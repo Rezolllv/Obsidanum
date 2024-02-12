@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "obsidanum:block/obsidan_planks_slab"
+    },
+    "type=double": {
+      "model": "obsidanum:block/obsidan_planks"
+    },
+    "type=top": {
+      "model": "obsidanum:block/obsidan_planks_slab_top"
+    }
+  }
+}

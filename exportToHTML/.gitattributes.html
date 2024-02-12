@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>.gitattributes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #7a7e85;}
+.s2 { color: #bcbec4;}
+.s3 { color: #cf8e6d;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+.gitattributes</font>
+</center></td></tr></table>
+<pre><span class="s0"># </span><span class="s1">Disable autocrlf on generated files, they always generate with LF</span>
+<span class="s0"># </span><span class="s1">Add any extra files or paths here to make git stop saying they</span>
+<span class="s0"># </span><span class="s1">are changed when only line endings change.</span>
+<span class="s2">src/generated/**/.cache/cache text </span><span class="s3">eol</span><span class="s0">=</span><span class="s2">lf 
+src/generated/**/*.json text </span><span class="s3">eol</span><span class="s0">=</span><span class="s2">lf 
+</span></pre>
+</body>
+</html>
