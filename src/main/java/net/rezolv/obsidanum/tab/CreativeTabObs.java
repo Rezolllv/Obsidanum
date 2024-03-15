@@ -27,10 +27,18 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDIAN_TEAR.get());
                         pOutput.accept(ItemsObs.OBSIDAN.get());
                         pOutput.accept(ItemsObs.OBSIDAN_APPLE.get());
+
                         //Blocks
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_STAIRS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());
+
+                        pOutput.accept(BlocksObs.OBSIDAN_WOOD_LOG.get());
+                        pOutput.accept(BlocksObs.OBSIDAN_WOOD.get());
+                        pOutput.accept(BlocksObs.STRIPPED_OBSIDAN_WOOD_LOG.get());
+                        pOutput.accept(BlocksObs.STRIPPED_OBSIDAN_WOOD.get());
+                        pOutput.accept(BlocksObs.OBSIDAN_WOOD_LEAVES.get());
+
                     })
                     .build());
 

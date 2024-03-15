@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "obsidanum:block/obsidan_wood_leaves_down",
+    "east": "obsidanum:block/obsidan_wood_leaves_side",
+    "north": "obsidanum:block/obsidan_wood_leaves_side",
+    "particle": "obsidanum:block/obsidan_wood_leaves_side",
+    "south": "obsidanum:block/obsidan_wood_leaves_side",
+    "up": "obsidanum:block/obsidan_wood_leaves_top",
+    "west": "obsidanum:block/obsidan_wood_leaves_side"
+  }
+}
