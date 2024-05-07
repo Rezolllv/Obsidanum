@@ -13,6 +13,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
+import net.rezolv.obsidanum.world.features.ModPlacedFeatures;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -29,8 +30,6 @@ public class Obsidanum {
         ItemsObs.register(modEventBus);
         BlocksObs.register(modEventBus);
         CreativeTabObs.register(modEventBus);
-
-
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
     }

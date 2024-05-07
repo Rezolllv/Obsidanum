@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "obsidanum:block/stripped_obsidan_wood_log_top",
+    "side": "obsidanum:block/stripped_obsidan_wood_log"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "obsidanum:block/obsidan_sapling"
+  },"render_type": "cutout"
+}

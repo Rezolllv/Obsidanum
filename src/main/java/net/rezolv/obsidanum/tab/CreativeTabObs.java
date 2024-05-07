@@ -26,10 +26,26 @@ public class CreativeTabObs extends CreativeModeTab {
                         //Items
                         pOutput.accept(ItemsObs.OBSIDIAN_TEAR.get());
                         pOutput.accept(ItemsObs.OBSIDAN.get());
+                        pOutput.accept(ItemsObs.DRILLING_CRYSTALLIZER.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_AXE.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_SHOVEL.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_SWORD.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_HOE.get());
                         pOutput.accept(ItemsObs.OBSIDAN_APPLE.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_PICKAXE.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_ARROW.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_AXE.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_PICKAXE.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_SHOVEL.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_SWORD.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_HOE.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_CHAKRAM.get());
+
+
 
                         //Blocks
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
+                        pOutput.accept(BlocksObs.OBSIDAN_SAPLING.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_STAIRS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());
 

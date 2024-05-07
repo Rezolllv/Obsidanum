@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "obsidanum:block/stripped_obsidan_wood_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "obsidanum:block/stripped_obsidan_wood_wood"
+    },
+    "axis=z": {
+      "model": "obsidanum:block/stripped_obsidan_wood_wood_horizontal",
+      "x": 90
+    }
+  }
+}

@@ -15,6 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.custom.*;
 import net.rezolv.obsidanum.item.ItemsObs;
+import net.rezolv.obsidanum.world.tree.ObsidanOak;
 
 import java.util.function.Supplier;
 
@@ -32,7 +33,8 @@ public class BlocksObs {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(3f)));
     public static final RegistryObject<Block> STRIPPED_OBSIDAN_WOOD = registerBlock("stripped_obsidan_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
-
+    public static final RegistryObject<Block> OBSIDAN_SAPLING = registerBlock("obsidan_sapling",
+            () -> new SaplingBlock(new ObsidanOak(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
 
     public static final RegistryObject<Block> OBSIDAN_PLANKS = registerBlock("obsidan_planks",
