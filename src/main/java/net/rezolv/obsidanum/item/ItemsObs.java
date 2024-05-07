@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
+import net.rezolv.obsidanum.item.custom.DrillingCrystallizer;
 
 public class ItemsObs {
     public static final DeferredRegister<Item> ITEMS =
@@ -16,7 +17,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> DRILLING_CRYSTALLIZER = ITEMS.register("drilling_crystallizer",
-            () -> new Item(new Item.Properties()));
+            () -> new DrillingCrystallizer(new Item.Properties().durability(5)));
     public static final RegistryObject<Item> OBSIDAN_APPLE = ITEMS.register("obsidan_apple",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SWORD = ITEMS.register("obsidan_sword",
