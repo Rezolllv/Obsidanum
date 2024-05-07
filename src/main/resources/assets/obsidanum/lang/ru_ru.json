@@ -1,0 +1,19 @@
+{
+  "creativetab.obsidanum": "Obsidanum",
+
+
+  "item.obsidanum.obsidian_tear": "§bОбсидиановая слеза",
+  "item.obsidanum.obsidan_apple": "§bОбсидановое яблоко",
+  "item.obsidanum.obsidan": "§bОбсидан",
+
+  "block.obsidanum.obsidan_planks": "Доски из обсиданового дерева",
+  "block.obsidanum.obsidan_planks_stairs": "Ступеньки из обсиданового дерева",
+  "block.obsidanum.obsidan_planks_slab": "Плита из обсиданового дерева",
+
+  "block.obsidanum.obsidan_wood": "Обсидановое дерево",
+  "block.obsidanum.obsidan_sapling": "Обсидановый саженец",
+  "block.obsidanum.obsidan_wood_log": "Обсидановая древесина",
+  "block.obsidanum.stripped_obsidan_wood": "Обтёсанная обсидановая древесина",
+  "block.obsidanum.stripped_obsidan_wood_log": "Обтёсанная обсидановое бревно",
+  "block.obsidanum.obsidan_wood_leaves": "Обсидановая листва"
+}
