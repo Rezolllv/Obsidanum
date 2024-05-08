@@ -11,8 +11,13 @@
   "item.obsidanum.obsidian_pickaxe": "Obsidian pickaxe",
   "item.obsidanum.obsidian_hoe": "Obsidian hoe",
   "item.obsidanum.obsidian_shovel": "Obsidian shovel",
+  "item.obsidanum.crystallized_copper_ore": "Crystallized copper ore",
+  "item.obsidanum.crystallized_iron_ore": "Crystallized iron ore",
+  "item.obsidanum.crystallized_gold_ore": "Crystallized gold ore",
 
   "block.obsidanum.obsidan_planks": "Obsidanwood planks",
+  "block.obsidanum.obsidan_planks_button": "Obsidanwood button",
+  "block.obsidanum.obsidan_planks_pressure_plate": "Obsidanwood pressure plate",
   "block.obsidanum.obsidan_planks_stairs": "Obsidanwood stairs",
   "block.obsidanum.obsidan_planks_slab": "Obsidanwood slab",
 

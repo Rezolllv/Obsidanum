@@ -11,8 +11,13 @@
   "item.obsidanum.obsidian_pickaxe": "Обсидиановая кирка",
   "item.obsidanum.obsidian_hoe": "Обсидиановая мотыга",
   "item.obsidanum.obsidian_shovel": "Обсидиановая лопата",
+  "item.obsidanum.crystallized_copper_ore": "Кристаллизованная медная руда",
+  "item.obsidanum.crystallized_iron_ore": "Кристаллизованная железная руда",
+  "item.obsidanum.crystallized_gold_ore": "Кристаллизованная золотая руда",
 
   "block.obsidanum.obsidan_planks": "Доски из обсиданового дерева",
+  "block.obsidanum.obsidan_planks_button": "Кнопка из обсиданового дерева",
+  "block.obsidanum.obsidan_planks_pressure_plate": "Нажимная плита из обсиданового дерева",
   "block.obsidanum.obsidan_planks_stairs": "Ступеньки из обсиданового дерева",
   "block.obsidanum.obsidan_planks_slab": "Плита из обсиданового дерева",
 

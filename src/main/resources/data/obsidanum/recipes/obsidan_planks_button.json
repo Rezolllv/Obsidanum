@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "obsidanum:obsidan_planks"
+    }
+  ],
+  "result": {
+    "item": "obsidanum:obsidan_planks_button"
+  }
+}

@@ -45,6 +45,8 @@ public class CreativeTabObs extends CreativeModeTab {
 
                         //Blocks
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
+                        pOutput.accept(BlocksObs.OBSIDAN_PLANKS_BUTTON.get());
+                        pOutput.accept(BlocksObs.OBSIDAN_PLANKS_PRESSURE_PLATE.get());
                         pOutput.accept(BlocksObs.OBSIDAN_SAPLING.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_STAIRS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());

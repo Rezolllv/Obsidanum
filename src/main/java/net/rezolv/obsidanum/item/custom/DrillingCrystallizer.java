@@ -1,7 +1,11 @@
 package net.rezolv.obsidanum.item.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
@@ -16,6 +20,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
 import net.rezolv.obsidanum.item.ItemsObs;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class DrillingCrystallizer extends Item {
@@ -27,7 +33,6 @@ public class DrillingCrystallizer extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        // Получение уровня, позиции и состояния блока
         if (!(context.getLevel() instanceof ServerLevel)) {
             return InteractionResult.FAIL;
         }
@@ -35,31 +40,82 @@ public class DrillingCrystallizer extends Item {
         ServerLevel level = (ServerLevel) context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState blockState = level.getBlockState(pos);
-
-        // Проверка, что целевой блок является плачущим обсидианом
         if (blockState.is(Blocks.CRYING_OBSIDIAN)) {
-            // Преобразование плачущего обсидиана в обсидиан
             level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
+            // Воспроизведение звука шипения и частиц дыма
+            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.1D, 0.1D, 0.1D, 0.0D);
 
-            // Шанс выпадения хоруса (30%)
             if (RANDOM.nextInt(100) < 30) {
-                // Выпадение хоруса
                 Block.popResource(level, pos, new ItemStack(ItemsObs.OBSIDIAN_TEAR.get()));
             }
-
-            // Уменьшение прочности предмета на 1
             ItemStack itemStack = context.getItemInHand();
             if (context.getPlayer() != null) {
                 itemStack.hurtAndBreak(1, context.getPlayer(), player -> {
                     player.broadcastBreakEvent(context.getHand());
                 });
             }
-
-            // Возвращение результата использования
             return InteractionResult.SUCCESS;
         }
 
-        // Если целевой блок не является плачущим обсидианом
+        // Список блоков руд для обработки
+        Block[] ores = {Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE};
+
+        for (Block ore : ores) {
+            if (blockState.is(ore)) {
+                // Воспроизведение звука шипения и частиц дыма
+                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.1D, 0.1D, 0.1D, 0.0D);
+
+                // Удаление блока руды и всех прилегающих блоков руды
+                Queue<BlockPos> queue = new LinkedList<>();
+                queue.add(pos);
+                while (!queue.isEmpty()) {
+                    BlockPos currentPos = queue.poll();
+                    BlockState currentBlockState = level.getBlockState(currentPos);
+                    if (currentBlockState.is(ore)) {
+                        level.setBlock(currentPos, Blocks.AIR.defaultBlockState(), 3);
+
+                        // Выпадение от 1 до 3 кристаллизированных руд
+                        int itemsToDrop = RANDOM.nextInt(3) + 1; // Выпадает от 1 до 3 предметов
+                        for (int i = 0; i < itemsToDrop; i++) {
+                            // Выбор кристаллизированной руды в зависимости от типа руды
+                            ItemStack crystallizedOre;
+                            if (ore == Blocks.IRON_ORE || ore == Blocks.DEEPSLATE_IRON_ORE) {
+                                crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_IRON_ORE.get());
+                            } else if (ore == Blocks.GOLD_ORE || ore == Blocks.DEEPSLATE_GOLD_ORE) {
+                                crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
+                            } else if (ore == Blocks.COPPER_ORE || ore == Blocks.DEEPSLATE_COPPER_ORE) {
+                                crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
+                            } else {
+                                // Здесь можно добавить обработку других типов руд
+                                continue;
+                            }
+                            Block.popResource(level, currentPos, crystallizedOre);
+                        }
+
+                        // Добавление соседних блоков руды в очередь для обработки
+                        for (Direction direction : Direction.values()) {
+                            BlockPos neighborPos = currentPos.relative(direction);
+                            BlockState neighborBlockState = level.getBlockState(neighborPos);
+                            if (neighborBlockState.is(ore)) {
+                                queue.add(neighborPos);
+                            }
+                        }
+                    }
+                }
+
+                // Уменьшение прочности предмета на 1
+                ItemStack itemStack = context.getItemInHand();
+                if (context.getPlayer() != null) {
+                    itemStack.hurtAndBreak(1, context.getPlayer(), player -> {
+                        player.broadcastBreakEvent(context.getHand());
+                    });
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+
         return InteractionResult.FAIL;
     }
 }

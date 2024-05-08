@@ -21,6 +21,13 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CRYSTALLIZED_COPPER_ORE = ITEMS.register("crystallized_copper_ore",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CRYSTALLIZED_IRON_ORE = ITEMS.register("crystallized_iron_ore",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CRYSTALLIZED_GOLD_ORE = ITEMS.register("crystallized_gold_ore",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> DRILLING_CRYSTALLIZER = ITEMS.register("drilling_crystallizer",
             () -> new DrillingCrystallizer(new Item.Properties().durability(5)));
     public static final RegistryObject<Item> OBSIDAN_APPLE = ITEMS.register("obsidan_apple",
