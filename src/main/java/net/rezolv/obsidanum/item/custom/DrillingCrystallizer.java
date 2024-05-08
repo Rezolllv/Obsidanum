@@ -44,8 +44,7 @@ public class DrillingCrystallizer extends Item {
             level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
             // Воспроизведение звука шипения и частиц дыма
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.1D, 0.1D, 0.1D, 0.0D);
-
+            level.sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
             if (RANDOM.nextInt(100) < 30) {
                 Block.popResource(level, pos, new ItemStack(ItemsObs.OBSIDIAN_TEAR.get()));
             }
@@ -59,15 +58,25 @@ public class DrillingCrystallizer extends Item {
         }
 
         // Список блоков руд для обработки
-        Block[] ores = {Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE};
+        Block[] ores = {
+                Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE,
+                Blocks.EMERALD_ORE, Blocks.DEEPSLATE_EMERALD_ORE,
+                Blocks.LAPIS_ORE, Blocks.DEEPSLATE_LAPIS_ORE,
+                Blocks.REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE,
+                Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE,
+                Blocks.ANCIENT_DEBRIS,
+                Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
+                Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE,
+                Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE
+        };
 
         for (Block ore : ores) {
             if (blockState.is(ore)) {
                 // Воспроизведение звука шипения и частиц дыма
                 level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 1, 0.1D, 0.1D, 0.1D, 0.0D);
+                level.sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
 
-                // Удаление блока руды и всех прилегающих блоков руды
+// Удаление блока руды и всех прилегающих блоков руды
                 Queue<BlockPos> queue = new LinkedList<>();
                 queue.add(pos);
                 while (!queue.isEmpty()) {
@@ -78,6 +87,7 @@ public class DrillingCrystallizer extends Item {
 
                         // Выпадение от 1 до 3 кристаллизированных руд
                         int itemsToDrop = RANDOM.nextInt(3) + 1; // Выпадает от 1 до 3 предметов
+                        int itemsToDropSix = RANDOM.nextInt(6) + 1; // Выпадает от 1 до 6 предметов
                         for (int i = 0; i < itemsToDrop; i++) {
                             // Выбор кристаллизированной руды в зависимости от типа руды
                             ItemStack crystallizedOre;
@@ -87,11 +97,35 @@ public class DrillingCrystallizer extends Item {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
                             } else if (ore == Blocks.COPPER_ORE || ore == Blocks.DEEPSLATE_COPPER_ORE) {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
+                            } else if (ore == Blocks.DIAMOND_ORE || ore == Blocks.DEEPSLATE_DIAMOND_ORE) {
+                                crystallizedOre = new ItemStack(Items.DIAMOND);
+                            } else if (ore == Blocks.EMERALD_ORE || ore == Blocks.DEEPSLATE_EMERALD_ORE) {
+                                crystallizedOre = new ItemStack(Items.EMERALD);
+                            } else if (ore == Blocks.ANCIENT_DEBRIS ) {
+                                crystallizedOre = new ItemStack(Items.NETHERITE_SCRAP);
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;
                             }
                             Block.popResource(level, currentPos, crystallizedOre);
+                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+
+                        }
+                        for (int i = 0; i < itemsToDropSix; i++) {
+                            // Выбор кристаллизированной руды в зависимости от типа руды
+                            ItemStack crystallizedOre;
+                            if (ore == Blocks.COAL_ORE || ore == Blocks.DEEPSLATE_COAL_ORE) {
+                                crystallizedOre = new ItemStack(Items.COAL);
+                            } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
+                                crystallizedOre = new ItemStack(Items.LAPIS_LAZULI);
+                            } else if (ore == Blocks.REDSTONE_ORE || ore == Blocks.DEEPSLATE_REDSTONE_ORE) {
+                                crystallizedOre = new ItemStack(Items.REDSTONE);
+                            } else {
+                                // Здесь можно добавить обработку других типов руд
+                                continue;
+                            }
+                            Block.popResource(level, currentPos, crystallizedOre);
+                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
                         }
 
                         // Добавление соседних блоков руды в очередь для обработки
@@ -105,9 +139,9 @@ public class DrillingCrystallizer extends Item {
                     }
                 }
 
-                // Уменьшение прочности предмета на 1
+// Уменьшение прочности предмета на 1
                 ItemStack itemStack = context.getItemInHand();
-                if (context.getPlayer() != null) {
+                if (context.getPlayer()!= null) {
                     itemStack.hurtAndBreak(1, context.getPlayer(), player -> {
                         player.broadcastBreakEvent(context.getHand());
                     });

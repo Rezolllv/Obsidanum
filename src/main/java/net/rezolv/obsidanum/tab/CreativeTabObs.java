@@ -40,6 +40,9 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDIAN_SWORD.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_HOE.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_CHAKRAM.get());
+                        pOutput.accept(ItemsObs.CRYSTALLIZED_IRON_ORE.get());
+                        pOutput.accept(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
+                        pOutput.accept(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
 
 
 
