@@ -20,7 +20,7 @@ public class ObsAxe extends AxeItem {
             // Создаем экземпляр Random
             Random random = new Random();
             // Генерируем случайное число от 0 до 10
-            int damage = random.nextInt(11); // Верхний предел 11, чтобы получить число от 0 до 10
+            int damage = random.nextInt(6); // Верхний предел 11, чтобы получить число от 0 до 10
 
             pStack.hurtAndBreak(damage, pEntityLiving, (p_40992_) -> {
                 p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND);

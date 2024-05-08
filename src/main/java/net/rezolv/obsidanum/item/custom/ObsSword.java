@@ -21,7 +21,7 @@ public class ObsSword extends SwordItem {
         // Создаем экземпляр Random
         Random random = new Random();
         // Генерируем случайное число от 0 до 10
-        int damage = random.nextInt(11); // Верхний предел 11, чтобы получить число от 0 до 10
+        int damage = random.nextInt(6); // Верхний предел 11, чтобы получить число от 0 до 10
 
         pStack.hurtAndBreak(damage, pAttacker, (p_43296_) -> {
             p_43296_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
@@ -33,7 +33,7 @@ public class ObsSword extends SwordItem {
             // Создаем экземпляр Random
             Random random = new Random();
             // Генерируем случайное число от 0 до 10
-            int damage = random.nextInt(11); // Верхний предел 11, чтобы получить число от 0 до 10
+            int damage = random.nextInt(6); // Верхний предел 11, чтобы получить число от 0 до 10
 
             pStack.hurtAndBreak(damage, pEntityLiving, (p_40992_) -> {
                 p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
