@@ -1,5 +1,6 @@
 package net.rezolv.obsidanum;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -11,9 +12,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.rezolv.obsidanum.block.BlocksObs;
+import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
 import net.rezolv.obsidanum.world.features.ModPlacedFeatures;
+import net.rezolv.obsidanum.world.wood.ModWoodTypes;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -28,6 +31,7 @@ public class Obsidanum {
         modEventBus.addListener(this::commonSetup);
         ItemsObs.register(modEventBus);
         BlocksObs.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -52,7 +56,7 @@ public class Obsidanum {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            Sheets.addWoodType(ModWoodTypes.OBSIDAN);
         }
     }
 }
