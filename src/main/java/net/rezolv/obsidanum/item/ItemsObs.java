@@ -44,16 +44,16 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_AXE = ITEMS.register("obsidian_axe",
-            () -> new ObsAxe(ModToolTiers.OBSIDIANUM,7,1, new Item.Properties()));
+            () -> new ObsAxe(ModToolTiers.OBSIDIANUM,5,-3.2F, new Item.Properties()));
 
     public static final RegistryObject<Item> OBSIDIAN_HOE = ITEMS.register("obsidian_hoe",
-            () -> new ObsHoe(ModToolTiers.OBSIDIANUM,0,0, new Item.Properties()));
+            () -> new ObsHoe(ModToolTiers.OBSIDIANUM,-4,-3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_PICKAXE = ITEMS.register("obsidian_pickaxe",
-            () -> new ObsPickaxe(ModToolTiers.OBSIDIANUM,1,1, new Item.Properties()));
+            () -> new ObsPickaxe(ModToolTiers.OBSIDIANUM,1,-3F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SHOVEL = ITEMS.register("obsidian_shovel",
-            () -> new ObsShovel(ModToolTiers.OBSIDIANUM,0,0, new Item.Properties()));
+            () -> new ObsShovel(ModToolTiers.OBSIDIANUM,1.5F,-3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SWORD = ITEMS.register("obsidian_sword",
-            () -> new ObsSword(ModToolTiers.OBSIDIANUM,4,2, new Item.Properties()));
+            () -> new ObsSword(ModToolTiers.OBSIDIANUM,3,-3F, new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

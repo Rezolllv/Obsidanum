@@ -6,6 +6,11 @@
   "item.obsidanum.obsidan_apple": "§bObsidan apple",
   "item.obsidanum.obsidan": "§bObsidan",
   "item.obsidanum.drilling_crystallizer": "Drilling crystallizer",
+  "item.obsidanum.obsidian_sword": "Obsidian sword",
+  "item.obsidanum.obsidian_axe": "Obsidian axe",
+  "item.obsidanum.obsidian_pickaxe": "Obsidian pickaxe",
+  "item.obsidanum.obsidian_hoe": "Obsidian hoe",
+  "item.obsidanum.obsidian_shovel": "Obsidian shovel",
 
   "block.obsidanum.obsidan_planks": "Obsidanwood planks",
   "block.obsidanum.obsidan_planks_stairs": "Obsidanwood stairs",
