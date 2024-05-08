@@ -67,7 +67,7 @@ public class DrillingCrystallizer extends Item {
                 Blocks.NETHER_QUARTZ_ORE,
                 Blocks.ANCIENT_DEBRIS,
                 Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
-                Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE,
+                Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.NETHER_GOLD_ORE,
                 Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE
         };
 
@@ -94,7 +94,7 @@ public class DrillingCrystallizer extends Item {
                             ItemStack crystallizedOre;
                             if (ore == Blocks.IRON_ORE || ore == Blocks.DEEPSLATE_IRON_ORE) {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_IRON_ORE.get());
-                            } else if (ore == Blocks.GOLD_ORE || ore == Blocks.DEEPSLATE_GOLD_ORE) {
+                            } else if (ore == Blocks.GOLD_ORE || ore == Blocks.DEEPSLATE_GOLD_ORE || ore == Blocks.NETHER_GOLD_ORE) {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
                             } else if (ore == Blocks.COPPER_ORE || ore == Blocks.DEEPSLATE_COPPER_ORE) {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
