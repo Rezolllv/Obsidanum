@@ -26,7 +26,6 @@ public class Obsidanum {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
-
         ItemsObs.register(modEventBus);
         BlocksObs.register(modEventBus);
         CreativeTabObs.register(modEventBus);
