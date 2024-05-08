@@ -64,6 +64,7 @@ public class DrillingCrystallizer extends Item {
                 Blocks.LAPIS_ORE, Blocks.DEEPSLATE_LAPIS_ORE,
                 Blocks.REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE,
                 Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE,
+                Blocks.NETHER_QUARTZ_ORE,
                 Blocks.ANCIENT_DEBRIS,
                 Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
                 Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE,
@@ -120,6 +121,8 @@ public class DrillingCrystallizer extends Item {
                                 crystallizedOre = new ItemStack(Items.LAPIS_LAZULI);
                             } else if (ore == Blocks.REDSTONE_ORE || ore == Blocks.DEEPSLATE_REDSTONE_ORE) {
                                 crystallizedOre = new ItemStack(Items.REDSTONE);
+                            } else if (ore == Blocks.NETHER_QUARTZ_ORE) {
+                                crystallizedOre = new ItemStack(Items.QUARTZ);
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;
