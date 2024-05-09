@@ -52,7 +52,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_BUTTON.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_PRESSURE_PLATE.get());
-                        pOutput.accept(BlocksObs.OBSIDAN_SAPLING.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_SAPLING.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_STAIRS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());
 
@@ -60,7 +60,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD.get());
                         pOutput.accept(BlocksObs.STRIPPED_OBSIDAN_WOOD_LOG.get());
                         pOutput.accept(BlocksObs.STRIPPED_OBSIDAN_WOOD.get());
-                        pOutput.accept(BlocksObs.OBSIDAN_WOOD_LEAVES.get());
+                        pOutput.accept(ItemsObs.OBSIDAN_WOOD_LEAVES.get());
 
                     })
                     .build());

@@ -4,10 +4,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.HangingSignItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.SignItem;
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -68,6 +65,10 @@ public class ItemsObs {
             () -> new SignItem(new Item.Properties().stacksTo(16), BlocksObs.OBSIDAN_SIGN.get(), BlocksObs.OBSIDAN_WALL_SIGN.get()));
     public static final RegistryObject<Item> PINE_HANGING_SIGN = ITEMS.register("obsidan_hanging_sign",
             () -> new HangingSignItem(BlocksObs.OBSIDAN_HANGING_SIGN.get(), BlocksObs.OBSIDAN_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
+            () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(),new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
+            () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties()));
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }
