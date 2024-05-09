@@ -10,7 +10,8 @@ import net.rezolv.obsidanum.Obsidanum;
 
 public class TagsObs {
     public static class Blocks {
-        public static final TagKey<Block> NEEDS_OBSIDAN_TOOL = tag("needs_sapphire_tool");
+        public static final TagKey<Block> NEEDS_OBSIDAN_TOOL = tag("needs_obsidan_tool");
+        public static final TagKey<Block> NEEDS_SMOLDERING_TOOL = tag("needs_smoldering_tool");
 
 
         private static TagKey<Block> tag(String name) {
