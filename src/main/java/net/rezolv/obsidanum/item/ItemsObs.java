@@ -3,7 +3,6 @@ package net.rezolv.obsidanum.item;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -12,6 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.item.custom.*;
+import net.rezolv.obsidanum.item.entity.ModBoatEntity;
 
 public class ItemsObs {
     public static final DeferredRegister<Item> ITEMS =
@@ -21,6 +21,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NETHER_FLAME = ITEMS.register("nether_flame",
+            () -> new Item(new Item.Properties().durability(25)));
     public static final RegistryObject<Item> CRYSTALLIZED_COPPER_ORE = ITEMS.register("crystallized_copper_ore",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRYSTALLIZED_IRON_ORE = ITEMS.register("crystallized_iron_ore",
@@ -63,12 +65,17 @@ public class ItemsObs {
             () -> new ObsSword(ModToolTiers.OBSIDIANUM,3,-3F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SIGN = ITEMS.register("obsidan_sign",
             () -> new SignItem(new Item.Properties().stacksTo(16), BlocksObs.OBSIDAN_SIGN.get(), BlocksObs.OBSIDAN_WALL_SIGN.get()));
-    public static final RegistryObject<Item> PINE_HANGING_SIGN = ITEMS.register("obsidan_hanging_sign",
+    public static final RegistryObject<Item> OBSIDAN_HANGING_SIGN = ITEMS.register("obsidan_hanging_sign",
             () -> new HangingSignItem(BlocksObs.OBSIDAN_HANGING_SIGN.get(), BlocksObs.OBSIDAN_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
+
     public static final RegistryObject<Item> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
             () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(),new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
-            () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties()));
+            () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties(), 450));
+    public static final RegistryObject<Item> OBSIDAN_BOAT = ITEMS.register("obsidan_boat",
+            () -> new ModBoatItem(false, ModBoatEntity.Type.OBSIDAN, new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDAN_CHEST_BOAT = ITEMS.register("obsidan_chest_boat",
+            () -> new ModBoatItem(true, ModBoatEntity.Type.OBSIDAN, new Item.Properties()));
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }

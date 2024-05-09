@@ -9,6 +9,9 @@
   "item.obsidanum.obsidian_sword": "Обсидиановый меч",
   "item.obsidanum.obsidian_axe": "Обсидиановый топор",
   "item.obsidanum.obsidian_pickaxe": "Обсидиановая кирка",
+  "item.obsidanum.obsidian_arrow": "Обсидиановая стрела",
+  "item.obsidanum.obsidian_chakram": "Обсидиановый шакрам",
+  "item.obsidanum.nether_flame": "Адское пламя",
   "item.obsidanum.obsidian_hoe": "Обсидиановая мотыга",
   "item.obsidanum.obsidian_shovel": "Обсидиановая лопата",
   "item.obsidanum.crystallized_copper_ore": "Кристаллизованная медная руда",
@@ -23,8 +26,10 @@
 
   "block.obsidanum.obsidan_wood": "Обсидановое дерево",
   "block.obsidanum.obsidan_sapling": "Обсидановый саженец",
+  "item.obsidanum.obsidan_sapling": "Обсидановый саженец",
   "block.obsidanum.obsidan_wood_log": "Обсидановая древесина",
   "block.obsidanum.stripped_obsidan_wood": "Обтёсанная обсидановая древесина",
   "block.obsidanum.stripped_obsidan_wood_log": "Обтёсанная обсидановое бревно",
-  "block.obsidanum.obsidan_wood_leaves": "Обсидановая листва"
+  "block.obsidanum.obsidan_wood_leaves": "Обсидановая листва",
+  "item.obsidanum.obsidan_wood_leaves": "Обсидановая листва"
 }

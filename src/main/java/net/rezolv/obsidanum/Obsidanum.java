@@ -1,6 +1,7 @@
 package net.rezolv.obsidanum;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,6 +18,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.item.ItemsObs;
+import net.rezolv.obsidanum.item.entity.ModEntities;
+import net.rezolv.obsidanum.item.entity.client.ModBoatRenderer;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
 import net.rezolv.obsidanum.world.features.ModPlacedFeatures;
 import net.rezolv.obsidanum.world.wood.ModWoodTypes;
@@ -35,6 +38,7 @@ public class Obsidanum {
         ItemsObs.register(modEventBus);
         BlocksObs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModEntities.register(modEventBus);
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -59,11 +63,14 @@ public class Obsidanum {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.MOD_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
+            EntityRenderers.register(ModEntities.MOD_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
             event.enqueueWork(() -> {
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_WOOD_LEAVES.get(), 0.2f);
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_SAPLING.get(), 0.2f);
 
             });
+
             Sheets.addWoodType(ModWoodTypes.OBSIDAN);
         }
     }

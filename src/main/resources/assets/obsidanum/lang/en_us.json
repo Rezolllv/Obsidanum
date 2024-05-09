@@ -10,6 +10,9 @@
   "item.obsidanum.obsidian_axe": "Obsidian axe",
   "item.obsidanum.obsidian_pickaxe": "Obsidian pickaxe",
   "item.obsidanum.obsidian_hoe": "Obsidian hoe",
+  "item.obsidanum.obsidian_arrow": "Obsidian arrow",
+  "item.obsidanum.obsidian_chakram": "Obsidian chakram",
+  "item.obsidanum.nether_flame": "Nether flame",
   "item.obsidanum.obsidian_shovel": "Obsidian shovel",
   "item.obsidanum.crystallized_copper_ore": "Crystallized copper ore",
   "item.obsidanum.crystallized_iron_ore": "Crystallized iron ore",
@@ -23,8 +26,10 @@
 
   "block.obsidanum.obsidan_wood": "Obsidanwood",
   "block.obsidanum.obsidan_sapling": "Obsidan sapling",
+  "item.obsidanum.obsidan_sapling": "Obsidan sapling",
   "block.obsidanum.obsidan_wood_log": "Obsidanwood log",
   "block.obsidanum.stripped_obsidan_wood": "Stripped obsidanwood",
   "block.obsidanum.stripped_obsidan_wood_log": "Stripped obsidanwood log",
-  "block.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves"
+  "block.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
+  "item.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves"
 }
