@@ -54,9 +54,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_AXE = ITEMS.register("obsidian_axe",
             () -> new ObsAxe(ModToolTiers.OBSIDIANUM,5,-3.2F, new Item.Properties()));
-
     public static final RegistryObject<Item> OBSIDIAN_HOE = ITEMS.register("obsidian_hoe",
-            () -> new ObsHoe(ModToolTiers.OBSIDIANUM,-4,-3.2F, new Item.Properties()));
+            () -> new ObsHoe(ModToolTiers.OBSIDIANUM,-1,-3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_PICKAXE = ITEMS.register("obsidian_pickaxe",
             () -> new ObsPickaxe(ModToolTiers.OBSIDIANUM,1,-3F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SHOVEL = ITEMS.register("obsidian_shovel",
