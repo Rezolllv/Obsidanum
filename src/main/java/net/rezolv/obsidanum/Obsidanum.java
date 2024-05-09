@@ -1,8 +1,11 @@
 package net.rezolv.obsidanum;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,6 +59,11 @@ public class Obsidanum {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_WOOD_LEAVES.get(), 0.2f);
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_SAPLING.get(), 0.2f);
+
+            });
             Sheets.addWoodType(ModWoodTypes.OBSIDAN);
         }
     }
