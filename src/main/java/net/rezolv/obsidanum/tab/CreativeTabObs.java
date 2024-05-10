@@ -36,6 +36,11 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDIAN_ARROW.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_AXE.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_PICKAXE.get());
+                        pOutput.accept(ItemsObs.SMOLDERING_OBSIDIAN_PICKAXE.get());
+                        pOutput.accept(ItemsObs.SMOLDERING_OBSIDIAN_AXE.get());
+                        pOutput.accept(ItemsObs.SMOLDERING_OBSIDIAN_SHOVEL.get());
+                        pOutput.accept(ItemsObs.SMOLDERING_OBSIDIAN_HOE.get());
+                        pOutput.accept(ItemsObs.SMOLDERING_OBSIDIAN_SWORD.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_SHOVEL.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_SWORD.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_HOE.get());

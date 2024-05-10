@@ -52,6 +52,16 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_PICKAXE = ITEMS.register("smoldering_obsidian_pickaxe",
+            () -> new SmolderingPickaxe(ModToolTiers.SMOLDERING,0,-2.9F, new Item.Properties()));
+    public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_HOE = ITEMS.register("smoldering_obsidian_hoe",
+            () -> new SmolderingHoe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
+    public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_AXE = ITEMS.register("smoldering_obsidian_axe",
+            () -> new SmolderingAxe(ModToolTiers.SMOLDERING,4,-3.1F, new Item.Properties()));
+    public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_SWORD = ITEMS.register("smoldering_obsidian_sword",
+            () -> new SmolderingSword(ModToolTiers.SMOLDERING, 2, -2.7f, new Item.Properties()));
+    public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_SHOVEL = ITEMS.register("smoldering_obsidian_shovel",
+            () -> new SmolderingShovel(ModToolTiers.SMOLDERING,0,-3.1F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_AXE = ITEMS.register("obsidian_axe",
             () -> new ObsAxe(ModToolTiers.OBSIDIANUM,5,-3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_HOE = ITEMS.register("obsidian_hoe",
