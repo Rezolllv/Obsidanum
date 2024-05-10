@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "obsidanum:nether_flame"
+    },
+    {
+      "item": "obsidanum:obsidian_sword"
+    }
+  ],
+  "result": {
+    "item": "obsidanum:smoldering_obsidian_sword"
+  }
+}
