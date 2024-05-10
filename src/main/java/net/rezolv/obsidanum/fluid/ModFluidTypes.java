@@ -12,8 +12,8 @@ import net.rezolv.obsidanum.Obsidanum;
 import org.joml.Vector3f;
 
 public class ModFluidTypes {
-    public static final ResourceLocation LAVA_STILL_RL = new ResourceLocation("block/lava_still");
-    public static final ResourceLocation LAVA_FLOWING_RL = new ResourceLocation("block/lava_flow");
+    public static final ResourceLocation LAVA_STILL_RL = new ResourceLocation("block/nether_fire_still");
+    public static final ResourceLocation LAVA_FLOWING_RL = new ResourceLocation("block/nether_fire_flow");
     public static final ResourceLocation NETHER_FIRE_OVERLAY_RL = new ResourceLocation(Obsidanum.MOD_ID, "misc/in_nether_fire");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
@@ -22,13 +22,12 @@ public class ModFluidTypes {
     public static final RegistryObject<FluidType> NETHER_FIRE_LAVA_FLUID_TYPE = register("nether_fire_fluid",
             FluidType.Properties.create()
                     .lightLevel(15) // Устанавливает уровень света, излучаемого лавой
-                    .density(3000) // Устанавливает плотность жидкости
-                    .viscosity(6000) // Устанавливает вязкость жидкости
-                    .temperature(1300) // Устанавливает температуру жидкости
+                    .density(2000) // Устанавливает плотность жидкости
+                    .viscosity(2000) // Устанавливает вязкость жидкости
                     .canDrown(true) // Устанавливает, можно ли утонуть в жидкости
                     .canHydrate(false) // Устанавливает, может ли жидкость увлажнять блоки
                     .sound(SoundAction.get("drink"),
-                    SoundEvents.LAVA_AMBIENT)
+                    SoundEvents.LAVA_POP)
                     .sound(SoundAction.get("swim"),
                             SoundEvents.LAVA_POP)
     );
@@ -37,7 +36,7 @@ public class ModFluidTypes {
 
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name, () -> new BaseFluidType(LAVA_STILL_RL, LAVA_FLOWING_RL, NETHER_FIRE_OVERLAY_RL,
-                0xA1E55137, new Vector3f(224f / 255f, 56f / 255f, 208f / 255f), properties));
+                0xA1FF8800, new Vector3f(224f / 255f, 56f / 255f, 208f / 255f), properties));
     }
 
     public static void register(IEventBus eventBus) {

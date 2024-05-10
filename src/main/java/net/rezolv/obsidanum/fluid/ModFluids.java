@@ -23,7 +23,7 @@ public class ModFluids {
 
     public static final ForgeFlowingFluid.Properties NETHER_FIRE_LAVA_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             ModFluidTypes.NETHER_FIRE_LAVA_FLUID_TYPE, SOURCE_NETHER_FIRE_LAVA, FLOWING_NETHER_FIRE_LAVA)
-            .slopeFindDistance(14).levelDecreasePerBlock(2).block(BlocksObs.NETHER_FLAME_BLOCK)
+            .slopeFindDistance(4).levelDecreasePerBlock(1).block(BlocksObs.NETHER_FLAME_BLOCK)
             .bucket(ItemsObs.NETHER_FLAME);
 
 
