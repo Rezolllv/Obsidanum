@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.rezolv.obsidanum.fluid.ModFluids;
 
 public class NetherFlame extends Item {
     public NetherFlame(Properties pProperties) {
@@ -64,7 +65,7 @@ public class NetherFlame extends Item {
             // Проверяем, можно ли установить текучую лаву на указанном месте
             if (world.isEmptyBlock(posBelow) && world instanceof ServerLevel) {
                 // Создайте FluidState текучей лавы
-                FluidState lavaFluidState = Fluids.LAVA.getFlowing(1, true);  // 1 - уровень жидкости
+                FluidState lavaFluidState = ModFluids.FLOWING_NETHER_FIRE_LAVA.get().getFlowing(7, true);  // 1 - уровень жидкости
 
 
                 // Преобразуйте FluidState в BlockState

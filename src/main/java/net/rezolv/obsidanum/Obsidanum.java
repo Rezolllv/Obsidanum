@@ -1,5 +1,7 @@
 package net.rezolv.obsidanum;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.alchemy.Potions;
@@ -17,6 +19,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
+import net.rezolv.obsidanum.fluid.ModFluidTypes;
+import net.rezolv.obsidanum.fluid.ModFluids;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.entity.ModEntities;
 import net.rezolv.obsidanum.item.entity.client.ModBoatRenderer;
@@ -38,6 +42,8 @@ public class Obsidanum {
         ItemsObs.register(modEventBus);
         BlocksObs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
         ModEntities.register(modEventBus);
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
@@ -70,7 +76,8 @@ public class Obsidanum {
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_SAPLING.get(), 0.2f);
 
             });
-
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NETHER_FIRE_LAVA.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NETHER_FIRE_LAVA.get(), RenderType.solid());
             Sheets.addWoodType(ModWoodTypes.OBSIDAN);
         }
     }
