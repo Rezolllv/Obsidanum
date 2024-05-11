@@ -27,7 +27,5 @@ public class TradesWanderingTraderObsidanum {
         event.getGenericTrades()
                 .add(new BasicItemListing(new ItemStack(Items.EMERALD, 35),
                         new ItemStack(ItemsObs.DRILLING_CRYSTALLIZER.get(),1), 8, 20, 0f));
-
-
     }
 }

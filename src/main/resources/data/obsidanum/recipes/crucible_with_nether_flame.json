@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "obsidanum:crucible"
+    },
+    {
+      "item": "obsidanum:nether_flame"
+    }
+  ],
+  "result": {
+    "item": "obsidanum:crucible_with_nether_flame"
+  }
+}
