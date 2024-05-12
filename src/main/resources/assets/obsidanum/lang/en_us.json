@@ -1,6 +1,8 @@
 {
   "creativetab.obsidanum": "Obsidanum",
 
+  "item.obsidan.description.enabled": "§aActive",
+  "item.obsidan.description.disabled": "§cInactive",
 
   "item.obsidanum.obsidian_tear": "§bObsidian tear",
   "item.obsidanum.obsidan_apple": "§bObsidan apple",

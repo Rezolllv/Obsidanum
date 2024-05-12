@@ -1,6 +1,8 @@
 {
   "creativetab.obsidanum": "Obsidanum",
 
+  "item.obsidan.description.enabled": "§aАктивно",
+  "item.obsidan.description.disabled": "§cНеактивно",
 
   "item.obsidanum.obsidian_tear": "§bОбсидиановая слеза",
   "item.obsidanum.obsidan_apple": "§bОбсидановое яблоко",

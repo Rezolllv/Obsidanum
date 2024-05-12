@@ -42,7 +42,7 @@ public class ItemsObs {
                     .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 2), 1.0F) // Абсорбция
                     .alwaysEat().build())));
     public static final RegistryObject<Item> OBSIDAN_SWORD = ITEMS.register("obsidan_sword",
-            () -> new Item(new Item.Properties()));
+            () -> new ObsidanSword(ModToolTiers.SMOLDERING,0,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_AXE = ITEMS.register("obsidan_axe",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_PICKAXE = ITEMS.register("obsidan_pickaxe",
@@ -50,7 +50,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDAN_SHOVEL = ITEMS.register("obsidan_shovel",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_HOE = ITEMS.register("obsidan_hoe",
-            () -> new Item(new Item.Properties()));
+            () -> new ObsidanHoe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_ARROW = ITEMS.register("obsidian_arrow",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
