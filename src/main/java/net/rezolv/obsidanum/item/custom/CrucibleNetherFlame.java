@@ -9,11 +9,14 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Random;
+
 @Mod.EventBusSubscriber
 public class CrucibleNetherFlame extends Item {
     public CrucibleNetherFlame(Properties pProperties) {
         super(pProperties);
     }
+    private static final Random random = new Random();
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -23,10 +26,12 @@ public class CrucibleNetherFlame extends Item {
             ItemStack stack = player.getInventory().getItem(i);
             if (stack.getItem() instanceof CrucibleNetherFlame) {
                 // Уменьшаем прочность на 1 каждую секунду
-                if (event.phase == TickEvent.Phase.END && player.tickCount % 20 == 0) { // Проверяем, что это конец тика и прошло 20 тиков (1 секунда)
-                    stack.hurt(1, player.getRandom(), null);
-                    if (stack.getDamageValue() >= stack.getMaxDamage() - 1) { // Если прочность стала меньше 1, ломаем предмет
-                        stack.setCount(0); // Удаляем предмет из инвентаря
+                if (random.nextInt(100) < 30) {
+                    if (event.phase == TickEvent.Phase.END && player.tickCount % 20 == 0) { // Проверяем, что это конец тика и прошло 20 тиков (1 секунда)
+                        stack.hurt(1, player.getRandom(), null);
+                        if (stack.getDamageValue() >= stack.getMaxDamage() - 1) { // Если прочность стала меньше 1, ломаем предмет
+                            stack.setCount(0); // Удаляем предмет из инвентаря
+                        }
                     }
                 }
             }
