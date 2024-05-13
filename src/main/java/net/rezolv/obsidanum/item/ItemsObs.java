@@ -32,7 +32,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRUCIBLE_WITH_NETHER_FLAME = ITEMS.register("crucible_with_nether_flame",
-            () -> new Item(new Item.Properties()));
+            () -> new CrucibleNetherFlame(new Item.Properties().durability(250)));
     public static final RegistryObject<Item> DRILLING_CRYSTALLIZER = ITEMS.register("drilling_crystallizer",
             () -> new DrillingCrystallizer(new Item.Properties().durability(5)));
     public static final RegistryObject<Item> OBSIDAN_APPLE = ITEMS.register("obsidan_apple",
