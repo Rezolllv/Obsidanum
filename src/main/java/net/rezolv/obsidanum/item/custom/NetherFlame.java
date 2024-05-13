@@ -19,11 +19,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.rezolv.obsidanum.fluid.ModFluids;
-
+@Mod.EventBusSubscriber
 public class NetherFlame extends Item {
     public NetherFlame(Properties pProperties) {
         super(pProperties);
@@ -46,6 +48,25 @@ public class NetherFlame extends Item {
             return ItemStack.EMPTY;
         }
         return retval;
+    }
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        // Проверяем каждый слот инвентаря
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (stack.getItem() instanceof NetherFlame) {
+                // Проверяем, прошло ли уже минута с последнего поджога
+                if (player.tickCount % (20 * 60) == 0) { // 20 тиков в секунду * 60 секунд = 1 минута
+                    // Генерируем случайное число от 0 до 99
+                    int chance = player.getRandom().nextInt(100);
+                    // Если случайное число меньше 20, поджигаем игрока
+                    if (chance < 20) {
+                        player.setSecondsOnFire(5); // Поджигаем игрока на 5 секунд
+                    }
+                }
+            }
+        }
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {
