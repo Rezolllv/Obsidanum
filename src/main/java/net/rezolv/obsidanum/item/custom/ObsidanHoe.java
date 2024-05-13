@@ -29,7 +29,7 @@ public class ObsidanHoe extends HoeItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 60 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 10 * 20; // 60 seconds in ticks
     private static final double BREAK_RADIUS_SQUARED = 20 * 20; // Radius of 20 blocks squared
 
 
@@ -48,32 +48,43 @@ public class ObsidanHoe extends HoeItem {
                 } else {
                     activate();
                     // Код для активации, например, создание частиц и т.д.
+                    lastActivationTime = currentTime;
                 }
-                lastActivationTime = currentTime;
+
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         } else {
             return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
         }
     }
+
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-            if (activated) {
-                list.add(Component.translatable("item.obsidan.description.enabled"));
-            } else  {
-                list.add(Component.translatable("item.obsidan.description.disabled"));
+        if (activated) {
+            list.add(Component.translatable("item.obsidan.description.enabled"));
+        } else {
+            list.add(Component.translatable("item.obsidan.description.disabled"));
+        }
+        long currentTime = world != null ? world.getGameTime() : 0;
+        long timeLeft = lastActivationTime + COOLDOWN_DURATION - currentTime;
+        if (timeLeft > 0) {
+            int secondsLeft = (int) (timeLeft / 20); // Перевод времени из тиков в секунды
+            list.add(Component.translatable("item.obsidan.description.cooldown"));
+            list.add(Component.keybind("" + secondsLeft));
+        }
     }
-}
 
     public void activate() {
         activated = true;
     }
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public boolean isFoil(ItemStack itemstack) {
         return activated; // Возвращает true только когда инструмент активирован
 
     }
+
     public void deactivate(Player playerIn, Level worldIn) {
         activated = false;
         // Определение радиуса в квадратных блоках

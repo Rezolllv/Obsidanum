@@ -3,6 +3,8 @@
 
   "item.obsidan.description.enabled": "§aActive",
   "item.obsidan.description.disabled": "§cInactive",
+  "item.obsidan.description.cooldown": "§cCooldown ",
+  "fluid_type.obsidanum.nether_fire_fluid": "Nether fire fluid",
 
   "item.obsidanum.obsidian_tear": "§bObsidian tear",
   "item.obsidanum.obsidan_apple": "§bObsidan apple",

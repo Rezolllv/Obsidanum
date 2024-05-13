@@ -3,12 +3,13 @@
 
   "item.obsidan.description.enabled": "§aАктивно",
   "item.obsidan.description.disabled": "§cНеактивно",
+  "item.obsidan.description.cooldown": "§cПерезарядка ",
 
   "item.obsidanum.obsidian_tear": "§bОбсидиановая слеза",
   "item.obsidanum.obsidan_apple": "§bОбсидановое яблоко",
   "item.obsidanum.obsidan": "§bОбсидан",
   "item.obsidanum.crucible": "Тигель",
-  "item.obsidanum.crucible_with_nether_flame": "Тигель с адским плпменем",
+  "item.obsidanum.crucible_with_nether_flame": "Тигель с адским пламенем",
   "item.obsidanum.drilling_crystallizer": "Буровой кристализатор",
   "item.obsidanum.obsidian_sword": "Обсидиановый меч",
   "item.obsidanum.obsidian_axe": "Обсидиановый топор",
@@ -28,6 +29,7 @@
   "item.obsidanum.smoldering_obsidian_sword": "Тлеющий обсидиановый меч",
   "item.obsidanum.obsidan_hoe": "Обсидановая мотыга",
   "item.obsidanum.obsidan_shovel": "Обсидановая лопата",
+  "fluid_type.obsidanum.nether_fire_fluid": "Жидкое адское пламя",
 
 
   "item.obsidanum.nether_flame": "§cПламя Незера",

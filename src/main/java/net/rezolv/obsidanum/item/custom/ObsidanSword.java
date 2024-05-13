@@ -58,6 +58,13 @@ public class ObsidanSword extends SwordItem {
         } else  {
             list.add(Component.translatable("item.obsidan.description.disabled"));
         }
+        long currentTime = world != null ? world.getGameTime() : 0;
+        long timeLeft = lastActivationTime + COOLDOWN_DURATION - currentTime;
+        if (timeLeft > 0) {
+            int secondsLeft = (int) (timeLeft / 20); // Перевод времени из тиков в секунды
+            list.add(Component.translatable("item.obsidan.description.cooldown"));
+            list.add(Component.keybind(secondsLeft + " Sec"));
+        }
     }
 
     public void activate() {
