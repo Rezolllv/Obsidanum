@@ -32,7 +32,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRUCIBLE_WITH_NETHER_FLAME = ITEMS.register("crucible_with_nether_flame",
-            () -> new CrucibleNetherFlame(new Item.Properties().durability(250)));
+            () -> new CrucibleNetherFlame(new Item.Properties().durability(25)));
     public static final RegistryObject<Item> DRILLING_CRYSTALLIZER = ITEMS.register("drilling_crystallizer",
             () -> new DrillingCrystallizer(new Item.Properties().durability(5)));
     public static final RegistryObject<Item> OBSIDAN_APPLE = ITEMS.register("obsidan_apple",
@@ -48,7 +48,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDAN_PICKAXE = ITEMS.register("obsidan_pickaxe",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SHOVEL = ITEMS.register("obsidan_shovel",
-            () -> new Item(new Item.Properties()));
+            () -> new ObsidanShovel(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_HOE = ITEMS.register("obsidan_hoe",
             () -> new ObsidanHoe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_ARROW = ITEMS.register("obsidian_arrow",
