@@ -48,6 +48,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.CRYSTALLIZED_IRON_ORE.get());
                         pOutput.accept(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
                         pOutput.accept(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
+                        pOutput.accept(ItemsObs.BAGELL_FUEL.get());
                         pOutput.accept(ItemsObs.OBSIDAN_SIGN.get());
                         pOutput.accept(ItemsObs.OBSIDAN_HANGING_SIGN.get());
                         pOutput.accept(ItemsObs.OBSIDAN_BOAT.get());
