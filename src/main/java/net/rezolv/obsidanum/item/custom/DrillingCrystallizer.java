@@ -68,7 +68,6 @@ public class DrillingCrystallizer extends Item {
                 Blocks.GLOWSTONE,
                 Blocks.AMETHYST_BLOCK,
                 Blocks.ANCIENT_DEBRIS,
-                Blocks.CALCITE,
                 Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
                 Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.NETHER_GOLD_ORE,
                 Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE
@@ -146,6 +145,10 @@ public class DrillingCrystallizer extends Item {
                             ItemStack crystallizedOre;
                             if (ore == Blocks.AMETHYST_BLOCK) {
                                 crystallizedOre = new ItemStack(Items.AMETHYST_SHARD);
+                                // 20% chance to drop emerald
+                                if (RANDOM.nextInt(100) < 2) {
+                                    Block.popResource(level, currentPos, new ItemStack(ItemsObs.RELICT_AMETHYST_SHARD.get()));
+                                }
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;

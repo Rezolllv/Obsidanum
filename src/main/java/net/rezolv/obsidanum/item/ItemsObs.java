@@ -22,6 +22,8 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RELICT_AMETHYST_SHARD = ITEMS.register("relict_amethyst_shard",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BAGELL_FUEL = ITEMS.register("bagell_fuel",
             () -> new BagellFuel(new Item.Properties(),24000));
     public static final RegistryObject<Item> NETHER_FLAME = ITEMS.register("nether_flame",
