@@ -18,34 +18,6 @@ public class RelictAmethyst extends Item {
     public RelictAmethyst(Properties pProperties) {
         super(pProperties);
     }
-    private static final int TICK_INTERVAL = 12000; // 10 минут в тиках (20 тиков = 1 секунда)
-
-    @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
-
-        if (!pLevel.isClientSide && pEntity instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer) pEntity;
-
-            if (pStack.getOrCreateTag().contains("tickCount")) {
-                int tickCount = pStack.getTag().getInt("tickCount") + 1;
-                if (tickCount >= TICK_INTERVAL) {
-                    // Выдаем опыт
-                    int experience = 5 + RandomSource.create().nextInt(11);
-                    player.giveExperiencePoints(experience);
-
-                    // Воспроизведение звука получения опыта
-                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 1.0F);
-
-                    // Сбрасываем счетчик тиков
-                    tickCount = 0;
-                }
-                pStack.getTag().putInt("tickCount", tickCount);
-            } else {
-                pStack.getOrCreateTag().putInt("tickCount", 1);
-            }
-        }
-    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
