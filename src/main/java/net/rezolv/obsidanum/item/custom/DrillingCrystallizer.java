@@ -125,7 +125,6 @@ public class DrillingCrystallizer extends Item {
                                 // 20% chance to drop emerald
                                 if (RANDOM.nextInt(100) < 3) {
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.BAGELL_FUEL.get()));
-                                    level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
                                 }
                             } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
                                 crystallizedOre = new ItemStack(Items.LAPIS_LAZULI);
