@@ -125,7 +125,7 @@ public class DrillingCrystallizer extends Item {
                             if (ore == Blocks.COAL_ORE || ore == Blocks.DEEPSLATE_COAL_ORE) {
                                 crystallizedOre = new ItemStack(Items.COAL);
                                 // 20% chance to drop emerald
-                                if (RANDOM.nextInt(100) < 20) {
+                                if (RANDOM.nextInt(100) < 4) {
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.BAGELL_FUEL.get()));
                                 }
                             } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
