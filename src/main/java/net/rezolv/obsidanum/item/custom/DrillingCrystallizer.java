@@ -150,7 +150,7 @@ public class DrillingCrystallizer extends Item {
                             if (ore == Blocks.AMETHYST_BLOCK) {
                                 crystallizedOre = new ItemStack(Items.AMETHYST_SHARD);
                                 // 20% chance to drop emerald
-                                if (RANDOM.nextFloat(100) < 0.5F) {
+                                if (RANDOM.nextInt(100) < 1) {
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.RELICT_AMETHYST_SHARD.get()));
                                 }
                             } else {
