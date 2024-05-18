@@ -23,7 +23,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BAGELL_FUEL = ITEMS.register("bagell_fuel",
-            () -> new Item(new Item.Properties()));
+            () -> new BagellFuel(new Item.Properties(),24000));
     public static final RegistryObject<Item> NETHER_FLAME = ITEMS.register("nether_flame",
             () -> new NetherFlame(new Item.Properties().durability(25)));
     public static final RegistryObject<Item> CRYSTALLIZED_COPPER_ORE = ITEMS.register("crystallized_copper_ore",

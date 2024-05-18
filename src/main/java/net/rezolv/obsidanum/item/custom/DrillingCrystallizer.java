@@ -66,7 +66,9 @@ public class DrillingCrystallizer extends Item {
                 Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE,
                 Blocks.NETHER_QUARTZ_ORE,
                 Blocks.GLOWSTONE,
+                Blocks.AMETHYST_BLOCK,
                 Blocks.ANCIENT_DEBRIS,
+                Blocks.CALCITE,
                 Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
                 Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.NETHER_GOLD_ORE,
                 Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE
@@ -89,7 +91,9 @@ public class DrillingCrystallizer extends Item {
 
                         // Выпадение от 1 до 3 кристаллизированных руд
                         int itemsToDrop = RANDOM.nextInt(3) + 1; // Выпадает от 1 до 3 предметов
+                        int itemsToDropFour = RANDOM.nextInt(4) + 1; // Выпадает от 1 до 3 предметов
                         int itemsToDropSix = RANDOM.nextInt(6) + 1; // Выпадает от 1 до 6 предметов
+
                         for (int i = 0; i < itemsToDrop; i++) {
                             // Выбор кристаллизированной руды в зависимости от типа руды
                             ItemStack crystallizedOre;
@@ -118,6 +122,11 @@ public class DrillingCrystallizer extends Item {
                             ItemStack crystallizedOre;
                             if (ore == Blocks.COAL_ORE || ore == Blocks.DEEPSLATE_COAL_ORE) {
                                 crystallizedOre = new ItemStack(Items.COAL);
+                                // 20% chance to drop emerald
+                                if (RANDOM.nextInt(100) < 3) {
+                                    Block.popResource(level, currentPos, new ItemStack(ItemsObs.BAGELL_FUEL.get()));
+                                    level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                                }
                             } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
                                 crystallizedOre = new ItemStack(Items.LAPIS_LAZULI);
                             } else if (ore == Blocks.REDSTONE_ORE || ore == Blocks.DEEPSLATE_REDSTONE_ORE) {
@@ -126,6 +135,18 @@ public class DrillingCrystallizer extends Item {
                                 crystallizedOre = new ItemStack(Items.QUARTZ);
                             } else if (ore == Blocks.GLOWSTONE) {
                                 crystallizedOre = new ItemStack(Items.GLOWSTONE_DUST);
+                            } else {
+                                // Здесь можно добавить обработку других типов руд
+                                continue;
+                            }
+                            Block.popResource(level, currentPos, crystallizedOre);
+                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                        }
+                        for (int i = 0; i < itemsToDropFour; i++) {
+                            // Выбор кристаллизированной руды в зависимости от типа руды
+                            ItemStack crystallizedOre;
+                            if (ore == Blocks.AMETHYST_BLOCK) {
+                                crystallizedOre = new ItemStack(Items.AMETHYST_SHARD);
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;

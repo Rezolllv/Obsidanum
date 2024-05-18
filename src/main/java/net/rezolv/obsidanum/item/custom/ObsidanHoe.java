@@ -96,7 +96,11 @@ public class ObsidanHoe extends HoeItem {
                 Blocks.GRASS.defaultBlockState(),
                 Blocks.TALL_GRASS.defaultBlockState(),
                 Blocks.FERN.defaultBlockState(),
-                Blocks.DEAD_BUSH.defaultBlockState()
+                Blocks.DEAD_BUSH.defaultBlockState(),
+                Blocks.CRIMSON_ROOTS.defaultBlockState(),
+                Blocks.WARPED_ROOTS.defaultBlockState(),
+                Blocks.FIRE.defaultBlockState(),
+                Blocks.NETHER_SPROUTS.defaultBlockState()
         };
 
         // Проверка каждого блока в радиусе вокруг игрока
