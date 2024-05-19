@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,10 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
@@ -64,11 +62,12 @@ public class SmolderingPickaxe extends PickaxeItem {
 
         // Создаем список для хранения результатов (переплавленные или исходные предметы)
         List<ItemStack> results = new ArrayList<>();
+        int totalExp = 0;
 
         // Перебираем все дропы
         for (ItemStack drop : drops) {
             // Проверяем, можно ли дроп переплавить
-            Optional<? extends Recipe<?>> recipeOpt = serverLevel.getRecipeManager()
+            Optional<SmeltingRecipe> recipeOpt = serverLevel.getRecipeManager()
                     .getRecipeFor(RecipeType.SMELTING, new SimpleContainer(drop), serverLevel);
 
             if (recipeOpt.isPresent()) {
@@ -76,6 +75,8 @@ public class SmolderingPickaxe extends PickaxeItem {
                 ItemStack smeltedResult = recipeOpt.get().getResultItem(serverLevel.registryAccess()).copy();
                 smeltedResult.setCount(drop.getCount());  // Сохраняем количество исходного дропа
                 results.add(smeltedResult);
+                // Добавляем опыт за переплавку
+                totalExp += recipeOpt.get().getExperience();
             } else {
                 // Если переплавка невозможна, добавляем исходный дроп
                 results.add(drop);
@@ -102,6 +103,15 @@ public class SmolderingPickaxe extends PickaxeItem {
         // Спавним опыт в мире
         if (exp > 0) {
             blockstate.getBlock().popExperience(serverLevel, pos, exp);
+        }
+
+        // Спавним опыт за переплавку
+        if (totalExp > 0) {
+            while (totalExp > 0) {
+                int expToDrop = ExperienceOrb.getExperienceValue(totalExp);
+                totalExp -= expToDrop;
+                serverLevel.addFreshEntity(new ExperienceOrb(serverLevel, pos.getX(), pos.getY(), pos.getZ(), expToDrop));
+            }
         }
 
         return retval;
