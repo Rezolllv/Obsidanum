@@ -14,6 +14,7 @@ import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -124,5 +125,39 @@ public class ObsidanHoe extends HoeItem {
                 }
             }
         }
+    }
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Player player = context.getPlayer();
+        InteractionHand hand = context.getHand();
+        ItemStack stack = context.getItemInHand();
+        BlockState state = world.getBlockState(pos);
+
+        if (player == null) {
+            return InteractionResult.FAIL;
+        }
+
+        if (!player.mayUseItemAt(pos.relative(context.getClickedFace()), context.getClickedFace(), stack)) {
+            return InteractionResult.FAIL;
+        }
+
+        if (state.is(BlockTags.DIRT) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT_PATH) || state.is(Blocks.COARSE_DIRT)) {
+            world.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!world.isClientSide) {
+                for (BlockPos targetPos : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 0, 1))) {
+                    BlockState targetState = world.getBlockState(targetPos);
+                    if (targetState.is(BlockTags.DIRT) || targetState.is(Blocks.GRASS_BLOCK) || targetState.is(Blocks.DIRT_PATH) || targetState.is(Blocks.COARSE_DIRT)) {
+                        world.setBlock(targetPos, Blocks.FARMLAND.defaultBlockState(), 11);
+                        world.levelEvent(2001, targetPos, Block.getId(targetState));
+                    }
+                }
+                stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+            }
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.PASS;
     }
 }
