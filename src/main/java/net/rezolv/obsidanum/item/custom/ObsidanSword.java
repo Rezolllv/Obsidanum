@@ -30,11 +30,20 @@ public class ObsidanSword extends SwordItem {
     private boolean activated = false;
     private long lastActivationTime = 0;
     private static final long COOLDOWN_DURATION = 150 * 20; // 60 seconds in ticks
+    private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
+
 
     public ObsidanSword(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
+    @Override
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, world, entity, slot, selected);
 
+        if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
+            deactivate();
+        }
+    }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();

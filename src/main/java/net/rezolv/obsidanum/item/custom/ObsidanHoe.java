@@ -32,6 +32,7 @@ public class ObsidanHoe extends HoeItem {
     private long lastActivationTime = 0;
     private static final long COOLDOWN_DURATION = 10 * 20; // 60 seconds in ticks
     private static final double BREAK_RADIUS_SQUARED = 20 * 20; // Radius of 20 blocks squared
+    private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
     public ObsidanHoe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
@@ -85,7 +86,16 @@ public class ObsidanHoe extends HoeItem {
         return activated; // Возвращает true только когда инструмент активирован
 
     }
+    @Override
+    public void inventoryTick(ItemStack stack, Level world, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, world, entity, slot, selected);
 
+        if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
+            if (entity instanceof Player) {
+                deactivate((Player) entity, world);
+            }
+        }
+    }
     public void deactivate(Player playerIn, Level worldIn) {
         activated = false;
         // Определение радиуса в квадратных блоках

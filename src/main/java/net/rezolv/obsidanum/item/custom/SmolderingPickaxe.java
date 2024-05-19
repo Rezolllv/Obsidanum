@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -50,6 +51,7 @@ public class SmolderingPickaxe extends PickaxeItem {
 
         return retval;
     }
+
     @Override
     public boolean mineBlock(ItemStack itemstack, Level world, BlockState blockstate, BlockPos pos, LivingEntity entity) {
         boolean retval = super.mineBlock(itemstack, world, blockstate, pos, entity);
@@ -90,7 +92,18 @@ public class SmolderingPickaxe extends PickaxeItem {
         // Удаляем блок, так как дроп уже обработан
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 
+        // Получаем уровень зачарования Удача
+        int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, itemstack);
+        int silkTouchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemstack);
+
+        // Получаем количество опыта, которое должен был бы выпустить блок
+        int exp = blockstate.getBlock().getExpDrop(blockstate, serverLevel, serverLevel.getRandom(), pos, fortuneLevel, silkTouchLevel);
+
+        // Спавним опыт в мире
+        if (exp > 0) {
+            blockstate.getBlock().popExperience(serverLevel, pos, exp);
+        }
+
         return retval;
     }
-
 }
