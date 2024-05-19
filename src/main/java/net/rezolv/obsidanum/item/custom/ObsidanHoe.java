@@ -100,6 +100,8 @@ public class ObsidanHoe extends HoeItem {
                 Blocks.CRIMSON_ROOTS.defaultBlockState(),
                 Blocks.WARPED_ROOTS.defaultBlockState(),
                 Blocks.FIRE.defaultBlockState(),
+                Blocks.FERN.defaultBlockState(),
+                Blocks.LARGE_FERN.defaultBlockState(),
                 Blocks.NETHER_SPROUTS.defaultBlockState()
         };
 
