@@ -76,7 +76,7 @@ public class SmolderingPickaxe extends PickaxeItem {
                 smeltedResult.setCount(drop.getCount());  // Сохраняем количество исходного дропа
                 results.add(smeltedResult);
                 // Добавляем опыт за переплавку
-                totalExp += recipeOpt.get().getExperience();
+                totalExp += recipeOpt.get().getExperience() * 2;
             } else {
                 // Если переплавка невозможна, добавляем исходный дроп
                 results.add(drop);

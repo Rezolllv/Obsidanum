@@ -49,14 +49,10 @@ public class ObsidanShovel extends ShovelItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
-        if (activated || currentTime - lastActivationTime >= COOLDOWN_DURATION) {
+        if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                if (activated) {
-                    deactivate(playerIn, worldIn);
-                } else {
                     activate();
                     lastActivationTime = currentTime;
-                }
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         } else {
