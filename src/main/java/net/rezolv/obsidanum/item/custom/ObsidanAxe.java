@@ -131,5 +131,4 @@ public class ObsidanAxe extends AxeItem {
             }
         }
     }
-
 }
