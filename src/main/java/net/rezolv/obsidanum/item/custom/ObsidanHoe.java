@@ -45,6 +45,7 @@ public class ObsidanHoe extends HoeItem {
         if (activated || currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
                 if (activated) {
+                    playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
 
                     deactivate(playerIn, worldIn);
                     int radiusSquared = (int) Math.sqrt(BREAK_RADIUS_SQUARED);

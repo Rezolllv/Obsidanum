@@ -23,46 +23,70 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 
 
+
 public class ObsidanPickaxe extends PickaxeItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 30 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 30 * 20; // 30 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
-
 
     public ObsidanPickaxe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
-
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-            if (entity instanceof Player) {
-                deactivate();
-            }
+            deactivate();
         }
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
+        ItemStack itemStack = playerIn.getItemInHand(handIn);
+
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                    activate();
-                    lastActivationTime = currentTime;
-
+                activate();
+                lastActivationTime = currentTime;
             }
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
         } else {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.PASS, itemStack);
         }
     }
 
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Player player = context.getPlayer();
+        ItemStack stack = context.getItemInHand();
+        if (!world.isClientSide && activated && player != null) {
+            BlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
+            if (isInstantBreakBlock(block)) {
+                // Немедленно разрушаем блок
+                world.destroyBlock(pos, false);
 
+                // Шанс выпадения алмаза
+                if (world.random.nextFloat() < 0.3f) {
+                    ItemStack diamond = new ItemStack(Items.DIAMOND);
+                    Block.popResource(world, pos, diamond);
+                }
+
+                deactivate();
+                player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return super.useOn(context);
+    }
 
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
@@ -76,8 +100,7 @@ public class ObsidanPickaxe extends PickaxeItem {
         long timeLeft = lastActivationTime + COOLDOWN_DURATION - currentTime;
         if (timeLeft > 0) {
             int secondsLeft = (int) (timeLeft / 20); // Перевод времени из тиков в секунды
-            list.add(Component.translatable("item.obsidan.description.cooldown"));
-            list.add(Component.keybind("" + secondsLeft));
+            list.add(Component.translatable("item.obsidan.description.cooldown", secondsLeft));
         }
     }
 
@@ -85,8 +108,8 @@ public class ObsidanPickaxe extends PickaxeItem {
         activated = true;
     }
 
-    @Override
     @OnlyIn(Dist.CLIENT)
+    @Override
     public boolean isFoil(ItemStack itemstack) {
         return activated;
     }
@@ -95,6 +118,7 @@ public class ObsidanPickaxe extends PickaxeItem {
         activated = false;
         // Здесь можно добавить дополнительный код для деактивации (например, создание частиц)
     }
+
     private static final Block[] INSTANT_BREAK_BLOCKS = {
             Blocks.STONE,
             Blocks.COBBLESTONE,
@@ -105,31 +129,6 @@ public class ObsidanPickaxe extends PickaxeItem {
             Blocks.COBBLED_DEEPSLATE
             // Добавьте другие блоки по вашему усмотрению
     };
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        Level world = context.getLevel();
-        BlockPos pos = context.getClickedPos();
-        Player player = context.getPlayer();
-        if (!world.isClientSide && activated && player != null) {
-            BlockState state = world.getBlockState(pos);
-            Block block = state.getBlock();
-            if (isInstantBreakBlock(block)) {
-                // Немедленно разрушаем блок
-                world.destroyBlock(pos, false);
-                // Шанс выпадения алмаза
-                // Деактивируем кирку
-                deactivate();
-                if (world.random.nextFloat() < 0.3f) {
-                    ItemStack diamond = new ItemStack(Items.DIAMOND);
-                    Block.popResource(world, pos, diamond);
-                }
-
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return super.useOn(context);
-    }
 
     private boolean isInstantBreakBlock(Block block) {
         for (Block instantBreakBlock : INSTANT_BREAK_BLOCKS) {
