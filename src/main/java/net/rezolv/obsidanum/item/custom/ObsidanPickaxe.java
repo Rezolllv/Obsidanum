@@ -40,6 +40,7 @@ public class ObsidanPickaxe extends PickaxeItem {
         super.inventoryTick(stack, world, entity, slot, selected);
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
+
             deactivate();
         }
     }
