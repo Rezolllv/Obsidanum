@@ -33,7 +33,7 @@ public class ObsidanAxe extends AxeItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 15 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 120 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 

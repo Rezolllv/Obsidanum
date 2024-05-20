@@ -21,7 +21,7 @@ public class ObsidanSword extends SwordItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 1 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 150 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
