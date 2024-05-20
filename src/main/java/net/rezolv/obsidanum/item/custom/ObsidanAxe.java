@@ -33,7 +33,7 @@ public class ObsidanAxe extends AxeItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 1 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 15 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
@@ -60,6 +60,8 @@ public class ObsidanAxe extends AxeItem {
             if (!worldIn.isClientSide) {
                     activate();
                     lastActivationTime = currentTime;
+                playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         } else {
@@ -114,7 +116,7 @@ public class ObsidanAxe extends AxeItem {
     }
 
     private void breakBlock(Level world, BlockPos pos, Player player, ItemStack stack, Set<BlockPos> visited, AtomicInteger blockBreakCount) {
-        if (visited.contains(pos) || blockBreakCount.get() >= 150) return;
+        if (visited.contains(pos) || blockBreakCount.get() >= 225) return;
         visited.add(pos);
 
         BlockState state = world.getBlockState(pos);

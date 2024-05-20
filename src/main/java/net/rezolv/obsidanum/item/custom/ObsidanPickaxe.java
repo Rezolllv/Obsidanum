@@ -27,7 +27,7 @@ public class ObsidanPickaxe extends PickaxeItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 120 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 30 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
@@ -54,6 +54,7 @@ public class ObsidanPickaxe extends PickaxeItem {
             if (!worldIn.isClientSide) {
                     activate();
                     lastActivationTime = currentTime;
+
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         } else {

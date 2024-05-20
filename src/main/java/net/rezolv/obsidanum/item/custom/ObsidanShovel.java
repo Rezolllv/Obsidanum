@@ -1,5 +1,6 @@
 package net.rezolv.obsidanum.item.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -34,7 +35,6 @@ public class ObsidanShovel extends ShovelItem {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
-
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
@@ -53,6 +53,8 @@ public class ObsidanShovel extends ShovelItem {
             if (!worldIn.isClientSide) {
                     activate();
                     lastActivationTime = currentTime;
+                playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         } else {

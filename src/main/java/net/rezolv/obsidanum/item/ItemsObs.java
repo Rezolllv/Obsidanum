@@ -47,15 +47,15 @@ public class ItemsObs {
                     .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 2), 1.0F) // Абсорбция
                     .alwaysEat().build())));
     public static final RegistryObject<Item> OBSIDAN_SWORD = ITEMS.register("obsidan_sword",
-            () -> new ObsidanSword(ModToolTiers.SMOLDERING,0,-2F, new Item.Properties()));
+            () -> new ObsidanSword(ModToolTiers.OBSIDAN,2,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_AXE = ITEMS.register("obsidan_axe",
-            () -> new ObsidanAxe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
+            () -> new ObsidanAxe(ModToolTiers.OBSIDAN,3,-2.8F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_PICKAXE = ITEMS.register("obsidan_pickaxe",
-            () -> new ObsidanPickaxe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
+            () -> new ObsidanPickaxe(ModToolTiers.OBSIDAN,-3,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SHOVEL = ITEMS.register("obsidan_shovel",
-            () -> new ObsidanShovel(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
+            () -> new ObsidanShovel(ModToolTiers.OBSIDAN,1,-2.6F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_HOE = ITEMS.register("obsidan_hoe",
-            () -> new ObsidanHoe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
+            () -> new ObsidanHoe(ModToolTiers.OBSIDAN,-4,2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_ARROW = ITEMS.register("obsidian_arrow",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
@@ -69,7 +69,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_SWORD = ITEMS.register("smoldering_obsidian_sword",
             () -> new SmolderingSword(ModToolTiers.SMOLDERING, 2, -2.7f, new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_SHOVEL = ITEMS.register("smoldering_obsidian_shovel",
-            () -> new SmolderingShovel(ModToolTiers.SMOLDERING,0,-3.1F, new Item.Properties()));
+            () -> new SmolderingShovel(ModToolTiers.SMOLDERING,-1,-3.1F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_AXE = ITEMS.register("obsidian_axe",
             () -> new ObsAxe(ModToolTiers.OBSIDIANUM,5,-3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_HOE = ITEMS.register("obsidian_hoe",

@@ -45,9 +45,47 @@ public class ObsidanHoe extends HoeItem {
         if (activated || currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
                 if (activated) {
+
                     deactivate(playerIn, worldIn);
+                    int radiusSquared = (int) Math.sqrt(BREAK_RADIUS_SQUARED);
+                    // Получение позиции игрока
+                    BlockPos playerPos = playerIn.blockPosition();
+                    // Список блоков травы
+                    BlockState[] grassBlocks = {
+                            Blocks.GRASS.defaultBlockState(),
+                            Blocks.TALL_GRASS.defaultBlockState(),
+                            Blocks.FERN.defaultBlockState(),
+                            Blocks.DEAD_BUSH.defaultBlockState(),
+                            Blocks.CRIMSON_ROOTS.defaultBlockState(),
+                            Blocks.WARPED_ROOTS.defaultBlockState(),
+                            Blocks.FIRE.defaultBlockState(),
+                            Blocks.FERN.defaultBlockState(),
+                            Blocks.LARGE_FERN.defaultBlockState(),
+                            Blocks.NETHER_SPROUTS.defaultBlockState()
+                    };
+
+                    // Проверка каждого блока в радиусе вокруг игрока
+                    for (int x = -radiusSquared; x <= radiusSquared; x++) {
+                        for (int y = -radiusSquared; y <= radiusSquared; y++) {
+                            for (int z = -radiusSquared; z <= radiusSquared; z++) {
+                                BlockPos blockPos = playerPos.offset(x, y, z);
+                                // Проверка, находится ли блок в пределах мира
+                                if (worldIn.isLoaded(blockPos)) {
+                                    // Проверка, является ли блок одним из блоков травы
+                                    for (BlockState grassBlock : grassBlocks) {
+                                        if (worldIn.getBlockState(blockPos).getBlock() == grassBlock.getBlock()) {
+                                            // Уничтожение блока
+                                            worldIn.destroyBlock(blockPos, true);
+                                            break; // Прерывание цикла после первого совпадения
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     // Код для деактивации, например, удаление частиц и т.д.
                 } else {
+
                     activate();
                     // Код для активации, например, создание частиц и т.д.
                     lastActivationTime = currentTime;
@@ -98,43 +136,6 @@ public class ObsidanHoe extends HoeItem {
     }
     public void deactivate(Player playerIn, Level worldIn) {
         activated = false;
-        // Определение радиуса в квадратных блоках
-        int radiusSquared = (int) Math.sqrt(BREAK_RADIUS_SQUARED);
-        // Получение позиции игрока
-        BlockPos playerPos = playerIn.blockPosition();
-        // Список блоков травы
-        BlockState[] grassBlocks = {
-                Blocks.GRASS.defaultBlockState(),
-                Blocks.TALL_GRASS.defaultBlockState(),
-                Blocks.FERN.defaultBlockState(),
-                Blocks.DEAD_BUSH.defaultBlockState(),
-                Blocks.CRIMSON_ROOTS.defaultBlockState(),
-                Blocks.WARPED_ROOTS.defaultBlockState(),
-                Blocks.FIRE.defaultBlockState(),
-                Blocks.FERN.defaultBlockState(),
-                Blocks.LARGE_FERN.defaultBlockState(),
-                Blocks.NETHER_SPROUTS.defaultBlockState()
-        };
-
-        // Проверка каждого блока в радиусе вокруг игрока
-        for (int x = -radiusSquared; x <= radiusSquared; x++) {
-            for (int y = -radiusSquared; y <= radiusSquared; y++) {
-                for (int z = -radiusSquared; z <= radiusSquared; z++) {
-                    BlockPos blockPos = playerPos.offset(x, y, z);
-                    // Проверка, находится ли блок в пределах мира
-                    if (worldIn.isLoaded(blockPos)) {
-                        // Проверка, является ли блок одним из блоков травы
-                        for (BlockState grassBlock : grassBlocks) {
-                            if (worldIn.getBlockState(blockPos).getBlock() == grassBlock.getBlock()) {
-                                // Уничтожение блока
-                                worldIn.destroyBlock(blockPos, true);
-                                break; // Прерывание цикла после первого совпадения
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {
