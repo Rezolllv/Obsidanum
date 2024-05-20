@@ -2,5 +2,8 @@
   "parent": "item/handheld",
   "textures": {
     "layer0": "obsidanum:item/obsidan_shovel"
-  }
+  },
+  "overrides": [
+    { "predicate": { "activated": 1.0 }, "model": "obsidanum:item/obsidan_shovel_activated" }
+  ]
 }

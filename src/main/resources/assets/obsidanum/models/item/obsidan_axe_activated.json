@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "obsidanum:item/obsidan_axe_activated"
+  }
+}

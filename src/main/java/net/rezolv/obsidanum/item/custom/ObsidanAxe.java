@@ -69,7 +69,9 @@ public class ObsidanAxe extends AxeItem {
         }
     }
 
-
+    public boolean isActivated() {
+        return activated;
+    }
 
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
@@ -92,11 +94,7 @@ public class ObsidanAxe extends AxeItem {
         activated = true;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
-        return activated;
-    }
+
 
     public void deactivate() {
         activated = false;

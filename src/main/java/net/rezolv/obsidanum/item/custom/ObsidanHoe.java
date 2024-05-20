@@ -38,7 +38,9 @@ public class ObsidanHoe extends HoeItem {
     public ObsidanHoe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
-
+    public boolean isActivated() {
+        return activated;
+    }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
@@ -119,12 +121,7 @@ public class ObsidanHoe extends HoeItem {
         activated = true;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
-        return activated; // Возвращает true только когда инструмент активирован
 
-    }
     @Override
     public void inventoryTick(ItemStack stack, Level world, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);

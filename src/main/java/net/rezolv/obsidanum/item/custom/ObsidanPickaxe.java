@@ -59,7 +59,9 @@ public class ObsidanPickaxe extends PickaxeItem {
             return new InteractionResultHolder<>(InteractionResult.PASS, itemStack);
         }
     }
-
+    public boolean isActivated() {
+        return activated;
+    }
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
@@ -108,11 +110,7 @@ public class ObsidanPickaxe extends PickaxeItem {
         activated = true;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public boolean isFoil(ItemStack itemstack) {
-        return activated;
-    }
+
 
     public void deactivate() {
         activated = false;

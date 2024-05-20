@@ -45,7 +45,9 @@ public class ObsidanShovel extends ShovelItem {
             }
         }
     }
-
+    public boolean isActivated() {
+        return activated;
+    }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
@@ -98,11 +100,7 @@ public class ObsidanShovel extends ShovelItem {
         activated = true;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
-        return activated;
-    }
+
 
     public void deactivate(Player player, Level world) {
         activated = false;

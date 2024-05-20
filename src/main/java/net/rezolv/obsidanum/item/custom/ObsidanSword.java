@@ -21,12 +21,15 @@ public class ObsidanSword extends SwordItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 150 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 1 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
     public ObsidanSword(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
+    }
+    public boolean isActivated() {
+        return activated;
     }
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
@@ -52,6 +55,7 @@ public class ObsidanSword extends SwordItem {
             return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
         }
     }
+
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
         if (activated) {
@@ -92,11 +96,11 @@ public class ObsidanSword extends SwordItem {
         }
         return super.onLeftClickEntity(stack, player, entity);
     }
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
-        return activated; // Возвращает true только когда инструмент активирован
-    }
+//    @Override
+//    @OnlyIn(Dist.CLIENT)
+//    public boolean isFoil(ItemStack itemstack) {
+//        return activated; // Возвращает true только когда инструмент активирован
+//    }
     public void deactivate() {
         activated = false;
 
