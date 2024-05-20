@@ -49,7 +49,7 @@ public class ObsidanHoe extends HoeItem {
                 if (activated) {
                     playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
 
-                    deactivate(playerIn, worldIn);
+                    deactivate(playerIn);
                     int radiusSquared = (int) Math.sqrt(BREAK_RADIUS_SQUARED);
                     // Получение позиции игрока
                     BlockPos playerPos = playerIn.blockPosition();
@@ -128,12 +128,13 @@ public class ObsidanHoe extends HoeItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
             if (entity instanceof Player) {
-                deactivate((Player) entity, world);
+                deactivate((Player) entity);
             }
         }
     }
-    public void deactivate(Player playerIn, Level worldIn) {
+    public void deactivate(Player player) {
         activated = false;
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {

@@ -41,7 +41,7 @@ public class ObsidanPickaxe extends PickaxeItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
 
-            deactivate();
+            deactivate((Player) entity);
         }
     }
 
@@ -52,7 +52,7 @@ public class ObsidanPickaxe extends PickaxeItem {
 
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate();
+                activate(playerIn);
                 lastActivationTime = currentTime;
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
@@ -82,7 +82,7 @@ public class ObsidanPickaxe extends PickaxeItem {
                     Block.popResource(world, pos, diamond);
                 }
 
-                deactivate();
+                deactivate(player);
                 player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
 
                 return InteractionResult.SUCCESS;
@@ -107,17 +107,14 @@ public class ObsidanPickaxe extends PickaxeItem {
         }
     }
 
-    public void activate() {
+    public void activate(Player player) {
         activated = true;
     }
 
-
-
-    public void deactivate() {
+    public void deactivate(Player player) {
         activated = false;
-        // Здесь можно добавить дополнительный код для деактивации (например, создание частиц)
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
     }
-
     private static final Block[] INSTANT_BREAK_BLOCKS = {
             Blocks.STONE,
             Blocks.COBBLESTONE,
