@@ -59,7 +59,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDIAN_ARROW = ITEMS.register("obsidian_arrow",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
-            () -> new Item(new Item.Properties()));
+            () -> new Chakram(new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_PICKAXE = ITEMS.register("smoldering_obsidian_pickaxe",
             () -> new SmolderingPickaxe(ModToolTiers.SMOLDERING,0,-2.9F, new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_HOE = ITEMS.register("smoldering_obsidian_hoe",
