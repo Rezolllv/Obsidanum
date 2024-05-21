@@ -20,9 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -33,7 +31,7 @@ public class ObsidanAxe extends AxeItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 120 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 40 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
@@ -113,25 +111,49 @@ public class ObsidanAxe extends AxeItem {
         return super.mineBlock(stack, world, state, pos, entity);
     }
 
-    private void breakBlock(Level world, BlockPos pos, Player player, ItemStack stack, Set<BlockPos> visited, AtomicInteger blockBreakCount) {
-        if (visited.contains(pos) || blockBreakCount.get() >= 225) return;
+    private void chainBreak(Level world, BlockPos pos, Player player, ItemStack stack) {
+        Queue<BlockPos> queue = new LinkedList<>();
+        Set<BlockPos> visited = new HashSet<>();
+        AtomicInteger blockBreakCount = new AtomicInteger(0);
+
+        queue.offer(pos);
         visited.add(pos);
 
+        while (!queue.isEmpty() && blockBreakCount.get() < 225) {
+            BlockPos currentPos = queue.poll();
+            breakBlock(world, currentPos, player, stack, visited, queue, blockBreakCount);
+        }
+    }
+
+    private void breakBlock(Level world, BlockPos pos, Player player, ItemStack stack, Set<BlockPos> visited, Queue<BlockPos> queue, AtomicInteger blockBreakCount) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
         if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG) || block == Blocks.NETHER_WART_BLOCK || block == Blocks.WARPED_WART_BLOCK || block == Blocks.SHROOMLIGHT) {
             world.destroyBlock(pos, true);
-            blockBreakCount.incrementAndGet(); // Увеличиваем счётчик разрушенных блоков
-            for (BlockPos offset : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
-                breakBlock(world, offset, player, stack, visited, blockBreakCount);
+            blockBreakCount.incrementAndGet();
+
+            // Добавляем соседние блоки
+            for (BlockPos offset : getNeighbors(pos)) {
+                if (!visited.contains(offset)) {
+                    visited.add(offset);
+                    queue.offer(offset);
+                }
             }
         }
     }
 
-    private void chainBreak(Level world, BlockPos pos, Player player, ItemStack stack) {
-        Set<BlockPos> visited = new HashSet<>();
-        AtomicInteger blockBreakCount = new AtomicInteger(0);
-        breakBlock(world, pos, player, stack, visited, blockBreakCount);
+    private Iterable<BlockPos> getNeighbors(BlockPos pos) {
+        List<BlockPos> neighbors = new ArrayList<>();
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    if (dx != 0 || dy != 0 || dz != 0) {
+                        neighbors.add(pos.offset(dx, dy, dz));
+                    }
+                }
+            }
+        }
+        return neighbors;
     }
 }

@@ -1,6 +1,7 @@
 package net.rezolv.obsidanum.item.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
@@ -56,7 +57,15 @@ public class SmolderingShovel extends ShovelItem {
 
         // Определяем уровень сервера
         ServerLevel serverLevel = (world instanceof ServerLevel) ? (ServerLevel) world : null;
-
+        // Добавляем огненные частицы
+        if (world instanceof ServerLevel) {
+            for (int i = 0; i < 5; i++) {
+                double offsetX = world.random.nextDouble() * 0.5 - 0.25;
+                double offsetY = world.random.nextDouble() * 0.5 - 0.25;
+                double offsetZ = world.random.nextDouble() * 0.5 - 0.25;
+                serverLevel.sendParticles(ParticleTypes.FLAME, pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 1, 0.0, 0.0, 0.0, 0.0);
+            }
+        }
         // Получаем дропы с учетом инструмента и зачарования удачи
         List<ItemStack> drops = Block.getDrops(blockstate, serverLevel, pos, world.getBlockEntity(pos), entity, itemstack);
 
