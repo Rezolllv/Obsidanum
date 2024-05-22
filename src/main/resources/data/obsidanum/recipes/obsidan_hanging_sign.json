@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "hanging_sign",
+  "key": {
+    "A": {
+      "item": "obsidanum:stripped_obsidan_wood_log"
+    },
+    "X": {
+      "item": "minecraft:chain"
+    }
+  },
+  "pattern": [
+    "X X",
+    "AAA",
+    "AAA"
+  ],
+  "result": {
+    "count": 6,
+    "item": "obsidanum:obsidan_hanging_sign"
+  },
+  "show_notification": true
+}
