@@ -40,7 +40,7 @@ public class Chakram extends Item {
             world.addFreshEntity(chakramEntity);
         }
         // Кулдаун
-        entity.getCooldowns().addCooldown(this, 10);
+        entity.getCooldowns().addCooldown(this, 30);
         return new InteractionResultHolder(InteractionResult.SUCCESS, entity.getItemInHand(hand));
     }
 }
