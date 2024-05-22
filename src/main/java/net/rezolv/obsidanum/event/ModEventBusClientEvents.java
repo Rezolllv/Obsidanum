@@ -16,6 +16,7 @@ import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.client.ModModelLayers;
+import net.rezolv.obsidanum.item.item_entity.ChakramModelEntity;
 
 @Mod.EventBusSubscriber(modid = Obsidanum.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
@@ -37,6 +38,10 @@ public class ModEventBusClientEvents {
                 (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanAxe && ((ObsidanAxe) stack.getItem()).isActivated() ? 1.0F : 0.0F);
         ItemProperties.register(ItemsObs.OBSIDAN_PICKAXE.get(), new ResourceLocation("activated"),
                 (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanPickaxe && ((ObsidanPickaxe) stack.getItem()).isActivated() ? 1.0F : 0.0F);
+    }
+    @SubscribeEvent
+    public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ChakramModelEntity.LAYER_LOCATION, ChakramModelEntity::createBodyLayer);
     }
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
