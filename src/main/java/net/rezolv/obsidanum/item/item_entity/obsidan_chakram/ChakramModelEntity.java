@@ -30,7 +30,7 @@ public class ChakramModelEntity extends EntityModel<ObsidianChakramEntity> {
 	@Override
 	public void setupAnim(ObsidianChakramEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (!entity.isStopped()) {
-			float rotation = ageInTicks * 32.0F; // Увеличиваем угол вращения в зависимости от времени анимации
+			float rotation = ageInTicks * -32.0F; // Увеличиваем угол вращения в зависимости от времени анимации
 			this.bb_main.yRot = (float) Math.toRadians(rotation);
 		} else {
 			this.bb_main.yRot = 0; // Останавливаем вращение
