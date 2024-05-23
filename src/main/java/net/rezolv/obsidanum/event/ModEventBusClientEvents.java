@@ -16,7 +16,7 @@ import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.client.ModModelLayers;
-import net.rezolv.obsidanum.item.item_entity.ChakramModelEntity;
+import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ChakramModelEntity;
 
 @Mod.EventBusSubscriber(modid = Obsidanum.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {

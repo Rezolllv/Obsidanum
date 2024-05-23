@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.rezolv.obsidanum.item.item_entity.ObsidianChakramEntity;
+import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ObsidianChakramEntity;
 
 public class Chakram extends Item {
     public Chakram(Properties pProperties) {

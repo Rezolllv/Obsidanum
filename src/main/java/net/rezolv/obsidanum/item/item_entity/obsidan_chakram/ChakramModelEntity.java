@@ -1,4 +1,4 @@
-package net.rezolv.obsidanum.item.item_entity;
+package net.rezolv.obsidanum.item.item_entity.obsidan_chakram;
 
 
 import com.mojang.blaze3d.vertex.PoseStack;

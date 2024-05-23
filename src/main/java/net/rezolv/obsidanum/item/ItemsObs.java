@@ -19,7 +19,6 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> OBSIDIAN_TEAR = ITEMS.register("obsidian_tear",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RELICT_AMETHYST_SHARD = ITEMS.register("relict_amethyst_shard",
@@ -57,7 +56,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDAN_HOE = ITEMS.register("obsidan_hoe",
             () -> new ObsidanHoe(ModToolTiers.OBSIDAN,-4,2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_ARROW = ITEMS.register("obsidian_arrow",
-            () -> new Item(new Item.Properties()));
+            () -> new ObsidianArrowItem(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
             () -> new Chakram(new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_PICKAXE = ITEMS.register("smoldering_obsidian_pickaxe",
