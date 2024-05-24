@@ -64,7 +64,6 @@ public class ObsidianTablet extends Block {
         if (stack.hasTag()) {
             CompoundTag tag = stack.getTag();
             boolean experienced = tag.getBoolean("experienced");
-            boolean active = tag.getBoolean("active");
 
             // Создаем новое состояние блока с учетом переданных тегов
             return this.defaultBlockState()
@@ -93,7 +92,6 @@ public class ObsidianTablet extends Block {
             // Записываем состояния в предмет
             CompoundTag compoundTag = new CompoundTag();
             compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
-            compoundTag.putBoolean("active", state.getValue(ACTIVE));
             itemStack.setTag(compoundTag);
 
             // Выпадает предмет
