@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
@@ -86,7 +87,7 @@ public class ObsidianTablet extends Block {
         boolean result = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
 
         // Проверяем, разрешено ли собирать блок
-        if (!player.isCreative() && result) {
+        if (!player.isCreative() && result && canHarvestBlock(state, level, pos, player)) {
             ItemStack itemStack = new ItemStack(this.asItem());
 
             // Записываем состояния в предмет
@@ -99,6 +100,18 @@ public class ObsidianTablet extends Block {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
+        ItemStack tool = player.getMainHandItem();
+        if (tool.getItem() instanceof TieredItem) {
+            TieredItem tieredItem = (TieredItem) tool.getItem();
+            int toolLevel = tieredItem.getTier().getLevel();
+
+            return toolLevel >= 3; // Проверяем, что инструмент имеет уровень добычи 3 (алмазный) или выше
+        }
+        return false;
     }
 
     @Override

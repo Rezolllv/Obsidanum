@@ -38,7 +38,7 @@ public class BlocksObs {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
 
     public static final RegistryObject<Block> OBSIDIAN_TABLET = registerBlock("obsidian_tablet",
-            () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).explosionResistance(6).strength(6).sound(SoundType.CHERRY_WOOD).noOcclusion()));
+            () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).explosionResistance(6).strength(6).sound(SoundType.CHERRY_WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
     public static final RegistryObject<Block> OBSIDAN_PLANKS = registerBlock("obsidan_planks",
             () -> new FlameBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).sound(SoundType.CHERRY_WOOD)));
