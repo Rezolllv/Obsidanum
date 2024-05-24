@@ -67,14 +67,12 @@ public class ObsidanShovel extends ShovelItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (activated) {
-            if (target instanceof Mob) {
                 Vec3 lookVector = attacker.getLookAngle();
                 double knockbackX = lookVector.x * -10.0;
                 double knockbackY = lookVector.y * 4.0;
                 double knockbackZ = lookVector.z * -10.0;
                 target.knockback(knockbackX, knockbackY, knockbackZ);
                 deactivate((Player) attacker, attacker.level());
-            }
         }
         return super.hurtEnemy(stack, target, attacker);
     }
