@@ -29,17 +29,18 @@ public class ObsidianArrow extends AbstractArrow {
 
       }
 
-    public void tick() {
-        super.tick();
-        if (this.level().isClientSide && !this.inGround) {
-            this.level().addParticle(ParticleTypes.FALLING_OBSIDIAN_TEAR, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
-        }
-
-    }
-
     public ObsidianArrow(Level p_37419_, LivingEntity p_37420_) {
         super(EntityTypeInit.OBSIDIAN_ARROW.get(), p_37420_, p_37419_);
         this.setBaseDamage(3.0f);
+        this.setDeltaMovement(this.getDeltaMovement().multiply(1.125, 1.125, 1.125)); // increase initial velocity by 12.5%
+    }
+
+    public void tick() {
+        super.tick();
+        if (this.level().isClientSide &&!this.inGround) {
+            this.level().addParticle(ParticleTypes.FALLING_OBSIDIAN_TEAR, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+        }
+        this.setDeltaMovement(this.getDeltaMovement().multiply(0.9875, 0.9875, 0.9875)); // reduce velocity over time by 12.5%
     }
 
 
