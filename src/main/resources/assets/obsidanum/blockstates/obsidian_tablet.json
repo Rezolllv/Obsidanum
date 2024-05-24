@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "obsidanum:block/obsidian_tablet"
+    },
+    "facing=east": {
+      "model": "obsidanum:block/obsidian_tablet",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "obsidanum:block/obsidian_tablet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "obsidanum:block/obsidian_tablet",
+      "y": 270
+    }
+  }
+}

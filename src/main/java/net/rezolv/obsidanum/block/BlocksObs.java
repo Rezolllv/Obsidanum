@@ -5,6 +5,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -36,7 +37,8 @@ public class BlocksObs {
     public static final RegistryObject<Block> STRIPPED_OBSIDAN_WOOD = registerBlock("stripped_obsidan_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
 
-
+    public static final RegistryObject<Block> OBSIDIAN_TABLET = registerBlock("obsidian_tablet",
+            () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.CHERRY_WOOD).noOcclusion()));
 
     public static final RegistryObject<Block> OBSIDAN_PLANKS = registerBlock("obsidan_planks",
             () -> new FlameBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).sound(SoundType.CHERRY_WOOD)));
