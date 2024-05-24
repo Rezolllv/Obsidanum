@@ -30,8 +30,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.rezolv.obsidanum.item.ItemsObs;
 
 public class ObsidianTablet extends Block {
-    private static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(2.0, 0.0, 6.0, 14.0, 16.0, 10.0);
-    private static final VoxelShape SHAPE_EAST_WEST = Block.box(6.0, 0.0, 2.0, 10.0, 16.0, 14.0);
+    private static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(2.0, 0.0, 6.0, 14.0, 23.0, 10.0);
+    private static final VoxelShape SHAPE_EAST_WEST = Block.box(6.0, 0.0, 2.0, 10.0, 23.0, 14.0);
     public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
     public static final BooleanProperty EXPERIENCED = BooleanProperty.create("experienced");
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
