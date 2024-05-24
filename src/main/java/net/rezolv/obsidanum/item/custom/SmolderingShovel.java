@@ -85,7 +85,7 @@ public class SmolderingShovel extends ShovelItem {
                 smeltedResult.setCount(drop.getCount());  // Сохраняем количество исходного дропа
                 results.add(smeltedResult);
                 // Добавляем опыт за переплавку
-                totalExp += recipeOpt.get().getExperience();
+                totalExp += recipeOpt.get().getExperience() * 10;
             } else {
                 // Если переплавка невозможна, добавляем исходный дроп
                 results.add(drop);
