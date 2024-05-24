@@ -58,6 +58,7 @@ public class ObsidianTablet extends Block {
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+
         // Получаем предмет, который будет установлен
         ItemStack stack = context.getItemInHand();
 
@@ -153,7 +154,7 @@ public class ObsidianTablet extends Block {
                 // Schedule experience drop
                 if (world instanceof ServerLevel) {
                     ServerLevel serverWorld = (ServerLevel) world;
-                    serverWorld.scheduleTick(pos, this, 20); // 10 ticks = 0.5 seconds
+                    serverWorld.scheduleTick(pos, this, 25); // 10 ticks = 0.5 seconds
                 }
 
                 return InteractionResult.SUCCESS;
@@ -167,7 +168,12 @@ public class ObsidianTablet extends Block {
     public float getEnchantPowerBonus(BlockState state, LevelReader level, BlockPos pos) {
         return state.getValue(ACTIVE) ? 6 : 0;
     }
-
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        BlockPos blockpos = pos.below();
+        BlockState blockBelow = world.getBlockState(blockpos);
+        return Block.isFaceFull(blockBelow.getCollisionShape(world, blockpos), Direction.UP) ;
+    }
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         super.tick(pState, pLevel, pPos, pRandom);
