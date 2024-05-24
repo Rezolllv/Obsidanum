@@ -2,25 +2,44 @@ package net.rezolv.obsidanum.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.rezolv.obsidanum.item.ItemsObs;
 
 public class ObsidianTablet extends Block {
     private static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(2.0, 0.0, 6.0, 14.0, 16.0, 10.0);
     private static final VoxelShape SHAPE_EAST_WEST = Block.box(6.0, 0.0, 2.0, 10.0, 16.0, 14.0);
+    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
+    public static final BooleanProperty EXPERIENCED = BooleanProperty.create("experienced");
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     public ObsidianTablet(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(EXPERIENCED, false).setValue(ACTIVE,false)); // Устанавливаем начальное состояние блока: активность = false
+
     }
 
     @Override
@@ -29,16 +48,121 @@ public class ObsidianTablet extends Block {
         return direction == Direction.NORTH || direction == Direction.SOUTH ? SHAPE_NORTH_SOUTH : SHAPE_EAST_WEST;
     }
 
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
-
-
+    @Override
+    public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
+        super.attack(pState, pLevel, pPos, pPlayer);
+        if (!pState.getValue(EXPERIENCED)) {
+            ((Level)pLevel).explode(null, pPos.getX(), pPos.getY(), pPos.getZ(), 3, Level.ExplosionInteraction.TNT);
+        }
+    }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        // Получаем предмет, который будет установлен
+        ItemStack stack = context.getItemInHand();
+
+        // Проверяем, содержит ли предмет теги "experienced" и "active"
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            boolean experienced = tag.getBoolean("experienced");
+            boolean active = tag.getBoolean("active");
+
+            // Создаем новое состояние блока с учетом переданных тегов
+            return this.defaultBlockState()
+                    .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                    .setValue(EXPERIENCED, experienced);
+        }
+
+        // Если тегов нет, возвращаем состояние блока по умолчанию
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, EXPERIENCED, ACTIVE);
+    }
+
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
+        // Сначала вызываем метод родительского класса
+        boolean result = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+
+        // Проверяем, разрешено ли собирать блок
+        if (!player.isCreative() && result) {
+            ItemStack itemStack = new ItemStack(this.asItem());
+
+            // Записываем состояния в предмет
+            CompoundTag compoundTag = new CompoundTag();
+            compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
+            compoundTag.putBoolean("active", state.getValue(ACTIVE));
+            itemStack.setTag(compoundTag);
+
+            // Выпадает предмет
+            popResource(level, pos, itemStack);
+        }
+
+        return result;
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!world.isClientSide) {
+            ItemStack itemInHand = player.getItemInHand(hand);
+
+            // Check if player is using the Obsidian Tear and the block is in the correct state
+            if (itemInHand.getItem() == ItemsObs.OBSIDIAN_TEAR.get() && state.getValue(EXPERIENCED) && !state.getValue(ACTIVE)) {
+                world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+
+                // Play activation sound
+                world.playSound(null, pos, SoundEvents.END_PORTAL_SPAWN, player.getSoundSource(), 1.0F, 1.0F);
+
+                // Spawn happy villager particles
+                if (world instanceof ServerLevel) {
+                    ServerLevel serverWorld = (ServerLevel) world;
+                    for (int i = 0; i < 10; i++) {
+                        double offsetX = world.random.nextGaussian() * 0.5D;
+                        double offsetY = world.random.nextGaussian() * 0.5D;
+                        double offsetZ = world.random.nextGaussian() * 0.5D;
+                        serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, 5, offsetX, offsetY, offsetZ, 1.0D);
+                    }
+                }
+                // Consume one Obsidian Tear
+                itemInHand.shrink(1);
+                return InteractionResult.SUCCESS;
+            }
+
+            // Existing interaction logic
+            if (hand == InteractionHand.MAIN_HAND && !state.getValue(EXPERIENCED)) {
+                world.setBlock(pos, state.setValue(EXPERIENCED, true), 3);
+
+                // Spawn lightning bolt
+                LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
+                lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
+                world.addFreshEntity(lightning);
+
+                // Schedule experience drop
+                if (world instanceof ServerLevel) {
+                    ServerLevel serverWorld = (ServerLevel) world;
+                    serverWorld.scheduleTick(pos, this, 20); // 10 ticks = 0.5 seconds
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+        }
+
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public float getEnchantPowerBonus(BlockState state, LevelReader level, BlockPos pos) {
+        return state.getValue(ACTIVE) ? 4 : 0;
+    }
+
+    @Override
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+        super.tick(pState, pLevel, pPos, pRandom);
+        if (pState.getValue(EXPERIENCED)) {
+            // Drop experience
+            ExperienceOrb.award(pLevel, Vec3.atCenterOf(pPos), 300);
+        }
     }
 }
