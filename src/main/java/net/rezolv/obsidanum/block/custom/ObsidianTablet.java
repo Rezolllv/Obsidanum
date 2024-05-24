@@ -152,7 +152,7 @@ public class ObsidianTablet extends Block {
 
     @Override
     public float getEnchantPowerBonus(BlockState state, LevelReader level, BlockPos pos) {
-        return state.getValue(ACTIVE) ? 4 : 0;
+        return state.getValue(ACTIVE) ? 6 : 0;
     }
 
     @Override
