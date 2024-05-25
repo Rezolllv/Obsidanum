@@ -59,5 +59,10 @@
   "block.obsidanum.stripped_obsidan_wood": "Stripped obsidanwood",
   "block.obsidanum.stripped_obsidan_wood_log": "Stripped obsidanwood log",
   "block.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
-  "item.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves"
+  "item.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
+
+  "item.obsidian_tablet.description.crashed": "§bA broken tablet, it needs to be activated with an obsidian tear",
+  "item.obsidian_tablet.description.active": "§aNow that the tablet is activated, the enchantment table has received a powerful charge from it!",
+  "item.obsidian_tablet.description.ancient": "§cAn ancient tablet that was cursed! Be careful, it might explode!"
+
 }

@@ -19,6 +19,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -35,6 +36,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.rezolv.obsidanum.item.ItemsObs;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ObsidianTablet extends Block {
     private static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(2.0, 0.0, 6.0, 14.0, 23.0, 10.0);
@@ -218,6 +222,23 @@ public class ObsidianTablet extends Block {
         BlockState blockBelow = world.getBlockState(blockpos);
         return Block.isFaceFull(blockBelow.getCollisionShape(world, blockpos), Direction.UP) ;
     }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+
+        // Проверка на наличие и значение тега "experienced"
+        if (pStack.hasTag() && pStack.getTag().getBoolean("experienced")&& pStack.getTag().getBoolean("active")) {
+            pTooltip.add(Component.translatable("item.obsidian_tablet.description.active"));
+        }
+       else if (pStack.hasTag() && pStack.getTag().getBoolean("experienced")) {
+            pTooltip.add(Component.translatable("item.obsidian_tablet.description.crashed"));
+       }
+       else {
+            pTooltip.add(Component.translatable("item.obsidian_tablet.description.ancient"));
+        }
+    }
+
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         super.tick(pState, pLevel, pPos, pRandom);
