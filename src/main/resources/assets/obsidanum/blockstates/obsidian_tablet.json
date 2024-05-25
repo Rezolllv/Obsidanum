@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=north,experienced=false,active=false": {
+      "model": "obsidanum:block/obsidian_tablet"
+    },
+    "facing=east,experienced=false,active=false": {
+      "model": "obsidanum:block/obsidian_tablet",
+      "y": 90
+    },
+    "facing=south,experienced=false,active=false": {
+      "model": "obsidanum:block/obsidian_tablet",
+      "y": 180
+    },
+    "facing=west,experienced=false,active=false": {
+      "model": "obsidanum:block/obsidian_tablet",
+      "y": 270
+    },
+    "facing=north,experienced=true,active=false": {
+      "model": "obsidanum:block/obsidian_tablet_inactive"
+    },
+    "facing=east,experienced=true,active=false": {
+      "model": "obsidanum:block/obsidian_tablet_inactive",
+      "y": 90
+    },
+    "facing=south,experienced=true,active=false": {
+      "model": "obsidanum:block/obsidian_tablet_inactive",
+      "y": 180
+    },
+    "facing=west,experienced=true,active=false": {
+      "model": "obsidanum:block/obsidian_tablet_inactive",
+      "y": 270
+    },
+    "facing=north,experienced=true,active=true": {
+      "model": "obsidanum:block/obsidian_tablet_active"
+    },
+    "facing=east,experienced=true,active=true": {
+      "model": "obsidanum:block/obsidian_tablet_active",
+      "y": 90
+    },
+    "facing=south,experienced=true,active=true": {
+      "model": "obsidanum:block/obsidian_tablet_active",
+      "y": 180
+    },
+    "facing=west,experienced=true,active=true": {
+      "model": "obsidanum:block/obsidian_tablet_active",
+      "y": 270
+    }
+  }
+}

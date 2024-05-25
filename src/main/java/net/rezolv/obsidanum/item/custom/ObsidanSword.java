@@ -9,6 +9,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -76,31 +77,27 @@ public class ObsidanSword extends SwordItem {
         activated = true;
     }
 
-    public static void getDamagePlayer(Player player, LivingEntity entity, Level level) {
-        if (entity == null)
-            return;
-        entity.hurt(new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), 9);
-    }
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (!player.isLocalPlayer()) { // Убедитесь, что код выполняется только на стороне сервера
             if (entity instanceof LivingEntity) { // Проверяем, является ли сущность живой сущностью
                 LivingEntity livingEntity = (LivingEntity) entity;
-                if (stack.getItem() instanceof ObsidanSword && ((ObsidanSword) stack.getItem()).activated) { // Проверяем, активирован ли ваш меч
-                    // Нанесение дополнительного урона
-                    getDamagePlayer(player, livingEntity, player.getCommandSenderWorld()); // Используем getCommandSenderWorld для получения уровня игры
-
-                    ((ObsidanSword) stack.getItem()).deactivate(); // Деактивация меча после удара
+                if (stack.getItem() instanceof ObsidanSword) {
+                    ObsidanSword sword = (ObsidanSword) stack.getItem();
+                    if (sword.activated) { // Проверяем, активирован ли ваш меч
+                        // Нанесение дополнительного урона
+                        float baseDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
+                        float additionalDamage = 4.0f;
+                        livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage + additionalDamage);
+                        sword.deactivate(); // Деактивация меча после удара
+                        return true; // Отмена стандартного поведения
+                    }
                 }
             }
         }
         return super.onLeftClickEntity(stack, player, entity);
     }
-//    @Override
-//    @OnlyIn(Dist.CLIENT)
-//    public boolean isFoil(ItemStack itemstack) {
-//        return activated; // Возвращает true только когда инструмент активирован
-//    }
+
     public void deactivate() {
         activated = false;
 

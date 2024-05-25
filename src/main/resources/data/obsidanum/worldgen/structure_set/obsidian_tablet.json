@@ -1,0 +1,15 @@
+{
+
+  "structures": [
+    {
+      "structure": "obsidanum:obsidian_tablet",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1642136474,
+    "spacing": 80,
+    "separation": 24,
+    "type": "minecraft:random_spread"
+  }
+}
