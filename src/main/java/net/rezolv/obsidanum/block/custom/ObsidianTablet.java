@@ -1,9 +1,13 @@
 package net.rezolv.obsidanum.block.custom;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -120,7 +124,6 @@ public class ObsidianTablet extends Block {
 
         return result;
     }
-
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         ItemStack itemStack = new ItemStack(this.asItem());
@@ -129,7 +132,6 @@ public class ObsidianTablet extends Block {
         CompoundTag compoundTag = new CompoundTag();
         itemStack.setTag(compoundTag);
         itemStack.getOrCreateTag().putInt("CustomModelData", 0);
-
         // Устанавливаем CustomModelData на основе состояния блока
         if (state.getValue(EXPERIENCED) && state.getValue(ACTIVE)) {
             compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
@@ -142,6 +144,8 @@ public class ObsidianTablet extends Block {
 
         return itemStack;
     }
+
+
 
     @Override
     public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
