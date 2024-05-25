@@ -95,7 +95,10 @@ public class ObsidianTablet extends Block {
             CompoundTag compoundTag = new CompoundTag();
             compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
             itemStack.setTag(compoundTag);
-
+            // Set custom model data based on the block state
+            if (state.getValue(EXPERIENCED)) {
+                itemStack.getOrCreateTag().putInt("CustomModelData", 1);
+            }
             // Выпадает предмет
             popResource(level, pos, itemStack);
         }
