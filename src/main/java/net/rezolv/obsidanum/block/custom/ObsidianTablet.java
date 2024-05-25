@@ -71,7 +71,16 @@ public class ObsidianTablet extends Block {
                     .setValue(FACING, context.getHorizontalDirection().getOpposite())
                     .setValue(EXPERIENCED, experienced);
         }
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            boolean active = tag.getBoolean("active");
+            boolean experienced = tag.getBoolean("experienced");
 
+            // Создаем новое состояние блока с учетом переданных тегов
+            return this.defaultBlockState()
+                    .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                    .setValue(EXPERIENCED, experienced);
+        }
         // Если тегов нет, возвращаем состояние блока по умолчанию
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
@@ -101,6 +110,7 @@ public class ObsidianTablet extends Block {
             // Выпадает предмет
             popResource(level, pos, itemStack);
         }
+
 
         return result;
     }
