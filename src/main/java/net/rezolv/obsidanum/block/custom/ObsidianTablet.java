@@ -16,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -57,31 +60,26 @@ public class ObsidianTablet extends Block {
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-
         // Получаем предмет, который будет установлен
         ItemStack stack = context.getItemInHand();
 
-        // Проверяем, содержит ли предмет теги "experienced" и "active"
+        // Проверяем, содержит ли предмет теги
         if (stack.hasTag()) {
             CompoundTag tag = stack.getTag();
-            boolean experienced = tag.getBoolean("experienced");
+            int customModelData = tag.getInt("CustomModelData");
+
+            // Проверяем значение тега CustomModelData
+            boolean experienced = customModelData == 1 || customModelData == 2;
+            boolean active = customModelData == 2;
 
             // Создаем новое состояние блока с учетом переданных тегов
             return this.defaultBlockState()
                     .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                    .setValue(EXPERIENCED, experienced);
+                    .setValue(EXPERIENCED, experienced)
+                    .setValue(ACTIVE, active);
         }
-        if (stack.hasTag()) {
-            CompoundTag tag = stack.getTag();
-            boolean active = tag.getBoolean("active");
-            boolean experienced = tag.getBoolean("experienced");
 
-            // Создаем новое состояние блока с учетом переданных тегов
-            return this.defaultBlockState()
-                    .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                    .setValue(EXPERIENCED, experienced);
-        }
-        // Если тегов нет, возвращаем состояние блока по умолчанию
+        // Возвращаем состояние блока по умолчанию, если теги не найдены
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
@@ -92,27 +90,57 @@ public class ObsidianTablet extends Block {
 
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        // Сначала вызываем метод родительского класса
+        // Call the parent class method first
         boolean result = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
 
-        // Проверяем, разрешено ли собирать блок
+        // Check if the block should be harvested and the player is not in creative mode
         if (!player.isCreative() && result && canHarvestBlock(state, level, pos, player)) {
             ItemStack itemStack = new ItemStack(this.asItem());
-
-            // Записываем состояния в предмет
+            // Получаем инструмент, который использует игрок
+            ItemStack tool = player.getMainHandItem();
+            boolean hasSilkTouch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0;
+            // Create a new tag for the item stack
             CompoundTag compoundTag = new CompoundTag();
-            compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
             itemStack.setTag(compoundTag);
-            // Set custom model data based on the block state
-            if (state.getValue(EXPERIENCED)) {
+
+            // Set CustomModelData based on the block state
+            if (state.getValue(EXPERIENCED) && state.getValue(ACTIVE) && hasSilkTouch) {
+                compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
+                compoundTag.putBoolean("active", state.getValue(EXPERIENCED));
+
+                itemStack.getOrCreateTag().putInt("CustomModelData", 2);
+            } else {
+                compoundTag.putBoolean("experienced2", state.getValue(EXPERIENCED));
                 itemStack.getOrCreateTag().putInt("CustomModelData", 1);
             }
-            // Выпадает предмет
+
+            // Drop the item stack
             popResource(level, pos, itemStack);
         }
 
-
         return result;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        ItemStack itemStack = new ItemStack(this.asItem());
+
+        // Создаем новый тег для предмета и присваиваем CustomModelData значение по умолчанию
+        CompoundTag compoundTag = new CompoundTag();
+        itemStack.setTag(compoundTag);
+        itemStack.getOrCreateTag().putInt("CustomModelData", 0);
+
+        // Устанавливаем CustomModelData на основе состояния блока
+        if (state.getValue(EXPERIENCED) && state.getValue(ACTIVE)) {
+            compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
+            compoundTag.putBoolean("active", state.getValue(ACTIVE));
+            itemStack.getOrCreateTag().putInt("CustomModelData", 2);
+        } else if (state.getValue(EXPERIENCED)) {
+            compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
+            itemStack.getOrCreateTag().putInt("CustomModelData", 1);
+        }
+
+        return itemStack;
     }
 
     @Override
