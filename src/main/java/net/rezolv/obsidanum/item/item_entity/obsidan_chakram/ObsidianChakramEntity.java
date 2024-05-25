@@ -69,7 +69,7 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
         Entity target = result.getEntity();
         Entity owner = this.getOwner();
         if (target != null && owner != null) {
-            target.hurt(new DamageSource(level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), 7);
+            target.hurt(new DamageSource(level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), 10);
             this.discard();
         }
     }

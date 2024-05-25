@@ -35,6 +35,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.rezolv.obsidanum.item.ItemsObs;
 import org.jetbrains.annotations.Nullable;
 
@@ -281,7 +283,7 @@ public class ObsidianTablet extends Block {
         super.tick(pState, pLevel, pPos, pRandom);
         if (pState.getValue(EXPERIENCED)) {
             // Drop experience
-            ExperienceOrb.award(pLevel, Vec3.atCenterOf(pPos), 300);
+            ExperienceOrb.award(pLevel, Vec3.atCenterOf(pPos), 1100);
         }
     }
 }

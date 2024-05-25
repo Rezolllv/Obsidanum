@@ -1,14 +1,20 @@
 package net.rezolv.obsidanum.item.custom;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ObsidianChakramEntity;
 
@@ -16,6 +22,19 @@ public class Chakram extends Item {
     public Chakram(Properties pProperties) {
         super(pProperties);
     }
+    @Override
+    public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
+        boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
+        getDamage(entity.level(), entity);
+        return retval;
+    }
+
+    public static void getDamage(LevelAccessor world, Entity entity) {
+        if (entity == null)
+            return;
+        entity.hurt(new DamageSource(world.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), 3);
+    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
         entity.startUsingItem(hand);
