@@ -39,6 +39,10 @@ import net.rezolv.obsidanum.item.ItemsObs;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ObsidianTablet extends Block {
     private static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(2.0, 0.0, 6.0, 14.0, 23.0, 10.0);
@@ -58,13 +62,36 @@ public class ObsidianTablet extends Block {
         Direction direction = state.getValue(FACING);
         return direction == Direction.NORTH || direction == Direction.SOUTH ? SHAPE_NORTH_SOUTH : SHAPE_EAST_WEST;
     }
-
+    private static final Random random = new Random();
     @Override
     public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
         super.attack(pState, pLevel, pPos, pPlayer);
+
         if (!pState.getValue(EXPERIENCED)) {
             ((Level)pLevel).explode(null, pPos.getX(), pPos.getY(), pPos.getZ(), 3, Level.ExplosionInteraction.TNT);
+
+            int lightningCount = 1 + random.nextInt(4); // Number of lightning bolts (1 to 4)
+            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+            for (int i = 0; i < lightningCount; i++) {
+                final int index = i;
+                long initialDelay = (index == 0? random.nextInt(5) : 15) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay, TimeUnit.MILLISECONDS);
+            }
+
+            // Shutdown executor after all tasks have been scheduled
+            executor.shutdown();
         }
+    }
+
+    private void spawnLightning(Level pLevel, BlockPos pPos) {
+        double offsetX = pPos.getX() + (random.nextDouble() * 10 - 5); // Random x within 5 blocks
+        double offsetY = pPos.getY();
+        double offsetZ = pPos.getZ() + (random.nextDouble() * 10 - 5); // Random z within 5 blocks
+
+        LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, pLevel);
+        lightning.moveTo(offsetX, offsetY, offsetZ);
+        pLevel.addFreshEntity(lightning);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -117,10 +144,20 @@ public class ObsidianTablet extends Block {
                 compoundTag.putBoolean("active", state.getValue(EXPERIENCED));
 
                 itemStack.getOrCreateTag().putInt("CustomModelData", 2);
-            } else {
-                compoundTag.putBoolean("experienced2", state.getValue(EXPERIENCED));
+            }
+            else if (state.getValue(EXPERIENCED) && !state.getValue(ACTIVE) && hasSilkTouch){
+                compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
                 itemStack.getOrCreateTag().putInt("CustomModelData", 1);
             }
+            else if (state.getValue(EXPERIENCED) && state.getValue(ACTIVE) && !hasSilkTouch){
+                compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
+                itemStack.getOrCreateTag().putInt("CustomModelData", 1);
+            }
+            else if (state.getValue(EXPERIENCED) && !state.getValue(ACTIVE) && !hasSilkTouch){
+                compoundTag.putBoolean("experienced", state.getValue(EXPERIENCED));
+                itemStack.getOrCreateTag().putInt("CustomModelData", 1);
+            }
+
 
             // Drop the item stack
             popResource(level, pos, itemStack);
@@ -228,10 +265,10 @@ public class ObsidianTablet extends Block {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
         // Проверка на наличие и значение тега "experienced"
-        if (pStack.hasTag() && pStack.getTag().getBoolean("experienced")&& pStack.getTag().getBoolean("active")) {
+        if (pStack.hasTag() && pStack.getTag().getBoolean("experienced") && pStack.getTag().getBoolean("active")) {
             pTooltip.add(Component.translatable("item.obsidian_tablet.description.active"));
         }
-       else if (pStack.hasTag() && pStack.getTag().getBoolean("experienced")) {
+       else if (pStack.hasTag() && pStack.getTag().getBoolean("experienced") && !pStack.getTag().getBoolean("active")){
             pTooltip.add(Component.translatable("item.obsidian_tablet.description.crashed"));
        }
        else {
