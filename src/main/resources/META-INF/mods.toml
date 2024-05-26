@@ -37,7 +37,7 @@ authors="Imaginaerum Team: Special thanks to Sanberdir(Alexander Zhukov), the wh
 # NONE means that no display test is set on your mod. You need to do this yourself, see IExtensionPoint.DisplayTest for more information. You can define any scheme you wish with this value.
 # IMPORTANT NOTE: this is NOT an instruction as to which environments (CLIENT or DEDICATED SERVER) your mod loads on. Your mod should load (and maybe do nothing!) whereever it finds itself.
 #displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
-logoFile="logo.png"
+logoFile="logo.jpg"
 # The description text for the mod (multi line!) (#mandatory)
 description='''...Their main abode was in Aromedard, the sultanate located on the Ash Lands in the east. The Great Collapse destroyed civilizations along with part of the world... But their order raised talented wizards, and some of them managed to take refuge. The Order of the Secret Fire survived by figuring out how to activate the portal to the underworld, but they hid their secrets safely in the underworld. Some travelers who have visited the lower world tell tales that the abandoned fortresses belonged to them. But where they went remains a mystery... and you have to solve this mystery, young wizard!'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
