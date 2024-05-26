@@ -37,7 +37,7 @@ public class ObsidanSword extends SwordItem {
         super.inventoryTick(stack, world, entity, slot, selected);
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-            deactivate();
+            deactivate((Player) entity);
         }
     }
     @Override
@@ -48,7 +48,6 @@ public class ObsidanSword extends SwordItem {
                     activate();
                     // Код для деактивации, например, удаление частиц и т.д.
                 lastActivationTime = currentTime;
-                playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
 
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
@@ -88,9 +87,12 @@ public class ObsidanSword extends SwordItem {
                         // Нанесение дополнительного урона
                         float baseDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
                         float additionalDamage = 4.0f;
+                        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+
                         livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage + additionalDamage);
-                        sword.deactivate(); // Деактивация меча после удара
+                        sword.deactivate(player); // Деактивация меча после удара
                         return true; // Отмена стандартного поведения
+
                     }
                 }
             }
@@ -98,8 +100,10 @@ public class ObsidanSword extends SwordItem {
         return super.onLeftClickEntity(stack, player, entity);
     }
 
-    public void deactivate() {
+    public void deactivate(Player player) {
         activated = false;
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
+
 
     }
 }

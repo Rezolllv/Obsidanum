@@ -46,7 +46,7 @@ public class ObsidanAxe extends AxeItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
             if (entity instanceof Player) {
-                deactivate();
+                deactivate((Player) entity);
             }
         }
     }
@@ -58,8 +58,6 @@ public class ObsidanAxe extends AxeItem {
             if (!worldIn.isClientSide) {
                     activate();
                     lastActivationTime = currentTime;
-                playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
-
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
         } else {
@@ -94,8 +92,9 @@ public class ObsidanAxe extends AxeItem {
 
 
 
-    public void deactivate() {
+    public void deactivate(Player player) {
         activated = false;
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
         // Здесь можно добавить дополнительный код для деактивации (например, создание частиц)
     }
     @Override
@@ -104,8 +103,11 @@ public class ObsidanAxe extends AxeItem {
             Block block = state.getBlock();
             if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG)) {
                 chainBreak(world, pos, (Player) entity, stack);
-                deactivate();
+                deactivate((Player) entity);
+                ((Player) entity).getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+
                 return true;
+
             }
         }
         return super.mineBlock(stack, world, state, pos, entity);

@@ -55,7 +55,6 @@ public class ObsidanShovel extends ShovelItem {
             if (!worldIn.isClientSide) {
                     activate();
                     lastActivationTime = currentTime;
-                playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
 
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
@@ -73,6 +72,7 @@ public class ObsidanShovel extends ShovelItem {
                 double knockbackZ = lookVector.z * -10.0;
                 target.knockback(knockbackX, knockbackY, knockbackZ);
                 deactivate((Player) attacker, attacker.level());
+            ((Player) attacker).getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
         }
         return super.hurtEnemy(stack, target, attacker);
     }
@@ -102,6 +102,8 @@ public class ObsidanShovel extends ShovelItem {
 
     public void deactivate(Player player, Level world) {
         activated = false;
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
+
         // Здесь можно добавить дополнительный код для деактивации (например, создание частиц)
     }
 }
