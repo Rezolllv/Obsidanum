@@ -46,7 +46,14 @@ public class DrillingCrystallizer extends Item {
             level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
             // Воспроизведение звука шипения и частиц дыма
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+            double particleDistance = 0.5;
+            for (Direction direction : Direction.values()) {
+                double offsetX = direction.getStepX() * particleDistance;
+                double offsetY = direction.getStepY() * particleDistance;
+                double offsetZ = direction.getStepZ() * particleDistance;
+                level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 10, 0.1D, 0.1D, 0.1D, 0.0D);
+            }
             if (RANDOM.nextInt(100) < 30) {
                 Block.popResource(level, pos, new ItemStack(ItemsObs.OBSIDIAN_TEAR.get()));
             }
@@ -79,8 +86,8 @@ public class DrillingCrystallizer extends Item {
             if (blockState.is(ore)) {
                 // Воспроизведение звука шипения и частиц дыма
                 level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
-                level.sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(),  pos.getX()+ 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
+                level.sendParticles(ParticleTypes.SMOKE, pos.getX()+ 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
 
                 // Удаление блока руды и всех прилегающих блоков руды до 20 блоков
                 Queue<BlockPos> queue = new LinkedList<>();
@@ -118,8 +125,8 @@ public class DrillingCrystallizer extends Item {
                                 continue;
                             }
                             Block.popResource(level, currentPos, crystallizedOre);
-                            level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
-                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                            level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
+                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
                         }
 
                         for (int i = 0; i < itemsToDropSix; i++) {
@@ -144,8 +151,8 @@ public class DrillingCrystallizer extends Item {
                                 continue;
                             }
                             Block.popResource(level, currentPos, crystallizedOre);
-                            level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
-                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                            level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
+                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
                         }
 
                         for (int i = 0; i < itemsToDropFour; i++) {
@@ -162,8 +169,8 @@ public class DrillingCrystallizer extends Item {
                                 continue;
                             }
                             Block.popResource(level, currentPos, crystallizedOre);
-                            level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
-                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                            level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
+                            level.sendParticles(ParticleTypes.SMOKE, currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
                         }
 
                         // Добавление соседних блоков руды в очередь для обработки
