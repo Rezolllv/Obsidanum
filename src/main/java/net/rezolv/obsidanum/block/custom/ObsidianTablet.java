@@ -72,7 +72,7 @@ public class ObsidianTablet extends Block {
         if (!pState.getValue(EXPERIENCED)) {
             ((Level)pLevel).explode(null, pPos.getX(), pPos.getY(), pPos.getZ(), 3, Level.ExplosionInteraction.TNT);
 
-            int lightningCount = 1 + random.nextInt(4); // Number of lightning bolts (1 to 4)
+            int lightningCount = 1 + random.nextInt(6); // Number of lightning bolts (1 to 4)
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
             for (int i = 0; i < lightningCount; i++) {
@@ -93,9 +93,9 @@ public class ObsidianTablet extends Block {
     }
 
     private void spawnLightning(Level pLevel, BlockPos pPos) {
-        double offsetX = pPos.getX() + (random.nextDouble() * 10 - 5); // Random x within 5 blocks
+        double offsetX = pPos.getX() + (random.nextDouble() * 12 - 6); // Random x within 5 blocks
         double offsetY = pPos.getY();
-        double offsetZ = pPos.getZ() + (random.nextDouble() * 10 - 5); // Random z within 5 blocks
+        double offsetZ = pPos.getZ() + (random.nextDouble() * 12 - 6); // Random z within 5 blocks
 
         LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, pLevel);
         lightning.moveTo(offsetX, offsetY, offsetZ);
