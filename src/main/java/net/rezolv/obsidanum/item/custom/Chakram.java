@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ObsidianChakramEntity;
+import net.rezolv.obsidanum.sound.SoundsObs;
 
 public class Chakram extends Item {
     public Chakram(Properties pProperties) {
@@ -49,7 +50,7 @@ public class Chakram extends Item {
                 itemStack.shrink(1);
             }
             // Play throw sound
-            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
+            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundsObs.CHAKRAM_TROWE.get(), SoundSource.PLAYERS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
             // Set the position and motion of the projectile
             Vec3 lookVec = entity.getLookAngle();
             chakramEntity.setPos(entity.getX(), entity.getEyeY() - (double)0.1F, entity.getZ());
