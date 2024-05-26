@@ -77,8 +77,14 @@ public class ObsidianTablet extends Block {
 
             for (int i = 0; i < lightningCount; i++) {
                 final int index = i;
-                long initialDelay = (index == 0? random.nextInt(5) : 15) * 50L; // Delay in milliseconds
+                long initialDelay = (index == 0? random.nextInt(10) : 10) * 50L; // Delay in milliseconds
                 executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay, TimeUnit.MILLISECONDS);
+                long initialDelay2 = (index == 0? random.nextInt(10) : 20) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay2, TimeUnit.MILLISECONDS);
+                long initialDelay3 = (index == 0? random.nextInt(10) : 25) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay3, TimeUnit.MILLISECONDS);
+                long initialDelay4 = (index == 0? random.nextInt(10) : 35) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay4, TimeUnit.MILLISECONDS);
             }
 
             // Shutdown executor after all tasks have been scheduled
