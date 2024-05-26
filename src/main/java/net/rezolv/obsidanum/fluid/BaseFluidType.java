@@ -21,6 +21,7 @@ public class BaseFluidType extends FluidType {
     private final ResourceLocation overlayTexture;
     private final int tintColor;
     private final Vector3f fogColor;
+    private int tickCounter = 0;
 
     public BaseFluidType(final ResourceLocation stillTexture, final ResourceLocation flowingTexture, final ResourceLocation overlayTexture,
                          final int tintColor, final Vector3f fogColor, final Properties properties) {

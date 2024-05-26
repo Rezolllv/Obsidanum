@@ -22,13 +22,15 @@ public class ModFluidTypes {
     public static final RegistryObject<FluidType> NETHER_FIRE_LAVA_FLUID_TYPE = register("nether_fire_fluid",
             FluidType.Properties.create()
                     .lightLevel(15) // Устанавливает уровень света, излучаемого лавой
-                    .density(2000) // Устанавливает плотность жидкости
-                    .viscosity(2000) // Устанавливает вязкость жидкости
+                    .density(2) // Устанавливает плотность жидкости
+                    .viscosity(2) // Устанавливает вязкость жидкости
+                    .fallDistanceModifier(1)
                     .canDrown(true) // Устанавливает, можно ли утонуть в жидкости
                     .canHydrate(false) // Устанавливает, может ли жидкость увлажнять блоки
                     .sound(SoundAction.get("drink"),
                     SoundEvents.LAVA_POP)
                     .sound(SoundAction.get("swim"),
+
                             SoundEvents.LAVA_POP)
     );
 
