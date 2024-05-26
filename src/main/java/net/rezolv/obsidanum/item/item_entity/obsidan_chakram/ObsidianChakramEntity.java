@@ -27,6 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.entity.ModEntities;
+import net.rezolv.obsidanum.sound.SoundsObs;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class ObsidianChakramEntity extends ThrowableItemProjectile {
@@ -95,7 +96,7 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
         this.setNoGravity(false);
         this.stopped = true;
         // Play arrow hit sound
-        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARROW_HIT, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundsObs.CHAKRAM_HIT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
     }
 
     @Override

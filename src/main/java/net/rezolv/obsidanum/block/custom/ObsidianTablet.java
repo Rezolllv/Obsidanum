@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -47,6 +48,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ObsidianTablet extends Block {
+
     private static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(2.0, 0.0, 6.0, 14.0, 23.0, 10.0);
     private static final VoxelShape SHAPE_EAST_WEST = Block.box(6.0, 0.0, 2.0, 10.0, 23.0, 14.0);
     public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
@@ -72,13 +74,19 @@ public class ObsidianTablet extends Block {
         if (!pState.getValue(EXPERIENCED)) {
             ((Level)pLevel).explode(null, pPos.getX(), pPos.getY(), pPos.getZ(), 3, Level.ExplosionInteraction.TNT);
 
-            int lightningCount = 1 + random.nextInt(4); // Number of lightning bolts (1 to 4)
+            int lightningCount = 1 + random.nextInt(6); // Number of lightning bolts (1 to 4)
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
             for (int i = 0; i < lightningCount; i++) {
                 final int index = i;
-                long initialDelay = (index == 0? random.nextInt(5) : 15) * 50L; // Delay in milliseconds
+                long initialDelay = (index == 0? random.nextInt(10) : 10) * 50L; // Delay in milliseconds
                 executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay, TimeUnit.MILLISECONDS);
+                long initialDelay2 = (index == 0? random.nextInt(10) : 20) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay2, TimeUnit.MILLISECONDS);
+                long initialDelay3 = (index == 0? random.nextInt(10) : 25) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay3, TimeUnit.MILLISECONDS);
+                long initialDelay4 = (index == 0? random.nextInt(10) : 35) * 50L; // Delay in milliseconds
+                executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay4, TimeUnit.MILLISECONDS);
             }
 
             // Shutdown executor after all tasks have been scheduled
@@ -86,10 +94,12 @@ public class ObsidianTablet extends Block {
         }
     }
 
+
+
     private void spawnLightning(Level pLevel, BlockPos pPos) {
-        double offsetX = pPos.getX() + (random.nextDouble() * 10 - 5); // Random x within 5 blocks
+        double offsetX = pPos.getX() + (random.nextDouble() * 12 - 6); // Random x within 5 blocks
         double offsetY = pPos.getY();
-        double offsetZ = pPos.getZ() + (random.nextDouble() * 10 - 5); // Random z within 5 blocks
+        double offsetZ = pPos.getZ() + (random.nextDouble() * 12 - 6); // Random z within 5 blocks
 
         LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, pLevel);
         lightning.moveTo(offsetX, offsetY, offsetZ);

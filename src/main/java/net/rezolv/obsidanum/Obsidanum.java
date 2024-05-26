@@ -28,6 +28,8 @@ import net.rezolv.obsidanum.item.entity.client.ModBoatRenderer;
 import net.rezolv.obsidanum.item.item_entity.arrows.DispenserRegistry;
 import net.rezolv.obsidanum.item.item_entity.arrows.EntityTypeInit;
 import net.rezolv.obsidanum.item.item_entity.arrows.obsidian_arrow.ObsidianArrowRenderer;
+import net.rezolv.obsidanum.particle.ParticlesObs;
+import net.rezolv.obsidanum.sound.SoundsObs;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
 import net.rezolv.obsidanum.world.features.ModPlacedFeatures;
 import net.rezolv.obsidanum.world.wood.ModWoodTypes;
@@ -48,8 +50,9 @@ public class Obsidanum {
         ModBlockEntities.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
+        ParticlesObs.register(modEventBus);
         EntityTypeInit.ENTITY_TYPES.register(modEventBus);
-
+        SoundsObs.register(modEventBus);
         ModEntities.register(modEventBus);
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);

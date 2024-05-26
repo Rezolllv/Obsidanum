@@ -1,0 +1,18 @@
+{
+  "chacram_hit": {
+    "sounds": [
+      {
+        "name": "obsidanum:chakram_hit",
+        "stream": true
+      }
+    ]
+  },
+  "chakram_trowe": {
+    "sounds": [
+      {
+        "name": "obsidanum:chakram_trowe",
+        "stream": true
+      }
+    ]
+  }
+}

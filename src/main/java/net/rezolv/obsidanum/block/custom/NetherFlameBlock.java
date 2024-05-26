@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.rezolv.obsidanum.particle.ParticlesObs;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -48,7 +49,7 @@ public class NetherFlameBlock extends LiquidBlock {
                 double d0 = (double)pPos.getX() + pRandom.nextDouble();
                 double d1 = (double)pPos.getY() + 1.0;
                 double d2 = (double)pPos.getZ() + pRandom.nextDouble();
-                pLevel.addParticle(ParticleTypes.LAVA, d0, d1, d2, 0.0, 0.0, 0.0);
+                pLevel.addParticle(ParticlesObs.NETHER_FLAME_PARTICLES.get(), d0, d1, d2, 0.0, 0.0, 0.0);
                 pLevel.playLocalSound(d0, d1, d2, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.2F + pRandom.nextFloat() * 0.2F, 0.9F + pRandom.nextFloat() * 0.15F, false);
             }
 
