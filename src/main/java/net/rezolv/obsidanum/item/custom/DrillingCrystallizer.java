@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -136,6 +137,8 @@ public class DrillingCrystallizer extends Item {
                                 crystallizedOre = new ItemStack(Items.COAL);
                                 // 20% chance to drop emerald
                                 if (RANDOM.nextInt(100) < 4) {
+                                    level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 3));
+
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.BAGELL_FUEL.get()));
                                 }
                             } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
@@ -163,7 +166,11 @@ public class DrillingCrystallizer extends Item {
                                 // 20% chance to drop emerald
                                 if (RANDOM.nextInt(100) < 1) {
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.RELICT_AMETHYST_SHARD.get()));
-                                }
+
+                                        level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 6));
+
+
+                            }
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;
