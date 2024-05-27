@@ -2,7 +2,7 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.7,
+  "experience": 0.9,
   "group": "iron_ingot",
   "ingredient": {
     "item": "obsidanum:crystallized_iron_ore"
