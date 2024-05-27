@@ -28,12 +28,8 @@ public class RelictAmethyst extends Item {
             int experience = 350 + RandomSource.create().nextInt(150);
             player.giveExperiencePoints(experience);
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 1.0F);
-
             // Уменьшение количества предмета
             stack.shrink(1);
-
-
-
             return InteractionResultHolder.success(stack);
         }
 

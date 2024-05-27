@@ -114,13 +114,19 @@ public class DrillingCrystallizer extends Item {
                             } else if (ore == Blocks.GOLD_ORE || ore == Blocks.DEEPSLATE_GOLD_ORE || ore == Blocks.NETHER_GOLD_ORE) {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
                             } else if (ore == Blocks.COPPER_ORE || ore == Blocks.DEEPSLATE_COPPER_ORE) {
+
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
                             } else if (ore == Blocks.DIAMOND_ORE || ore == Blocks.DEEPSLATE_DIAMOND_ORE) {
                                 crystallizedOre = new ItemStack(Items.DIAMOND);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 3));
+
                             } else if (ore == Blocks.EMERALD_ORE || ore == Blocks.DEEPSLATE_EMERALD_ORE) {
                                 crystallizedOre = new ItemStack(Items.EMERALD);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 3));
+
                             } else if (ore == Blocks.ANCIENT_DEBRIS) {
                                 crystallizedOre = new ItemStack(Items.NETHERITE_SCRAP);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 2));
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;
@@ -135,18 +141,24 @@ public class DrillingCrystallizer extends Item {
                             ItemStack crystallizedOre;
                             if (ore == Blocks.COAL_ORE || ore == Blocks.DEEPSLATE_COAL_ORE) {
                                 crystallizedOre = new ItemStack(Items.COAL);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 1));
                                 // 20% chance to drop emerald
                                 if (RANDOM.nextInt(100) < 4) {
-                                    level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 3));
+                                    level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 4));
 
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.BAGELL_FUEL.get()));
                                 }
                             } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
                                 crystallizedOre = new ItemStack(Items.LAPIS_LAZULI);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 2));
                             } else if (ore == Blocks.REDSTONE_ORE || ore == Blocks.DEEPSLATE_REDSTONE_ORE) {
                                 crystallizedOre = new ItemStack(Items.REDSTONE);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 1));
+
                             } else if (ore == Blocks.NETHER_QUARTZ_ORE) {
                                 crystallizedOre = new ItemStack(Items.QUARTZ);
+                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 1));
+
                             } else if (ore == Blocks.GLOWSTONE) {
                                 crystallizedOre = new ItemStack(Items.GLOWSTONE_DUST);
                             } else {
