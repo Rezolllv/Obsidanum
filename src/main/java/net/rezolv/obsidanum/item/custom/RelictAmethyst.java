@@ -24,7 +24,7 @@ public class RelictAmethyst extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide && player instanceof ServerPlayer) {
-            // Получение случайного количества опыта от 400 до 600
+            // Получение случайного количества опыта от 350 до 500
             int experience = 350 + RandomSource.create().nextInt(150);
             player.giveExperiencePoints(experience);
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -32,10 +32,7 @@ public class RelictAmethyst extends Item {
             // Уменьшение количества предмета
             stack.shrink(1);
 
-            // Если предмет закончился, удаление его из инвентаря
-            if (stack.isEmpty()) {
-                player.getInventory().removeItem(stack);
-            }
+
 
             return InteractionResultHolder.success(stack);
         }
