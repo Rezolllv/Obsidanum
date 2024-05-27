@@ -1,6 +1,8 @@
 package net.rezolv.obsidanum.block.custom;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.core.BlockPos;
@@ -278,13 +280,28 @@ public class ObsidianTablet extends Block {
 
         // Проверка на наличие и значение тега "experienced"
         if (pStack.hasTag() && pStack.getTag().getBoolean("experienced") && pStack.getTag().getBoolean("active")) {
-            pTooltip.add(Component.translatable("item.obsidian_tablet.description.active"));
+            if(Screen.hasShiftDown()) {
+                pTooltip.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
+                pTooltip.add(Component.translatable("item.obsidian_tablet.description.active").withStyle(ChatFormatting.DARK_PURPLE));
+            } else {
+                pTooltip.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
+            }
         }
        else if (pStack.hasTag() && pStack.getTag().getBoolean("experienced") && !pStack.getTag().getBoolean("active")){
-            pTooltip.add(Component.translatable("item.obsidian_tablet.description.crashed"));
+            if(Screen.hasShiftDown()) {
+                pTooltip.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
+                pTooltip.add(Component.translatable("item.obsidian_tablet.description.crashed").withStyle(ChatFormatting.DARK_PURPLE));
+            } else {
+                pTooltip.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
+            }
        }
        else {
-            pTooltip.add(Component.translatable("item.obsidian_tablet.description.ancient"));
+            if(Screen.hasShiftDown()) {
+                pTooltip.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
+                pTooltip.add(Component.translatable("item.obsidian_tablet.description.ancient").withStyle(ChatFormatting.DARK_PURPLE));
+            } else {
+                pTooltip.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
+            }
         }
     }
 

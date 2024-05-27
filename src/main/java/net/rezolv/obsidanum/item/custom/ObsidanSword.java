@@ -1,5 +1,7 @@
 package net.rezolv.obsidanum.item.custom;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -58,17 +60,11 @@ public class ObsidanSword extends SwordItem {
 
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        if (activated) {
-            list.add(Component.translatable("item.obsidan.description.enabled"));
-        } else  {
-            list.add(Component.translatable("item.obsidan.description.disabled"));
-        }
-        long currentTime = world != null ? world.getGameTime() : 0;
-        long timeLeft = lastActivationTime + COOLDOWN_DURATION - currentTime;
-        if (timeLeft > 0) {
-            int secondsLeft = (int) (timeLeft / 20); // Перевод времени из тиков в секунды
-            list.add(Component.translatable("item.obsidan.description.cooldown"));
-            list.add(Component.keybind(secondsLeft + " Sec"));
+        if(Screen.hasShiftDown()) {
+            list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
+            list.add(Component.translatable("item.obsidan.description.sword").withStyle(ChatFormatting.DARK_PURPLE));
+        } else {
+            list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 
