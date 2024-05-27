@@ -25,7 +25,7 @@ public class RelictAmethyst extends Item {
 
         if (!level.isClientSide && player instanceof ServerPlayer) {
             // Получение случайного количества опыта от 400 до 600
-            int experience = 400 + RandomSource.create().nextInt(201);
+            int experience = 350 + RandomSource.create().nextInt(150);
             player.giveExperiencePoints(experience);
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 1.0F);
 
