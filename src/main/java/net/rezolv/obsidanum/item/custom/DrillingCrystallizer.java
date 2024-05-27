@@ -1,8 +1,11 @@
 package net.rezolv.obsidanum.item.custom;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,7 +16,9 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +28,7 @@ import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.particle.ParticlesObs;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
@@ -32,6 +38,16 @@ public class DrillingCrystallizer extends Item {
 
     public DrillingCrystallizer(Properties properties) {
         super(properties);
+    }
+
+    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
+        super.appendHoverText(itemstack, world, list, flag);
+        if(Screen.hasShiftDown()) {
+            list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
+            list.add(Component.translatable("item.obsidan.description.drilling_crystallizer").withStyle(ChatFormatting.DARK_GRAY));
+        } else {
+            list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
+        }
     }
 
     @Override
@@ -87,8 +103,8 @@ public class DrillingCrystallizer extends Item {
             if (blockState.is(ore)) {
                 // Воспроизведение звука шипения и частиц дыма
                 level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(),  pos.getX()+ 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
-                level.sendParticles(ParticleTypes.SMOKE, pos.getX()+ 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
+                level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
 
                 // Удаление блока руды и всех прилегающих блоков руды до 20 блоков
                 Queue<BlockPos> queue = new LinkedList<>();
@@ -114,19 +130,13 @@ public class DrillingCrystallizer extends Item {
                             } else if (ore == Blocks.GOLD_ORE || ore == Blocks.DEEPSLATE_GOLD_ORE || ore == Blocks.NETHER_GOLD_ORE) {
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_GOLD_ORE.get());
                             } else if (ore == Blocks.COPPER_ORE || ore == Blocks.DEEPSLATE_COPPER_ORE) {
-
                                 crystallizedOre = new ItemStack(ItemsObs.CRYSTALLIZED_COPPER_ORE.get());
                             } else if (ore == Blocks.DIAMOND_ORE || ore == Blocks.DEEPSLATE_DIAMOND_ORE) {
                                 crystallizedOre = new ItemStack(Items.DIAMOND);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 3));
-
                             } else if (ore == Blocks.EMERALD_ORE || ore == Blocks.DEEPSLATE_EMERALD_ORE) {
                                 crystallizedOre = new ItemStack(Items.EMERALD);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 3));
-
                             } else if (ore == Blocks.ANCIENT_DEBRIS) {
                                 crystallizedOre = new ItemStack(Items.NETHERITE_SCRAP);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 2));
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;
@@ -141,24 +151,17 @@ public class DrillingCrystallizer extends Item {
                             ItemStack crystallizedOre;
                             if (ore == Blocks.COAL_ORE || ore == Blocks.DEEPSLATE_COAL_ORE) {
                                 crystallizedOre = new ItemStack(Items.COAL);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 1));
-                                // 20% chance to drop emerald
-                                if (RANDOM.nextInt(100) < 4) {
-                                    level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 4));
-
+                                // 20% chance to drop Bagell Fuel
+                                if (RANDOM.nextInt(100) < 5) {
+                                    level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 6));
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.BAGELL_FUEL.get()));
                                 }
                             } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
                                 crystallizedOre = new ItemStack(Items.LAPIS_LAZULI);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 2));
                             } else if (ore == Blocks.REDSTONE_ORE || ore == Blocks.DEEPSLATE_REDSTONE_ORE) {
                                 crystallizedOre = new ItemStack(Items.REDSTONE);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 1));
-
                             } else if (ore == Blocks.NETHER_QUARTZ_ORE) {
                                 crystallizedOre = new ItemStack(Items.QUARTZ);
-                                level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 1));
-
                             } else if (ore == Blocks.GLOWSTONE) {
                                 crystallizedOre = new ItemStack(Items.GLOWSTONE_DUST);
                             } else {
@@ -175,14 +178,11 @@ public class DrillingCrystallizer extends Item {
                             ItemStack crystallizedOre;
                             if (ore == Blocks.AMETHYST_BLOCK) {
                                 crystallizedOre = new ItemStack(Items.AMETHYST_SHARD);
-                                // 20% chance to drop emerald
+                                // 1% chance to drop Relict Amethyst Shard
                                 if (RANDOM.nextInt(100) < 1) {
                                     Block.popResource(level, currentPos, new ItemStack(ItemsObs.RELICT_AMETHYST_SHARD.get()));
-
-                                        level.addFreshEntity(new ExperienceOrb(level, pos.getX(), pos.getY(), pos.getZ(), 6));
-
-
-                            }
+                                    level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 6));
+                                }
                             } else {
                                 // Здесь можно добавить обработку других типов руд
                                 continue;
@@ -190,6 +190,23 @@ public class DrillingCrystallizer extends Item {
                             Block.popResource(level, currentPos, crystallizedOre);
                             level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 5, 0.2D, 0.2D, 0.2D, 0.0D);
                             level.sendParticles(ParticleTypes.SMOKE, currentPos.getX() + 0.5, currentPos.getY() + 0.5, currentPos.getZ() + 0.5, 10, 0.1D, 0.1D, 0.1D, 0.0D);
+                        }
+
+                        // Добавление опыта за каждый разрушенный блок руды
+                        if (ore == Blocks.DIAMOND_ORE || ore == Blocks.DEEPSLATE_DIAMOND_ORE) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 3));
+                        } else if (ore == Blocks.EMERALD_ORE || ore == Blocks.DEEPSLATE_EMERALD_ORE) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 3));
+                        } else if (ore == Blocks.ANCIENT_DEBRIS) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 3));
+                        } else if (ore == Blocks.COAL_ORE || ore == Blocks.DEEPSLATE_COAL_ORE) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 1));
+                        } else if (ore == Blocks.LAPIS_ORE || ore == Blocks.DEEPSLATE_LAPIS_ORE) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 2));
+                        } else if (ore == Blocks.REDSTONE_ORE || ore == Blocks.DEEPSLATE_REDSTONE_ORE) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 1));
+                        } else if (ore == Blocks.NETHER_QUARTZ_ORE) {
+                            level.addFreshEntity(new ExperienceOrb(level, currentPos.getX(), currentPos.getY(), currentPos.getZ(), 1));
                         }
 
                         // Добавление соседних блоков руды в очередь для обработки

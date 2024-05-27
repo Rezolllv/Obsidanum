@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:nether/nether_crucible",
+  "criteria": {
+    "any_of_five_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "obsidanum:smoldering_obsidian_pickaxe",
+              "obsidanum:smoldering_obsidian_axe",
+              "obsidanum:smoldering_obsidian_sword",
+              "obsidanum:smoldering_obsidian_shovel",
+              "obsidanum:smoldering_obsidian_hoe"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obsidanum.nether.instrument.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "obsidanum:smoldering_obsidian_pickaxe"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obsidanum.nether.instrument.title"
+    }
+  },
+  "requirements": [
+    [
+      "any_of_five_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

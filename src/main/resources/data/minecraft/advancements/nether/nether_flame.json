@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "wither_skull": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "obsidanum:nether_flame"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obsidanum.nether.nether_flame.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "obsidanum:nether_flame"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obsidanum.nether.nether_flame.title"
+    }
+  },
+  "requirements": [
+    [
+      "wither_skull"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

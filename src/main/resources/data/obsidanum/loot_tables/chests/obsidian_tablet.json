@@ -122,6 +122,31 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "obsidanum:bagell_fuel",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 0.2,
+                "max": 0.5
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.04
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "obsidanum:obsidian_tear",
           "functions": [
             {

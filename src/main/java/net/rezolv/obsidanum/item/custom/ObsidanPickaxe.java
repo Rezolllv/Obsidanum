@@ -79,7 +79,7 @@ public class ObsidanPickaxe extends PickaxeItem {
                 world.destroyBlock(pos, false);
 
                 // Шанс выпадения алмаза
-                if (world.random.nextFloat() < 0.3f) {
+                if (world.random.nextFloat() < 0.15f) {
                     ItemStack diamond = new ItemStack(Items.DIAMOND);
                     Block.popResource(world, pos, diamond);
                 }
@@ -98,7 +98,7 @@ public class ObsidanPickaxe extends PickaxeItem {
         super.appendHoverText(itemstack, world, list, flag);
         if(Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
-            list.add(Component.translatable("item.obsidan.description.pickaxe").withStyle(ChatFormatting.DARK_PURPLE));
+            list.add(Component.translatable("item.obsidan.description.pickaxe").withStyle(ChatFormatting.DARK_GRAY));
         } else {
             list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }

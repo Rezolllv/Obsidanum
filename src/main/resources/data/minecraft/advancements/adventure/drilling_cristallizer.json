@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "wither_skull": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "obsidanum:drilling_crystallizer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obsidanum.nether.drilling_crystallizer.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "obsidanum:drilling_crystallizer"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obsidanum.nether.drilling_crystallizer.title"
+    }
+  },
+  "requirements": [
+    [
+      "wither_skull"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
