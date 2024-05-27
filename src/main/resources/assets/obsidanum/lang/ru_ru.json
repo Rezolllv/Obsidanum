@@ -61,7 +61,13 @@
   "block.obsidanum.obsidan_wood_leaves": "Листва обсиданового дерева",
 
 
-
+  "obsidanum.press_shift": "Нажмите [§7Shift§8], чтобы увидеть описание",
+  "obsidanum.press_shift2": "Нажмите [§fShift§8], чтобы увидеть описание",
+  "item.obsidan.description.sword": "Obsidanwood leaves",
+  "item.obsidan.description.hoe": "Obsidanwood leaves",
+  "item.obsidan.description.shovel": "Obsidanwood leaves",
+  "item.obsidan.description.pickaxe": "Obsidanwood leaves",
+  "item.obsidan.description.axe": "Obsidanwood leaves",
   "item.obsidian_tablet.description.crashed": "Сила из древних начертаний исчезла, и скрижаль потрескалась.. \nДолжно быть она все это время простояла благодаря магической печати.",
   "item.obsidian_tablet.description.active": "Сила обсидиановой слезы перетекла в безжизненную скрижаль и зажгла новые начертания, которые меняются время от времени, и дают новые знания.\nВидимо теперь можно забыть о нагруженных книжных полках с таким объемом информации заключенной в эту пробужденную древнюю плиту.",
   "item.obsidian_tablet.description.ancient": "Древний и загадочный монумент, с письменами на каком-то древнем диалекте.\nБуквы бледнеют тусклым светом, словно заманивают прикоснуться к ним... Без магии тут явно не обошлось, надо быть начеку.\n"
