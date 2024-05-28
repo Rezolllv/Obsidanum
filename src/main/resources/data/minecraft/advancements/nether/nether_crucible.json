@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "obsidanum:crucible"
+              "obsidanum:crucible_with_nether_flame"
             ]
           }
         ]
@@ -22,7 +22,7 @@
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "obsidanum:crucible"
+      "item": "obsidanum:crucible_with_nether_flame"
     },
     "show_toast": true,
     "title": {
