@@ -76,7 +76,7 @@ public class ObsidanAxe extends AxeItem {
         super.appendHoverText(itemstack, world, list, flag);
         if(Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
-            list.add(Component.translatable("item.obsidan.description.axe").withStyle(ChatFormatting.DARK_PURPLE));
+            list.add(Component.translatable("item.obsidan.description.axe").withStyle(ChatFormatting.DARK_GRAY));
         } else {
             list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }
@@ -117,7 +117,7 @@ public class ObsidanAxe extends AxeItem {
         queue.offer(pos);
         visited.add(pos);
 
-        while (!queue.isEmpty() && blockBreakCount.get() < 225) {
+        while (!queue.isEmpty() && blockBreakCount.get() < 300) {
             BlockPos currentPos = queue.poll();
             breakBlock(world, currentPos, player, stack, visited, queue, blockBreakCount);
         }

@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:nether/nether_flame",
+  "criteria": {
+    "wither_skull": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "obsidanum:crucible_with_nether_flame"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obsidanum.nether.crucible.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "obsidanum:crucible_with_nether_flame"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obsidanum.nether.crucible.title"
+    }
+  },
+  "requirements": [
+    [
+      "wither_skull"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

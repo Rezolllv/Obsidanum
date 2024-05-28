@@ -24,7 +24,7 @@ public class ObsidanSword extends SwordItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 150 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 80 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
@@ -62,7 +62,7 @@ public class ObsidanSword extends SwordItem {
         super.appendHoverText(itemstack, world, list, flag);
         if(Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
-            list.add(Component.translatable("item.obsidan.description.sword").withStyle(ChatFormatting.DARK_PURPLE));
+            list.add(Component.translatable("item.obsidan.description.sword").withStyle(ChatFormatting.DARK_GRAY));
         } else {
             list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }
@@ -82,10 +82,10 @@ public class ObsidanSword extends SwordItem {
                     if (sword.activated) { // Проверяем, активирован ли ваш меч
                         // Нанесение дополнительного урона
                         float baseDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                        float additionalDamage = 4.0f;
+                        float additionalDamage = 1.5f;
                         player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
 
-                        livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage + additionalDamage);
+                        livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage * additionalDamage);
                         sword.deactivate(player); // Деактивация меча после удара
                         return true; // Отмена стандартного поведения
 
