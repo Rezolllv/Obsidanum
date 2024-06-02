@@ -1,5 +1,11 @@
 {
   "values": [
-    "obsidanum:obsidian_tablet"
+    "obsidanum:obsidian_tablet",
+    "obsidanum:obsidian_inlaid_column",
+    "obsidanum:obsidian_polished",
+    "obsidanum:carved_obsidian_bricks",
+    "obsidanum:obsidian_bricks",
+    "obsidanum:mysterious_carved_obsidian_bricks",
+    "obsidanum:obsidian_column"
   ]
 }

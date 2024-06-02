@@ -59,7 +59,12 @@
   "block.obsidanum.stripped_obsidan_wood": "Обтёсанная древесина обсиданового дерева",
   "block.obsidanum.stripped_obsidan_wood_log": "Обтёсанная бревно обсиданового дерева",
   "block.obsidanum.obsidan_wood_leaves": "Листва обсиданового дерева",
-
+  "block.obsidanum.obsidian_inlaid_column": "Обсидиановая инкрустированная колонна",
+  "block.obsidanum.obsidian_column": "Обсидиановая колонна",
+  "block.obsidanum.obsidian_polished": "Полированный обсидиан",
+  "block.obsidanum.carved_obsidian_bricks": "Резные обсидиановые кирпичи",
+  "block.obsidanum.obsidian_bricks": "Обсидиановые кирпичи",
+  "block.obsidanum.mysterious_carved_obsidian_bricks": "Таинственные резные обсидиановые кирпичи",
 
   "obsidanum.press_shift": "Зажмите [§7Shift§8], чтобы увидеть описание",
   "obsidanum.press_shift2": "Зажмите [§7Shift§8], чтобы увидеть описание",
