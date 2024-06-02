@@ -17,7 +17,7 @@ license="CC BY-ND 4.0"
 # The modid of the mod
 modId="obsidanum" #mandatory
 # The version number of the mod
-version="1.0-1.20.1-Forge" #mandatory
+version="1.1-1.20.1-Forge" #mandatory
 # A display name for the mod
 displayName="Obsidanum" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/

@@ -3,6 +3,7 @@ package net.rezolv.obsidanum.block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
@@ -39,7 +40,9 @@ public class BlocksObs {
 
     public static final RegistryObject<Block> OBSIDIAN_TABLET = registerBlock("obsidian_tablet",
             () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
-                    .explosionResistance(6).strength(6).sound(SoundType.CHERRY_WOOD).requiresCorrectToolForDrops().noOcclusion()));
+                    .explosionResistance(6).strength(6).sound(SoundType.CHERRY_WOOD).hasPostProcess((bs, br, bp) -> true).emissiveRendering((bs, br, bp) -> true)  // Устанавливаем предикат на true, чтобы всегда использовать эмиссирующий рендеринг
+
+                    .mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().noOcclusion()));
 
     public static final RegistryObject<Block> OBSIDAN_PLANKS = registerBlock("obsidan_planks",
             () -> new FlameBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).sound(SoundType.CHERRY_WOOD)));
