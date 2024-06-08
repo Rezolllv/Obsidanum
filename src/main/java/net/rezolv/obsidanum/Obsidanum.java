@@ -4,22 +4,22 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
+import net.rezolv.obsidanum.chests.SCRegistry;
 import net.rezolv.obsidanum.fluid.ModFluidTypes;
 import net.rezolv.obsidanum.fluid.ModFluids;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -31,7 +31,6 @@ import net.rezolv.obsidanum.item.item_entity.arrows.obsidian_arrow.ObsidianArrow
 import net.rezolv.obsidanum.particle.ParticlesObs;
 import net.rezolv.obsidanum.sound.SoundsObs;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
-import net.rezolv.obsidanum.world.features.ModPlacedFeatures;
 import net.rezolv.obsidanum.world.wood.ModWoodTypes;
 import org.slf4j.Logger;
 
@@ -57,7 +56,16 @@ public class Obsidanum {
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+        SCRegistry.register();
 
+        FMLJavaModLoadingContext.get().getModEventBus().addListener((BuildCreativeModeTabContentsEvent e) -> {
+            if (e.getTabKey() == CreativeTabObs.OBSIDANUM_TAB.getKey()) {
+                SCRegistry.ITEMS.getEntries()
+                        .stream()
+                        .map(RegistryObject::get)
+                        .forEach(e::accept);
+            }
+        });
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

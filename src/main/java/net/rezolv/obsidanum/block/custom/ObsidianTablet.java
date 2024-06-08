@@ -28,6 +28,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -90,7 +91,8 @@ public class ObsidianTablet extends Block {
                 long initialDelay4 = (index == 0? random.nextInt(10) : 35) * 50L; // Delay in milliseconds
                 executor.schedule(() -> spawnLightning(pLevel, pPos), initialDelay4, TimeUnit.MILLISECONDS);
             }
-
+            // Break the block
+            pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
             // Shutdown executor after all tasks have been scheduled
             executor.shutdown();
         }
