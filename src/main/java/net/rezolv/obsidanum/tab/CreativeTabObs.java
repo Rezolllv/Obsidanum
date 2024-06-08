@@ -30,6 +30,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDAN_AXE.get());
                         pOutput.accept(ItemsObs.OBSIDAN_SHOVEL.get());
                         pOutput.accept(ItemsObs.OBSIDAN_SWORD.get());
+                        pOutput.accept(ItemsObs.REZOLV_THE_TALE_OF_THE_VANISHED_ORDER_DISC.get());
                         pOutput.accept(ItemsObs.OBSIDAN_HOE.get());
                         pOutput.accept(ItemsObs.OBSIDAN_APPLE.get());
                         pOutput.accept(ItemsObs.OBSIDAN_PICKAXE.get());
@@ -64,11 +65,17 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_TABLET.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_INLAID_COLUMN.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_INLAID_COLUMN.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_COLUMN.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_COLUMN.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_POLISHED.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_POLISHED.get());
                         pOutput.accept(BlocksObs.CARVED_OBSIDIAN_BRICKS.get());
+                        pOutput.accept(BlocksObs.CRACKED_CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_BRICKS.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.MYSTERIOUS_CARVED_OBSIDIAN_BRICKS.get());
+                        pOutput.accept(BlocksObs.CRACKED_MYSTERIOUS_CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_DOOR.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_TRAPDOOR.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_BUTTON.get());

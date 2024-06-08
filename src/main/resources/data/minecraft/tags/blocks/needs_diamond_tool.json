@@ -2,11 +2,17 @@
   "values": [
     "obsidanum:obsidian_tablet",
     "obsidanum:obsidian_inlaid_column",
+    "obsidanum:cracked_obsidian_inlaid_column",
     "obsidanum:obsidian_polished",
+    "obsidanum:cracked_obsidian_polished",
+    "obsidanum:cracked_carved_obsidian_bricks",
     "obsidanum:carved_obsidian_bricks",
     "obsidanum:obsidian_bricks",
+    "obsidanum:cracked_obsidian_bricks",
     "obsidanum:chest_obsidian",
     "obsidanum:mysterious_carved_obsidian_bricks",
-    "obsidanum:obsidian_column"
+    "obsidanum:cracked_mysterious_carved_obsidian_bricks",
+    "obsidanum:obsidian_column",
+    "obsidanum:cracked_obsidian_column"
   ]
 }

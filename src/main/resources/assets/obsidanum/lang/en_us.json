@@ -49,11 +49,17 @@
   "block.obsidanum.obsidan_planks_slab": "Obsidanwood slab",
 
   "block.obsidanum.obsidian_inlaid_column": "Obsidian inlaid column",
+  "block.obsidanum.cracked_obsidian_inlaid_column": "Cracked obsidian inlaid column",
   "block.obsidanum.obsidian_column": "Obsidian column",
+  "block.obsidanum.cracked_obsidian_column": "Cracked obsidian column",
   "block.obsidanum.obsidian_polished": "Obsidian polished",
+  "block.obsidanum.cracked_obsidian_polished": "Cracked obsidian polished",
   "block.obsidanum.carved_obsidian_bricks": "Carved obsidian bricks",
+  "block.obsidanum.cracked_carved_obsidian_bricks": "Cracked carved obsidian bricks",
   "block.obsidanum.obsidian_bricks": "Obsidian bricks",
+  "block.obsidanum.cracked_obsidian_bricks": "Cracked obsidian bricks",
   "block.obsidanum.mysterious_carved_obsidian_bricks": "Mysterious carved obsidian bricks",
+  "block.obsidanum.cracked_mysterious_carved_obsidian_bricks": "Cracked mysterious carved obsidian bricks",
   "block.obsidanum.obsidan_wood": "Obsidanwood",
   "block.obsidanum.obsidan_sapling": "Obsidan sapling",
   "block.obsidanum.chest_obsidian": "Obsidian Chest of the Order of the Secret Flame",
@@ -63,6 +69,8 @@
   "block.obsidanum.stripped_obsidan_wood_log": "Stripped obsidanwood log",
   "block.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
   "item.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
+  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc": "Music Disc",
+  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Rezolv the tale of the vanished order disc",
 
 
   "obsidanum.press_shift": "Hold down [§7Shift§8]§8, to see the description",

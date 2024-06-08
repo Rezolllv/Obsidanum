@@ -14,5 +14,13 @@
         "stream": true
       }
     ]
+  },
+  "rezolv_the_tale_of_the_vanished_order": {
+    "sounds": [
+      {
+        "name": "obsidanum:rezolv_the_tale_of_the_vanished_order",
+        "stream": false
+      }
+    ]
   }
 }

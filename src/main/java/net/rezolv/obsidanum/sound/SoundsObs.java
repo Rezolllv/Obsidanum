@@ -14,6 +14,7 @@ public class SoundsObs {
 
     public static final RegistryObject<SoundEvent> CHAKRAM_HIT = registerSoundEvents("chacram_hit");
     public static final RegistryObject<SoundEvent> CHAKRAM_TROWE = registerSoundEvents("chakram_trowe");
+    public static final RegistryObject<SoundEvent> REZOLV_THE_TALE_OF_THE_VANISHED_ORDER = registerSoundEvents("rezolv_the_tale_of_the_vanished_order");
 
 
 

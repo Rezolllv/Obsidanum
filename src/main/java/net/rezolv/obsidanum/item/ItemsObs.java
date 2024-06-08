@@ -12,6 +12,7 @@ import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.ModBoatEntity;
+import net.rezolv.obsidanum.sound.SoundsObs;
 
 public class ItemsObs {
     public static final DeferredRegister<Item> ITEMS =
@@ -35,6 +36,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> REZOLV_THE_TALE_OF_THE_VANISHED_ORDER_DISC = ITEMS.register("rezolv_the_tale_of_the_vanished_order_disc",
+            () -> new RecordItem(12, SoundsObs.REZOLV_THE_TALE_OF_THE_VANISHED_ORDER, new Item.Properties().stacksTo(1), 2520));
     public static final RegistryObject<Item> CRUCIBLE_WITH_NETHER_FLAME = ITEMS.register("crucible_with_nether_flame",
             () -> new CrucibleNetherFlame(new Item.Properties().durability(25)));
     public static final RegistryObject<Item> DRILLING_CRYSTALLIZER = ITEMS.register("drilling_crystallizer",
