@@ -37,27 +37,27 @@ public class BannerSecretFlame extends Block {
             case NORTH:
             default:
                 return Shapes.or(
-                        Block.box(1, 28, 5.6, 15, 29.4, 7),
-                        Block.box(7.3, 0, 5.6, 8.7, 28.1, 7),
-                        Block.box(1, 1.4, 4.9, 15, 29.4, 5.6)
+                        Block.box(1, 28, 14.6, 15, 29.4, 16), // stand top horizontal
+                        Block.box(7.3, 0, 14.6, 8.7, 28.1, 16), // stand vertical
+                        Block.box(1, 1.4, 13.9, 15, 29.4, 14.6) // banner
                 );
             case SOUTH:
                 return Shapes.or(
-                        Block.box(1, 28, 9, 15, 29.4, 10.4),
-                        Block.box(7.3, 0, 9, 8.7, 28.1, 10.4),
-                        Block.box(1, 1.4, 9.4, 15, 29.4, 10.1)
+                        Block.box(1, 28, 0, 15, 29.4, 1.4), // stand top horizontal
+                        Block.box(7.3, 0, 0, 8.7, 28.1, 1.4), // stand vertical
+                        Block.box(1, 1.4, 1.4, 15, 29.4, 2.1) // banner
                 );
             case WEST:
                 return Shapes.or(
-                        Block.box(4.9, 28, 1, 5.6, 29.4, 15),
-                        Block.box(5.6, 0, 7.3, 7, 28.1, 8.7),
-                        Block.box(5.6, 1.4, 1, 5.6, 29.4, 15)
+                        Block.box(14.6, 28, 1, 16, 29.4, 15), // stand top horizontal
+                        Block.box(14.6, 0, 7.3, 16, 28.1, 8.7), // stand vertical
+                        Block.box(13.9, 1.4, 1, 14.6, 29.4, 15) // banner
                 );
             case EAST:
                 return Shapes.or(
-                        Block.box(9, 28, 1, 10.4, 29.4, 15),
-                        Block.box(9, 0, 7.3, 10.4, 28.1, 8.7),
-                        Block.box(9.4, 1.4, 1, 10.1, 29.4, 15)
+                        Block.box(0, 28, 1, 1.4, 29.4, 15), // stand top horizontal
+                        Block.box(0, 0, 7.3, 1.4, 28.1, 8.7), // stand vertical
+                        Block.box(1.4, 1.4, 1, 2.1, 29.4, 15) // banner
                 );
         }
     }
