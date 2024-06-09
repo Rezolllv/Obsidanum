@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "obsidanum:block/moldy_obsidian_polished_slab"
+    },
+    "type=double": {
+      "model": "obsidanum:block/moldy_obsidian_polished"
+    },
+    "type=top": {
+      "model": "obsidanum:block/moldy_obsidian_polished_slab_top"
+    }
+  }
+}

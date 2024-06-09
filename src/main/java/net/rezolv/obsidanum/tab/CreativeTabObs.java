@@ -89,7 +89,20 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_PRESSURE_PLATE.get());
                         pOutput.accept(ItemsObs.OBSIDAN_SAPLING.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_STAIRS.get());
+                        pOutput.accept(BlocksObs.OBSIDIAN_POLISHED_STAIRS.get());
+                        pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_POLISHED_STAIRS.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_POLISHED_STAIRS.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS_STAIRS.get());
+                        pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_BRICKS_STAIRS.get());
+                        pOutput.accept(BlocksObs.OBSIDIAN_BRICKS_STAIRS.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());
+
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS_SLAB.get());
+                        pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_POLISHED_SLAB.get());
+                        pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_POLISHED_SLAB.get());
+                        pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_BRICKS_SLAB.get());
+                        pOutput.accept(BlocksObs.OBSIDIAN_POLISHED_SLAB.get());
+                        pOutput.accept(BlocksObs.OBSIDIAN_BRICKS_SLAB.get());
 
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_LOG.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD.get());
