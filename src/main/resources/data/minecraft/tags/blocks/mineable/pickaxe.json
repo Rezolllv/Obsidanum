@@ -4,15 +4,21 @@
     "obsidanum:obsidian_inlaid_column",
     "obsidanum:obsidian_polished",
     "obsidanum:cracked_obsidian_polished",
+    "obsidanum:moldy_obsidian_polished",
     "obsidanum:carved_obsidian_bricks",
     "obsidanum:cracked_carved_obsidian_bricks",
+    "obsidanum:moldy_carved_obsidian_bricks",
     "obsidanum:obsidian_bricks",
     "obsidanum:cracked_obsidian_bricks",
+    "obsidanum:moldy_obsidian_bricks",
+    "obsidanum:moldy_mysterious_carved_obsidian_bricks",
     "obsidanum:chest_obsidian",
     "obsidanum:mysterious_carved_obsidian_bricks",
     "obsidanum:cracked_mysterious_carved_obsidian_bricks",
     "obsidanum:cracked_obsidian_column",
+    "obsidanum:moldy_obsidian_column",
     "obsidanum:cracked_obsidian_inlaid_column",
+    "obsidanum:moldy_obsidian_inlaid_column",
     "obsidanum:obsidian_column"
   ]
 }
