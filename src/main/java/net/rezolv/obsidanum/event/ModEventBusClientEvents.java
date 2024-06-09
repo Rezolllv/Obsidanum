@@ -29,6 +29,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.OBSIDAN_BOAT_LAYER, BoatModel::createBodyModel);
         event.registerLayerDefinition(ModModelLayers.OBSIDAN_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
     }
+
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ParticlesObs.NETHER_FLAME_PARTICLES.get(), NetherFlameParticle.Provider::new);
