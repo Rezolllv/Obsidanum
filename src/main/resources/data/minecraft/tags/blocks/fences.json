@@ -1,0 +1,11 @@
+{
+  "values": [
+    "#minecraft:wooden_fences",
+    "obsidanum:obsidian_polished_fence",
+    "obsidanum:cracked_obsidian_polished_fence",
+    "obsidanum:moldy_obsidian_polished_fence",
+    "obsidanum:obsidian_bricks_fence",
+    "obsidanum:cracked_obsidian_bricks_fence",
+    "obsidanum:moldy_obsidian_bricks_fence"
+  ]
+}

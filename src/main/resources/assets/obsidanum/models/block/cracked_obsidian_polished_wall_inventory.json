@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "obsidanum:block/cracked_obsidian_polished"
+  }
+}
