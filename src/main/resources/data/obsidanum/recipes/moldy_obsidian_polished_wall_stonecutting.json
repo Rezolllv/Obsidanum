@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "obsidanum:moldy_obsidian_polished"
+  },
+  "result": "obsidanum:moldy_obsidian_polished_wall"
+}

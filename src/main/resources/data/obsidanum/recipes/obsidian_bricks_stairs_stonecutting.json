@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "obsidanum:obsidian_bricks"
+  },
+  "result": "obsidanum:obsidian_bricks_stairs"
+}

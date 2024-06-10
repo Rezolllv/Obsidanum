@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "obsidanum:cracked_obsidian_bricks"
+  },
+  "result": "obsidanum:cracked_obsidian_bricks_fence"
+}
