@@ -1,6 +1,6 @@
 {
 
-  "name": "obsidanum:obsidian_tablet/start_pool",
+  "name": "obsidanum:place_wisdom_2/start_pool",
 
   "fallback": "minecraft:empty",
 
@@ -13,7 +13,7 @@
       "element": {
 
 
-        "location": "obsidanum:obsidian_tablet",
+        "location": "obsidanum:place_wisdom_2",
 
 
         "processors": "minecraft:empty",

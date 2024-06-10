@@ -3,13 +3,13 @@
   "type": "minecraft:jigsaw",
 
 
-  "start_pool": "obsidanum:obsidian_tablet/start_pool",
+  "start_pool": "obsidanum:place_wisdom_2/start_pool",
 
   "size": 2,
 
   "max_distance_from_center": 80,
 
-  "biomes": "#obsidanum:has_structure/obsidian_tablet",
+  "biomes": "#obsidanum:has_structure/place_wisdom_2",
 
 
   "step": "surface_structures",
