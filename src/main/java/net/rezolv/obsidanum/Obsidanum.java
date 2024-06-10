@@ -20,6 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.SCRegistry;
+import net.rezolv.obsidanum.event.BlockBreakEventHandler;
 import net.rezolv.obsidanum.fluid.ModFluidTypes;
 import net.rezolv.obsidanum.fluid.ModFluids;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -56,6 +57,7 @@ public class Obsidanum {
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
         SCRegistry.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener((BuildCreativeModeTabContentsEvent e) -> {

@@ -130,6 +130,13 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
         }
     }
 
+    public void dropAsItem() {
+        if (!this.level().isClientSide) {
+            this.spawnAtLocation(this.getPickupItem(), 0.1F);
+            this.discard();
+        }
+    }
+
     private void setFlag(int pId, boolean pValue) {
         byte b0 = (Byte) this.entityData.get(ID_FLAGS);
         if (pValue) {
