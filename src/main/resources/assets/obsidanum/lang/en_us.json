@@ -123,5 +123,10 @@
   "advancements.obsidanum.nether.instrument.title": "Burnt",
   "advancements.obsidanum.nether.instrument.description": "Pour the contents of the crucible over the obsidian tool until it burns using the blacksmith's table",
   "advancements.obsidanum.nether.drilling_crystallizer.title": "Diluted Greatness",
-  "advancements.obsidanum.nether.drilling_crystallizer.description": "Buy a bottle of drilling fluid from a traveling merchant"
+  "advancements.obsidanum.nether.drilling_crystallizer.description": "Buy a bottle of drilling fluid from a traveling merchant",
+
+  "advancements.obsidanum.nether.bagell_fuel.title": "The pride of Bagel",
+  "advancements.obsidanum.nether.bagell_fuel.description": "Extract Bagel fuel using a crystallizer",
+  "advancements.obsidanum.nether.relict_amethyst_shard.title": "A shard of knowledge",
+  "advancements.obsidanum.nether.relict_amethyst_shard.description": "Dig out the relic amethyst"
 }

@@ -126,5 +126,9 @@
   "advancements.obsidanum.nether.instrument.title": "Подгорело",
   "advancements.obsidanum.nether.instrument.description": "Облейте обсидиановый инструмент содержимым тигеля пока он не сгорел воспользовавшись столом кузнеца",
   "advancements.obsidanum.nether.drilling_crystallizer.title": "Разбавленное величие",
-  "advancements.obsidanum.nether.drilling_crystallizer.description": "Выкупите у странствующего торговца флакон с буровой жидкостью"
+  "advancements.obsidanum.nether.drilling_crystallizer.description": "Выкупите у странствующего торговца флакон с буровой жидкостью",
+  "advancements.obsidanum.nether.bagell_fuel.title": "Гордость Багелля",
+  "advancements.obsidanum.nether.bagell_fuel.description": "Добудьте топливо Багелля используя кристаллизатор",
+  "advancements.obsidanum.nether.relict_amethyst_shard.title": "Осколок знаний",
+  "advancements.obsidanum.nether.relict_amethyst_shard.description": "Откопайте реликтовый аметист"
 }

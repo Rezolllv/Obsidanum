@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:adventure/drilling_cristallizer",
+  "criteria": {
+    "wither_skull": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "obsidanum:bagell_fuel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.obsidanum.nether.bagell_fuel.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "obsidanum:bagell_fuel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.obsidanum.nether.bagell_fuel.title"
+    }
+  },
+  "requirements": [
+    [
+      "wither_skull"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
