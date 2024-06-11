@@ -74,7 +74,7 @@ public class ObsidanShovel extends ShovelItem {
                 double knockbackZ = lookVector.z * -10.0;
                 target.knockback(knockbackX, knockbackY, knockbackZ);
                 deactivate((Player) attacker, attacker.level());
-            ((Player) attacker).getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
+
         }
         return super.hurtEnemy(stack, target, attacker);
     }

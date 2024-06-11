@@ -83,7 +83,7 @@ public class ObsidanSword extends SwordItem {
                         // Нанесение дополнительного урона
                         float baseDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
                         float additionalDamage = 1.5f;
-                        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+                       // Устанавливаем визуальный кулдаун
 
                         livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage * additionalDamage);
                         sword.deactivate(player); // Деактивация меча после удара

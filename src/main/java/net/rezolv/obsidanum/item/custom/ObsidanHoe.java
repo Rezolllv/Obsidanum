@@ -88,6 +88,7 @@ public class ObsidanHoe extends HoeItem {
                             }
                         }
                     }
+                    playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
                     // Код для деактивации, например, удаление частиц и т.д.
                 } else {
 
@@ -132,7 +133,6 @@ public class ObsidanHoe extends HoeItem {
     }
     public void deactivate(Player player) {
         activated = false;
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {

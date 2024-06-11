@@ -58,7 +58,8 @@ public class ObsidanPickaxe extends PickaxeItem {
                 lastActivationTime = currentTime;
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
-        } else {
+        }
+        else {
             return new InteractionResultHolder<>(InteractionResult.PASS, itemStack);
         }
     }
@@ -85,8 +86,6 @@ public class ObsidanPickaxe extends PickaxeItem {
                 }
 
                 deactivate(player);
-                player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
-
                 return InteractionResult.SUCCESS;
             }
         }

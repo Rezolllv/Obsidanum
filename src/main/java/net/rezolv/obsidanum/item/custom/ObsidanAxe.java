@@ -100,7 +100,7 @@ public class ObsidanAxe extends AxeItem {
             if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG)) {
                 chainBreak(world, pos, (Player) entity, stack);
                 deactivate((Player) entity);
-                ((Player) entity).getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+               // Устанавливаем визуальный кулдаун
 
                 return true;
 
