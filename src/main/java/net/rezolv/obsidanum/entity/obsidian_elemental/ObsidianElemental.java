@@ -60,6 +60,7 @@ public class ObsidianElemental extends Monster {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.8)
                 .add(Attributes.ARMOR, 0.0);
     }
+
     @Override
     protected void dropExperience() {
         super.dropExperience();
@@ -131,9 +132,14 @@ public class ObsidianElemental extends Monster {
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        this.setAttacking(true);
-        boolean result = super.doHurtTarget(target);
-        return result;
+        double attackRange = 2.0; // Дальность атаки в блоках
+        if (this.distanceTo(target) <= attackRange) {
+            this.setAttacking(true);
+            boolean result = super.doHurtTarget(target);
+            this.setAttacking(false);
+            return result;
+        }
+        return false;
     }
 
     @Override
