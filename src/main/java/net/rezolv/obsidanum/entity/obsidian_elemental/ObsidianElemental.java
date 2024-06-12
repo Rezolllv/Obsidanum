@@ -26,17 +26,18 @@ public class ObsidianElemental extends Monster {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 16.0F));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 48.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D)); // Случайное передвижение
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2D, false));
         this.targetSelector.addGoal(2, new ObsidianElementalAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
+// Заменяем ObsidianElementalAttackGoal на FollowMobGoal для преследования игрока
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.GLOW_SQUID_AMBIENT;
+        return SoundEvents.BLAZE_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
@@ -49,14 +50,15 @@ public class ObsidianElemental extends Monster {
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 30D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.MAX_HEALTH, 40)
+                .add(Attributes.MOVEMENT_SPEED, 0.4D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
-                .add(Attributes.FOLLOW_RANGE, 20D)
-                .add(Attributes.ATTACK_DAMAGE, 8)
+                .add(Attributes.FOLLOW_RANGE, 48)
+                .add(Attributes.ATTACK_DAMAGE, 16)
                 .add(Attributes.ATTACK_KNOCKBACK, 5)
                 .add(Attributes.ATTACK_SPEED, 0.2)
-                .add(Attributes.ARMOR);
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.8)
+                .add(Attributes.ARMOR, 0.0);
     }
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(ObsidianElemental.class, EntityDataSerializers.BOOLEAN);
@@ -85,7 +87,7 @@ public class ObsidianElemental extends Monster {
         }
 
         if (this.isAttacking() && attackAnimationTimeout <= 0) {
-            attackAnimationTimeout = 80; // Length in ticks of your animation
+            attackAnimationTimeout = 23; // Length in ticks of your animation
             attackAnimationState.start(this.tickCount);
         } else {
             --this.attackAnimationTimeout;
@@ -126,7 +128,6 @@ public class ObsidianElemental extends Monster {
     public boolean doHurtTarget(Entity target) {
         this.setAttacking(true);
         boolean result = super.doHurtTarget(target);
-        this.setAttacking(false);
         return result;
     }
 
