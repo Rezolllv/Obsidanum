@@ -28,8 +28,8 @@ public class ObsidianElemental extends Monster {
         super.registerGoals();
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 48.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D)); // Случайное передвижение
-        this.targetSelector.addGoal(2, new ObsidianElementalAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D)); // Случайное передвижение
+        this.targetSelector.addGoal(2, new ObsidianElementalAttackGoal(this, 1.2D, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
 // Заменяем ObsidianElementalAttackGoal на FollowMobGoal для преследования игрока
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -51,12 +51,12 @@ public class ObsidianElemental extends Monster {
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 40)
-                .add(Attributes.MOVEMENT_SPEED, 0.4D)
+                .add(Attributes.MOVEMENT_SPEED, 0.5D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
                 .add(Attributes.FOLLOW_RANGE, 48)
                 .add(Attributes.ATTACK_DAMAGE, 16)
                 .add(Attributes.ATTACK_KNOCKBACK, 5)
-                .add(Attributes.ATTACK_SPEED, 0.2)
+                .add(Attributes.ATTACK_SPEED, 4)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.8)
                 .add(Attributes.ARMOR, 0.0);
     }
