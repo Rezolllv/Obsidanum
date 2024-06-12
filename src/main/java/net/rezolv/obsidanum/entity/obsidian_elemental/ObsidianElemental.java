@@ -60,6 +60,11 @@ public class ObsidianElemental extends Monster {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.8)
                 .add(Attributes.ARMOR, 0.0);
     }
+    @Override
+    protected void dropExperience() {
+        super.dropExperience();
+        this.level().addFreshEntity(new ExperienceOrb(this.level(), this.getX(), this.getY(), this.getZ(), 40));
+    }
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(ObsidianElemental.class, EntityDataSerializers.BOOLEAN);
     public final AnimationState idleAnimationState = new AnimationState();
