@@ -29,7 +29,7 @@
   "item.obsidanum.relict_amethyst_shard": "§bРеликтовый осколок аметиста",
 
 
-  "item.obsidanum.nether_flame": "§cПламя Незера",
+  "item.obsidanum.nether_flame": "§eПламя Незера",
   "item.obsidanum.crystallized_copper_ore": "Кристаллизованная медная руда",
   "item.obsidanum.crystallized_iron_ore": "Кристаллизованная железная руда",
   "item.obsidanum.crystallized_gold_ore": "Кристаллизованная золотая руда",
@@ -104,7 +104,7 @@
   "block.obsidanum.cracked_mysterious_carved_obsidian_bricks": "Треснутые таинственные резные обсидиановые кирпичи",
   "block.obsidanum.moldy_mysterious_carved_obsidian_bricks": "Плесневелые таинственные резные обсидиановые кирпичи",
   "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc": "§bПластинка",
-  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Резольв - история исчезнувшего ордена",
+  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Rezolv - Сказ об исчезнувшем ордена",
   "container.chest_obsidian" : "Обсидиановый сундук",
 
   "obsidanum.press_shift": "Зажмите [§7Shift§8], чтобы увидеть описание",

@@ -27,7 +27,7 @@
   "item.obsidanum.obsidan_shovel": "Obsidan shovel",
   "item.obsidanum.obsidian_arrow": "Obsidian arrow",
   "item.obsidanum.obsidian_chakram": "Obsidian chakram",
-  "item.obsidanum.nether_flame": "Nether flame",
+  "item.obsidanum.nether_flame": "§eNether flame",
   "item.obsidanum.obsidan_sign": "Obsidan sign",
   "item.obsidanum.obsidan_boat": "Obsidan boat",
   "item.obsidanum.obsidan_chest_boat": "Obsidan chest boat",
@@ -100,8 +100,8 @@
   "block.obsidanum.stripped_obsidan_wood_log": "Stripped obsidanwood log",
   "block.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
   "item.obsidanum.obsidan_wood_leaves": "Obsidanwood leaves",
-  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc": "Music Disc",
-  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Rezolv the tale of the vanished order disc",
+  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc": "§bMusic Disc",
+  "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Rezolv - The tale of the vanished order",
 
 
   "obsidanum.press_shift": "Hold down [§7Shift§8]§8, to see the description",
