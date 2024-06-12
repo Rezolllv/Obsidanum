@@ -73,7 +73,7 @@ public class DrillingCrystallizer extends Item {
                 level.sendParticles(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 10, 0.1D, 0.1D, 0.1D, 0.0D);
                 level.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 10, 0.1D, 0.1D, 0.1D, 0.0D);
             }
-            if (RANDOM.nextInt(100) < 30) {
+            if (RANDOM.nextInt(100) < 40) {
                 Block.popResource(level, pos, new ItemStack(ItemsObs.OBSIDIAN_TEAR.get()));
             }
             if (RANDOM.nextInt(100) < 15) {

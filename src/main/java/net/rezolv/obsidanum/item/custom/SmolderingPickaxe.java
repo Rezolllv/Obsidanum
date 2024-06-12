@@ -1,7 +1,10 @@
 package net.rezolv.obsidanum.item.custom;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
@@ -9,10 +12,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -49,6 +49,17 @@ public class SmolderingPickaxe extends PickaxeItem {
         }
 
         return retval;
+    }
+    @Override
+    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
+        super.appendHoverText(itemstack, world, list, flag);
+        if(Screen.hasShiftDown()) {
+            list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
+            list.add(Component.translatable("item.obsidan.description.shovel").withStyle(ChatFormatting.DARK_GRAY));
+        } else {
+            list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
+        }
+
     }
 
     @Override
