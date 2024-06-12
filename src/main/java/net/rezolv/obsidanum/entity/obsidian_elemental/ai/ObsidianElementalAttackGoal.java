@@ -8,8 +8,8 @@ import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 
 public class ObsidianElementalAttackGoal extends MeleeAttackGoal {
     private final ObsidianElemental entity;
-    private int attackDelay = 23; // Длительность анимации атаки
-    private int ticksUntilNextAttack = 40;
+    private int attackDelay = 15;
+    private int ticksUntilNextAttack = 15;
     private boolean shouldCountTillNextAttack = false;
 
     public ObsidianElementalAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
@@ -20,8 +20,8 @@ public class ObsidianElementalAttackGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        attackDelay = 23;
-        ticksUntilNextAttack = 40;
+        attackDelay = 7;
+        ticksUntilNextAttack = 15;
     }
 
     @Override
@@ -29,12 +29,11 @@ public class ObsidianElementalAttackGoal extends MeleeAttackGoal {
         if (isEnemyWithinAttackDistance(pEnemy, pDistToEnemySqr)) {
             shouldCountTillNextAttack = true;
 
-            if (isTimeToStartAttackAnimation()) {
+            if(isTimeToStartAttackAnimation()) {
                 entity.setAttacking(true);
-                entity.attackAnimationState.start(entity.tickCount); // Начинаем анимацию атаки
             }
 
-            if (isTimeToAttack()) {
+            if(isTimeToAttack()) {
                 this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ());
                 performAttack(pEnemy);
             }
@@ -51,31 +50,32 @@ public class ObsidianElementalAttackGoal extends MeleeAttackGoal {
     }
 
     protected void resetAttackCooldown() {
-        this.ticksUntilNextAttack = this.adjustedTickDelay(attackDelay);
+        this.ticksUntilNextAttack = this.adjustedTickDelay(attackDelay * 2);
     }
 
     protected boolean isTimeToAttack() {
-        return this.ticksUntilNextAttack <= attackDelay / 2; // Выполняем атаку в середине анимации
+        return this.ticksUntilNextAttack <= 0;
     }
 
     protected boolean isTimeToStartAttackAnimation() {
-        return this.ticksUntilNextAttack == attackDelay;
+        return this.ticksUntilNextAttack <= attackDelay;
     }
 
     protected int getTicksUntilNextAttack() {
         return this.ticksUntilNextAttack;
     }
 
+
     protected void performAttack(LivingEntity pEnemy) {
+        this.resetAttackCooldown();
         this.mob.swing(InteractionHand.MAIN_HAND);
         this.mob.doHurtTarget(pEnemy);
-        this.resetAttackCooldown();
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (shouldCountTillNextAttack) {
+        if(shouldCountTillNextAttack) {
             this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
         }
     }

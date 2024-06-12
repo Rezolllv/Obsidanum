@@ -51,7 +51,7 @@ public class ObsidianElemental extends Monster {
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 40)
-                .add(Attributes.MOVEMENT_SPEED, 0.5D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
                 .add(Attributes.FOLLOW_RANGE, 48)
                 .add(Attributes.ATTACK_DAMAGE, 16)
@@ -93,7 +93,7 @@ public class ObsidianElemental extends Monster {
         }
 
         if (this.isAttacking() && attackAnimationTimeout <= 0) {
-            attackAnimationTimeout = 23; // Length in ticks of your animation
+            attackAnimationTimeout = 15; // Length in ticks of your animation
             attackAnimationState.start(this.tickCount);
         } else {
             --this.attackAnimationTimeout;
