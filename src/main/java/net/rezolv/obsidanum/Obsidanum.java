@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,11 +19,14 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.SCRegistry;
+import net.rezolv.obsidanum.entity.ModEntities;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
 import net.rezolv.obsidanum.event.BlockBreakEventHandler;
 import net.rezolv.obsidanum.fluid.ModFluidTypes;
 import net.rezolv.obsidanum.fluid.ModFluids;
 import net.rezolv.obsidanum.item.ItemsObs;
-import net.rezolv.obsidanum.item.entity.ModEntities;
+import net.rezolv.obsidanum.item.entity.ModEntitiesItem;
 import net.rezolv.obsidanum.item.entity.client.ModBoatRenderer;
 import net.rezolv.obsidanum.item.item_entity.arrows.DispenserRegistry;
 import net.rezolv.obsidanum.item.item_entity.arrows.EntityTypeInit;
@@ -50,6 +52,7 @@ public class Obsidanum {
         ModBlockEntities.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
+        ModEntitiesItem.register(modEventBus);
         ParticlesObs.register(modEventBus);
         EntityTypeInit.ENTITY_TYPES.register(modEventBus);
         SoundsObs.register(modEventBus);
@@ -91,9 +94,9 @@ public class Obsidanum {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(EntityTypeInit.OBSIDIAN_ARROW.get(), ObsidianArrowRenderer::new);
-
-            EntityRenderers.register(ModEntities.MOD_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
-            EntityRenderers.register(ModEntities.MOD_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
+            EntityRenderers.register(ModEntities.OBSIDIAN_ELEMENTAL.get(), ObsidianElementalRenderer::new);
+            EntityRenderers.register(ModEntitiesItem.MOD_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
+            EntityRenderers.register(ModEntitiesItem.MOD_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
             event.enqueueWork(() -> {
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_WOOD_LEAVES.get(), 0.2f);
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_SAPLING.get(), 0.2f);

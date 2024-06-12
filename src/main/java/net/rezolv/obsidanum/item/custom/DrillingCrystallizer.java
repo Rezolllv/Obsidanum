@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
+import net.rezolv.obsidanum.entity.ModEntities;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.particle.ParticlesObs;
 
@@ -73,6 +75,26 @@ public class DrillingCrystallizer extends Item {
             }
             if (RANDOM.nextInt(100) < 30) {
                 Block.popResource(level, pos, new ItemStack(ItemsObs.OBSIDIAN_TEAR.get()));
+            }
+            if (RANDOM.nextInt(100) < 15) {
+                // Генерация случайного направления
+                double angle = RANDOM.nextDouble() * 2.0D * Math.PI;
+                double distance = 2.0D + RANDOM.nextDouble() * 3.0D; // Расстояние от 2 до 5 блоков
+
+                // Вычисление целевой позиции
+                double targetX = pos.getX() + 0.5D + distance * Math.cos(angle);
+                double targetY = pos.getY() + 1;
+                double targetZ = pos.getZ() + 0.5D + distance * Math.sin(angle);
+
+                // Округление координат до целых чисел и создание объекта BlockPos
+                BlockPos targetPos = new BlockPos((int) Math.round(targetX), (int) Math.round(targetY), (int) Math.round(targetZ));
+
+                // Проверка на наличие воздуха
+                if (level.getBlockState(targetPos).isAir()) {
+                    ObsidianElemental obsidianElemental = new ObsidianElemental(ModEntities.OBSIDIAN_ELEMENTAL.get(), level);
+                    obsidianElemental.moveTo(targetX, targetY, targetZ, level.random.nextFloat() * 360.0F, 0.0F);
+                    level.addFreshEntity(obsidianElemental);
+                }
             }
             ItemStack itemStack = context.getItemInHand();
             if (context.getPlayer() != null) {

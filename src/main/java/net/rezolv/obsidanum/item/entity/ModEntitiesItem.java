@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ObsidianChakramEntity;
 
-public class ModEntities {
+public class ModEntitiesItem {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Obsidanum.MOD_ID);
 
     public static final RegistryObject<EntityType<ObsidianChakramEntity>> OBSIDIAN_CHAKRAM = ENTITIES.register("obsidian_chakram",

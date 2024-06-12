@@ -6,13 +6,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.item.ItemsObs;
 
@@ -26,7 +24,7 @@ public class ModBoatEntity extends Boat {
     }
 
     public ModBoatEntity(Level level, double pX, double pY, double pZ) {
-        this(ModEntities.MOD_BOAT.get(), level);
+        this(ModEntitiesItem.MOD_BOAT.get(), level);
         this.setPos(pX, pY, pZ);
         this.xo = pX;
         this.yo = pY;

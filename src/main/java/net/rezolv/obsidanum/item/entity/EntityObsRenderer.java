@@ -11,6 +11,6 @@ import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ObsidianChakramRend
 public class EntityObsRenderer {
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntities.OBSIDIAN_CHAKRAM.get(), ObsidianChakramRenderer::new);
+        event.registerEntityRenderer(ModEntitiesItem.OBSIDIAN_CHAKRAM.get(), ObsidianChakramRenderer::new);
     }
 }

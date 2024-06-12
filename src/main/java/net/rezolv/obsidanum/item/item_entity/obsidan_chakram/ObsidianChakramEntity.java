@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.rezolv.obsidanum.item.ItemsObs;
-import net.rezolv.obsidanum.item.entity.ModEntities;
+import net.rezolv.obsidanum.item.entity.ModEntitiesItem;
 import net.rezolv.obsidanum.sound.SoundsObs;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
@@ -46,12 +46,12 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
     }
 
     public ObsidianChakramEntity(Level world, double x, double y, double z) {
-        super(ModEntities.OBSIDIAN_CHAKRAM.get(), x, y, z, world);
+        super(ModEntitiesItem.OBSIDIAN_CHAKRAM.get(), x, y, z, world);
         this.tridentItem = new ItemStack(ItemsObs.OBSIDIAN_CHAKRAM.get());
     }
 
     public ObsidianChakramEntity(Level world, LivingEntity owner) {
-        super(ModEntities.OBSIDIAN_CHAKRAM.get(), owner, world);
+        super(ModEntitiesItem.OBSIDIAN_CHAKRAM.get(), owner, world);
         this.tridentItem = new ItemStack(ItemsObs.OBSIDIAN_CHAKRAM.get());
     }
 

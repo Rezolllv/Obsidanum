@@ -5,25 +5,24 @@ import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
+import net.rezolv.obsidanum.entity.ModEntities;
+import net.rezolv.obsidanum.entity.ModModelLayers;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalModel;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.custom.*;
-import net.rezolv.obsidanum.item.entity.client.ModModelLayers;
+import net.rezolv.obsidanum.item.entity.client.ModModelLayersItem;
 import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ChakramModelEntity;
-import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ObsidianChakramEntity;
 import net.rezolv.obsidanum.particle.BagellFlameParticle;
 import net.rezolv.obsidanum.particle.NetherFlameParticle;
 import net.rezolv.obsidanum.particle.ParticlesObs;
@@ -32,8 +31,9 @@ import net.rezolv.obsidanum.particle.ParticlesObs;
 public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ModModelLayers.OBSIDAN_BOAT_LAYER, BoatModel::createBodyModel);
-        event.registerLayerDefinition(ModModelLayers.OBSIDAN_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+        event.registerLayerDefinition(ModModelLayersItem.OBSIDAN_BOAT_LAYER, BoatModel::createBodyModel);
+        event.registerLayerDefinition(ModModelLayersItem.OBSIDAN_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+        event.registerLayerDefinition(ModModelLayers.OBSIDIAN_ELEMENTAL, ObsidianElementalModel::createBodyLayer);
     }
 
     @SubscribeEvent

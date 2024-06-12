@@ -4,7 +4,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.rezolv.obsidanum.Obsidanum;
 
-public class ModModelLayers {
+public class ModModelLayersItem {
 
     public static final ModelLayerLocation OBSIDAN_BOAT_LAYER = new ModelLayerLocation(
             new ResourceLocation(Obsidanum.MOD_ID, "boat/obsidan"), "main");
