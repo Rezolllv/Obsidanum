@@ -82,7 +82,6 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_POLISHED_FENCE.get());
                         pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_POLISHED.get());
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_POLISHED.get());
-                        pOutput.accept(BlocksObs.BANNER_SECRET_FLAME.get());
                         pOutput.accept(BlocksObs.CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.MOLDY_CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.CRACKED_CARVED_OBSIDIAN_BRICKS.get());
