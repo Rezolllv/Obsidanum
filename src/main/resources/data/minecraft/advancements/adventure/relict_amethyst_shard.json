@@ -19,7 +19,7 @@
     "description": {
       "translate": "advancements.obsidanum.nether.relict_amethyst_shard.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "obsidanum:relict_amethyst_shard"

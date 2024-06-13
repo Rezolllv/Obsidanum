@@ -19,7 +19,7 @@
     "description": {
       "translate": "advancements.obsidanum.nether.bagell_fuel.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "obsidanum:bagell_fuel"
