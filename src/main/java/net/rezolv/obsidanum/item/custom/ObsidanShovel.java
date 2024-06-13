@@ -29,7 +29,7 @@ public class ObsidanShovel extends ShovelItem {
 
     private boolean activated = false;
     private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 40 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 50 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
 
@@ -68,12 +68,9 @@ public class ObsidanShovel extends ShovelItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (activated) {
-                Vec3 lookVector = attacker.getLookAngle();
-                double knockbackX = lookVector.x * -10.0;
-                double knockbackY = lookVector.y * 4.0;
-                double knockbackZ = lookVector.z * -10.0;
-                target.knockback(knockbackX, knockbackY, knockbackZ);
-                deactivate((Player) attacker, attacker.level());
+            double knockbackY = 4.0; // Подбрасываем цель вверх на 15 блоков
+            target.setDeltaMovement(target.getDeltaMovement().x, knockbackY, target.getDeltaMovement().z);
+            deactivate((Player) attacker, attacker.level());
 
         }
         return super.hurtEnemy(stack, target, attacker);
