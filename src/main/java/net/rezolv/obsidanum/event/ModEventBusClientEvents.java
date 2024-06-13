@@ -24,6 +24,7 @@ import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.client.ModModelLayersItem;
 import net.rezolv.obsidanum.item.item_entity.obsidan_chakram.ChakramModelEntity;
 import net.rezolv.obsidanum.particle.BagellFlameParticle;
+import net.rezolv.obsidanum.particle.Nether2FlameParticle;
 import net.rezolv.obsidanum.particle.NetherFlameParticle;
 import net.rezolv.obsidanum.particle.ParticlesObs;
 
@@ -39,6 +40,7 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ParticlesObs.NETHER_FLAME_PARTICLES.get(), NetherFlameParticle.Provider::new);
+        event.registerSpriteSet(ParticlesObs.NETHER_FLAME2_PARTICLES.get(), Nether2FlameParticle.Provider::new);
         event.registerSpriteSet(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), BagellFlameParticle.Provider::new);
     }
     @SubscribeEvent

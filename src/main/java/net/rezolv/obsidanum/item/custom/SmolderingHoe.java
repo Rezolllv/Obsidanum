@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.rezolv.obsidanum.item.ItemsObs;
+import net.rezolv.obsidanum.particle.ParticlesObs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class SmolderingHoe extends HoeItem {
                 double offsetX = world.random.nextDouble() * 0.5 - 0.25;
                 double offsetY = world.random.nextDouble() * 0.5 - 0.25;
                 double offsetZ = world.random.nextDouble() * 0.5 - 0.25;
-                serverLevel.sendParticles(ParticleTypes.FLAME, pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 1, 0.0, 0.0, 0.0, 0.0);
+                serverLevel.sendParticles(ParticlesObs.NETHER_FLAME2_PARTICLES.get(), pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 1, 0.0, 0.0, 0.0, 0.0);
             }
         }
         // Получаем дропы с учетом инструмента и зачарования удачи

@@ -53,7 +53,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> OBSIDAN_AXE = ITEMS.register("obsidan_axe",
             () -> new ObsidanAxe(ModToolTiers.OBSIDAN,3,-2.8F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_PICKAXE = ITEMS.register("obsidan_pickaxe",
-            () -> new ObsidanPickaxe(ModToolTiers.OBSIDAN,-3,-2F, new Item.Properties()));
+            () -> new ObsidanPickaxe(ModToolTiers.OBSIDAN,-1,-2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SHOVEL = ITEMS.register("obsidan_shovel",
             () -> new ObsidanShovel(ModToolTiers.OBSIDAN,1,-2.6F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_HOE = ITEMS.register("obsidan_hoe",
