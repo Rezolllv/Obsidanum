@@ -3,6 +3,7 @@ package net.rezolv.obsidanum.event;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,10 +17,33 @@ public class BlockBreakEventHandler {
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         BlockPos pos = event.getPos();
         ServerLevel world = (ServerLevel) event.getLevel();
-        for (Entity entity : world.getEntities(null, new AABB(pos))) {
+
+        for (Entity entity : world.getEntities(null, new AABB(pos).inflate(1))) {
             if (entity instanceof ObsidianChakramEntity) {
-                ((ObsidianChakramEntity) entity).dropAsItem();
+                BlockPos entityPos = entity.blockPosition();
+                if (!hasBlockBelowOrAdjacent(world, entityPos)) {
+                    ((ObsidianChakramEntity) entity).dropAsItem();
+                }
             }
         }
+    }
+
+    private static boolean hasBlockBelowOrAdjacent(ServerLevel world, BlockPos pos) {
+        // Проверяем блоки снизу и по всем сторонам
+        BlockPos[] positionsToCheck = new BlockPos[] {
+                pos.below(),
+                pos.north(),
+                pos.south(),
+                pos.east(),
+                pos.west()
+        };
+
+        for (BlockPos checkPos : positionsToCheck) {
+            BlockState blockState = world.getBlockState(checkPos);
+            if (!blockState.isAir()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
