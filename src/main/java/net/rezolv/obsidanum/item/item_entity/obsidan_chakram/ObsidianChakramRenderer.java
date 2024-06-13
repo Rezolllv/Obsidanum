@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class ObsidianChakramRenderer extends EntityRenderer<ObsidianChakramEntity> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("obsidanum", "textures/entity/obsidian_chakram.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("obsidanum", "textures/entity/projectiles/obsidian_chakram.png");
     private final ChakramModelEntity model;
 
     public ObsidianChakramRenderer(EntityRendererProvider.Context context) {
