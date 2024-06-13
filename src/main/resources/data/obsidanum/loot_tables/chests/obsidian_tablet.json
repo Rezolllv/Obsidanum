@@ -6,6 +6,30 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "obsidanum:chakram",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 4
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "minecraft:obsidian",
           "functions": [
             {
@@ -221,7 +245,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -275,7 +299,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -329,7 +353,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -383,7 +407,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -437,7 +461,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -491,7 +515,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -545,7 +569,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -599,7 +623,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -653,7 +677,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
@@ -707,7 +731,7 @@
             {
               "function": "minecraft:set_damage",
               "damage": {
-                "min": 0.0,
+                "min": 0,
                 "max": 0.75
               },
               "conditions": [
