@@ -11,7 +11,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
 public class ChakramModelEntity extends EntityModel<ObsidianChakramEntity> {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("obsidanum", "entity/obsidian_chakram"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("obsidanum", "entity/projectiles/obsidian_chakram"), "main");
 	private final ModelPart group2;
 	private final ModelPart group3;
 	private final ModelPart group4;
