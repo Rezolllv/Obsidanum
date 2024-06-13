@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ai.ObsidianElementalAttackGoal;
+import net.rezolv.obsidanum.sound.SoundsObs;
 
 public class ObsidianElemental extends Monster {
     public ObsidianElemental(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -37,15 +38,15 @@ public class ObsidianElemental extends Monster {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.BLAZE_AMBIENT;
+        return SoundsObs.OBSIDIAN_ELEMENTAL_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.BLAZE_HURT;
+        return SoundsObs.OBSIDIAN_ELEMENTAL_HURT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PHANTOM_DEATH;
+        return SoundsObs.OBSIDIAN_ELEMENTAL_DEATH.get();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

@@ -14,6 +14,9 @@ public class SoundsObs {
 
     public static final RegistryObject<SoundEvent> CHAKRAM_HIT = registerSoundEvents("chacram_hit");
     public static final RegistryObject<SoundEvent> CHAKRAM_TROWE = registerSoundEvents("chakram_trowe");
+    public static final RegistryObject<SoundEvent> OBSIDIAN_ELEMENTAL_AMBIENT = registerSoundEvents("obsidian_elemental_ambient");
+    public static final RegistryObject<SoundEvent> OBSIDIAN_ELEMENTAL_HURT = registerSoundEvents("obsidian_elemental_hurt");
+    public static final RegistryObject<SoundEvent> OBSIDIAN_ELEMENTAL_DEATH = registerSoundEvents("obsidian_elemental_death");
     public static final RegistryObject<SoundEvent> REZOLV_THE_TALE_OF_THE_VANISHED_ORDER = registerSoundEvents("rezolv_the_tale_of_the_vanished_order");
 
 

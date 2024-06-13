@@ -15,6 +15,42 @@
       }
     ]
   },
+  "obsidian_elemental_ambient": {
+    "sounds": [
+      {
+        "name": "obsidanum:obsidian_elemental_ambient_1",
+        "stream": true
+      },
+      {
+        "name": "obsidanum:obsidian_elemental_ambient_2",
+        "stream": true
+      },
+      {
+        "name": "obsidanum:obsidian_elemental_ambient_3",
+        "stream": true
+      }
+    ]
+  },
+  "obsidian_elemental_hurt": {
+    "sounds": [
+      {
+        "name": "obsidanum:obsidian_elemental_hurt_1",
+        "stream": true
+      },
+      {
+        "name": "obsidanum:obsidian_elemental_hurt_2",
+        "stream": true
+      }
+    ]
+  },
+  "obsidian_elemental_death": {
+    "sounds": [
+      {
+        "name": "obsidanum:obsidian_elemental_death",
+        "stream": true
+      }
+    ]
+  },
   "rezolv_the_tale_of_the_vanished_order": {
     "sounds": [
       {
