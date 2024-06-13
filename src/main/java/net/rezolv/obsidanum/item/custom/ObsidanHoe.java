@@ -46,28 +46,38 @@ public class ObsidanHoe extends HoeItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
-        if (activated || currentTime - lastActivationTime >= COOLDOWN_DURATION) {
-            if (!worldIn.isClientSide) {
-                if (activated) {
-                    playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун
+        ItemStack itemStack = playerIn.getItemInHand(handIn);
 
-                    deactivate(playerIn);
+        if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
+            if (!worldIn.isClientSide) {
+                activate();
+                lastActivationTime = currentTime;
+            }
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
+        } else {
+            return new InteractionResultHolder<>(InteractionResult.FAIL, itemStack);
+        }
+    }
+    private static final BlockState[] TARGET_BLOCKS = {
+            Blocks.GRASS.defaultBlockState(),
+            Blocks.TALL_GRASS.defaultBlockState(),
+            Blocks.FERN.defaultBlockState(),
+            Blocks.DEAD_BUSH.defaultBlockState(),
+            Blocks.CRIMSON_ROOTS.defaultBlockState(),
+            Blocks.WARPED_ROOTS.defaultBlockState(),
+            Blocks.FIRE.defaultBlockState(),
+            Blocks.LARGE_FERN.defaultBlockState(),
+            Blocks.NETHER_SPROUTS.defaultBlockState()
+    };
+    @Override
+    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, net.minecraft.world.entity.LivingEntity entity) {
+        if (!level.isClientSide && activated) {
+            // Проверка, является ли разрушенный блок целевым блоком
+            for (BlockState targetBlock : TARGET_BLOCKS) {
+                if (state.getBlock() == targetBlock.getBlock()) {
                     int radiusSquared = (int) Math.sqrt(BREAK_RADIUS_SQUARED);
                     // Получение позиции игрока
-                    BlockPos playerPos = playerIn.blockPosition();
-                    // Список блоков травы
-                    BlockState[] grassBlocks = {
-                            Blocks.GRASS.defaultBlockState(),
-                            Blocks.TALL_GRASS.defaultBlockState(),
-                            Blocks.FERN.defaultBlockState(),
-                            Blocks.DEAD_BUSH.defaultBlockState(),
-                            Blocks.CRIMSON_ROOTS.defaultBlockState(),
-                            Blocks.WARPED_ROOTS.defaultBlockState(),
-                            Blocks.FIRE.defaultBlockState(),
-                            Blocks.FERN.defaultBlockState(),
-                            Blocks.LARGE_FERN.defaultBlockState(),
-                            Blocks.NETHER_SPROUTS.defaultBlockState()
-                    };
+                    BlockPos playerPos = entity.blockPosition();
 
                     // Проверка каждого блока в радиусе вокруг игрока
                     for (int x = -radiusSquared; x <= radiusSquared; x++) {
@@ -75,12 +85,12 @@ public class ObsidanHoe extends HoeItem {
                             for (int z = -radiusSquared; z <= radiusSquared; z++) {
                                 BlockPos blockPos = playerPos.offset(x, y, z);
                                 // Проверка, находится ли блок в пределах мира
-                                if (worldIn.isLoaded(blockPos)) {
-                                    // Проверка, является ли блок одним из блоков травы
-                                    for (BlockState grassBlock : grassBlocks) {
-                                        if (worldIn.getBlockState(blockPos).getBlock() == grassBlock.getBlock()) {
+                                if (level.isLoaded(blockPos)) {
+                                    // Проверка, является ли блок одним из целевых блоков
+                                    for (BlockState grassBlock : TARGET_BLOCKS) {
+                                        if (level.getBlockState(blockPos).getBlock() == grassBlock.getBlock()) {
                                             // Уничтожение блока
-                                            worldIn.destroyBlock(blockPos, true);
+                                            level.destroyBlock(blockPos, true);
                                             break; // Прерывание цикла после первого совпадения
                                         }
                                     }
@@ -88,22 +98,13 @@ public class ObsidanHoe extends HoeItem {
                             }
                         }
                     }
-                    playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
-                    // Код для деактивации, например, удаление частиц и т.д.
-                } else {
-
-                    activate();
-                    // Код для активации, например, создание частиц и т.д.
-                    lastActivationTime = currentTime;
+                    deactivate((Player) entity);
+                    break;
                 }
-
             }
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
-        } else {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
         }
+        return super.mineBlock(stack, level, state, pos, entity);
     }
-
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
         if(Screen.hasShiftDown()) {
@@ -133,6 +134,8 @@ public class ObsidanHoe extends HoeItem {
     }
     public void deactivate(Player player) {
         activated = false;
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
+
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {

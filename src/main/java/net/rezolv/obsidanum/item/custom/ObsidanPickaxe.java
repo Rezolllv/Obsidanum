@@ -67,30 +67,30 @@ public class ObsidanPickaxe extends PickaxeItem {
         return activated;
     }
     @Override
-    public InteractionResult useOn(UseOnContext context) {
-        Level world = context.getLevel();
-        BlockPos pos = context.getClickedPos();
-        Player player = context.getPlayer();
-        ItemStack stack = context.getItemInHand();
-        if (!world.isClientSide && activated && player != null) {
-            BlockState state = world.getBlockState(pos);
-            Block block = state.getBlock();
+    public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
+        if (!pLevel.isClientSide && activated) {
+            Block block = pState.getBlock();
+
             if (isInstantBreakBlock(block)) {
                 // Немедленно разрушаем блок
-                world.destroyBlock(pos, false);
+                pLevel.destroyBlock(pPos, false);
 
                 // Шанс выпадения алмаза
-                if (world.random.nextFloat() < 0.15f) {
+                if (pLevel.random.nextFloat() < 0.15f) {
                     ItemStack diamond = new ItemStack(Items.DIAMOND);
-                    Block.popResource(world, pos, diamond);
+                    Block.popResource(pLevel, pPos, diamond);
                 }
 
-                deactivate(player);
-                return InteractionResult.SUCCESS;
+                // Деактивируем кирку после разрушения блока
+                deactivate((Player) pEntityLiving);
             }
         }
-        return super.useOn(context);
+
+        return super.mineBlock(pStack, pLevel, pState, pPos, pEntityLiving);
     }
+
+
+
 
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
