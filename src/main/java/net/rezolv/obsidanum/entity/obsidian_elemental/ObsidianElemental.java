@@ -30,7 +30,13 @@ public class ObsidianElemental extends Monster {
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 48.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D)); // Случайное передвижение
-        this.targetSelector.addGoal(2, new ObsidianElementalAttackGoal(this, 1.2D, true));
+        this.targetSelector.addGoal(2, new ObsidianElementalAttackGoal(this, 1.2D, true)
+        {
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+                return 16;
+            }
+        });
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
 // Заменяем ObsidianElementalAttackGoal на FollowMobGoal для преследования игрока
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -133,7 +139,7 @@ public class ObsidianElemental extends Monster {
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        double attackRange = 2.0; // Дальность атаки в блоках
+        double attackRange = 12.0; // Установлено на 12.0 для атаки на расстоянии 12 блоков
         if (this.distanceTo(target) <= attackRange) {
             this.setAttacking(true);
             boolean result = super.doHurtTarget(target);

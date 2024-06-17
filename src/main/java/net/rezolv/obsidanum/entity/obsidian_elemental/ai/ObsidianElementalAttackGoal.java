@@ -8,7 +8,7 @@ import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 
 public class ObsidianElementalAttackGoal extends MeleeAttackGoal {
     private final ObsidianElemental entity;
-    private int attackDelay = 15;
+    private int attackDelay = 7;
     private int ticksUntilNextAttack = 15;
     private boolean shouldCountTillNextAttack = false;
 
@@ -37,6 +37,9 @@ public class ObsidianElementalAttackGoal extends MeleeAttackGoal {
                 this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ());
                 performAttack(pEnemy);
             }
+
+            // Останавливаем движение к цели, если она уже в пределах досягаемости атаки
+            this.mob.getNavigation().stop();
         } else {
             resetAttackCooldown();
             shouldCountTillNextAttack = false;
