@@ -61,10 +61,7 @@ public abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
             }
         }
     }
-    private boolean isBookShelf(Level level, BlockPos enchantmentTablePos, BlockPos offset) {
-        BlockPos targetPos = enchantmentTablePos.offset(offset);
-        return level.getBlockState(targetPos).is(Blocks.BOOKSHELF);
-    }
+
     private boolean isValidObsidianTablet(Level level, BlockPos enchantmentTablePos, BlockPos offset) {
         BlockPos targetPos = enchantmentTablePos.offset(offset);
         return level.getBlockState(targetPos).is(BlocksObs.OBSIDIAN_TABLET.get());
