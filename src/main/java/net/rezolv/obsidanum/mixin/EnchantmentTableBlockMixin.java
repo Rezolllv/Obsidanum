@@ -18,11 +18,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.rezolv.obsidanum.block.BlocksObs;
+import net.rezolv.obsidanum.particle.ParticlesObs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,6 +33,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static net.minecraft.world.level.block.EnchantmentTableBlock.BOOKSHELF_OFFSETS;
+import static net.minecraft.world.level.block.EnchantmentTableBlock.isValidBookShelf;
 
 @Mixin(EnchantmentTableBlock.class)
 public abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
@@ -38,60 +46,27 @@ public abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
     protected EnchantmentTableBlockMixin(Properties pProperties) {
         super(pProperties);
     }
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        super.animateTick(pState, pLevel, pPos, pRandom);
+        Iterator var5 = BOOKSHELF_OFFSETS.iterator();
 
-    @Inject(method = "animateTick", at = @At("HEAD"))
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom, CallbackInfo ci) {
-        if (!pLevel.isClientSide) {
-            System.out.println("Running animateTick on server side");
-
-            for (BlockPos blockpos : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
-                System.out.println("Checking bookshelf offset: " + blockpos);
-                if (pRandom.nextInt(16) == 0 && isValidBookShelf2(pLevel, pPos, blockpos)) {
-                    if (pLevel.getBlockState(pPos.offset(blockpos)).is(BlocksObs.OBSIDIAN_TABLET.get())) {
-                        System.out.println("Found OBSIDIAN_TABLET, spawning FLAME particles");
-                        pLevel.addParticle(ParticleTypes.FLAME,
-                                pPos.getX() + 0.5,
-                                pPos.getY() + 2.0,
-                                pPos.getZ() + 0.5,
-                                (blockpos.getX() + pRandom.nextFloat()) - 0.5,
-                                (blockpos.getY() - pRandom.nextFloat() - 1.0F),
-                                (blockpos.getZ() + pRandom.nextFloat()) - 0.5);
-                    } else {
-                        System.out.println("Found bookshelf, spawning ENCHANT particles");
-                        pLevel.addParticle(ParticleTypes.ENCHANT,
-                                pPos.getX() + 0.5,
-                                pPos.getY() + 2.0,
-                                pPos.getZ() + 0.5,
-                                (blockpos.getX() + pRandom.nextFloat()) - 0.5,
-                                (blockpos.getY() - pRandom.nextFloat() - 1.0F),
-                                (blockpos.getZ() + pRandom.nextFloat()) - 0.5);
-                    }
-                }
+        while(var5.hasNext()) {
+            BlockPos blockpos = (BlockPos)var5.next();
+            if (pRandom.nextInt(16) == 0 && isBookShelf(pLevel, pPos, blockpos)) {
+                pLevel.addParticle(ParticleTypes.ENCHANT, (double)pPos.getX() + 0.5, (double)pPos.getY() + 2.0, (double)pPos.getZ() + 0.5, (double)((float)blockpos.getX() + pRandom.nextFloat()) - 0.5, (double)((float)blockpos.getY() - pRandom.nextFloat() - 1.0F), (double)((float)blockpos.getZ() + pRandom.nextFloat()) - 0.5);
+            }
+           else if (pRandom.nextInt(16) == 0 && isValidObsidianTablet(pLevel, pPos, blockpos)) {
+                pLevel.addParticle(ParticlesObs.BAGELL_TABLE_PARTICLES.get(), (double)pPos.getX() + 0.5, (double)pPos.getY() + 2.0, (double)pPos.getZ() + 0.5, (double)((float)blockpos.getX() + pRandom.nextFloat()) - 0.5, (double)((float)blockpos.getY() - pRandom.nextFloat() - 1.0F), (double)((float)blockpos.getZ() + pRandom.nextFloat()) - 0.5);
             }
         }
     }
-
-
-    @Overwrite
-    public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            LightningBolt lightingBolt = EntityType.LIGHTNING_BOLT.create(level);
-
-            if (level instanceof ServerLevel serverLevel && lightingBolt != null) {
-                lightingBolt.moveTo(blockPos.getCenter());
-                level.addFreshEntity(lightingBolt);
-            }
-
-            return InteractionResult.CONSUME;
-        }
+    private boolean isBookShelf(Level level, BlockPos enchantmentTablePos, BlockPos offset) {
+        BlockPos targetPos = enchantmentTablePos.offset(offset);
+        return level.getBlockState(targetPos).is(Blocks.BOOKSHELF);
     }
-    public boolean isValidBookShelf2(Level pLevel, BlockPos pTablePos, BlockPos pOffsetPos) {
-        return pLevel.getBlockState(pTablePos.offset(pOffsetPos)).getEnchantPowerBonus(pLevel, pTablePos.offset(pOffsetPos)) != 0.0F && pLevel.getBlockState(pTablePos.offset(pOffsetPos.getX() / 2, pOffsetPos.getY(), pOffsetPos.getZ() / 2)).is(BlocksObs.OBSIDIAN_TABLET.get());
-    }
-    private boolean isValidBookShelf(Level pLevel, BlockPos pPos, BlockPos blockpos) {
-        // Ваша логика проверки допустимости книжной полки
-        return true; // Пример
+    private boolean isValidObsidianTablet(Level level, BlockPos enchantmentTablePos, BlockPos offset) {
+        BlockPos targetPos = enchantmentTablePos.offset(offset);
+        return level.getBlockState(targetPos).is(BlocksObs.OBSIDIAN_TABLET.get());
     }
 }

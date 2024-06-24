@@ -19,6 +19,8 @@ public class ParticlesObs {
             PARTICLE_TYPES.register("bagell_flame_particles", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> NETHER_FLAME2_PARTICLES =
             PARTICLE_TYPES.register("nether_flame2_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> BAGELL_TABLE_PARTICLES =
+            PARTICLE_TYPES.register("bagell_table_particles", () -> new SimpleParticleType(true));
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }
