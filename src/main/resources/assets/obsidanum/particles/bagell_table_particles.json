@@ -1,5 +1,30 @@
 {
   "textures": [
-    "obsidanum:bagell_flame"
+    "obsidanum:sga_a",
+    "obsidanum:sga_b",
+    "obsidanum:sga_c",
+    "obsidanum:sga_d",
+    "obsidanum:sga_e",
+    "obsidanum:sga_f",
+    "obsidanum:sga_g",
+    "obsidanum:sga_h",
+    "obsidanum:sga_i",
+    "obsidanum:sga_j",
+    "obsidanum:sga_k",
+    "obsidanum:sga_l",
+    "obsidanum:sga_m",
+    "obsidanum:sga_n",
+    "obsidanum:sga_o",
+    "obsidanum:sga_p",
+    "obsidanum:sga_q",
+    "obsidanum:sga_r",
+    "obsidanum:sga_s",
+    "obsidanum:sga_t",
+    "obsidanum:sga_u",
+    "obsidanum:sga_v",
+    "obsidanum:sga_w",
+    "obsidanum:sga_x",
+    "obsidanum:sga_y",
+    "obsidanum:sga_z"
   ]
 }
