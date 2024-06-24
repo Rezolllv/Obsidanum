@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.rezolv.obsidanum.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "refmap": "obsidanum.refmap.json",
+  "mixins": [
+    "EnchantmentTableBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
