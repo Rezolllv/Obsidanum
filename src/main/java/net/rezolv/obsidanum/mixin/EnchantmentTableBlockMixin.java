@@ -46,18 +46,26 @@ public abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
     protected EnchantmentTableBlockMixin(Properties pProperties) {
         super(pProperties);
     }
+
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         super.animateTick(pState, pLevel, pPos, pRandom);
         Iterator var5 = BOOKSHELF_OFFSETS.iterator();
 
-        while(var5.hasNext()) {
-            BlockPos blockpos = (BlockPos)var5.next();
+        while (var5.hasNext()) {
+            BlockPos blockpos = (BlockPos) var5.next();
             if (pRandom.nextInt(16) == 0 && isValidBookShelf(pLevel, pPos, blockpos) && !isValidObsidianTablet(pLevel, pPos, blockpos)) {
-                pLevel.addParticle(ParticleTypes.ENCHANT, (double)pPos.getX() + 0.5, (double)pPos.getY() + 2.0, (double)pPos.getZ() + 0.5, (double)((float)blockpos.getX() + pRandom.nextFloat()) - 0.5, (double)((float)blockpos.getY() - pRandom.nextFloat() - 1.0F), (double)((float)blockpos.getZ() + pRandom.nextFloat()) - 0.5);
-            }
-           else if (pRandom.nextInt(16) == 0 && isValidBookShelf(pLevel, pPos, blockpos) && isValidObsidianTablet(pLevel, pPos, blockpos)) {
-                pLevel.addParticle(ParticlesObs.BAGELL_TABLE_PARTICLES.get(), (double)pPos.getX() + 0.5, (double)pPos.getY() + 2.0, (double)pPos.getZ() + 0.5, (double)((float)blockpos.getX() + pRandom.nextFloat()) - 0.5, (double)((float)blockpos.getY() - pRandom.nextFloat() - 1.0F), (double)((float)blockpos.getZ() + pRandom.nextFloat()) - 0.5);
+                pLevel.addParticle(ParticleTypes.ENCHANT, (double) pPos.getX() + 0.5, (double) pPos.getY() + 2.0, (double) pPos.getZ() + 0.5, (double) ((float) blockpos.getX() + pRandom.nextFloat()) - 0.5, (double) ((float) blockpos.getY() - pRandom.nextFloat() - 1.0F), (double) ((float) blockpos.getZ() + pRandom.nextFloat()) - 0.5);
+            } else if (pRandom.nextInt(16) == 0 && isValidBookShelf(pLevel, pPos, blockpos) && isValidObsidianTablet(pLevel, pPos, blockpos)) {
+                for (int i = 0; i < 6; i++) { // Генерируем частицы 6 раз
+                    pLevel.addParticle(ParticlesObs.BAGELL_TABLE_PARTICLES.get(),
+                            (double) pPos.getX() + 0.5,
+                            (double) pPos.getY() + 2.0,
+                            (double) pPos.getZ() + 0.5,
+                            (double) ((float) blockpos.getX() + pRandom.nextFloat()) - 0.5,
+                            (double) ((float) blockpos.getY() - pRandom.nextFloat() - 1.0F),
+                            (double) ((float) blockpos.getZ() + pRandom.nextFloat()) - 0.5);
+                }
             }
         }
     }
