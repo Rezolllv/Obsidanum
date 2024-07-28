@@ -2,224 +2,148 @@ package net.rezolv.obsidanum.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 
 public class ObsidianDoor extends Block {
-    public static final EnumProperty<GaragePart> PART = EnumProperty.create("part", GaragePart.class);
-    public static final BooleanProperty OPEN = BooleanProperty.create("open");
-    private static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Part> PART = EnumProperty.create("part", Part.class);
 
-    private static final VoxelShape EAST = Block.box(6, 0, 0, 10, 16, 16);
-    private static final VoxelShape NORTH = Block.box(0, 0, 6, 16, 16, 10);
+    private static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 6, 16, 16, 10);
+    private static final VoxelShape SHAPE_SOUTH = Block.box(0, 0, 6, 16, 16, 10);
+    private static final VoxelShape SHAPE_EAST = Block.box(6, 0, 0, 10, 16, 16);
+    private static final VoxelShape SHAPE_WEST = Block.box(6, 0, 0, 10, 16, 16);
+
+    public ObsidianDoor(Properties pProperties) {
+        super(pProperties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(PART, Part.CENTER));
+    }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
-                               CollisionContext context) {
-        Direction facing = state.getValue(FACING);
-        if (facing == Direction.WEST || facing == Direction.EAST) {
-            return NORTH;
-        } else {
-            return EAST;
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
+            case NORTH:
+                return SHAPE_NORTH;
+            case SOUTH:
+                return SHAPE_SOUTH;
+            case EAST:
+                return SHAPE_EAST;
+            case WEST:
+                return SHAPE_WEST;
+            default:
+                return Shapes.block();
         }
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
-        if (state.getValue(OPEN)) {
-            return Shapes.empty();
-        } else {
-            return state.getValue(FACING) == Direction.WEST || state.getValue(FACING) == Direction.EAST ? NORTH : EAST;
-        }
-    }
-
-    public ObsidianDoor(Properties properties) {
-        super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(OPEN, false)
-                .setValue(POWERED, false)
-                .setValue(PART, GaragePart.BOTTOM));
-    }
-
-
-
-
-    protected BlockState GarageState(BlockState state, LevelAccessor level, BlockPos pos) {
-        boolean above = level.getBlockState(pos.above()).getBlock() == this;
-        boolean below = level.getBlockState(pos.below()).getBlock() == this;
-
-        if (above == true && below == true) {
-            return state.setValue(PART, GaragePart.MIDDLE);
-        } else if (above != true && below == true) {
-            return state.setValue(PART, GaragePart.TOP);
-        } else if (above == true && below != true) {
-            return state.setValue(PART, GaragePart.BOTTOM);
-        } else {
-            return state.setValue(PART, GaragePart.TOP);
-        }
-    }
-
-    @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState statetwo, boolean bool) {
-        if (!statetwo.is(state.getBlock())) {
-            this.GarageState(state, level, pos);
-        }
-    }
-
-    @Override
-    @Nullable
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.GarageState(super.getStateForPlacement(context), context.getLevel(), context.getClickedPos())
-                .setValue(FACING, context.getHorizontalDirection().getClockWise());
-    }
-
-    public void placeAt(Level level, BlockPos pos, int num) {
-        level.setBlock(pos, this.defaultBlockState(), num);
-    }
-
-    @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor level, BlockPos pos, BlockPos newPos) {
-        return this.GarageState(state, level, pos);
-
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(PART, FACING, POWERED, OPEN);
+        builder.add(FACING, PART);
     }
-
-    public boolean isOpen(BlockState state) {
-        return state.getValue(OPEN);
-    }
-
-    public void openDoor(Level level, BlockState state, BlockPos pos, boolean open) {
-        if (state.is(this) && state.getValue(OPEN) != open) {
-            level.setBlockAndUpdate(pos, state.setValue(OPEN, Boolean.valueOf(open)));
-        }
-    }
-
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn,
-                                 BlockHitResult hit) {
-        ItemStack itemstack = player.getItemInHand(handIn);
-        Item item = itemstack.getItem();
-        if (item == this.asItem()) {
-            return InteractionResult.PASS;
-        }
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            Direction facing = state.getValue(FACING);
 
-        this.garageDoor(level, pos, !state.getValue(OPEN), state.getValue(FACING));
-        level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.5F,
-                level.random.nextFloat() * 0.1F + 0.8F);
-        state = state.cycle(OPEN);
-        level.setBlock(pos, state, 10);
-        return InteractionResult.SUCCESS;
-    }
-
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
-    }
-
-    @SuppressWarnings("deprecation")
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, Level level,
-                                          BlockPos currentPos, BlockPos facingPos) {
-        return super.updateShape(stateIn, facing, facingState, level, currentPos, facingPos);
-    }
-
-    @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        Block block = level.getBlockState(pos).getBlock();
-        Block upper = level.getBlockState(pos.above(1)).getBlock();
-        Block lower = level.getBlockState(pos.below(1)).getBlock();
-
-        if (upper == block && lower == block) {
-            level.setBlockAndUpdate(pos.below(1), state.setValue(PART, GaragePart.TOP));
-        } else if (lower == block) {
-            level.setBlockAndUpdate(pos.below(1), state.setValue(PART, GaragePart.TOP));
-        }
-        level.playSound(null, pos, SoundEvents.METAL_BREAK, SoundSource.BLOCKS, 0.5F,
-                level.random.nextFloat() * 0.1F + 0.8F);
-
-        if (state.getValue(OPEN) == true && state.getValue(PART) == GaragePart.BOTTOM || state.getValue(PART) == GaragePart.MIDDLE) {
-
-        } else {
-            this.spawnDestroyParticles(level, player, pos, state);
-        }
-    }
-
-    private void garageDoor(Level world, BlockPos pos, boolean bool, Direction dir) {
-        BlockState state = world.getBlockState(pos);
-        if (state.getBlock() == this && state.getValue(OPEN) != bool
-                && state.getValue(FACING).equals(dir)) {
-            world.setBlockAndUpdate(pos, state.setValue(OPEN, bool));
+            // Iterate through all parts of the door
             for (int x = -1; x <= 1; x++) {
                 for (int y = -1; y <= 1; y++) {
-                    for (int z = -1; z <= 1; z++) {
-                        BlockPos newPos = pos.offset(x, y, z);
-                        garageDoor(world, newPos, bool, dir);
+                    BlockPos partPos = getPartPos(pos, facing, x, y);
+                    BlockState partState = level.getBlockState(partPos);
+
+                    // Remove the part if it is part of this door
+                    if (partState.getBlock() == this) {
+                        level.destroyBlock(partPos, false);
                     }
                 }
             }
         }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction facing = context.getHorizontalDirection().getOpposite();
+        BlockPos pos = context.getClickedPos();
+        Level level = context.getLevel();
+
+        // Place the entire 3x3 structure horizontally
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                BlockPos partPos = getPartPos(pos, facing, x, y);
+                Part part = Part.getPart(x, y);
+                BlockState partState = this.defaultBlockState().setValue(FACING, facing).setValue(PART, part);
+                level.setBlock(partPos, partState, 3);
+                level.sendBlockUpdated(partPos, partState, partState, 3);
+            }
+        }
+        return this.defaultBlockState().setValue(FACING, facing).setValue(PART, Part.CENTER);
+    }
+
+    private BlockPos getPartPos(BlockPos pos, Direction facing, int x, int y) {
+        switch (facing) {
+            case NORTH:
+                return pos.offset(x, y, 0);
+            case SOUTH:
+                return pos.offset(-x, y, 0);
+            case EAST:
+                return pos.offset(0, y, x);
+            case WEST:
+                return pos.offset(0, y, -x);
+            default:
+                return pos;
+        }
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean isMoving) {
-        if (!level.isClientSide) {
-            boolean powered = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.above());
-            if (state.getValue(POWERED) != powered) {
-                level.setBlock(pos, state.setValue(POWERED, powered), 2);
-                if (state.getValue(OPEN) != powered) {
-                    garageDoor(level, pos, !state.getValue(OPEN), state.getValue(FACING)); // Invert the open state
-                    level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.5F,
-                            level.random.nextFloat() * 0.1F + 0.8F);
-                }
-            }
-        }
+    public BlockState rotate(BlockState state, Rotation rot) {
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
+    }
 
-    public enum GaragePart implements StringRepresentable {
-        TOP("top"), MIDDLE("middle"), BOTTOM("bottom");
+    public enum Part implements StringRepresentable {
+        BOTTOM_RIGHT,
+        BOTTOM_CENTER,
+        BOTTOM_LEFT,
+        CENTER_RIGHT,
+        CENTER,
+        CENTER_LEFT,
+        TOP_RIGHT,
+        TOP_CENTER,
+        TOP_LEFT;
 
-        private final String name;
-
-        GaragePart(final String name) {
-            this.name = name;
+        public static Part getPart(int x, int y) {
+            if (x == -1 && y == -1) return BOTTOM_RIGHT;
+            if (x == 0 && y == -1) return BOTTOM_CENTER;
+            if (x == 1 && y == -1) return BOTTOM_LEFT;
+            if (x == -1 && y == 0) return CENTER_RIGHT;
+            if (x == 0 && y == 0) return CENTER;
+            if (x == 1 && y == 0) return CENTER_LEFT;
+            if (x == -1 && y == 1) return TOP_RIGHT;
+            if (x == 0 && y == 1) return TOP_CENTER;
+            if (x == 1 && y == 1) return TOP_LEFT;
+            return CENTER;
         }
 
-        public String getName() {
-            return this.name;
-        }
-
+        @Override
         public String getSerializedName() {
-            return this.name;
+            return this.name().toLowerCase();
         }
-
     }
-
 }

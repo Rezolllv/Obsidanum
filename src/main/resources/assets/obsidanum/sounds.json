@@ -1,4 +1,20 @@
 {
+  "open_obsidian_door": {
+    "sounds": [
+      {
+        "name": "obsidanum:open_obsidian_door",
+        "stream": true
+      }
+    ]
+  },
+  "close_obsidian_door": {
+    "sounds": [
+      {
+        "name": "obsidanum:close_obsidian_door",
+        "stream": true
+      }
+    ]
+  },
   "chacram_hit": {
     "sounds": [
       {

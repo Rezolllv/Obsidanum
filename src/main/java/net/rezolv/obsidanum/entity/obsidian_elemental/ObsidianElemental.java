@@ -42,21 +42,20 @@ public class ObsidianElemental extends Monster {
                 return 16;
             }
         });
-        this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
-// Заменяем ObsidianElementalAttackGoal на FollowMobGoal для преследования игрока
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Villager.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Piglin.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, EnderMan.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ZombifiedPiglin.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PiglinBrute.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Vindicator.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Pillager.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Vex.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Evoker.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Ravager.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Witch.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, SnowGolem.class, true));
+        this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Piglin.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, EnderMan.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ZombifiedPiglin.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PiglinBrute.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Vindicator.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Pillager.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Vex.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Evoker.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Ravager.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Witch.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, SnowGolem.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
     }

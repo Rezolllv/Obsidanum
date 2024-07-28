@@ -19,12 +19,15 @@ import net.rezolv.obsidanum.block.BlocksObs;
 import java.util.List;
 
 public class ModPlacedFeatures {
+    public static final ResourceKey<PlacedFeature> ONYX_PLACED_KEY = registerKey("onyx_placed");
 
     public static final ResourceKey<PlacedFeature> OBSIDAN_TREE_PLACED_KEY = registerKey("obsidan_tree_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
-
+        register(context, ONYX_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_ONYX_KEY),
+                ModOrePlacement.commonOrePlacement(1,
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(0))));
 
         register(context, OBSIDAN_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OBSIDAN_TREE),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 2),

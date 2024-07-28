@@ -26,9 +26,16 @@ import java.util.List;
 
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> OBSIDAN_TREE = registerKey("obsidan_tree");
-
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_ONYX_KEY = registerKey("onyx");
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+        RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 
+        OreConfiguration.target(deepslateReplaceables, BlocksObs.ONYX.get().defaultBlockState());
+
+        List<OreConfiguration.TargetBlockState> overworldOnyxOres = List.of(
+                OreConfiguration.target(deepslateReplaceables, BlocksObs.ONYX.get().defaultBlockState()));
+
+        register(context, OVERWORLD_ONYX_KEY, Feature.ORE, new OreConfiguration(overworldOnyxOres, 60));
 
         register(context, OBSIDAN_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(BlocksObs.OBSIDAN_WOOD_LOG.get()),

@@ -86,10 +86,18 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_DOOR = registerBlock("obsidian_door",
-            () -> new ObsidianDoor(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE)
-                    .requiresCorrectToolForDrops()));
+            () -> new ObsidianDoor(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noLootTable().sound(SoundType.STONE)));
+//    public static final RegistryObject<Block> OPENER_BLOCK = registerBlock("opener_block",
+//            () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE)
+//                    .requiresCorrectToolForDrops().noCollission()));
     public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS = registerBlock("carved_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ONYX = registerBlock("onyx",
+            () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ONYX_BRICKS = registerBlock("onyx_bricks",
+            () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> POLISHED_ONYX = registerBlock("polished_onyx",
+            () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_CARVED_OBSIDIAN_BRICKS = registerBlock("moldy_carved_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_CARVED_OBSIDIAN_BRICKS = registerBlock("cracked_carved_obsidian_bricks",
