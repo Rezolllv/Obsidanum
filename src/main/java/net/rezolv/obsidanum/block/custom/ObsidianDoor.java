@@ -3,6 +3,10 @@ package net.rezolv.obsidanum.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -12,8 +16,10 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -22,6 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class ObsidianDoor extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<Part> PART = EnumProperty.create("part", Part.class);
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     private static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 6, 16, 16, 10);
     private static final VoxelShape SHAPE_SOUTH = Block.box(0, 0, 6, 16, 16, 10);
@@ -30,7 +37,10 @@ public class ObsidianDoor extends Block {
 
     public ObsidianDoor(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(PART, Part.CENTER));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(PART, Part.CENTER)
+                .setValue(ACTIVE, false));
     }
 
     @Override
@@ -51,8 +61,9 @@ public class ObsidianDoor extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, PART);
+        builder.add(FACING, PART, ACTIVE);
     }
+
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
@@ -74,6 +85,17 @@ public class ObsidianDoor extends Block {
         super.onRemove(state, level, pos, newState, isMoving);
     }
     @Override
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (state.getValue(PART) == Part.CENTER && state.getValue(ACTIVE) == false && player.getItemInHand(hand).getItem() == Items.STICK) {
+            world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+            if (!player.isCreative()) {
+                player.getItemInHand(hand).shrink(1);
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
+    }
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getHorizontalDirection().getOpposite();
         BlockPos pos = context.getClickedPos();
@@ -84,12 +106,15 @@ public class ObsidianDoor extends Block {
             for (int y = -1; y <= 1; y++) {
                 BlockPos partPos = getPartPos(pos, facing, x, y);
                 Part part = Part.getPart(x, y);
-                BlockState partState = this.defaultBlockState().setValue(FACING, facing).setValue(PART, part);
+                BlockState partState = this.defaultBlockState()
+                        .setValue(FACING, facing)
+                        .setValue(PART, part)
+                        .setValue(ACTIVE, part == Part.CENTER ? true : false); // Set ACTIVE to true for CENTER part
                 level.setBlock(partPos, partState, 3);
                 level.sendBlockUpdated(partPos, partState, partState, 3);
             }
         }
-        return this.defaultBlockState().setValue(FACING, facing).setValue(PART, Part.CENTER);
+        return this.defaultBlockState().setValue(FACING, facing).setValue(PART, Part.CENTER).setValue(ACTIVE, false);
     }
 
     private BlockPos getPartPos(BlockPos pos, Direction facing, int x, int y) {
