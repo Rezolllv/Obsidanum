@@ -40,6 +40,10 @@
   "item.obsidanum.crystallized_copper_ore": "Crystallized copper ore",
   "item.obsidanum.crystallized_iron_ore": "Crystallized iron ore",
   "item.obsidanum.crystallized_gold_ore": "Crystallized gold ore",
+  "item.obsidanum.obsidian_door_key_1": "Obsidian door key 1",
+  "item.obsidanum.obsidian_door_key_2": "Obsidian door key 2",
+  "item.obsidanum.obsidian_door_key_3": "Obsidian door key 3",
+  "item.obsidanum.obsidian_door_key_4": "Obsidian door key 4",
 
   "block.obsidanum.obsidian_tablet": "Obsidian tablet",
   "block.obsidanum.obsidan_planks": "Obsidanwood planks",

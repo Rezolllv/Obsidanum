@@ -58,6 +58,10 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.CRUCIBLE.get());
                         pOutput.accept(ItemsObs.RELICT_AMETHYST_SHARD.get());
                         pOutput.accept(ItemsObs.CRUCIBLE_WITH_NETHER_FLAME.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_1.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_2.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_3.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_4.get());
 
 
 

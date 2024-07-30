@@ -1,0 +1,23 @@
+{
+	"parent": "block/orientable",
+	"textures": {
+		"front": "obsidanum:block/obsidian_door_active_2",
+		"side": "obsidanum:block/obsidian_door_active_2",
+		"top": "obsidanum:block/obsidian_door_active_2"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 6],
+			"to": [16, 16, 10],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#front"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top", "rotation": 180},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#top", "rotation": 180}
+			}
+		}
+	]
+}
