@@ -37,13 +37,13 @@ public class ItemsObs {
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_1 = ITEMS.register("obsidian_door_key_1",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_2 = ITEMS.register("obsidian_door_key_2",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_3 = ITEMS.register("obsidian_door_key_3",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_4 = ITEMS.register("obsidian_door_key_4",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> REZOLV_THE_TALE_OF_THE_VANISHED_ORDER_DISC = ITEMS.register("rezolv_the_tale_of_the_vanished_order_disc",
             () -> new RecordItem(12, SoundsObs.REZOLV_THE_TALE_OF_THE_VANISHED_ORDER, new Item.Properties().stacksTo(1), 2520));
     public static final RegistryObject<Item> CRUCIBLE_WITH_NETHER_FLAME = ITEMS.register("crucible_with_nether_flame",
