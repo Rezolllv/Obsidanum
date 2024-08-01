@@ -56,6 +56,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDAN_CHEST_BOAT.get());
                         pOutput.accept(ItemsObs.NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.CRUCIBLE.get());
+                        pOutput.accept(ItemsObs.INGOT_BAGGELL.get());
                         pOutput.accept(ItemsObs.RELICT_AMETHYST_SHARD.get());
                         pOutput.accept(ItemsObs.CRUCIBLE_WITH_NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_1.get());
@@ -69,6 +70,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_TABLET.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_INLAID_COLUMN.get());
+                        pOutput.accept(ItemsObs.MOLD_FIBERS.get());
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_INLAID_COLUMN.get());
                         pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_INLAID_COLUMN.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_COLUMN.get());

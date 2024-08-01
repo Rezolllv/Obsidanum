@@ -36,6 +36,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> INGOT_BAGGELL = ITEMS.register("ingot_baggell",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_1 = ITEMS.register("obsidian_door_key_1",
             () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_2 = ITEMS.register("obsidian_door_key_2",
@@ -97,6 +99,8 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
             () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(),new Item.Properties()));
+    public static final RegistryObject<Item> MOLD_FIBERS = ITEMS.register("mold_fibers",
+            () -> new ItemNameBlockItem(BlocksObs.MOLD_FIBERS.get(),new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
             () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties(), 450));
     public static final RegistryObject<Item> OBSIDAN_BOAT = ITEMS.register("obsidan_boat",

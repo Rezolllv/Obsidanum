@@ -8,5 +8,5 @@
     "south": "obsidanum:block/obsidan_wood_leaves_side",
     "up": "obsidanum:block/obsidan_wood_leaves_top",
     "west": "obsidanum:block/obsidan_wood_leaves_side"
-  }
+  },"render_type": "translucent"
 }
