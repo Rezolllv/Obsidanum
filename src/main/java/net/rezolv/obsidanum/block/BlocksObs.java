@@ -45,7 +45,7 @@ public class BlocksObs {
 
     public static final RegistryObject<Block> OBSIDIAN_TABLET = registerBlock("obsidian_tablet",
             () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
-                    .strength(20, 500).sound(SoundType.CHERRY_WOOD).hasPostProcess((bs, br, bp) -> true).emissiveRendering((bs, br, bp) -> true)  // Устанавливаем предикат на true, чтобы всегда использовать эмиссирующий рендеринг
+                    .strength(20, 500).sound(SoundType.CHERRY_WOOD)  // Устанавливаем предикат на true, чтобы всегда использовать эмиссирующий рендеринг
 
                     .mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistryObject<Block> OBSIDIAN_INLAID_COLUMN = registerBlock("obsidian_inlaid_column",

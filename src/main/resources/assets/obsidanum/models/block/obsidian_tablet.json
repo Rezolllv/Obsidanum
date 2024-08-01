@@ -6,7 +6,7 @@
 	"textures": {
 		"0": "obsidanum:block/obsidian_tablet",
 		"particle": "obsidanum:block/obsidian_tablet"
-	},"render_type": "cutout",
+	},
 	"elements": [
 		{
 			"from": [2, 0, 6],

@@ -3,5 +3,5 @@
   "textures": {
     "bottom": "obsidanum:block/obsidan_wood_door_bottom",
     "top": "obsidanum:block/obsidan_wood_door_top"
-  },"render_type": "cutout"
+  },"render_type": "translucent"
 }

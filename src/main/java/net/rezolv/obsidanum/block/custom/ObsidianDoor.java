@@ -37,6 +37,7 @@ public class ObsidianDoor extends Block {
     public static final BooleanProperty ACTIVE_2 = BooleanProperty.create("active_2");
     public static final BooleanProperty ACTIVE_3= BooleanProperty.create("active_3");
     public static final BooleanProperty ACTIVE_4 = BooleanProperty.create("active_4");
+    public static final BooleanProperty ACTIVE_TOP = BooleanProperty.create("active_top");
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
 
     private static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 6, 16, 16, 10);
@@ -80,7 +81,7 @@ public class ObsidianDoor extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, PART, ACTIVE_1, ACTIVE_2, ACTIVE_3, ACTIVE_4, OPEN);
+        builder.add(FACING, PART, ACTIVE_1, ACTIVE_2, ACTIVE_3, ACTIVE_4, ACTIVE_TOP, OPEN);
     }
 
     @Override
@@ -118,6 +119,7 @@ public class ObsidianDoor extends Block {
                         .setValue(ACTIVE_2, false)
                         .setValue(ACTIVE_3, false)
                         .setValue(ACTIVE_4, false)
+                        .setValue(ACTIVE_TOP, false)
                         .setValue(OPEN, false);
                 level.setBlock(partPos, partState, 3);
                 level.sendBlockUpdated(partPos, partState, partState, 3);
@@ -129,6 +131,7 @@ public class ObsidianDoor extends Block {
                 .setValue(ACTIVE_2, false)
                 .setValue(ACTIVE_3, false)
                 .setValue(ACTIVE_4, false)
+                .setValue(ACTIVE_TOP, false)
                 .setValue(OPEN, false);
     }
 
@@ -192,9 +195,17 @@ public class ObsidianDoor extends Block {
                 }
                 return InteractionResult.SUCCESS;
             }
-            else if (state.getValue(ACTIVE_1)&&state.getValue(ACTIVE_2)&&state.getValue(ACTIVE_3)&&state.getValue(ACTIVE_4)) {
-                boolean isOpen = state.getValue(OPEN);
+            else if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_3) && state.getValue(ACTIVE_4)) {
+                // Set ACTIVE_TOP to true for the TOP_CENTER part
                 Direction facing = state.getValue(FACING);
+                BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
+                BlockState topCenterState = world.getBlockState(topCenterPos);
+                if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
+                    world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
+                    world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+
+                boolean isOpen = state.getValue(OPEN);
                 for (int x = -1; x <= 1; x++) {
                     for (int y = -1; y <= 1; y++) {
                         BlockPos partPos = getPartPos(pos, facing, x, y);

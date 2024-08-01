@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/orientable",
-	"render_type": "cutout",
+	"render_type": "translucent",
 	"textures": {
 		"0": "obsidanum:block/obsidian_door_bottom_center_open",
 		"1": "obsidanum:block/obsidian_door_center_open",
@@ -11,7 +11,6 @@
 		{
 			"from": [0, 0, 6],
 			"to": [16, 16, 10],
-			"shade": false,
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},

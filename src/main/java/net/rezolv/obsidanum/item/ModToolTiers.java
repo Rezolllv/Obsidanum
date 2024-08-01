@@ -24,6 +24,6 @@ public class ModToolTiers {
     public static final Tier SMOLDERING = TierSortingRegistry.registerTier(
             new ForgeTier(2, 550, 6, 4f, 1,
                     TagsObs.Blocks.NEEDS_OBSIDIAN_TOOL, () -> Ingredient.of(Items.OBSIDIAN)),
-            new ResourceLocation(Obsidanum.MOD_ID, "smoldering"), List.of(Tiers.STONE), List.of());
+            new ResourceLocation(Obsidanum.MOD_ID, "smoldering"), List.of(Tiers.IRON), List.of());
 
 }

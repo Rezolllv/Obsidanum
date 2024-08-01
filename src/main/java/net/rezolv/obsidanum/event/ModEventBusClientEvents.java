@@ -4,12 +4,12 @@ import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -19,6 +19,7 @@ import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.ModModelLayers;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalModel;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.client.ModModelLayersItem;
@@ -41,6 +42,7 @@ public class ModEventBusClientEvents {
         event.registerSpriteSet(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), BagellFlameParticle.Provider::new);
         event.registerSpriteSet(ParticlesObs.BAGELL_TABLE_PARTICLES.get(), BagelEnchantParticle.Provider::new);
     }
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         ItemProperties.register(ItemsObs.OBSIDAN_SWORD.get(), new ResourceLocation("activated"),
@@ -54,13 +56,16 @@ public class ModEventBusClientEvents {
         ItemProperties.register(ItemsObs.OBSIDAN_PICKAXE.get(), new ResourceLocation("activated"),
                 (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanPickaxe && ((ObsidanPickaxe) stack.getItem()).isActivated() ? 1.0F : 0.0F);
     }
+
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ChakramModelEntity.LAYER_LOCATION, ChakramModelEntity::createBodyLayer);
     }
+
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.OBSIDAN_SIGN.get(), SignRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.OBSIDAN_HANGING_SIGN.get(), HangingSignRenderer::new);
     }
+
 }
