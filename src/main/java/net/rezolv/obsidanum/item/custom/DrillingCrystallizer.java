@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
+import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -116,6 +117,7 @@ public class DrillingCrystallizer extends Item {
                 Blocks.GLOWSTONE,
                 Blocks.AMETHYST_BLOCK,
                 Blocks.ANCIENT_DEBRIS,
+                BlocksObs.ONYX.get(),
                 Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
                 Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.NETHER_GOLD_ORE,
                 Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE
@@ -184,6 +186,8 @@ public class DrillingCrystallizer extends Item {
                                 crystallizedOre = new ItemStack(Items.REDSTONE);
                             } else if (ore == Blocks.NETHER_QUARTZ_ORE) {
                                 crystallizedOre = new ItemStack(Items.QUARTZ);
+                            } else if (ore == BlocksObs.ONYX.get()&& RANDOM.nextInt(100) < 1) {
+                                crystallizedOre = new ItemStack(ItemsObs.FACETED_ONYX.get());
                             } else if (ore == Blocks.GLOWSTONE) {
                                 crystallizedOre = new ItemStack(Items.GLOWSTONE_DUST);
                             } else {

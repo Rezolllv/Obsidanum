@@ -17,7 +17,7 @@ public class GloomyMycelium extends VineBlock {
     }
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (pLevel.isDay() && pLevel.canSeeSky(pPos) && pRandom.nextFloat() < 0.15) {
+        if (pLevel.isDay() && pLevel.canSeeSky(pPos) && pRandom.nextFloat() < 0.45) {
             pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
         } else {
             super.randomTick(pState, pLevel, pPos, pRandom);
