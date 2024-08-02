@@ -70,7 +70,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_TABLET.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_INLAID_COLUMN.get());
-                        pOutput.accept(ItemsObs.MOLD_FIBERS.get());
+                        pOutput.accept(ItemsObs.THE_GLOOMY_MYCELIUM.get());
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_INLAID_COLUMN.get());
                         pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_INLAID_COLUMN.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_COLUMN.get());

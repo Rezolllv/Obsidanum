@@ -100,7 +100,7 @@ public class Obsidanum {
             event.enqueueWork(() -> {
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_WOOD_LEAVES.get(), 0.2f);
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_SAPLING.get(), 0.2f);
-                ComposterBlock.COMPOSTABLES.put(ItemsObs.MOLD_FIBERS.get(), 0.2f);
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.THE_GLOOMY_MYCELIUM.get(), 0.2f);
 
             });
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NETHER_FIRE_LAVA.get(), RenderType.solid());

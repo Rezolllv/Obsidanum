@@ -99,8 +99,8 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
             () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(),new Item.Properties()));
-    public static final RegistryObject<Item> MOLD_FIBERS = ITEMS.register("mold_fibers",
-            () -> new ItemNameBlockItem(BlocksObs.MOLD_FIBERS.get(),new Item.Properties()));
+    public static final RegistryObject<Item> THE_GLOOMY_MYCELIUM = ITEMS.register("the_gloomy_mycelium",
+            () -> new ItemNameBlockItem(BlocksObs.THE_GLOOMY_MYCELIUM.get(),new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
             () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties(), 450));
     public static final RegistryObject<Item> OBSIDAN_BOAT = ITEMS.register("obsidan_boat",

@@ -26,8 +26,8 @@ public class BlocksObs {
             () -> new NetherFlameBlock(ModFluids.SOURCE_NETHER_FIRE_LAVA, BlockBehaviour.Properties.copy(Blocks.LAVA)));
     public static final RegistryObject<Block> OBSIDAN_WOOD_LEAVES = BLOCKS.register("obsidan_wood_leaves",
             () -> new FlameLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<Block> MOLD_FIBERS = BLOCKS.register("mold_fibers",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistryObject<Block> THE_GLOOMY_MYCELIUM = BLOCKS.register("the_gloomy_mycelium",
+            () -> new GloomyMycelium(BlockBehaviour.Properties.copy(Blocks.VINE)));
 
     public static final RegistryObject<Block> OBSIDAN_SAPLING = BLOCKS.register("obsidan_sapling",
             () -> new SaplingBlock(new ObsidanOak(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
