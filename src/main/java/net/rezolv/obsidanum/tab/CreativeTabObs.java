@@ -58,6 +58,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.CRUCIBLE.get());
                         pOutput.accept(ItemsObs.INGOT_BAGGELL.get());
                         pOutput.accept(ItemsObs.FACETED_ONYX.get());
+                        pOutput.accept(ItemsObs.ONYX_PENDANT.get());
                         pOutput.accept(ItemsObs.RELICT_AMETHYST_SHARD.get());
                         pOutput.accept(ItemsObs.CRUCIBLE_WITH_NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_1.get());
@@ -92,8 +93,14 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDIAN_DOOR.get());
                         pOutput.accept(BlocksObs.CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.ONYX.get());
+                        pOutput.accept(BlocksObs.ONYX_SLAB.get());
+                        pOutput.accept(BlocksObs.ONYX_STAIRS.get());
                         pOutput.accept(BlocksObs.ONYX_BRICKS.get());
+                        pOutput.accept(BlocksObs.ONYX_BRICKS_SLAB.get());
+                        pOutput.accept(BlocksObs.ONYX_BRICKS_STAIRS.get());
                         pOutput.accept(BlocksObs.POLISHED_ONYX.get());
+                        pOutput.accept(BlocksObs.POLISHED_ONYX_SLAB.get());
+                        pOutput.accept(BlocksObs.POLISHED_ONYX_STAIRS.get());
                         pOutput.accept(BlocksObs.MOLDY_CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.CRACKED_CARVED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_BRICKS.get());

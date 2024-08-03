@@ -25,7 +25,9 @@ public class BlocksObs {
     public static final RegistryObject<NetherFlameBlock> NETHER_FLAME_BLOCK = BLOCKS.register("nether_flame_block",
             () -> new NetherFlameBlock(ModFluids.SOURCE_NETHER_FIRE_LAVA, BlockBehaviour.Properties.copy(Blocks.LAVA)));
     public static final RegistryObject<Block> OBSIDAN_WOOD_LEAVES = BLOCKS.register("obsidan_wood_leaves",
-            () -> new FlameLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+            () -> new FlameLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).lightLevel((p_152680_) -> {
+                return 5;
+            })));
     public static final RegistryObject<Block> THE_GLOOMY_MYCELIUM = BLOCKS.register("the_gloomy_mycelium",
             () -> new GloomyMycelium(BlockBehaviour.Properties.copy(Blocks.VINE)));
 
@@ -89,10 +91,26 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ONYX = registerBlock("onyx",
             () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ONYX_SLAB = registerBlock("onyx_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ONYX_STAIRS = registerBlock("onyx_stairs",
+            () -> new StairBlock(() -> BlocksObs.ONYX.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)
+                            .requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ONYX_BRICKS = registerBlock("onyx_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ONYX_BRICKS_SLAB = registerBlock("onyx_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ONYX_BRICKS_STAIRS = registerBlock("onyx_bricks_stairs",
+            () -> new StairBlock(() -> BlocksObs.ONYX_BRICKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> POLISHED_ONYX = registerBlock("polished_onyx",
             () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> POLISHED_ONYX_SLAB = registerBlock("polished_onyx_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> POLISHED_ONYX_STAIRS = registerBlock("polished_onyx_stairs",
+            () -> new StairBlock(() -> BlocksObs.POLISHED_ONYX.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_CARVED_OBSIDIAN_BRICKS = registerBlock("moldy_carved_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_CARVED_OBSIDIAN_BRICKS = registerBlock("cracked_carved_obsidian_bricks",

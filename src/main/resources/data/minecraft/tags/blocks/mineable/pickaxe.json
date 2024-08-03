@@ -2,6 +2,12 @@
   "values": [
     "obsidanum:obsidian_tablet",
     "obsidanum:onyx",
+    "obsidanum:onyx_stairs",
+    "obsidanum:onyx_slab",
+    "obsidanum:polished_onyx_stairs",
+    "obsidanum:polished_onyx_slab",
+    "obsidanum:onyx_bricks_stairs",
+    "obsidanum:onyx_bricks_slab",
     "obsidanum:onyx_bricks",
     "obsidanum:polished_onyx",
     "obsidanum:obsidian_inlaid_column",

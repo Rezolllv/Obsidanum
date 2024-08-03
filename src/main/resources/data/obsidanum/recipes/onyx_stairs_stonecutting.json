@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "obsidanum:onyx"
+  },
+  "result": "obsidanum:onyx_stairs"
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "obsidanum:block/onyx",
+    "side": "obsidanum:block/onyx",
+    "top": "obsidanum:block/onyx"
+  }
+}

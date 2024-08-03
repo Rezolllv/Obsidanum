@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "obsidanum:polished_onyx"
+  },
+  "result": "obsidanum:polished_onyx_slab"
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "obsidanum:block/onyx_slab"
+    },
+    "type=double": {
+      "model": "obsidanum:block/onyx"
+    },
+    "type=top": {
+      "model": "obsidanum:block/onyx_slab_top"
+    }
+  }
+}

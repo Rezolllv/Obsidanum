@@ -40,6 +40,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> FACETED_ONYX = ITEMS.register("faceted_onyx",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ONYX_PENDANT = ITEMS.register("onyx_pendant",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_1 = ITEMS.register("obsidian_door_key_1",
             () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_2 = ITEMS.register("obsidian_door_key_2",

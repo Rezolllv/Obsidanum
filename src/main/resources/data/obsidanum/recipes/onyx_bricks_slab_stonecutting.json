@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "obsidanum:onyx_bricks"
+  },
+  "result": "obsidanum:onyx_bricks_slab"
+}

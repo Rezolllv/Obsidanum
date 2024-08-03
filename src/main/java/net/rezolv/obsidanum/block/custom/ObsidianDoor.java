@@ -2,9 +2,11 @@ package net.rezolv.obsidanum.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -169,6 +171,15 @@ public class ObsidianDoor extends Block {
                 if (!player.isCreative()) {
                     player.getItemInHand(hand).shrink(1);
                 }
+                if (state.getValue(ACTIVE_4) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_3)) {
+                    Direction facing = state.getValue(FACING);
+                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
+                    BlockState topCenterState = world.getBlockState(topCenterPos);
+                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
+                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
+                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    }
+                }
                 return InteractionResult.SUCCESS;
             }
            else if (!state.getValue(ACTIVE_2) && player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_DOOR_KEY_2.get()) {
@@ -177,6 +188,15 @@ public class ObsidianDoor extends Block {
                 if (!player.isCreative()) {
                     player.getItemInHand(hand).shrink(1);
                 }
+                if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_3) && state.getValue(ACTIVE_4)) {
+                    Direction facing = state.getValue(FACING);
+                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
+                    BlockState topCenterState = world.getBlockState(topCenterPos);
+                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
+                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
+                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    }
+                }
                 return InteractionResult.SUCCESS;
             }
             else if (!state.getValue(ACTIVE_3) && player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_DOOR_KEY_3.get()) {
@@ -184,6 +204,14 @@ public class ObsidianDoor extends Block {
                 world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
                 if (!player.isCreative()) {
                     player.getItemInHand(hand).shrink(1);
+                }if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_4)) {
+                    Direction facing = state.getValue(FACING);
+                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
+                    BlockState topCenterState = world.getBlockState(topCenterPos);
+                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
+                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
+                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    }
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -192,6 +220,14 @@ public class ObsidianDoor extends Block {
                 world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
                 if (!player.isCreative()) {
                     player.getItemInHand(hand).shrink(1);
+                }if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_3)) {
+                    Direction facing = state.getValue(FACING);
+                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
+                    BlockState topCenterState = world.getBlockState(topCenterPos);
+                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
+                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
+                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    }
                 }
                 return InteractionResult.SUCCESS;
             }
