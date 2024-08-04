@@ -45,7 +45,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> EYE_GART = ITEMS.register("eye_gart",
             () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F)
                     .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 1200, 0), 1.0F) // Защита
-                    .effect(() -> new MobEffectInstance(MobEffects.POISON, 60, 0), 0.5F) // Огнестойкость                    .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 2), 1.0F) // Абсорбция
+                    .effect(() -> new MobEffectInstance(MobEffects.POISON, 60, 0), 0.5F) // Огнестойкость
                     .alwaysEat().build())));
     public static final RegistryObject<Item> OBSIDIAN_DOOR_KEY_1 = ITEMS.register("obsidian_door_key_1",
             () -> new Item(new Item.Properties().stacksTo(16)));
