@@ -59,6 +59,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.INGOT_BAGGELL.get());
                         pOutput.accept(ItemsObs.FACETED_ONYX.get());
                         pOutput.accept(ItemsObs.ONYX_PENDANT.get());
+                        pOutput.accept(ItemsObs.EYE_GART.get());
                         pOutput.accept(ItemsObs.RELICT_AMETHYST_SHARD.get());
                         pOutput.accept(ItemsObs.CRUCIBLE_WITH_NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_1.get());
