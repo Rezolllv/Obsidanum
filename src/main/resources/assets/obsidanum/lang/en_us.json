@@ -30,6 +30,12 @@
   "item.obsidanum.nether_flame": "§eNether flame",
   "item.obsidanum.obsidan_sign": "Obsidan sign",
   "item.obsidanum.eye_gart": "Eye gart",
+  "item.obsidanum.obsidian_shard_key": "Obsidian shard",
+  "item.obsidan.description.obsidian_shard_key": "(key sign)",
+  "item.obsidanum.obsidian_shard_arrow": "Obsidian shard",
+  "item.obsidan.description.obsidian_shard_arrow": "(arrow protection sign)",
+  "item.obsidanum.obsidian_shard_inviolability": "Obsidian shard",
+  "item.obsidan.description.obsidian_shard_inviolability": "(inviolability sign)",
   "item.obsidanum.obsidan_boat": "Obsidan boat",
   "item.obsidanum.obsidan_chest_boat": "Obsidan chest boat",
   "entity.obsidanum.mod_chest_boat": "Boat with chest",
@@ -53,6 +59,7 @@
   "block.obsidanum.obsidan_planks": "Obsidanwood planks",
   "block.obsidanum.onyx": "Onyx",
   "block.obsidanum.onyx_stairs": "Onyx stairs",
+  "block.obsidanum.locked_chest_runic": "Locked runic chest",
   "block.obsidanum.onyx_slab": "Onyx slab",
   "item.obsidanum.the_gloomy_mycelium": "The gloomy mycelium",
   "block.obsidanum.the_gloomy_mycelium": "The gloomy mycelium",
@@ -125,7 +132,8 @@
   "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Rezolv - The tale of the vanished order",
 
 
-
+  "effect.obsidanum.inviolability": "Inviolability",
+  "effect.obsidanum.protection_arrow": "Protection from arrows",
   "obsidanum.press_shift": "Hold down [§7Shift§8]§8, to see the description",
   "obsidanum.press_shift2": "Hold down [§fShift§8]§8, to see the description",
   "item.obsidan.description.sword": "\n§oA sword made from a magic-soaked alloy. The will of the owner can ignite this blade with a Secret Fire that will make the next blow deadly. \n\n§2Properties: §fWhen activating ancient magic, the damage to the attacked increases by 1.5 times. CD 80 sec.",

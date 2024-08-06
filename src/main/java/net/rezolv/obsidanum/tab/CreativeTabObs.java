@@ -57,6 +57,9 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.CRUCIBLE.get());
                         pOutput.accept(ItemsObs.INGOT_BAGGELL.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_SHARD_KEY.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_SHARD_ARROW.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_SHARD_INVIOLABILITY.get());
                         pOutput.accept(ItemsObs.FACETED_ONYX.get());
                         pOutput.accept(ItemsObs.ONYX_PENDANT.get());
                         pOutput.accept(ItemsObs.EYE_GART.get());
@@ -111,6 +114,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDIAN_BRICKS_FENCE.get());
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS.get());
                         pOutput.accept(BlocksObs.MOLDY_OBSIDIAN_BRICKS.get());
+                        pOutput.accept(BlocksObs.LOCKED_CHEST_RUNIC.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_DOOR.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_TRAPDOOR.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_BUTTON.get());

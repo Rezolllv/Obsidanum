@@ -15,6 +15,14 @@
       }
     ]
   },
+  "lock": {
+    "sounds": [
+      {
+        "name": "obsidanum:lock",
+        "stream": true
+      }
+    ]
+  },
   "chacram_hit": {
     "sounds": [
       {

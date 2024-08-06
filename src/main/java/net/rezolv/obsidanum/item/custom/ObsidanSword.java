@@ -15,8 +15,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
@@ -70,6 +68,7 @@ public class ObsidanSword extends SwordItem {
 
     public void activate() {
         activated = true;
+
     }
 
     @Override

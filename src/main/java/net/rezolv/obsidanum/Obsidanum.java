@@ -19,6 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.SCRegistry;
+import net.rezolv.obsidanum.effect.EffectsObs;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
@@ -56,6 +57,7 @@ public class Obsidanum {
         ParticlesObs.register(modEventBus);
         EntityTypeInit.ENTITY_TYPES.register(modEventBus);
         SoundsObs.register(modEventBus);
+        EffectsObs.register(modEventBus);
         ModEntities.register(modEventBus);
         CreativeTabObs.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);

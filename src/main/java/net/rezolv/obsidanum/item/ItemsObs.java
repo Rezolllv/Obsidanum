@@ -38,6 +38,12 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> INGOT_BAGGELL = ITEMS.register("ingot_baggell",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDIAN_SHARD_KEY = ITEMS.register("obsidian_shard_key",
+            () -> new ObsidianShardKey(new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDIAN_SHARD_ARROW = ITEMS.register("obsidian_shard_arrow",
+            () -> new ObsidianShardArrow(new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDIAN_SHARD_INVIOLABILITY = ITEMS.register("obsidian_shard_inviolability",
+            () -> new ObsidianShardInviolability(new Item.Properties()));
     public static final RegistryObject<Item> FACETED_ONYX = ITEMS.register("faceted_onyx",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ONYX_PENDANT = ITEMS.register("onyx_pendant",

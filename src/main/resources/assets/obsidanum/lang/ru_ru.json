@@ -25,6 +25,12 @@
   "item.obsidanum.smoldering_obsidian_sword": "Тлеющий обсидиановый меч",
   "item.obsidanum.obsidan_hoe": "Обсидановая мотыга",
   "item.obsidanum.obsidan_shovel": "Обсидановая лопата",
+  "item.obsidanum.obsidian_shard_key": "Обсидиановый осколок",
+  "item.obsidan.description.obsidian_shard_key": "(знак ключа)",
+  "item.obsidanum.obsidian_shard_arrow": "Обсидиановый осколок",
+  "item.obsidan.description.obsidian_shard_arrow": "(знак защиты от стрел)",
+  "item.obsidanum.obsidian_shard_inviolability": "Обсидиановый осколок",
+  "item.obsidan.description.obsidian_shard_inviolability": "(знак неприкосновенности)",
   "fluid_type.obsidanum.nether_fire_fluid": "Жидкое адское пламя",
   "item.obsidanum.relict_amethyst_shard": "§bРеликтовый осколок аметиста",
 
@@ -53,6 +59,7 @@
 
   "block.obsidanum.obsidian_tablet": "Обсидиановая скрижаль",
   "block.obsidanum.obsidan_planks_button": "Кнопка из обсиданового дерева",
+  "block.obsidanum.locked_chest_runic": "Закрытый рунный сундук",
   "block.obsidanum.obsidan_wood_door": "Дверь из обсиданового дерева",
   "block.obsidanum.obsidan_wood_trapdoor": "Люк из обсиданового дерева",
   "block.obsidanum.obsidan_planks_pressure_plate": "Нажимная плита из обсиданового дерева",
@@ -79,7 +86,7 @@
   "block.obsidanum.cracked_obsidian_bricks_stairs": "Треснутые ступеньки из обсидианового кирпича",
   "block.obsidanum.moldy_obsidian_bricks_stairs": "Плесневелые ступеньки из обсидианового кирпича",
   "block.obsidanum.obsidian_polished_slab": "Плита из полированного обсидиана",
-  "block.obsidanum.cracked_obsidian_polished_slab": "Треснута плита из полированного обсидиана",
+  "block.obsidanum.cracked_obsidian_polished_slab": "Треснутая плита из полированного обсидиана",
   "block.obsidanum.moldy_obsidian_polished_slab": "Плесневелая плита из полированного обсидиана",
   "block.obsidanum.obsidian_bricks_slab": "Плита из обсидианового кирпича",
   "block.obsidanum.cracked_obsidian_bricks_slab": "Треснутая плита из обсидианового кирпича",
@@ -128,6 +135,8 @@
   "item.obsidanum.rezolv_the_tale_of_the_vanished_order_disc.desc": "Rezolv - Сказ об исчезнувшем ордене",
   "container.chest_obsidian" : "Обсидиановый сундук",
 
+  "effect.obsidanum.inviolability": "Неприкосновенность",
+  "effect.obsidanum.protection_arrow": "Защита от стрел",
   "obsidanum.press_shift": "Зажмите [§7Shift§8], чтобы увидеть описание",
   "obsidanum.press_shift2": "Зажмите [§fShift§8], чтобы увидеть описание",
   "item.obsidan.description.sword": "\n§oМеч созданый из пропитанного магией сплава. Воля пладельца может зажечь этот клинок Тайным Огнем, который сделает следущий удар смертельно опасным. \n\n§2Описание способности: §fПри активации древней магии урон по атакуемому увеличивается в 1.5 раза. КД 80 сек.",

@@ -18,6 +18,7 @@ public class TileEntityStoneChest extends ChestBlockEntity {
         this(EnumStoneChest.OBSIDIAN, pos, state);
     }
 
+
     public TileEntityStoneChest(EnumStoneChest chestType, BlockPos pos, BlockState state) {
         super(SCRegistry.CHEST_TILE_TYPE.get(), pos, state);
         this.chestType = chestType;
