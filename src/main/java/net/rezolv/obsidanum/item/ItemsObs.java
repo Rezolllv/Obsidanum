@@ -36,7 +36,7 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> INGOT_BAGGELL = ITEMS.register("ingot_baggell",
+    public static final RegistryObject<Item> VELNARIUM_INGOT = ITEMS.register("velnarium_ingot",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SHARD_KEY = ITEMS.register("obsidian_shard_key",
             () -> new ObsidianShardKey(new Item.Properties()));

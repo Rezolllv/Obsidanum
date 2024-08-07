@@ -56,7 +56,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDAN_CHEST_BOAT.get());
                         pOutput.accept(ItemsObs.NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.CRUCIBLE.get());
-                        pOutput.accept(ItemsObs.INGOT_BAGGELL.get());
+                        pOutput.accept(ItemsObs.VELNARIUM_INGOT.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_SHARD_KEY.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_SHARD_ARROW.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_SHARD_INVIOLABILITY.get());

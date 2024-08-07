@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "obsidanum:item/ingot_baggell"
+    "layer0": "obsidanum:item/velnarium_ingot"
   }
 }
