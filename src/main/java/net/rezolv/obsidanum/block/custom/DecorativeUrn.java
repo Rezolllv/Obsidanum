@@ -61,6 +61,7 @@ public class DecorativeUrn extends Block {
         super.stepOn(pLevel, pos, pState, entity);
         if (!pLevel.isClientSide && entity instanceof Player) {
             // Сломать блок при шаге игрока
+            pLevel.destroyBlock(pos, true);
 // Проверяем, бегает ли игрок
             if (entity.isSprinting() || entity.onGround() && entity.getDeltaMovement().y < 0) {
                 // Сломать блок при шаге игрока или беге
