@@ -84,10 +84,6 @@ public class GloomyMycelium extends Block {
             if (growthStage == 0 && pRandom.nextFloat() < 0.04) { // Настроить шанс по вашему усмотрению
                 BlockState newState = pState.setValue(GROWTH_STAGE, 1);
                 pLevel.setBlock(pPos, newState, 3);
-
-                // Воспроизводим эффекты
-                ((ServerLevel) pLevel).sendParticles(ParticleTypes.HAPPY_VILLAGER, pPos.getX() + 0.5, pPos.getY() + 0.5, pPos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
-                pLevel.playSound(null, pPos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }
 
