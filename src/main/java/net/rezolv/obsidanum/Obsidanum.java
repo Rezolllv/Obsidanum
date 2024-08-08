@@ -21,7 +21,6 @@ import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.SCRegistry;
 import net.rezolv.obsidanum.effect.EffectsObs;
 import net.rezolv.obsidanum.entity.ModEntities;
-import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
 import net.rezolv.obsidanum.event.BlockBreakEventHandler;
 import net.rezolv.obsidanum.fluid.ModFluidTypes;

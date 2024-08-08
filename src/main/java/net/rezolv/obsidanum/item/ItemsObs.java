@@ -38,6 +38,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> VELNARIUM_INGOT = ITEMS.register("velnarium_ingot",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GLOOMY_MUSHROOM = ITEMS.register("gloomy_mushroom",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SHARD_KEY = ITEMS.register("obsidian_shard_key",
             () -> new ObsidianShardKey(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SHARD_ARROW = ITEMS.register("obsidian_shard_arrow",

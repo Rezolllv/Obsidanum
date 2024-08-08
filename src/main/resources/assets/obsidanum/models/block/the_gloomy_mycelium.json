@@ -1,18 +1,21 @@
-
 {
-  "ambientocclusion": false,
-  "textures": {
-    "particle": "obsidanum:block/the_gloomy_mycelium",
-    "vine": "obsidanum:block/the_gloomy_mycelium"
-  },"render_type": "translucent",
-  "elements": [
-    {   "from": [ 0, 0, 0.8 ],
-      "to": [ 16, 16, 0.8 ],
-      "shade": false,
-      "faces": {
-        "north": { "uv": [ 16, 0, 0, 16 ], "texture": "#vine", "tintindex": 0 },
-        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine", "tintindex": 0 }
-      }
-    }
-  ]
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"render_type": "translucent",
+	"textures": {
+		"particle": "obsidanum:block/the_gloomy_mycelium",
+		"vine": "obsidanum:block/the_gloomy_mycelium"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 15.82],
+			"to": [16, 16, 15.82],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 15.2]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#vine", "tintindex": 0},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#vine", "tintindex": 0}
+			}
+		}
+	]
 }

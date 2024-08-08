@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "obsidanum:item/the_gloomy_mycelium"
+    "layer0": "obsidanum:item/gloomy_mushroom"
   }
 }
