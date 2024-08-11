@@ -57,6 +57,24 @@
     },
     {
       "rolls": {
+        "min": 1,
+        "max": 2
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "obsidanum:obsidian_tear",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.01
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": {
         "min": 3,
         "max": 50
       },
