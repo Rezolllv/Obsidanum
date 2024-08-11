@@ -86,9 +86,6 @@ public class GloomyMycelium extends Block {
                 pLevel.setBlock(pPos, newState, 3);
             }
         }
-
-
-
     }
 
 

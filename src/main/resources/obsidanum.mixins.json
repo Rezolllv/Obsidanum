@@ -5,7 +5,9 @@
   "minVersion": "0.8",
   "refmap": "obsidanum.refmap.json",
   "mixins": [
-    "EnchantmentTableBlockMixin"
+    "EnchantmentTableBlockMixin",
+    "BaseFireBlockMixin",
+    "PortalShapeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

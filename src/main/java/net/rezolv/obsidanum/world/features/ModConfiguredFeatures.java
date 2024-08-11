@@ -14,7 +14,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
@@ -23,6 +25,7 @@ import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.BlocksObs;
 
 import java.util.List;
+import java.util.OptionalInt;
 
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> OBSIDAN_TREE = registerKey("obsidan_tree");
@@ -37,16 +40,15 @@ public class ModConfiguredFeatures {
 
         register(context, OVERWORLD_ONYX_KEY, Feature.ORE, new OreConfiguration(overworldOnyxOres, 60));
 
-        register(context, OBSIDAN_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(BlocksObs.OBSIDAN_WOOD_LOG.get()),
-                new StraightTrunkPlacer(3, 2, 1),
-
-                BlockStateProvider.simple(BlocksObs.OBSIDAN_WOOD_LEAVES.get()),
-                new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2), 3),
-
-                new TwoLayersFeatureSize(1, 0, 2)).build());
+        register(context, OBSIDAN_TREE, Feature.TREE, createFancyOak().build());
     }
-
+    private static TreeConfiguration.TreeConfigurationBuilder createFancyOak() {
+        return (
+                new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(BlocksObs.OBSIDAN_WOOD_LOG.get()),
+                new FancyTrunkPlacer(3, 11, 0), BlockStateProvider.simple(BlocksObs.OBSIDAN_WOOD_LEAVES.get()),
+                new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
+                new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4)))).ignoreVines();
+    }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Obsidanum.MOD_ID, name));
