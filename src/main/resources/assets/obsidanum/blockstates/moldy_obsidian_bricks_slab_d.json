@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "obsidanum:block/moldy_obsidian_bricks_slab_d"
+    },
+    "type=double": {
+      "model": "obsidanum:block/moldy_obsidian_bricks_d"
+    },
+    "type=top": {
+      "model": "obsidanum:block/moldy_obsidian_bricks_slab_top_d"
+    }
+  }
+}

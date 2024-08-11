@@ -4,7 +4,7 @@
   "group": "wooden_slab",
   "key": {
     "#": {
-      "item": "obsidanum:obsidian_polished"
+      "item": "obsidanum:obsidian_polished_d"
     }
   },
   "pattern": [
@@ -12,7 +12,7 @@
   ],
   "result": {
     "count": 6,
-    "item": "obsidanum:obsidian_polished_slab"
+    "item": "obsidanum:obsidian_polished_slab_d"
   },
   "show_notification": true
 }

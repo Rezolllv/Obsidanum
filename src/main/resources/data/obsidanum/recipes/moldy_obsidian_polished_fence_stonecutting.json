@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "item": "obsidanum:moldy_obsidian_polished"
+    "item": "obsidanum:moldy_obsidian_polished_d"
   },
-  "result": "obsidanum:moldy_obsidian_polished_fence"
+  "result": "obsidanum:moldy_obsidian_polished_fence_d"
 }

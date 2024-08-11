@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "item": "obsidanum:cracked_obsidian_polished"
+    "item": "obsidanum:cracked_obsidian_polished_d"
   },
-  "result": "obsidanum:cracked_obsidian_polished_stairs"
+  "result": "obsidanum:cracked_obsidian_polished_stairs_d"
 }

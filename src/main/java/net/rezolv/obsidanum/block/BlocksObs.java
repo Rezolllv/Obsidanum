@@ -22,6 +22,8 @@ import java.util.function.Supplier;
 public class BlocksObs {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, Obsidanum.MOD_ID);
+
+
     public static final RegistryObject<NetherFlameBlock> NETHER_FLAME_BLOCK = BLOCKS.register("nether_flame_block",
             () -> new NetherFlameBlock(ModFluids.SOURCE_NETHER_FIRE_LAVA, BlockBehaviour.Properties.copy(Blocks.LAVA)));
     public static final RegistryObject<Block> OBSIDAN_WOOD_LEAVES = BLOCKS.register("obsidan_wood_leaves",
@@ -44,50 +46,101 @@ public class BlocksObs {
     public static final RegistryObject<Block> OBSIDIAN_TABLET = registerBlock("obsidian_tablet",
             () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                     .strength(20, 500).sound(SoundType.CHERRY_WOOD)  // Устанавливаем предикат на true, чтобы всегда использовать эмиссирующий рендеринг
-
                     .mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().noOcclusion()));
+
     public static final RegistryObject<Block> OBSIDIAN_INLAID_COLUMN = registerBlock("obsidian_inlaid_column",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_INLAID_COLUMN = registerBlock("cracked_obsidian_inlaid_column",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_INLAID_COLUMN = registerBlock("moldy_obsidian_inlaid_column",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_COLUMN = registerBlock("obsidian_column",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_COLUMN = registerBlock("cracked_obsidian_column",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_COLUMN = registerBlock("moldy_obsidian_column",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_POLISHED = registerBlock("obsidian_polished",
-            () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().forceSolidOn()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().forceSolidOn()));
     public static final RegistryObject<Block> OBSIDIAN_POLISHED_WALL = registerBlock("obsidian_polished_wall",
-            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_WALL = registerBlock("cracked_obsidian_polished_wall",
-            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_WALL = registerBlock("moldy_obsidian_polished_wall",
-            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS_WALL = registerBlock("obsidian_bricks_wall",
-            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_WALL = registerBlock("cracked_obsidian_bricks_wall",
-            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_WALL = registerBlock("moldy_obsidian_bricks_wall",
-            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_POLISHED_FENCE = registerBlock("obsidian_polished_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_FENCE = registerBlock("cracked_obsidian_polished_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_FENCE = registerBlock("moldy_obsidian_polished_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED = registerBlock("cracked_obsidian_polished",
-            () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED = registerBlock("moldy_obsidian_polished",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS = registerBlock("carved_obsidian_bricks",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS_D = registerBlock("carved_obsidian_bricks_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_INLAID_COLUMN_D = registerBlock("obsidian_inlaid_column_d",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_INLAID_COLUMN_D = registerBlock("cracked_obsidian_inlaid_column_d",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_INLAID_COLUMN_D = registerBlock("moldy_obsidian_inlaid_column_d",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_COLUMN_D = registerBlock("obsidian_column_d",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_COLUMN_D = registerBlock("cracked_obsidian_column_d",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_COLUMN_D = registerBlock("moldy_obsidian_column_d",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_POLISHED_D = registerBlock("obsidian_polished_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().forceSolidOn()));
+    public static final RegistryObject<Block> OBSIDIAN_POLISHED_WALL_D = registerBlock("obsidian_polished_wall_d",
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_WALL_D = registerBlock("cracked_obsidian_polished_wall_d",
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_WALL_D = registerBlock("moldy_obsidian_polished_wall_d",
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_BRICKS_WALL_D = registerBlock("obsidian_bricks_wall_d",
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_WALL_D = registerBlock("cracked_obsidian_bricks_wall_d",
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_WALL_D = registerBlock("moldy_obsidian_bricks_wall_d",
+            () -> new WallBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_POLISHED_FENCE_D = registerBlock("obsidian_polished_fence_d",
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_FENCE_D = registerBlock("cracked_obsidian_polished_fence_d",
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_FENCE_D = registerBlock("moldy_obsidian_polished_fence_d",
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_D = registerBlock("cracked_obsidian_polished_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_D = registerBlock("moldy_obsidian_polished_d",
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
+
+
+
+
+
     public static final RegistryObject<Block> OBSIDIAN_DOOR = registerBlock("obsidian_door",
             () -> new ObsidianDoor(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
                     .noLootTable().sound(SoundType.GLASS)));
-    public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS = registerBlock("carved_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+
+
+
+
+
     public static final RegistryObject<Block> ONYX = registerBlock("onyx",
             () -> new Block(BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ONYX_SLAB = registerBlock("onyx_slab",
@@ -111,21 +164,40 @@ public class BlocksObs {
             () -> new StairBlock(() -> BlocksObs.POLISHED_ONYX.get().defaultBlockState(),
                     BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_CARVED_OBSIDIAN_BRICKS = registerBlock("moldy_carved_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_CARVED_OBSIDIAN_BRICKS = registerBlock("cracked_carved_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS = registerBlock("obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS_FENCE = registerBlock("obsidian_bricks_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_FENCE = registerBlock("cracked_obsidian_bricks_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_FENCE = registerBlock("moldy_obsidian_bricks_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS = registerBlock("cracked_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS = registerBlock("moldy_obsidian_bricks",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> MOLDY_CARVED_OBSIDIAN_BRICKS_D = registerBlock("moldy_carved_obsidian_bricks_d",
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_CARVED_OBSIDIAN_BRICKS_D = registerBlock("cracked_carved_obsidian_bricks_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_BRICKS_D = registerBlock("obsidian_bricks_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_BRICKS_FENCE_D = registerBlock("obsidian_bricks_fence_d",
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_FENCE_D = registerBlock("cracked_obsidian_bricks_fence_d",
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_FENCE_D = registerBlock("moldy_obsidian_bricks_fence_d",
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(20.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_D = registerBlock("cracked_obsidian_bricks_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_D = registerBlock("moldy_obsidian_bricks_d",
+            () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+
     public static final RegistryObject<Block> MYSTERIOUS_CARVED_OBSIDIAN_BRICKS = registerBlock("mysterious_carved_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_MYSTERIOUS_CARVED_OBSIDIAN_BRICKS = registerBlock("cracked_mysterious_carved_obsidian_bricks",
@@ -155,34 +227,69 @@ public class BlocksObs {
                     BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).sound(SoundType.CHERRY_WOOD)));
     public static final RegistryObject<Block> OBSIDIAN_POLISHED_STAIRS = registerBlock("obsidian_polished_stairs",
             () -> new StairBlock(() -> BlocksObs.OBSIDIAN_POLISHED.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_STAIRS = registerBlock("cracked_obsidian_polished_stairs",
             () -> new StairBlock(() -> BlocksObs.CRACKED_OBSIDIAN_POLISHED.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_STAIRS = registerBlock("moldy_obsidian_polished_stairs",
             () -> new StairBlock(() -> BlocksObs.MOLDY_OBSIDIAN_POLISHED.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS_STAIRS = registerBlock("obsidian_bricks_stairs",
             () -> new StairBlock(() -> BlocksObs.OBSIDIAN_BRICKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_STAIRS = registerBlock("cracked_obsidian_bricks_stairs",
             () -> new StairBlock(() -> BlocksObs.CRACKED_OBSIDIAN_BRICKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_STAIRS = registerBlock("moldy_obsidian_bricks_stairs",
             () -> new StairBlock(() -> BlocksObs.MOLDY_OBSIDIAN_BRICKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS_SLAB = registerBlock("obsidian_bricks_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_SLAB = registerBlock("cracked_obsidian_bricks_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_SLAB = registerBlock("moldy_obsidian_bricks_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_POLISHED_SLAB = registerBlock("obsidian_polished_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_SLAB = registerBlock("cracked_obsidian_polished_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_SLAB = registerBlock("moldy_obsidian_polished_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> OBSIDIAN_POLISHED_STAIRS_D = registerBlock("obsidian_polished_stairs_d",
+            () -> new StairBlock(() -> BlocksObs.OBSIDIAN_POLISHED_D.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_STAIRS_D = registerBlock("cracked_obsidian_polished_stairs_d",
+            () -> new StairBlock(() -> BlocksObs.CRACKED_OBSIDIAN_POLISHED_D.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_STAIRS_D = registerBlock("moldy_obsidian_polished_stairs_d",
+            () -> new StairBlock(() -> BlocksObs.MOLDY_OBSIDIAN_POLISHED_D.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_BRICKS_STAIRS_D = registerBlock("obsidian_bricks_stairs_d",
+            () -> new StairBlock(() -> BlocksObs.OBSIDIAN_BRICKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_STAIRS_D = registerBlock("cracked_obsidian_bricks_stairs_d",
+            () -> new StairBlock(() -> BlocksObs.CRACKED_OBSIDIAN_BRICKS_D.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_STAIRS_D = registerBlock("moldy_obsidian_bricks_stairs_d",
+            () -> new StairBlock(() -> BlocksObs.MOLDY_OBSIDIAN_BRICKS_D.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_BRICKS_SLAB_D = registerBlock("obsidian_bricks_slab_d",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_BRICKS_SLAB_D = registerBlock("cracked_obsidian_bricks_slab_d",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS_SLAB_D = registerBlock("moldy_obsidian_bricks_slab_d",
             () -> new SlabBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_POLISHED_SLAB_D = registerBlock("obsidian_polished_slab_d",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CRACKED_OBSIDIAN_POLISHED_SLAB_D = registerBlock("cracked_obsidian_polished_slab_d",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MOLDY_OBSIDIAN_POLISHED_SLAB_D= registerBlock("moldy_obsidian_polished_slab_d",
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+
+
+
     public static final RegistryObject<Block> OBSIDAN_PLANKS_SLAB = registerBlock("obsidan_planks_slab",
             () -> new FlameSlab(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).sound(SoundType.CHERRY_WOOD)));
     public static final RegistryObject<Block> OBSIDAN_SIGN = BLOCKS.register("obsidan_sign",

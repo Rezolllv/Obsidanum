@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "obsidanum:block/obsidian_inlaid_column_top",
+    "side": "obsidanum:block/obsidian_inlaid_column"
+  }
+}

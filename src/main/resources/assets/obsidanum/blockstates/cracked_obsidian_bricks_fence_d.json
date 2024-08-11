@@ -1,0 +1,48 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "obsidanum:block/cracked_obsidian_bricks_fence_post_d"
+      }
+    },
+    {
+      "apply": {
+        "model": "obsidanum:block/cracked_obsidian_bricks_fence_side_d",
+        "uvlock": true
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "obsidanum:block/cracked_obsidian_bricks_fence_side_d",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "obsidanum:block/cracked_obsidian_bricks_fence_side_d",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "obsidanum:block/cracked_obsidian_bricks_fence_side_d",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    }
+  ]
+}

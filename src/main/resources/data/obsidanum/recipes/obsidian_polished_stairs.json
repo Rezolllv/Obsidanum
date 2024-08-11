@@ -4,7 +4,7 @@
   "group": "wooden_stairs",
   "key": {
     "#": {
-      "item": "obsidanum:obsidian_polished"
+      "item": "obsidanum:obsidian_polished_d"
     }
   },
   "pattern": [
@@ -14,7 +14,7 @@
   ],
   "result": {
     "count": 4,
-    "item": "obsidanum:obsidian_polished_stairs"
+    "item": "obsidanum:obsidian_polished_stairs_d"
   },
   "show_notification": true
 }

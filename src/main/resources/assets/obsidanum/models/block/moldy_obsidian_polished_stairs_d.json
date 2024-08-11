@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "obsidanum:block/moldy_obsidian_polished",
+    "side": "obsidanum:block/moldy_obsidian_polished",
+    "top": "obsidanum:block/moldy_obsidian_polished"
+  }
+}

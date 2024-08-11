@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "item": "obsidanum:cracked_obsidian_bricks"
+    "item": "obsidanum:cracked_obsidian_bricks_d"
   },
-  "result": "obsidanum:cracked_obsidian_bricks_wall"
+  "result": "obsidanum:cracked_obsidian_bricks_wall_d"
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side_tall",
+  "textures": {
+    "wall": "obsidanum:block/moldy_obsidian_polished"
+  }
+}

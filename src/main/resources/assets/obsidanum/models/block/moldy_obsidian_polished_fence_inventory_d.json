@@ -1,0 +1,7 @@
+
+{
+  "parent": "minecraft:block/fence_inventory",
+  "textures": {
+    "texture": "obsidanum:block/moldy_obsidian_polished"
+  }
+}

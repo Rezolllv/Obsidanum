@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "obsidanum:block/moldy_obsidian_inlaid_column_horizontal_d",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "obsidanum:block/moldy_obsidian_inlaid_column_d"
+    },
+    "axis=z": {
+      "model": "obsidanum:block/moldy_obsidian_inlaid_column_horizontal_d",
+      "x": 90
+    }
+  }
+}

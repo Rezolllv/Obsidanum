@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "item": "minecraft:obsidian"
+    "item": "minecraft:obsidian_d"
   },
-  "result": "obsidanum:obsidian_column"
+  "result": "obsidanum:obsidian_column_d"
 }
