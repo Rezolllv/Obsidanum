@@ -154,17 +154,7 @@ public class ObsidianElemental extends Monster {
         this.entityData.define(ATTACKING, false);
     }
 
-    @Override
-    public boolean doHurtTarget(Entity target) {
-        double attackRange = 12.0; // Установлено на 12.0 для атаки на расстоянии 12 блоков
-        if (this.distanceTo(target) <= attackRange) {
-            this.setAttacking(true);
-            boolean result = super.doHurtTarget(target);
-            this.setAttacking(false);
-            return result;
-        }
-        return false;
-    }
+
 
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {

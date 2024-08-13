@@ -21,6 +21,7 @@ import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.SCRegistry;
 import net.rezolv.obsidanum.effect.EffectsObs;
 import net.rezolv.obsidanum.entity.ModEntities;
+import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleRenderer;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
 import net.rezolv.obsidanum.event.BlockBreakEventHandler;
 import net.rezolv.obsidanum.fluid.ModFluidTypes;
@@ -96,6 +97,7 @@ public class Obsidanum {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(EntityTypeInit.OBSIDIAN_ARROW.get(), ObsidianArrowRenderer::new);
             EntityRenderers.register(ModEntities.OBSIDIAN_ELEMENTAL.get(), ObsidianElementalRenderer::new);
+            EntityRenderers.register(ModEntities.MEET_BEETLE.get(), MeetBeetleRenderer::new);
             EntityRenderers.register(ModEntitiesItem.MOD_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
             EntityRenderers.register(ModEntitiesItem.MOD_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
             event.enqueueWork(() -> {

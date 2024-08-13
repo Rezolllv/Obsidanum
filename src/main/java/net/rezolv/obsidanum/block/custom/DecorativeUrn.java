@@ -59,7 +59,7 @@ public class DecorativeUrn extends Block {
     @Override
     public void stepOn(Level pLevel, BlockPos pos, BlockState pState, Entity entity) {
         super.stepOn(pLevel, pos, pState, entity);
-        if (!pLevel.isClientSide && entity instanceof Player) {
+        if (!pLevel.isClientSide && entity instanceof Entity) {
             // Сломать блок при шаге игрока
             pLevel.destroyBlock(pos, true);
 // Проверяем, бегает ли игрок
