@@ -86,7 +86,8 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS = registerBlock("carved_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new MysteriousCarvedObsidian(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
+                    .randomTicks().sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS_D = registerBlock("carved_obsidian_bricks_d",
             () -> new Block(BlockBehaviour.Properties.of().strength(50.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -164,9 +165,9 @@ public class BlocksObs {
             () -> new StairBlock(() -> BlocksObs.POLISHED_ONYX.get().defaultBlockState(),
                     BlockBehaviour.Properties.of().strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_CARVED_OBSIDIAN_BRICKS = registerBlock("moldy_carved_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new MysteriousCarvedObsidian(BlockBehaviour.Properties.of().randomTicks().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CRACKED_CARVED_OBSIDIAN_BRICKS = registerBlock("cracked_carved_obsidian_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new MysteriousCarvedObsidian(BlockBehaviour.Properties.of().randomTicks().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS = registerBlock("obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_BRICKS_FENCE = registerBlock("obsidian_bricks_fence",

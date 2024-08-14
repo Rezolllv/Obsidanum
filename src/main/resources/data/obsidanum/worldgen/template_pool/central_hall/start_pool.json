@@ -1,0 +1,28 @@
+{
+
+  "name": "obsidanum:central_hall/start_pool",
+
+  "fallback": "minecraft:empty",
+
+
+  "elements": [
+    {
+
+
+      "weight": 5,
+      "element": {
+
+
+        "location": "obsidanum:central_hall",
+
+
+        "processors": "minecraft:empty",
+
+
+        "projection": "rigid",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

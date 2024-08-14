@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "mysterious=true": {
+      "model": "obsidanum:block/moldy_mysterious_carved_obsidian_bricks"
+    },
+    "mysterious=false": {
       "model": "obsidanum:block/moldy_carved_obsidian_bricks"
     }
   }
