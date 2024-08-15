@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": "#obsidanum:has_structure/obs_catacombs_enter_1",
+  "step": "surface_structures",
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "full",
+      "spawns": [{
+        "type": "obsidanum:meet_beetle",
+        "maxCount": 15,
+        "minCount": 1,
+        "weight": 4
+      }]
+    },
+    "monster": {
+      "bounding_box": "full",
+      "spawns": []
+    },
+    "ambient": {
+      "bounding_box": "full",
+      "spawns": [{
+        "type": "obsidanum:meet_beetle",
+        "maxCount": 15,
+        "minCount": 1,
+        "weight": 4
+      }]
+    }
+  },
+
+  "start_pool": "obsidanum:obs_catacombs_enter_1/start_pool",
+  "size": 7,
+  "start_height": {
+    "absolute": -29
+  },
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+  "max_distance_from_center": 128,
+  "use_expansion_hack": true
+}

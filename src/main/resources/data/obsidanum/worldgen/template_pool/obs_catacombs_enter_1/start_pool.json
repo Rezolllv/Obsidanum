@@ -1,6 +1,6 @@
 {
 
-  "name": "obsidanum:central_hall/start_pool",
+  "name": "obsidanum:obs_catacombs_enter_1/start_pool",
 
   "fallback": "minecraft:empty",
 
@@ -9,11 +9,11 @@
     {
 
 
-      "weight": 5,
+      "weight": 7,
       "element": {
 
 
-        "location": "obsidanum:central_hall",
+        "location": "obsidanum:obs_catacombs_enter_1",
 
 
         "processors": "minecraft:empty",

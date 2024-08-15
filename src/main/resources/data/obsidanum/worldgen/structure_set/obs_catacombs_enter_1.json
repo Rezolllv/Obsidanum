@@ -2,8 +2,8 @@
 
   "structures": [
     {
-      "structure": "obsidanum:central_hall",
-      "weight": 1
+      "structure": "obsidanum:obs_catacombs_enter_1",
+      "weight": 7
     }
   ],
   "placement": {
