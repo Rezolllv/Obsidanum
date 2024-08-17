@@ -3,7 +3,8 @@ package net.rezolv.obsidanum.entity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.rezolv.obsidanum.Obsidanum;
+
+import net.rezolv.obsidanum.entity.gart.GartModel;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleModel;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalModel;
 
@@ -19,5 +20,11 @@ public class ModModelLayers {
 
     public static void registerLayersBeetle(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MEET_BEETLE, MeetBeetleModel::createBodyLayer);
+    }
+    public static final ModelLayerLocation GART = new ModelLayerLocation(
+            new ResourceLocation("obsidanum", "gart"), "main");
+
+    public static void registerLayersGart(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(GART, GartModel::createBodyLayer);
     }
 }

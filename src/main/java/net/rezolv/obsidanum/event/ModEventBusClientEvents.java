@@ -16,6 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.entity.ModModelLayers;
+import net.rezolv.obsidanum.entity.gart.GartModel;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleModel;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalModel;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -32,6 +33,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayersItem.OBSIDAN_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
         event.registerLayerDefinition(ModModelLayers.OBSIDIAN_ELEMENTAL, ObsidianElementalModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.MEET_BEETLE, MeetBeetleModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.GART, GartModel::createBodyLayer);
     }
 
     @SubscribeEvent
