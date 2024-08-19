@@ -22,6 +22,14 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RAW_MEET_BEETLE = ITEMS.register("raw_meet_beetle",
+            () -> new Item(new Item.Properties()
+                    .food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).build()
+                    )));
+    public static final RegistryObject<Item> COCKED_MEET_BEETLE = ITEMS.register("cocked_meet_beetle",
+            () -> new Item(new Item.Properties()
+                    .food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5f).build()
+                    )));
     public static final RegistryObject<Item> RELICT_AMETHYST_SHARD = ITEMS.register("relict_amethyst_shard",
             () -> new RelictAmethyst(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> BAGELL_FUEL = ITEMS.register("bagell_fuel",

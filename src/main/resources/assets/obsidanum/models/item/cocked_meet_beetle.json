@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "obsidanum:item/cocked_meet_beetle"
+  }
+}

@@ -26,6 +26,8 @@ public class CreativeTabObs extends CreativeModeTab {
                         //Items
                         pOutput.accept(ItemsObs.OBSIDIAN_TEAR.get());
                         pOutput.accept(ItemsObs.OBSIDAN.get());
+                        pOutput.accept(ItemsObs.RAW_MEET_BEETLE.get());
+                        pOutput.accept(ItemsObs.COCKED_MEET_BEETLE.get());
                         pOutput.accept(ItemsObs.DRILLING_CRYSTALLIZER.get());
                         pOutput.accept(ItemsObs.OBSIDAN_AXE.get());
                         pOutput.accept(ItemsObs.OBSIDAN_SHOVEL.get());

@@ -30,7 +30,7 @@
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:beef"
+          "name": "obsidanum:raw_meet_beetle"
         }
       ],
       "rolls": 1.0
