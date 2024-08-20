@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "unusual_decorative_urn",
 	"ambientocclusion": false,
+	"parent": "unusual_decorative_urn",
 	"texture_size": [128, 128],
 	"textures": {
 		"particle": "obsidanum:block/unusual_decorative_urn",

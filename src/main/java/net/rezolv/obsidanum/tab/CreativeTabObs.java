@@ -149,6 +149,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.LOCKED_CHEST_RUNIC.get());
                         pOutput.accept(BlocksObs.DECORATIVE_URN.get());
                         pOutput.accept(BlocksObs.UNUSUAL_DECORATIVE_URN.get());
+                        pOutput.accept(BlocksObs.RARE_DECORATIVE_URN.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_DOOR.get());
                         pOutput.accept(BlocksObs.OBSIDAN_WOOD_TRAPDOOR.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_BUTTON.get());

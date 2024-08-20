@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "obsidanum:block/rare_decorative_urn"
+        },
+        "facing=east": {
+            "model": "obsidanum:block/rare_decorative_urn",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "obsidanum:block/rare_decorative_urn",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "obsidanum:block/rare_decorative_urn",
+            "y": 270
+        }
+    }
+}
