@@ -209,6 +209,8 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> DECORATIVE_URN = registerBlock("decorative_urn",
             () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> UNUSUAL_DECORATIVE_URN = registerBlock("unusual_decorative_urn",
+            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> LOCKED_CHEST_RUNIC = registerBlock("locked_chest_runic",
             () -> new LockedRunicChest(BlockBehaviour.Properties.of().noOcclusion()
                     .strength(-1.0F, 3600000.0F).sound(SoundType.STONE)));

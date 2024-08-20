@@ -23,7 +23,7 @@ public class ModEntities {
                     .sized(0.8f, 0.4f).build("meet_beetle"));
     public static final RegistryObject<EntityType<Gart>> GART =
             ENTITY_TYPES.register("gart", () -> EntityType.Builder.of(Gart::new, MobCategory.MONSTER)
-                    .sized(1f, 2f).build("gart"));
+                    .sized(1f, 1.2f).build("gart"));
 
 
     public static void register(IEventBus eventBus) {

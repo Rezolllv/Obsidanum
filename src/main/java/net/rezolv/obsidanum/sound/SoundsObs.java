@@ -17,6 +17,7 @@ public class SoundsObs {
     public static final RegistryObject<SoundEvent> OPEN_OBSIDIAN_DOOR = registerSoundEvents("open_obsidian_door");
     public static final RegistryObject<SoundEvent> CLOSE_OBSIDIAN_DOOR = registerSoundEvents("close_obsidian_door");
     public static final RegistryObject<SoundEvent> LOCK = registerSoundEvents("lock");
+    public static final RegistryObject<SoundEvent> FLASH = registerSoundEvents("flash");
     public static final RegistryObject<SoundEvent> OBSIDIAN_ELEMENTAL_AMBIENT = registerSoundEvents("obsidian_elemental_ambient");
     public static final RegistryObject<SoundEvent> OBSIDIAN_ELEMENTAL_HURT = registerSoundEvents("obsidian_elemental_hurt");
     public static final RegistryObject<SoundEvent> OBSIDIAN_ELEMENTAL_DEATH = registerSoundEvents("obsidian_elemental_death");

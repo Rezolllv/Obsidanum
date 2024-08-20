@@ -23,6 +23,14 @@
       }
     ]
   },
+  "flash": {
+    "sounds": [
+      {
+        "name": "obsidanum:flash",
+        "stream": true
+      }
+    ]
+  },
   "chacram_hit": {
     "sounds": [
       {

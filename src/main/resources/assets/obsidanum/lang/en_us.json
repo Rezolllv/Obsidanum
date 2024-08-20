@@ -140,6 +140,7 @@
   "container.chest_obsidian": "Obsidian chest",
   "creativetab.obsidanum": "Obsidanum",
   "effect.obsidanum.inviolability": "Inviolability",
+  "effect.obsidanum.flash": "Confusion",
   "effect.obsidanum.protection_arrow": "Protection from arrows",
   "entity.obsidanum.mod_chest_boat": "Boat with chest",
   "entity.obsidanum.obsidian_elemental": "Obsidian elemental",
