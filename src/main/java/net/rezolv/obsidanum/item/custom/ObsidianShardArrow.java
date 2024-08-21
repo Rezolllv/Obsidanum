@@ -36,10 +36,10 @@ public class ObsidianShardArrow extends Item {
                 if (existingEffect != null) {
                     // Если эффект уже активен, создаем новый эффект с обновленным временем
                     int newDuration = existingEffect.getDuration() + 1200; // Увеличиваем на 1200 тиков
-                    pPlayer.addEffect(new MobEffectInstance(EffectsObs.PROTECTION_ARROW.get(), newDuration, 0)); // Устанавливаем обновленное время
+                    pPlayer.addEffect(new MobEffectInstance(EffectsObs.PROTECTION_ARROW.get(), newDuration, 0,false,false,true)); // Устанавливаем обновленное время
                 } else {
                     // Если эффекта нет, накладываем новый с длительностью 1200 тиков
-                    pPlayer.addEffect(new MobEffectInstance(EffectsObs.PROTECTION_ARROW.get(), 1200, 0)); // Длительность 1200 тиков, уровень 0
+                    pPlayer.addEffect(new MobEffectInstance(EffectsObs.PROTECTION_ARROW.get(), 1200, 0,false,false,true)); // Длительность 1200 тиков, уровень 0
                 }
                 itemInHand.shrink(1);
             }

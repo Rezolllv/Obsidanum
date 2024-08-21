@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,8 +40,13 @@ public class Inviolability extends MobEffect {
                 if (entity instanceof Mob monster) {
                     // Устанавливаем агрессивность моба в false
                     monster.setTarget(null);
+                    monster.setArrowCount(0);
                     monster.setAggressive(false); // Устанавливаем нейтральное состояние
+                    if (monster instanceof Skeleton skeleton) {
+                        skeleton.setArrowCount(0); // Останавливаем стрельбу
+                    }
                 }
+
             }
         }
     }

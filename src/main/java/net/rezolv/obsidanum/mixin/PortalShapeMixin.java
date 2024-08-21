@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.portal.PortalShape;
 import net.minecraftforge.common.Tags;
-import net.rezolv.obsidanum.block.BlocksObs;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -27,5 +26,4 @@ public class PortalShapeMixin {
             return blockState.is(Tags.Blocks.OBSIDIAN); // Используйте тег блоков
         };
     }
-
 }
