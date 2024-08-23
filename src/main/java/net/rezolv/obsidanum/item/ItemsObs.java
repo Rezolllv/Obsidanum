@@ -4,12 +4,14 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.BlocksObs;
+import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.ModBoatEntity;
 import net.rezolv.obsidanum.sound.SoundsObs;
@@ -132,6 +134,16 @@ public class ItemsObs {
             () -> new ModBoatItem(false, ModBoatEntity.Type.OBSIDAN, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_CHEST_BOAT = ITEMS.register("obsidan_chest_boat",
             () -> new ModBoatItem(true, ModBoatEntity.Type.OBSIDAN, new Item.Properties()));
+
+
+    public static final RegistryObject<Item> GART_SPANW_EGG = ITEMS.register("gart_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.GART, 0x240935, 0x008000, new Item.Properties()));
+
+    public static final RegistryObject<Item> MEET_BEETLE_SPANW_EGG = ITEMS.register("meet_beetle_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MEET_BEETLE, 0x613613, 0xf2e8c9, new Item.Properties()));
+
+    public static final RegistryObject<Item> OBSIDIAN_ELEMENTAL_SPANW_EGG = ITEMS.register("obsidian_elemental_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.OBSIDIAN_ELEMENTAL, 0x240935, 0xdeb6f3, new Item.Properties()));
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }
