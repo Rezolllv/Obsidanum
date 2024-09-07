@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -83,6 +84,11 @@ public class Obsidanum {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(ItemsObs.GART_SPANW_EGG);
+            event.accept(ItemsObs.MEET_BEETLE_SPANW_EGG);
+            event.accept(ItemsObs.OBSIDIAN_ELEMENTAL_SPANW_EGG);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -103,9 +109,12 @@ public class Obsidanum {
             EntityRenderers.register(ModEntitiesItem.MOD_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
             EntityRenderers.register(ModEntitiesItem.MOD_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
             event.enqueueWork(() -> {
-                ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_WOOD_LEAVES.get(), 0.2f);
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_WOOD_LEAVES.get(), 0.3f);
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.OBSIDAN_SAPLING.get(), 0.2f);
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.GLOOMY_MUSHROOM.get(), 0.2f);
                 ComposterBlock.COMPOSTABLES.put(ItemsObs.THE_GLOOMY_MYCELIUM.get(), 0.2f);
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.STEM_GLOOMY_MUSHROOM.get(), 0.4f);
+                ComposterBlock.COMPOSTABLES.put(ItemsObs.CAP_GLOOMY_MUSHROOM.get(), 0.4f);
 
             });
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NETHER_FIRE_LAVA.get(), RenderType.solid());

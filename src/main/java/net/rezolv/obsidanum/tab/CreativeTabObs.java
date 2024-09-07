@@ -3,6 +3,7 @@ package net.rezolv.obsidanum.tab;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -57,9 +58,6 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDAN_BOAT.get());
                         pOutput.accept(ItemsObs.OBSIDAN_CHEST_BOAT.get());
                         pOutput.accept(ItemsObs.NETHER_FLAME.get());
-                        pOutput.accept(ItemsObs.GART_SPANW_EGG.get());
-                        pOutput.accept(ItemsObs.MEET_BEETLE_SPANW_EGG.get());
-                        pOutput.accept(ItemsObs.OBSIDIAN_ELEMENTAL_SPANW_EGG.get());
                         pOutput.accept(ItemsObs.CRUCIBLE.get());
                         pOutput.accept(ItemsObs.VELNARIUM_INGOT.get());
                         pOutput.accept(ItemsObs.GLOOMY_MUSHROOM.get());
@@ -172,6 +170,9 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDIAN_BRICKS_STAIRS.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_BRICKS_STAIRS_D.get());
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());
+
+                        pOutput.accept(BlocksObs.STEM_GLOOMY_MUSHROOM.get());
+                        pOutput.accept(ItemsObs.CAP_GLOOMY_MUSHROOM.get());
 
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS_SLAB.get());
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS_SLAB_D.get());

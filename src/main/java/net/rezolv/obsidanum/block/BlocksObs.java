@@ -5,6 +5,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -131,6 +132,12 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> STEM_GLOOMY_MUSHROOM = BLOCKS.register("stem_gloomy_mushroom",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASS).strength(0.2F)
+                    .sound(SoundType.WOOD).ignitedByLava()));
+    public static final RegistryObject<Block> CAP_GLOOMY_MUSHROOM = BLOCKS.register("cap_gloomy_mushroom",
+            () -> new HugeMushroomBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASS).strength(0.2F)
+                    .sound(SoundType.WOOD).ignitedByLava()));
 
 
 

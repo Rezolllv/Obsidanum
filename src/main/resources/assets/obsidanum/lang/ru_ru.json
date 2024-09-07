@@ -67,6 +67,11 @@
   "block.obsidanum.obsidian_polished_stairs": "§8Ступеньки из полированного обсидиана",
   "block.obsidanum.obsidian_polished_wall": "§8Ограда из полированного обсидиана",
 
+  "block.obsidanum.stem_gloomy_mushroom": "Стебель сумрачного гриба",
+  "item.obsidanum.stem_gloomy_mushroom": "Стебель сумрачного гриба",
+
+  "block.obsidanum.cap_gloomy_mushroom": "Шляпка сумрачного гриба",
+  "item.obsidanum.cap_gloomy_mushroom": "Шляпка сумрачного гриба",
 
   "block.obsidanum.carved_obsidian_bricks_d": "Резные обсидиановые кирпичи",
   "block.obsidanum.cracked_carved_obsidian_bricks_d": "Треснутые резные обсидиановые кирпичи",
