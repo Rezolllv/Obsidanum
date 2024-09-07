@@ -1,0 +1,27 @@
+{
+  "feature": "obsidanum:big_gloomy_mushroom",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 45
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:biased_to_bottom",
+        "min_inclusive": {
+          "absolute": 0
+        },
+        "max_inclusive": {
+          "absolute": 100
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
