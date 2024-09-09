@@ -132,6 +132,9 @@ public class ItemsObs {
             () -> new ItemNameBlockItem(BlocksObs.STEM_GLOOMY_MUSHROOM.get(), new Item.Properties()));
     public static final RegistryObject<Item> CAP_GLOOMY_MUSHROOM = ITEMS.register("cap_gloomy_mushroom",
             () -> new ItemNameBlockItem(BlocksObs.CAP_GLOOMY_MUSHROOM.get(), new Item.Properties()));
+
+
+
     public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
             () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties(), 450));
     public static final RegistryObject<Item> OBSIDAN_BOAT = ITEMS.register("obsidan_boat",

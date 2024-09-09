@@ -172,6 +172,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS_SLAB.get());
 
                         pOutput.accept(BlocksObs.STEM_GLOOMY_MUSHROOM.get());
+                        pOutput.accept(BlocksObs.HEAD_HYMENIUM_STEM_GLOOMY_MUSHROOM.get());
                         pOutput.accept(ItemsObs.CAP_GLOOMY_MUSHROOM.get());
 
                         pOutput.accept(BlocksObs.CRACKED_OBSIDIAN_BRICKS_SLAB.get());
@@ -195,9 +196,6 @@ public class CreativeTabObs extends CreativeModeTab {
 
                     })
                     .build());
-
-
-
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);

@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -140,8 +141,17 @@ public class BlocksObs {
                     .sound(SoundType.WOOD).ignitedByLava()));
 
 
-
-
+    public static final RegistryObject<Block> HEAD_HYMENIUM_STEM_GLOOMY_MUSHROOM = registerBlock("head_hymenium_gloomy_mushroom",
+            () -> new HeadHymeniumMushroom(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollission()
+                    .instabreak().sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY).lightLevel((p_152629_) -> {
+                        return 7;
+                    })));
+    public static final RegistryObject<Block> HYMENIUM_STEM_GLOOMY_MUSHROOM = registerBlock("hymenium_gloomy_mushroom",
+            () -> new HymeniumMushroom(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollission()
+                    .instabreak().sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY).lightLevel((p_152629_) -> {
+                        return 7;
+                    })));
+    
     public static final RegistryObject<Block> OBSIDIAN_DOOR = registerBlock("obsidian_door",
             () -> new ObsidianDoor(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
                     .noLootTable().sound(SoundType.GLASS)));

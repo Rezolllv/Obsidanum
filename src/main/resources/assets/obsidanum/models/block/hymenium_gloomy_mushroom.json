@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "obsidanum:block/hymenium_gloomy_mushroom"
+  },"render_type": "translucent"
+}
