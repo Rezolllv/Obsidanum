@@ -1,0 +1,94 @@
+# Automatically builds and publishes the mod when a new release is created on GitHub.
+# It uploads the mod to GitHub, CurseForge and Modrinth.
+
+name: Beta
+
+on:
+  push:
+    branches:
+      - "main"
+env:                                              
+  MINECRAFT_VERSION: 1.20.1
+  JAVA_VERSION: 17
+  VERSION: 1.4.0-1.20.1-Snapshot-Forge
+  RELEASE_NAME: Obsidanum 1.4.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest                        
+    steps:                                        
+      - name: Check Environment Variables
+        run: env
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: 21
+
+      - name: Make Gradle Wrapper Executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Publish mod to CurseForge and Modrinth
+        id: publish
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          curseforge-id: 1026572
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: oPSw5ILy
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          
+          name: "${{env.RELEASE_NAME}}"                             
+          version: "${{env.VERSION}}"
+          version-type: beta
+          changelog-file: BETA_CHANGELOG.md                                      
+
+          loaders: |
+            neoforge
+            forge
+          game-versions: "${{env.MINECRAFT_VERSION}}"
+          java: "${{env.JAVA_VERSION}}"
+          dependencies: |
+            required-dependency
+            optional-dependency@0.1.0(optional)
+            recommended-dependency@0.2.0(recommended)
+            embedded-dependency@0.3.0(embedded)
+            conflicting-dependency(conflicting)
+            incompatible-dependency(incompatible)
+          modrinth-featured: false
+          fail-mode: warn
+      - name: Send Discord webhook
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "<@&1195647504730050670>"
+        env:
+          DISCORD_WEBHOOK: "${{secrets.DISCORD_WEBHOOK}}"
+          DISCORD_EMBEDS: |
+            [{
+              "title": "${{env.RELEASE_NAME}} for Minecraft ${{env.MINECRAFT_VERSION}} Released",
+              "color": 285786,
+              "thumbnail": {
+                "url": "https://i.postimg.cc/RV6DLSF3/logo-obsidanum-final.png"
+              },
+              "url": "https://www.curseforge.com/minecraft/mc-mods/obsidanum",
+              "fields": [
+                  {
+                    "name": "Download now:",
+                    "value": "[<:curseforge:805066577871110196> CurseForge](https://www.curseforge.com/minecraft/mc-mods/obsidanum)\n[<:modrinth:805066578215043092> Modrinth](https://modrinth.com/mod/obsidanum)\n[<:github:805066578164580392> GitHub](https://github.com/Rezolllv/Obsidanum)",
+                    "inline": true
+                  }
+              ],
+              "footer": {
+                "text": "Created by the Environment Studios team!",
+                "icon_url": "https://sun9-2.userapi.com/impg/uV8n02lvJ-IPojMugzVzla-mS1XNSYxP7kK37w/dFRlvkG06Pg.jpg?size=2268x2268&quality=95&sign=d1bc84ea1e0be3a5ad198ce9f1227b11&type=album"
+              }
+            }]
