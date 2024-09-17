@@ -1,6 +1,4 @@
 {
-	"credit": "Made with Blockbench",
-	"parent": " order's_forge ",
 	"texture_size": [112, 112],
 	"textures": {
 		"0": "obsidanum:block/obsidian_forge",
@@ -270,10 +268,16 @@
 		"firstperson_lefthand": {
 			"scale": [0.3, 0.3, 0.3]
 		},
+		"ground": {
+			"scale": [0.2, 0.2, 0.2]
+		},
 		"gui": {
 			"rotation": [36, 148, 0],
 			"translation": [0.25, -2.5, 0],
 			"scale": [0.27, 0.27, 0.27]
+		},
+		"head": {
+			"translation": [0, 2.5, -8.25]
 		}
 	},
 	"groups": [
