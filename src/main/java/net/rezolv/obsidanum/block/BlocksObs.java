@@ -90,6 +90,9 @@ public class BlocksObs {
     public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS = registerBlock("carved_obsidian_bricks",
             () -> new MysteriousCarvedObsidian(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
                     .randomTicks().sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CARVED_OBSIDIAN_BRICKS_E = registerBlock("carved_obsidian_bricks_e",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
+                    .randomTicks().sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> VELNARIUM_GRID = registerBlock("velnarium_grid",
             () -> new IronBarsBlock(BlockBehaviour.Properties.of().strength(5.0F, 1200.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
