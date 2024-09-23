@@ -3,7 +3,7 @@
     "textures": {
         "particle": "obsidanum:block/velnarium_grid",
         "edge": "obsidanum:block/velnarium_grid"
-    },"render_type": "translucent",
+    },"render_type": "cutout",
     "elements": [
         {   "from": [ 7, 0.001, 7 ],
             "to": [ 9, 0.001, 9 ],

@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -58,7 +59,14 @@ public class GloomyMycelium extends Block {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        Direction facing = state.getValue(FACING); // Направление блока
+        BlockPos blockBelow = pos.relative(facing.getOpposite()); // Позиция блока, на который ставится грибница
 
+        // Проверяем, является ли блок под грибницей твёрдым и может ли блок стоять на этой стороне
+        return level.getBlockState(blockBelow).isFaceSturdy(level, blockBelow, facing);
+    }
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         int growthStage = pState.getValue(GROWTH_STAGE);

@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
-	"render_type": "translucent",
+	"render_type": "cutout",
 	"textures": {
 		"particle": "obsidanum:block/the_gloomy_mycelium",
 		"vine": "obsidanum:block/the_gloomy_mycelium"

@@ -4,7 +4,7 @@
         "particle": "obsidanum:block/velnarium_grid",
         "bars": "obsidanum:block/velnarium_grid",
         "edge": "obsidanum:block/velnarium_grid"
-    },"render_type": "translucent",
+    },"render_type": "cutout",
     "elements": [
         {   "from": [ 8, 0, 0 ],
             "to": [ 8, 16, 8 ],
