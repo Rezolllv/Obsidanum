@@ -135,7 +135,8 @@ public class BlocksObs {
 
     public static final RegistryObject<Block> OBSIDIAN_FORGE = registerBlock("obsidian_forge",
             () -> new ObsidianForge(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noOcclusion().sound(SoundType.STONE)));
-
+    public static final RegistryObject<Block> ABSTRACT_OBSIDIAN_FORGE = registerBlock("abstract_obsidian_forge",
+            () -> new GlassBlock(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> STEM_GLOOMY_MUSHROOM = BLOCKS.register("stem_gloomy_mushroom",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASS).strength(0.2F)
                     .sound(SoundType.WOOD).ignitedByLava()));

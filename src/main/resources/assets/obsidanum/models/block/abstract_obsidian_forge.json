@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "obsidanum:block/abstract_obsidian_forge"
+  },"render_type": "cutout"
+}

@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "obsidanum:block/abstract_obsidian_forge" }
+    }
+}
