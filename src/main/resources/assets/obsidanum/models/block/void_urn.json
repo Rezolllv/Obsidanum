@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "obsidanum:block/void_urn"
+  },"render_type": "cutout"
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "void_urn=false": { "model": "obsidanum:block/large_urn" },
+        "void_urn=true": { "model": "obsidanum:block/void_urn" }
+    }
+}

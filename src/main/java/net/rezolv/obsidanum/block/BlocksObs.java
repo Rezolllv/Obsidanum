@@ -136,10 +136,7 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
 
-    public static final RegistryObject<Block> OBSIDIAN_FORGE = registerBlock("obsidian_forge",
-            () -> new ObsidianForge(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noOcclusion().sound(SoundType.STONE)));
-    public static final RegistryObject<Block> ABSTRACT_OBSIDIAN_FORGE = registerBlock("abstract_obsidian_forge",
-            () -> new GlassBlock(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE)));
+
     public static final RegistryObject<Block> STEM_GLOOMY_MUSHROOM = BLOCKS.register("stem_gloomy_mushroom",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASS).strength(0.2F)
                     .sound(SoundType.WOOD).ignitedByLava()));
@@ -237,12 +234,18 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(35.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_MYSTERIOUS_CARVED_OBSIDIAN_BRICKS = registerBlock("moldy_mysterious_carved_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+
     public static final RegistryObject<Block> DECORATIVE_URN = registerBlock("decorative_urn",
             () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> UNUSUAL_DECORATIVE_URN = registerBlock("unusual_decorative_urn",
             () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> RARE_DECORATIVE_URN = registerBlock("rare_decorative_urn",
             () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
+
+    public static final RegistryObject<Block> LARGE_URN = registerBlock("large_urn",
+            () -> new LargeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.4F, 1.0F).sound(SoundType.DECORATED_POT_CRACKED)));
+
     public static final RegistryObject<Block> LOCKED_CHEST_RUNIC = registerBlock("locked_chest_runic",
             () -> new LockedRunicChest(BlockBehaviour.Properties.of().noOcclusion()
                     .strength(-1.0F, 3600000.0F).sound(SoundType.STONE)));
