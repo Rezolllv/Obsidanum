@@ -33,26 +33,33 @@ public class ObsidanSword extends SwordItem {
         return activated;
     }
     @Override
+    public void onCraftedBy(ItemStack stack, Level world, Player player) {
+        super.onCraftedBy(stack, world, player);
+        // Сохраняем активированное состояние в NBT
+        stack.getOrCreateTag().putBoolean("Activated", this.activated);
+    }
+
+    @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-            deactivate((Player) entity);
+            deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
         }
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn);
         long currentTime = worldIn.getGameTime();
+
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                    activate();
-                    // Код для деактивации, например, удаление частиц и т.д.
+                activate(stack); // Передаем stack в метод активации
                 lastActivationTime = currentTime;
-
             }
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
         }
     }
 
@@ -66,9 +73,11 @@ public class ObsidanSword extends SwordItem {
         }
     }
 
-    public void activate() {
+    public void activate(ItemStack stack) {
         activated = true;
-
+        // Обновляем данные модели
+        stack.getOrCreateTag().putBoolean("Activated", true);
+        stack.getOrCreateTag().putInt("CustomModelData", 1);
     }
 
     @Override
@@ -85,7 +94,7 @@ public class ObsidanSword extends SwordItem {
                        // Устанавливаем визуальный кулдаун
 
                         livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage * additionalDamage);
-                        sword.deactivate(player); // Деактивация меча после удара
+                        sword.deactivate(stack,player); // Деактивация меча после удара
                         return true; // Отмена стандартного поведения
 
                     }
@@ -95,10 +104,12 @@ public class ObsidanSword extends SwordItem {
         return super.onLeftClickEntity(stack, player, entity);
     }
 
-    public void deactivate(Player player) {
+    public void deactivate(ItemStack stack, Player player) {
         activated = false;
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
+        // Обновляем данные модели
+        stack.getOrCreateTag().putBoolean("Activated", false);
+        stack.getOrCreateTag().putInt("CustomModelData", 0);
 
-
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
     }
 }

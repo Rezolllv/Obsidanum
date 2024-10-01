@@ -48,22 +48,24 @@ public class ObsidanAxe extends AxeItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
             if (entity instanceof Player) {
-                deactivate((Player) entity);
+                deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
             }
         }
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn); // Получаем предмет
         long currentTime = worldIn.getGameTime();
+
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                    activate();
-                    lastActivationTime = currentTime;
+                activate(stack); // Передаем stack в метод активации
+                lastActivationTime = currentTime;
             }
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
         }
     }
 
@@ -82,28 +84,32 @@ public class ObsidanAxe extends AxeItem {
         }
     }
 
-    public void activate() {
+    public void activate(ItemStack stack) {
         activated = true;
+        // Сохраняем состояние активации в NBT
+        stack.getOrCreateTag().putBoolean("Activated", true);
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
     }
 
 
 
-    public void deactivate(Player player) {
+    public void deactivate(ItemStack stack, Player player) {
         activated = false;
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
-        // Здесь можно добавить дополнительный код для деактивации (например, создание частиц)
+        // Сохраняем состояние деактивации в NBT
+        stack.getOrCreateTag().putBoolean("Activated", false);
+        stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
+
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем кулдаун
     }
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!world.isClientSide && activated && entity instanceof Player) {
             Block block = state.getBlock();
             if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG)) {
-                chainBreak(world, pos, (Player) entity, stack);
-                deactivate((Player) entity);
-               // Устанавливаем визуальный кулдаун
+                chainBreak(world, pos, (Player) entity, stack); // Передаем stack
+                deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
 
                 return true;
-
             }
         }
         return super.mineBlock(stack, world, state, pos, entity);

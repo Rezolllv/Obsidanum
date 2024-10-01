@@ -4,6 +4,6 @@
     "layer0": "obsidanum:item/obsidan_hoe"
   },
   "overrides": [
-    { "predicate": { "activated": 1.0 }, "model": "obsidanum:item/obsidan_hoe_activated" }
+    { "predicate": { "custom_model_data": 1 }, "model": "obsidanum:item/obsidan_hoe_activated" }
   ]
 }

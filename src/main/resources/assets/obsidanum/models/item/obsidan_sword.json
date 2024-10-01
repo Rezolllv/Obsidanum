@@ -4,6 +4,9 @@
     "layer0": "obsidanum:item/obsidan_sword"
   },
   "overrides": [
-    { "predicate": { "activated": 1.0 }, "model": "obsidanum:item/obsidan_sword_activated" }
+    {
+      "predicate": { "custom_model_data": 1 },
+      "model": "obsidanum:item/obsidan_sword_activated"
+    }
   ]
 }

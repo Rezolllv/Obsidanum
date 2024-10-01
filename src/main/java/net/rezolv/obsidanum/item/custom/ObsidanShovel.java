@@ -43,7 +43,7 @@ public class ObsidanShovel extends ShovelItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
             if (entity instanceof Player) {
-                deactivate((Player) entity, world);
+                deactivate(stack, (Player) entity, world); // Передаем stack и player в метод деактивации
             }
         }
     }
@@ -52,26 +52,26 @@ public class ObsidanShovel extends ShovelItem {
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn); // Получаем предмет
         long currentTime = worldIn.getGameTime();
+
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                    activate();
-                    lastActivationTime = currentTime;
-
+                activate(stack); // Передаем stack в метод активации
+                lastActivationTime = currentTime;
             }
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
+            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
         }
     }
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (activated) {
-            double knockbackY = 4.0; // Подбрасываем цель вверх на 15 блоков
+            double knockbackY = 4.0; // Подбрасываем цель вверх на 4 блока
             target.setDeltaMovement(target.getDeltaMovement().x, knockbackY, target.getDeltaMovement().z);
-            deactivate((Player) attacker, attacker.level());
-
+            deactivate(stack, (Player) attacker, attacker.level()); // Передаем stack и player в метод деактивации
         }
         return super.hurtEnemy(stack, target, attacker);
     }
@@ -88,16 +88,22 @@ public class ObsidanShovel extends ShovelItem {
 
     }
 
-    public void activate() {
+    public void activate(ItemStack stack) {
         activated = true;
+        // Сохраняем состояние активации в NBT
+        stack.getOrCreateTag().putBoolean("Activated", true);
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
     }
 
 
 
-    public void deactivate(Player player, Level world) {
-        activated = false;
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
 
-        // Здесь можно добавить дополнительный код для деактивации (например, создание частиц)
+    public void deactivate(ItemStack stack, Player player, Level world) {
+        activated = false;
+        // Сохраняем состояние деактивации в NBT
+        stack.getOrCreateTag().putBoolean("Activated", false);
+        stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
+
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем кулдаун
     }
 }

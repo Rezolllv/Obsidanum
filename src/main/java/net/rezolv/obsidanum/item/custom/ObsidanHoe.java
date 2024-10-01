@@ -50,7 +50,7 @@ public class ObsidanHoe extends HoeItem {
 
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate();
+                activate(itemStack);
                 lastActivationTime = currentTime;
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
@@ -98,7 +98,7 @@ public class ObsidanHoe extends HoeItem {
                             }
                         }
                     }
-                    deactivate((Player) entity);
+                    deactivate(stack,(Player) entity);
                     break;
                 }
             }
@@ -117,8 +117,10 @@ public class ObsidanHoe extends HoeItem {
 
     }
 
-    public void activate() {
+    public void activate(ItemStack stack) {
         activated = true;
+        stack.getOrCreateTag().putBoolean("Activated", true);
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
     }
 
 
@@ -128,12 +130,14 @@ public class ObsidanHoe extends HoeItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
             if (entity instanceof Player) {
-                deactivate((Player) entity);
+                deactivate(stack, (Player) entity);
             }
         }
     }
-    public void deactivate(Player player) {
+    public void deactivate(ItemStack stack,Player player) {
         activated = false;
+        stack.getOrCreateTag().putBoolean("Activated", false);
+        stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
         player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
 
     }

@@ -43,7 +43,7 @@ public class ObsidanPickaxe extends PickaxeItem {
 
         if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
 
-            deactivate((Player) entity);
+            deactivate(stack,(Player) entity);
         }
     }
 
@@ -54,7 +54,7 @@ public class ObsidanPickaxe extends PickaxeItem {
 
         if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate(playerIn);
+                activate(itemStack,playerIn);
                 lastActivationTime = currentTime;
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
@@ -82,7 +82,7 @@ public class ObsidanPickaxe extends PickaxeItem {
                 }
 
                 // Деактивируем кирку после разрушения блока
-                deactivate((Player) pEntityLiving);
+                deactivate(pStack,(Player) pEntityLiving);
             }
         }
 
@@ -104,12 +104,16 @@ public class ObsidanPickaxe extends PickaxeItem {
 
     }
 
-    public void activate(Player player) {
+    public void activate(ItemStack stack,Player player) {
         activated = true;
+        stack.getOrCreateTag().putBoolean("Activated", true);
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
     }
 
-    public void deactivate(Player player) {
+    public void deactivate(ItemStack stack,Player player) {
         activated = false;
+        stack.getOrCreateTag().putBoolean("Activated", false);
+        stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
         player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
     }
     private static final Block[] INSTANT_BREAK_BLOCKS = {
