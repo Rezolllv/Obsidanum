@@ -1,0 +1,21 @@
+{
+	"textures": {
+		"0": "obsidanum:block/flame_banner_baggel_top_2",
+		"particle": "obsidanum:block/flame_banner_baggel_top_2"
+	},"render_type": "cutout",
+	"elements": [
+		{
+			"from": [0, 0, 15.7],
+			"to": [16, 16, 15.7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 15.7]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 16], "texture": "#particle"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 16], "texture": "#particle"},
+				"up": {"uv": [0, 0, 16, 0], "texture": "#particle"},
+				"down": {"uv": [0, 0, 16, 0], "texture": "#particle"}
+			}
+		}
+	]
+}
