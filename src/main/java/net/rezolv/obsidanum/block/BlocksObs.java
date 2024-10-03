@@ -248,7 +248,7 @@ public class BlocksObs {
                     .sound(SoundType.DECORATED_POT_CRACKED)));
 
     public static final RegistryObject<Block> FLAME_BANNER_BAGGEL = registerBlock("flame_banner_baggel",
-            () -> new FlameBannerBaggel(BlockBehaviour.Properties.of().noOcclusion().strength(0.2F, 1.0F)
+            () -> new FlameBannerBaggel(BlockBehaviour.Properties.of().noOcclusion().noCollission().strength(0.2F, 1.0F)
                     .sound(SoundType.WOOL)));
 
     public static final RegistryObject<Block> LOCKED_CHEST_RUNIC = registerBlock("locked_chest_runic",
