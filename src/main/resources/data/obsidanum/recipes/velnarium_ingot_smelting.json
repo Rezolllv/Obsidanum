@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 3.5,
+  "group": "velnarium_ingot",
+  "ingredient": {
+    "item": "obsidanum:velnarium_ore"
+  },
+  "result": "obsidanum:velnarium_ingot"
+}

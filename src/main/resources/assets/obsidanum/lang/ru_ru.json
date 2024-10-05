@@ -13,6 +13,7 @@
   "advancements.obsidanum.nether.relict_amethyst_shard.title": "Осколок знаний",
 
   "creativetab.obsidanum": "Obsidanum",
+  "block.obsidanum.flame_banner_baggel": "Баннер ордена Баггеля",
 
   "block.obsidanum.chest_obsidian": "Обсидиановый сундук",
   "block.obsidanum.chest_runic": "Рунический обсидиановый сундук",
@@ -165,7 +166,16 @@
   "fluid_type.obsidanum.nether_fire_fluid": "Адская жижа",
 
 
-
+  "item.obsidanum.velnarium_ore": "Вельнариумовая руда",
+  "item.obsidanum.order_sword": "Меч ордена",
+  "item.obsidanum.order_plan": "Чертёж ордена",
+  "item.obsidanum.nether_plan": "Адский чертёж",
+  "item.obsidanum.catacombs_plan": "Чертёж катакомб",
+  "item.obsidanum.velnarium_mace": "Вельнариумная булава",
+  "item.obsidanum.demonic_bonecrusher": "Демоническая костоломка",
+  "item.obsidanum.spores_of_the_gloomy_mushroom": "Споры сумрачного гриба",
+  "item.obsidanum.obsidian_totem_of_immortality": "Обсидиановый тотем возрождения",
+  "item.obsidanum.elemental_crusher": "Элементальный диструктор",
   "item.obsidanum.raw_meet_beetle": "Мясо жука",
   "item.obsidanum.cocked_meet_beetle": "Жареное мясо жука",
   "item.obsidanum.bagell_fuel": "§bТопливо Багелля",

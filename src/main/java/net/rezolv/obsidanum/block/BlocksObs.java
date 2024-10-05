@@ -245,10 +245,12 @@ public class BlocksObs {
 
     public static final RegistryObject<Block> LARGE_URN = registerBlock("large_urn",
             () -> new LargeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.2F, 1.0F)
-                    .sound(SoundType.DECORATED_POT_CRACKED)));
+                    .sound(SoundType.DECORATED_POT_CRACKED).lightLevel((p_152680_) -> {
+                        return 5;
+                    })));
 
     public static final RegistryObject<Block> FLAME_BANNER_BAGGEL = registerBlock("flame_banner_baggel",
-            () -> new FlameBannerBaggel(BlockBehaviour.Properties.of().noOcclusion().noCollission().strength(0.2F, 1.0F)
+            () -> new FlameBannerBaggel(BlockBehaviour.Properties.of().noOcclusion().noCollission().instabreak()
                     .sound(SoundType.WOOL)));
 
     public static final RegistryObject<Block> LOCKED_CHEST_RUNIC = registerBlock("locked_chest_runic",

@@ -16,6 +16,9 @@
   "block.obsidanum.chest_runic": "Runic Chest",
   "block.obsidanum.velnarium_grid": "Velnarium Grid",
 
+  "block.obsidanum.flame_banner_baggel": "Flame banner Baggel",
+
+
   "block.obsidanum.large_urn": "Large Urn",
   "block.obsidanum.decorative_urn": "Decorative Urn",
   "block.obsidanum.unusual_decorative_urn": "Unusual Decorative Urn",
@@ -174,7 +177,19 @@
   "item.obsidan.description.shovel": "\n§oThe Shovel is shaped like an ordinary Shovel, but in fact, if you want to, it will send any enemy on a long journey.\n\n§2Properties: §fBy activating the ancient magic contained in this tool, you will be able to deliver a powerful blow to the enemy, throwing him up to the height of several blocks. CD 40 sec.",
   "item.obsidan.description.sword": "\n§oA Sword made from a magic-soaked alloy. The will of the owner can ignite this blade with a Secret Fire that will make the next blow deadly. \n\n§2Properties: §fWhen activating ancient magic, the damage to the attacked increases by 1.5 times. CD 80 sec.",
   "item.obsidanum.bagell_fuel": "§bBagell Fuel",
+
+
   "item.obsidanum.crucible": "Crucible",
+  "item.obsidanum.velnarium_ore": "Velnaruim Ore",
+  "item.obsidanum.order_sword": "The Sword of the Order",
+  "item.obsidanum.order_plan": "Order Plan",
+  "item.obsidanum.nether_plan": "Nether Plan",
+  "item.obsidanum.catacombs_plan": "Catacombs Plan",
+  "item.obsidanum.obsidian_totem_of_immortality": "The Obsidian Renaissance Totem",
+  "item.obsidanum.elemental_crusher": "Elemental Crusher",
+  "item.obsidanum.velnarium_mace": "Velnarium Mace",
+  "item.obsidanum.demonic_bonecrusher": "Demonic Bonecrusher",
+  "item.obsidanum.spores_of_the_gloomy_mushroom": "Spores of the Gloomy Mushroom",
   "item.obsidanum.raw_meet_beetle": "Raw Meet Beetle",
   "item.obsidanum.cocked_meet_beetle": "Cocked Meet Beetle",
   "item.obsidanum.crucible_with_nether_flame": "Crucible With Nether Flame",

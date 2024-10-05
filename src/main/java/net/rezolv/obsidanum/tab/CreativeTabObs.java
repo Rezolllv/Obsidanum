@@ -73,6 +73,16 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_2.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_3.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_DOOR_KEY_4.get());
+                        pOutput.accept(ItemsObs.VELNARIUM_ORE.get());
+                        pOutput.accept(ItemsObs.ORDER_SWORD.get());
+                        pOutput.accept(ItemsObs.ORDER_PLAN.get());
+                        pOutput.accept(ItemsObs.NETHER_PLAN.get());
+                        pOutput.accept(ItemsObs.CATACOMBS_PLAN.get());
+                        pOutput.accept(ItemsObs.OBSIDIAN_TOTEM_OF_IMMORTALITY.get());
+                        pOutput.accept(ItemsObs.ELEMENTAL_CRUSHER.get());
+                        pOutput.accept(ItemsObs.VELNARIUM_MACE.get());
+                        pOutput.accept(ItemsObs.DEMONIC_BONECRUSHER.get());
+                        pOutput.accept(ItemsObs.SPORES_OF_THE_GLOOMY_MUSHROOM.get());
 
 
 

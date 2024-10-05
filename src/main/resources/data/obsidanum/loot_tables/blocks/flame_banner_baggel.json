@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "obsidanum:banner_secret_flame"
+          "name": "obsidanum:flame_banner_baggel"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "obsidanum:blocks/banner_secret_flame"
+  "random_sequence": "obsidanum:blocks/flame_banner_baggel"
 }

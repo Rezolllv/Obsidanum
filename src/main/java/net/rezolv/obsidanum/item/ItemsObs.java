@@ -20,6 +20,28 @@ public class ItemsObs {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Obsidanum.MOD_ID);
 
+    public static final RegistryObject<Item> VELNARIUM_ORE = ITEMS.register("velnarium_ore",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ORDER_SWORD = ITEMS.register("order_sword",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ORDER_PLAN = ITEMS.register("order_plan",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NETHER_PLAN = ITEMS.register("nether_plan",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CATACOMBS_PLAN = ITEMS.register("catacombs_plan",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDIAN_TOTEM_OF_IMMORTALITY = ITEMS.register("obsidian_totem_of_immortality",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ELEMENTAL_CRUSHER = ITEMS.register("elemental_crusher",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> VELNARIUM_MACE = ITEMS.register("velnarium_mace",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DEMONIC_BONECRUSHER = ITEMS.register("demonic_bonecrusher",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SPORES_OF_THE_GLOOMY_MUSHROOM = ITEMS.register("spores_of_the_gloomy_mushroom",
+            () -> new Item(new Item.Properties()));
+
+
     public static final RegistryObject<Item> OBSIDIAN_TEAR = ITEMS.register("obsidian_tear",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN = ITEMS.register("obsidan",
