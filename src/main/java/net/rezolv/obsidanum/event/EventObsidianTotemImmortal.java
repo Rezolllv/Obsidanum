@@ -53,7 +53,7 @@ public class EventObsidianTotemImmortal {
                     revivePlayer(player);
                     // Воспроизводим анимацию тотема
                     Obsidanum.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new TotemAnimationMessage());
-                    playSound(player.level(), player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_BLOCK);
+                    playSound(player.level(), player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_RESONATE);
                     // Применяем эффекты тотема
                     applyTotemEffects(player);
                     // Удаляем один тотем из инвентаря
@@ -65,7 +65,7 @@ public class EventObsidianTotemImmortal {
         }
     }
     public static void playSound(LevelAccessor world, double x, double y, double z, SoundEvent sound) {
-        world.playSound(null, BlockPos.containing(x, y, z), sound, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        world.playSound(null, BlockPos.containing(x, y, z), sound, SoundSource.NEUTRAL, 1.0F, 2.0F);
     }
 
 
