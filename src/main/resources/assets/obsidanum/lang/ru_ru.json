@@ -154,7 +154,7 @@
   "block.obsidanum.the_gloomy_mycelium": "Сумрачная грибница",
 
   "container.chest_obsidian": "Обсидиановый сундук",
-
+  "death.attack.obsidian_totem": "%1$s не выдержал тяжёлого возвращения к жизни %2$s через обсидиановый тотем",
   "effect.obsidanum.inviolability": "Неприкосновенность",
   "effect.obsidanum.flash": "Замешательство",
   "effect.obsidanum.protection_arrow": "Защита от стрел",

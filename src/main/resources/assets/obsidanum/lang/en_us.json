@@ -160,6 +160,10 @@
   "block.obsidanum.the_gloomy_mycelium": "The Gloomy mycelium",
   "container.chest_obsidian": "Obsidian Chest",
   "creativetab.obsidanum": "Obsidanum",
+
+  "death.attack.obsidian_totem": "%1$s was obliterated by the magic of %2$s's Obsidian Totem",
+
+
   "effect.obsidanum.inviolability": "Inviolability",
   "effect.obsidanum.flash": "Confusion",
   "effect.obsidanum.protection_arrow": "Protection From Arrows",
