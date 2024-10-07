@@ -1,0 +1,6 @@
+// 1.20.1	2024-10-06T23:53:50.010582	Registries
+97fae9b0374cf5cbad8d94cc6fd4e76203385a23 data/obsidanum/forge/biome_modifier/add_onyx.json
+517d722a084841d8f57c82cd764b891b28154d7d data/obsidanum/worldgen/configured_feature/obsidan_tree.json
+0736ba24906c7ed976be96bee5767c1c900c67d2 data/obsidanum/worldgen/configured_feature/onyx.json
+e8b38fc1444bda9bd4743ef0ef8d33c5ccbd06d5 data/obsidanum/worldgen/placed_feature/obsidan_tree_placed.json
+ad0ef87ae66ae8196342f5d4fb704727b5aa6b50 data/obsidanum/worldgen/placed_feature/onyx_placed.json

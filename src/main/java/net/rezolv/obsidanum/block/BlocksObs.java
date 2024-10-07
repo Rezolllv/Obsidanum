@@ -209,6 +209,8 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOLDY_OBSIDIAN_BRICKS = registerBlock("moldy_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN = registerBlock("obsidian",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> MOLDY_CARVED_OBSIDIAN_BRICKS_D = registerBlock("moldy_carved_obsidian_bricks_d",
             () -> new Block(BlockBehaviour.Properties.of().strength(40.0F, 1200.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -237,11 +239,20 @@ public class BlocksObs {
 
 
     public static final RegistryObject<Block> DECORATIVE_URN = registerBlock("decorative_urn",
-            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
+            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)
+                    .lightLevel((p_152629_) -> {
+                return 5;
+            })));
     public static final RegistryObject<Block> UNUSUAL_DECORATIVE_URN = registerBlock("unusual_decorative_urn",
-            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
+            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)
+                    .lightLevel((p_152629_) -> {
+                return 5;
+            })));
     public static final RegistryObject<Block> RARE_DECORATIVE_URN = registerBlock("rare_decorative_urn",
-            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)));
+            () -> new DecorativeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.1F, 1.0F).sound(SoundType.GLASS)
+                    .lightLevel((p_152629_) -> {
+                return 5;
+            })));
 
     public static final RegistryObject<Block> LARGE_URN = registerBlock("large_urn",
             () -> new LargeUrn(BlockBehaviour.Properties.of().noOcclusion().strength(0.2F, 1.0F)
