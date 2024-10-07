@@ -1,10 +1,13 @@
 package net.rezolv.obsidanum;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
@@ -26,6 +31,7 @@ import net.rezolv.obsidanum.entity.gart.GartRenderer;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleRenderer;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
 import net.rezolv.obsidanum.event.BlockBreakEventHandler;
+import net.rezolv.obsidanum.event.TotemAnimationMessage;
 import net.rezolv.obsidanum.fluid.ModFluidTypes;
 import net.rezolv.obsidanum.fluid.ModFluids;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -46,8 +52,22 @@ public class Obsidanum {
     public static final String MOD_ID = "obsidanum";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    // Сеть для анимации тотема
+    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MOD_ID, "main"),
+            () -> "1.0",
+            s -> true,
+            s -> true
+    );
+
     public Obsidanum() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        // Канал для анимации тотема
+        CHANNEL.messageBuilder(TotemAnimationMessage.class, 0)
+                .decoder(TotemAnimationMessage::decode)
+                .encoder(TotemAnimationMessage::encode)
+                .consumerMainThread(TotemAnimationMessage::handle)
+                .add();
 
         modEventBus.addListener(this::commonSetup);
         ItemsObs.register(modEventBus);
@@ -121,5 +141,6 @@ public class Obsidanum {
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NETHER_FIRE_LAVA.get(), RenderType.solid());
             Sheets.addWoodType(ModWoodTypes.OBSIDAN);
         }
+
     }
 }

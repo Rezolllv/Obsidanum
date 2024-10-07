@@ -3,6 +3,7 @@ package net.rezolv.obsidanum.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -12,11 +13,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+
+import net.minecraftforge.network.PacketDistributor;
+import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.ItemsObs;
 
 import javax.annotation.Nullable;
@@ -25,29 +32,31 @@ import java.util.logging.Level;
 
 @Mod.EventBusSubscriber
 public class EventObsidianTotemImmortal {
-
     @SubscribeEvent
-    public static void onPlayerDeath(LivingDeathEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            ItemStack totem = getObsidianTotem(player);
-            if (!totem.isEmpty()) {
-                event.setCanceled(true); // Отмена смерти
-                revivePlayer(player);
-                applyTotemEffects(player);
-                loadAnimationTotem(event.getEntity().level(),player); // Проблемное место
-                pushAndDamageNearbyEntities(player);
-                totem.shrink(1); // Удаление одного тотема из инвентаря
+    public static void onPlayerHurt(LivingHurtEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+
+            if (player.getHealth() - event.getAmount() <= 0) {
+                // Отменяем урон, чтобы игрок не умер
+                event.setCanceled(true);
+
+                // Проверяем наличие обсиданового тотема
+                ItemStack totem = getObsidianTotem(player);
+                if (!totem.isEmpty()) {
+                    // Восстанавливаем здоровье игрока до 50%
+                    revivePlayer(player);
+                    // Воспроизводим анимацию тотема
+                    Obsidanum.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new TotemAnimationMessage());
+                    // Применяем эффекты тотема
+                    applyTotemEffects(player);
+                    // Удаляем один тотем из инвентаря
+                    totem.shrink(1);
+                    // Отталкиваем и наносим урон ближайшим сущностям
+                    pushAndDamageNearbyEntities(player);
+                }
             }
         }
     }
-
-
-    private static void loadAnimationTotem(LevelAccessor world,Player player) {
-        if (world.isClientSide()) {
-            Minecraft.getInstance().gameRenderer.displayItemActivation(new ItemStack(ItemsObs.OBSIDIAN_TOTEM_OF_IMMORTALITY.get())); // Замените на вашу анимацию
-        }
-    }
-
 
 
     private static ItemStack getObsidianTotem(Player player) {
@@ -66,6 +75,7 @@ public class EventObsidianTotemImmortal {
         player.setHealth(player.getMaxHealth() * 0.5F); // Половина хп
         player.removeAllEffects(); // Удаление всех негативных эффектов
     }
+
     private static void pushAndDamageNearbyEntities(Player player) {
         // Радиус отталкивания
         double radius = 7.0;
@@ -102,11 +112,13 @@ public class EventObsidianTotemImmortal {
             }
         }
     }
+
     // Метод для создания кастомного сообщения о смерти с локализацией
     private static Component createDeathMessage(Player killer, Player victim) {
         // Используем Component.translatable() для поддержки локализации
         return Component.translatable("death.attack.obsidian_totem", victim.getName(), killer.getName());
     }
+
     private static void applyTotemEffects(Player player) {
         // Наложение сильного замедления и сопротивления
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 35 * 20, 4)); // Замедление
