@@ -1,9 +1,14 @@
 package net.rezolv.obsidanum.event;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +28,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
 import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.ItemsObs;
 
@@ -47,6 +53,7 @@ public class EventObsidianTotemImmortal {
                     revivePlayer(player);
                     // Воспроизводим анимацию тотема
                     Obsidanum.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new TotemAnimationMessage());
+                    playSound(player.level(), player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_BLOCK);
                     // Применяем эффекты тотема
                     applyTotemEffects(player);
                     // Удаляем один тотем из инвентаря
@@ -57,6 +64,10 @@ public class EventObsidianTotemImmortal {
             }
         }
     }
+    public static void playSound(LevelAccessor world, double x, double y, double z, SoundEvent sound) {
+        world.playSound(null, BlockPos.containing(x, y, z), sound, SoundSource.NEUTRAL, 1.0F, 1.0F);
+    }
+
 
 
     private static ItemStack getObsidianTotem(Player player) {
