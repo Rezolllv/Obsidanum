@@ -44,7 +44,7 @@ public class EventObsidianTotemImmortal {
 
     private static void loadAnimationTotem(LevelAccessor world,Player player) {
         if (world.isClientSide()) {
-            Minecraft.getInstance().gameRenderer.displayItemActivation(new ItemStack(Blocks.ACACIA_SAPLING)); // Замените на вашу анимацию
+            Minecraft.getInstance().gameRenderer.displayItemActivation(new ItemStack(ItemsObs.OBSIDIAN_TOTEM_OF_IMMORTALITY.get())); // Замените на вашу анимацию
         }
     }
 
