@@ -1,9 +1,9 @@
 package net.rezolv.obsidanum.event;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -16,25 +16,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.ItemsObs;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.logging.Level;
 
 @Mod.EventBusSubscriber
 public class EventObsidianTotemImmortal {
@@ -44,12 +36,13 @@ public class EventObsidianTotemImmortal {
 
             if (player.getHealth() - event.getAmount() <= 0) {
                 // Отменяем урон, чтобы игрок не умер
-                event.setCanceled(true);
 
                 // Проверяем наличие обсиданового тотема
                 ItemStack totem = getObsidianTotem(player);
                 if (!totem.isEmpty()) {
                     // Восстанавливаем здоровье игрока до 50%
+                    event.setCanceled(true);
+
                     revivePlayer(player);
                     // Воспроизводим анимацию тотема
                     Obsidanum.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new TotemAnimationMessage());
@@ -60,10 +53,17 @@ public class EventObsidianTotemImmortal {
                     totem.shrink(1);
                     // Отталкиваем и наносим урон ближайшим сущностям
                     pushAndDamageNearbyEntities(player);
+                    spawnPortalParticles(player.level(), player.getX(), player.getY(), player.getZ());
+
                 }
             }
         }
     }
+    public static void spawnPortalParticles(LevelAccessor world, double x, double y, double z) {
+        if (world instanceof ServerLevel level)
+            level.sendParticles(ParticleTypes.PORTAL, x, y, z, 80, 2, 2, 2, 0.2);
+    }
+
     public static void playSound(LevelAccessor world, double x, double y, double z, SoundEvent sound) {
         world.playSound(null, BlockPos.containing(x, y, z), sound, SoundSource.NEUTRAL, 1.0F, 2.0F);
     }

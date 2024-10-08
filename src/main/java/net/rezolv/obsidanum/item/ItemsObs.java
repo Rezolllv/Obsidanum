@@ -30,6 +30,8 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CATACOMBS_PLAN = ITEMS.register("catacombs_plan",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDAN_ESSENCE = ITEMS.register("obsidan_essence",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_TOTEM_OF_IMMORTALITY = ITEMS.register("obsidian_totem_of_immortality",
             () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ELEMENTAL_CRUSHER = ITEMS.register("elemental_crusher",
