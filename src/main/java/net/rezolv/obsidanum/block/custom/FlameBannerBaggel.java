@@ -22,6 +22,7 @@ public class FlameBannerBaggel extends Block {
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(TOP, false)
+                .setValue(TOP_BELOW, false)
                 .setValue(MIDDLE, false)
                 .setValue(BOTTOM, false));
     }
@@ -45,39 +46,34 @@ public class FlameBannerBaggel extends Block {
     }
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty TOP = BooleanProperty.create("top");
+    public static final BooleanProperty TOP_BELOW = BooleanProperty.create("top_below");
     public static final BooleanProperty MIDDLE = BooleanProperty.create("middle");
     public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, TOP, MIDDLE, BOTTOM);
+        builder.add(FACING, TOP, TOP_BELOW, MIDDLE, BOTTOM);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        BlockState aboveState = level.getBlockState(pos.above());
         BlockState belowState = level.getBlockState(pos.below());
         Block thisBlock = this;
 
-        boolean hasBlockAbove = aboveState.is(thisBlock);
         boolean hasBlockBelow = belowState.is(thisBlock);
 
-        if (hasBlockAbove && hasBlockBelow) {
+        if (hasBlockBelow) {
             return this.defaultBlockState()
                     .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                    .setValue(MIDDLE, true)
-                    .setValue(TOP, false)
-                    .setValue(BOTTOM, false);
-        } else if (hasBlockAbove) {
-            return this.defaultBlockState()
-                    .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                    .setValue(BOTTOM, true)
+                    .setValue(TOP, true)
+                    .setValue(TOP_BELOW, true)
                     .setValue(MIDDLE, false)
-                    .setValue(TOP, false);
+                    .setValue(BOTTOM, false);
         } else {
             return this.defaultBlockState()
                     .setValue(FACING, context.getHorizontalDirection().getOpposite())
                     .setValue(TOP, true)
+                    .setValue(TOP_BELOW, false)
                     .setValue(MIDDLE, false)
                     .setValue(BOTTOM, false);
         }
@@ -88,12 +84,33 @@ public class FlameBannerBaggel extends Block {
         boolean hasBlockAbove = level.getBlockState(pos.above()).is(thisBlock);
         boolean hasBlockBelow = level.getBlockState(pos.below()).is(thisBlock);
 
+        // Если есть блок выше и ниже, это средний блок
         if (hasBlockAbove && hasBlockBelow) {
-            return state.setValue(MIDDLE, true).setValue(TOP, false).setValue(BOTTOM, false);
-        } else if (hasBlockAbove) {
-            return state.setValue(BOTTOM, true).setValue(MIDDLE, false).setValue(TOP, false);
-        } else {
-            return state.setValue(TOP, true).setValue(MIDDLE, false).setValue(BOTTOM, false);
+            return state.setValue(MIDDLE, true)
+                    .setValue(TOP, false)
+                    .setValue(TOP_BELOW, false)
+                    .setValue(BOTTOM, false);
+        }
+        // Если есть только блок выше, это нижний блок
+        else if (hasBlockAbove) {
+            return state.setValue(BOTTOM, true)
+                    .setValue(MIDDLE, false)
+                    .setValue(TOP, false)
+                    .setValue(TOP_BELOW, false);
+        }
+        // Если есть только блок ниже, это верхний блок с состоянием "top-below"
+        else if (hasBlockBelow) {
+            return state.setValue(TOP, true)
+                    .setValue(TOP_BELOW, true)
+                    .setValue(MIDDLE, false)
+                    .setValue(BOTTOM, false);
+        }
+        // Если нет блоков ни сверху, ни снизу, это обычный верхний блок
+        else {
+            return state.setValue(TOP, true)
+                    .setValue(TOP_BELOW, false)
+                    .setValue(MIDDLE, false)
+                    .setValue(BOTTOM, false);
         }
     }
     public BlockState rotate(BlockState state, Rotation rot) {

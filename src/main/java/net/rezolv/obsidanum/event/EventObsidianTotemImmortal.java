@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.ItemsObs;
+import net.rezolv.obsidanum.sound.SoundsObs;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class EventObsidianTotemImmortal {
                     revivePlayer(player);
                     // Воспроизводим анимацию тотема
                     Obsidanum.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new TotemAnimationMessage());
-                    playSound(player.level(), player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_RESONATE);
+                    playSound(player.level(), player.getX(), player.getY(), player.getZ(), SoundsObs.OBSIDIAN_TOTEM.get());
                     // Применяем эффекты тотема
                     applyTotemEffects(player);
                     // Удаляем один тотем из инвентаря
@@ -117,7 +118,7 @@ public class EventObsidianTotemImmortal {
                 // Добавляем небольшое значение для предотвращения деления на 0
                 if (distance != 0) {
                     // Отталкиваем с коэффициентом силы
-                    double strength = 1.5;
+                    double strength = 7;
                     entity.setDeltaMovement(dx / distance * strength, 0.5, dz / distance * strength);
                 }
             }
@@ -132,8 +133,7 @@ public class EventObsidianTotemImmortal {
 
     private static void applyTotemEffects(Player player) {
         // Наложение сильного замедления и сопротивления
-        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 35 * 20, 4)); // Замедление
+        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10 * 20, 3)); // Замедление
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 35 * 20, 5)); // Сопротивление
-        player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 3 * 20, 0)); // Тьма
     }
 }

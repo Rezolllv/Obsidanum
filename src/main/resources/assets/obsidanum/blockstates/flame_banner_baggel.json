@@ -1,6 +1,6 @@
 {
   "variants": {
-    "facing=north,top=true,middle=false,bottom=false": [
+    "facing=north,top=true,middle=false,bottom=false,top_below=false": [
       {
         "model": "obsidanum:block/flame_banner_baggel_top_1"
       },
@@ -8,7 +8,15 @@
         "model": "obsidanum:block/flame_banner_baggel_top_2"
       }
     ],
-    "facing=east,top=true,middle=false,bottom=false": [
+    "facing=north,top=true,middle=false,bottom=false,top_below=true": [
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_1"
+      },
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_2"
+      }
+    ],
+    "facing=east,top=true,middle=false,bottom=false,top_below=false": [
       {
         "model": "obsidanum:block/flame_banner_baggel_top_1",
         "y": 90
@@ -18,7 +26,17 @@
         "y": 90
       }
     ],
-    "facing=south,top=true,middle=false,bottom=false": [
+    "facing=east,top=true,middle=false,bottom=false,top_below=true": [
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_1",
+        "y": 90
+      },
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_2",
+        "y": 90
+      }
+    ],
+    "facing=south,top=true,middle=false,bottom=false,top_below=false": [
       {
         "model": "obsidanum:block/flame_banner_baggel_top_1",
         "y": 180
@@ -28,13 +46,33 @@
         "y": 180
       }
     ],
-    "facing=west,top=true,middle=false,bottom=false": [
+    "facing=south,top=true,middle=false,bottom=false,top_below=true": [
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_1",
+        "y": 180
+      },
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_2",
+        "y": 180
+      }
+    ],
+    "facing=west,top=true,middle=false,bottom=false,top_below=false": [
       {
         "model": "obsidanum:block/flame_banner_baggel_top_1",
         "y": 270
       },
       {
         "model": "obsidanum:block/flame_banner_baggel_top_2",
+        "y": 270
+      }
+    ],
+    "facing=west,top=true,middle=false,bottom=false,top_below=true": [
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_1",
+        "y": 270
+      },
+      {
+        "model": "obsidanum:block/flame_banner_baggel_top_below_2",
         "y": 270
       }
     ],
@@ -124,7 +162,7 @@
         "model": "obsidanum:block/flame_banner_baggel_bottom_1",
         "y": 270
       },
-            {
+      {
         "model": "obsidanum:block/flame_banner_baggel_bottom_2",
         "y": 270
       }

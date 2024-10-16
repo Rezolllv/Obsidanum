@@ -23,6 +23,14 @@
       }
     ]
   },
+  "obsidian_totem": {
+    "sounds": [
+      {
+        "name": "obsidanum:obsidian_totem",
+        "stream": true
+      }
+    ]
+  },
   "flash": {
     "sounds": [
       {

@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -23,9 +24,11 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.rezolv.obsidanum.item.ItemsObs;
 
@@ -126,22 +129,22 @@ public class GloomyMycelium extends Block {
                 BlockState newState = state;
                 player.swing(InteractionHand.MAIN_HAND, true);
 
-                    // Проверяем стадию роста и увеличиваем её, если это возможно
-                    int growthStage = state.getValue(GROWTH_STAGE);
-                    if (growthStage < 1) {
-                        if (randomChance < 10) {
+                // Проверяем стадию роста и увеличиваем её, если это возможно
+                int growthStage = state.getValue(GROWTH_STAGE);
+                if (growthStage < 1) {
+                    if (randomChance < 10) {
                         newState = state.setValue(GROWTH_STAGE, growthStage + 1);
-                        }
-                        level.setBlock(pos, newState, 2); // Обновляем состояние блока
+                    }
+                    level.setBlock(pos, newState, 2); // Обновляем состояние блока
 
-                        // Воспроизводим эффекты
-                        ((ServerLevel) level).sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
-                        level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    // Воспроизводим эффекты
+                    ((ServerLevel) level).sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.1);
+                    level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-                        // Уменьшаем количество костной муки в инвентаре игрока
-                        if (!player.isCreative()) {
-                            itemStack.shrink(1);
-                        }
+                    // Уменьшаем количество костной муки в инвентаре игрока
+                    if (!player.isCreative()) {
+                        itemStack.shrink(1);
+                    }
 
                 }
 
@@ -162,13 +165,13 @@ public class GloomyMycelium extends Block {
                     ItemStack mushroomStack = new ItemStack(ItemsObs.GLOOMY_MUSHROOM.get()); // Замените на нужный блок или гриб
                     ItemEntity mushroomEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, mushroomStack);
                     level.addFreshEntity(mushroomEntity);                       // Если игрок смог получить гриб, значит инвентарь был изменен
-                        // Уменьшить прочность ножниц
-                        itemStack.hurtAndBreak(1, player, (p_220037_) -> {
-                            p_220037_.broadcastBreakEvent(hand);
-                        });
+                    // Уменьшить прочность ножниц
+                    itemStack.hurtAndBreak(1, player, (p_220037_) -> {
+                        p_220037_.broadcastBreakEvent(hand);
+                    });
 
-                        // Воспроизвести звук ножниц
-                        level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    // Воспроизвести звук ножниц
+                    level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                 }
             }
