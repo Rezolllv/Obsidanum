@@ -20,43 +20,39 @@ import java.util.List;
 
 public class ObsidanSword extends SwordItem {
 
-    private static final long COOLDOWN_DURATION = 80 * 20; // 60 seconds in ticks
+    private static final long COOLDOWN_DURATION = 80 * 20; // 80 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
 
     public ObsidanSword(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
-    // Метод для проверки активации через NBT
     public boolean isActivated(ItemStack stack) {
         return stack.getOrCreateTag().getBoolean("Activated");
     }
 
-    // Метод для получения времени последней активации через NBT
-    public long getLastActivationTime(ItemStack stack) {
+    private long getLastActivationTime(ItemStack stack) {
         return stack.getOrCreateTag().getLong("LastActivationTime");
     }
 
-    // Метод для установки времени последней активации через NBT
-    public void setLastActivationTime(ItemStack stack, long time) {
+    private void setLastActivationTime(ItemStack stack, long time) {
         stack.getOrCreateTag().putLong("LastActivationTime", time);
     }
 
     @Override
     public void onCraftedBy(ItemStack stack, Level world, Player player) {
         super.onCraftedBy(stack, world, player);
-        stack.getOrCreateTag().putBoolean("Activated", false); // По умолчанию меч не активирован
+        // Установка значений по умолчанию
+        stack.getOrCreateTag().putBoolean("Activated", false);
+        stack.getOrCreateTag().putLong("LastActivationTime", 0);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
 
-        if (!world.isClientSide && isActivated(stack)) {
-            long lastActivationTime = getLastActivationTime(stack);
-            if (world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-                deactivate(stack, (Player) entity);
-            }
+        if (!world.isClientSide && isActivated(stack) && world.getGameTime() - getLastActivationTime(stack) >= ACTIVATION_DURATION) {
+            deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
         }
     }
 
@@ -65,10 +61,10 @@ public class ObsidanSword extends SwordItem {
         ItemStack stack = playerIn.getItemInHand(handIn);
         long currentTime = worldIn.getGameTime();
 
-        if (!isActivated(stack) && !playerIn.getCooldowns().isOnCooldown(this)) {
+        if (!isActivated(stack) && currentTime - getLastActivationTime(stack) >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate(stack, currentTime);
-                playerIn.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Кулдаун уникален для каждого игрока
+                activate(stack); // Передаем stack в метод активации
+                setLastActivationTime(stack, currentTime);
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else {
@@ -76,32 +72,28 @@ public class ObsidanSword extends SwordItem {
         }
     }
 
-    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
-        super.appendHoverText(itemstack, world, list, flag);
-        if (Screen.hasShiftDown()) {
-            list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
-            list.add(Component.translatable("item.obsidan.description.sword").withStyle(ChatFormatting.DARK_GRAY));
-        } else {
-            list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
-        }
-    }
-
-    public void activate(ItemStack stack, long currentTime) {
+    public void activate(ItemStack stack) {
         stack.getOrCreateTag().putBoolean("Activated", true);
-        setLastActivationTime(stack, currentTime);
+        // Обновляем данные модели
         stack.getOrCreateTag().putInt("CustomModelData", 1);
     }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-        if (!player.isLocalPlayer() && entity instanceof LivingEntity livingEntity) {
-            if (isActivated(stack)) {
-                float baseDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                float additionalDamage = 4f;
+        if (!player.isLocalPlayer()) {
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingEntity = (LivingEntity) entity;
+                if (stack.getItem() instanceof ObsidanSword) {
+                    ObsidanSword sword = (ObsidanSword) stack.getItem();
+                    if (sword.isActivated(stack)) {
+                        float baseDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
+                        float additionalDamage = 4f;
 
-                livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage + additionalDamage);
-                deactivate(stack, player);
-                return true; // Отмена стандартного поведения
+                        livingEntity.hurt(new DamageSource(player.getCommandSenderWorld().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), baseDamage * additionalDamage);
+                        sword.deactivate(stack, player); // Деактивация меча после удара
+                        return true; // Отмена стандартного поведения
+                    }
+                }
             }
         }
         return super.onLeftClickEntity(stack, player, entity);
@@ -109,8 +101,9 @@ public class ObsidanSword extends SwordItem {
 
     public void deactivate(ItemStack stack, Player player) {
         stack.getOrCreateTag().putBoolean("Activated", false);
+        // Обновляем данные модели
         stack.getOrCreateTag().putInt("CustomModelData", 0);
 
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Назначаем кулдаун для игрока
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
     }
 }
