@@ -31,37 +31,35 @@ public class ObsidanAxe extends AxeItem {
     private static final TagKey<Block> MINEABLE_LOGS_TAG = BlockTags.create(new ResourceLocation("minecraft", "logs"));
     private static final TagKey<Block> MINEABLE_LEAVES_TAG = BlockTags.create(new ResourceLocation("minecraft", "leaves"));
 
-    private boolean activated = false;
-    private long lastActivationTime = 0;
     private static final long COOLDOWN_DURATION = 40 * 20; // 60 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
-
 
     public ObsidanAxe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
-
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-
-        if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-            if (entity instanceof Player) {
-                deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
+        if (!world.isClientSide && isActivated(stack)) {
+            long lastActivationTime = getLastActivationTime(stack);
+            if (world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
+                if (entity instanceof Player) {
+                    deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
+                }
             }
         }
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack stack = playerIn.getItemInHand(handIn); // Получаем предмет
+        ItemStack stack = playerIn.getItemInHand(handIn);
         long currentTime = worldIn.getGameTime();
 
-        if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
+        if (!isActivated(stack) && currentTime - getLastActivationTime(stack) >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
                 activate(stack); // Передаем stack в метод активации
-                lastActivationTime = currentTime;
+                setLastActivationTime(stack, currentTime);
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else {
@@ -69,14 +67,22 @@ public class ObsidanAxe extends AxeItem {
         }
     }
 
-    public boolean isActivated() {
-        return activated;
+    public boolean isActivated(ItemStack stack) {
+        return stack.getOrCreateTag().getBoolean("Activated");
+    }
+
+    private long getLastActivationTime(ItemStack stack) {
+        return stack.getOrCreateTag().getLong("LastActivationTime");
+    }
+
+    private void setLastActivationTime(ItemStack stack, long time) {
+        stack.getOrCreateTag().putLong("LastActivationTime", time);
     }
 
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        if(Screen.hasShiftDown()) {
+        if (Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
             list.add(Component.translatable("item.obsidan.description.axe").withStyle(ChatFormatting.DARK_GRAY));
         } else {
@@ -85,30 +91,23 @@ public class ObsidanAxe extends AxeItem {
     }
 
     public void activate(ItemStack stack) {
-        activated = true;
-        // Сохраняем состояние активации в NBT
         stack.getOrCreateTag().putBoolean("Activated", true);
         stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
     }
 
-
-
     public void deactivate(ItemStack stack, Player player) {
-        activated = false;
-        // Сохраняем состояние деактивации в NBT
         stack.getOrCreateTag().putBoolean("Activated", false);
         stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
-
         player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем кулдаун
     }
+
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
-        if (!world.isClientSide && activated && entity instanceof Player) {
+        if (!world.isClientSide && isActivated(stack) && entity instanceof Player) {
             Block block = state.getBlock();
             if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG)) {
                 chainBreak(world, pos, (Player) entity, stack); // Передаем stack
                 deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
-
                 return true;
             }
         }

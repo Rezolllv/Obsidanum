@@ -27,19 +27,36 @@ public class GloomyMycelium2 extends Block {
     private static final VoxelShape FLAT_SHAPE_SOUTH = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 1.0D);   // Северная сторона
     private static final VoxelShape FLAT_SHAPE_WEST = Block.box(15.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);  // Восточная сторона
     private static final VoxelShape FLAT_SHAPE_EAST = Block.box(0.0D, 0.0D, 0.0D, 1.0D, 16.0D, 16.0D);    // Западная сторона
-    private static final VoxelShape FLAT_BWN = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_NORTH);
-    private static final VoxelShape FLAT_BWS = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_SOUTH);
-    private static final VoxelShape FLAT_BWE = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_EAST);
-    private static final VoxelShape FLAT_BWW = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_WEST);
+
     public static final BooleanProperty BWN = BooleanProperty.create("b_w_n");  // Новое свойство
     public static final BooleanProperty BWS = BooleanProperty.create("b_w_s");  // Новое свойство
     public static final BooleanProperty BWE = BooleanProperty.create("b_w_e");  // Новое свойство
     public static final BooleanProperty BWW = BooleanProperty.create("b_w_w");  // Новое свойство
 
+    public static final BooleanProperty TWN = BooleanProperty.create("t_w_n");  // Новое свойство
+    public static final BooleanProperty TWS = BooleanProperty.create("t_w_s");  // Новое свойство
+    public static final BooleanProperty TWE = BooleanProperty.create("t_w_e");  // Новое свойство
+    public static final BooleanProperty TWW = BooleanProperty.create("t_w_w");  // Новое свойство
+
+    private static final VoxelShape FLAT_BWN = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_NORTH);
+    private static final VoxelShape FLAT_BWS = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_SOUTH);
+    private static final VoxelShape FLAT_BWE = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_EAST);
+    private static final VoxelShape FLAT_BWW = Shapes.or(FLAT_SHAPE_UP, FLAT_SHAPE_WEST);
+
+    private static final VoxelShape FLAT_TWN = Shapes.or(FLAT_SHAPE_DOWN, FLAT_SHAPE_NORTH);
+    private static final VoxelShape FLAT_TWS = Shapes.or(FLAT_SHAPE_DOWN, FLAT_SHAPE_SOUTH);
+    private static final VoxelShape FLAT_TWE = Shapes.or(FLAT_SHAPE_DOWN, FLAT_SHAPE_EAST);
+    private static final VoxelShape FLAT_TWW = Shapes.or(FLAT_SHAPE_DOWN, FLAT_SHAPE_WEST);
+
+
     public GloomyMycelium2(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
+                .setValue(TWN, false)
+                .setValue(TWE, false)
+                .setValue(TWW, false)
+                .setValue(TWS, false)
                 .setValue(BWN, false)
                 .setValue(BWE, false)
                 .setValue(BWW, false)
@@ -50,6 +67,10 @@ public class GloomyMycelium2 extends Block {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite())
+                    .setValue(TWN, false)
+                    .setValue(TWE, false)
+                    .setValue(TWW, false)
+                    .setValue(TWS, false)
                     .setValue(BWN, false)
                     .setValue(BWE, false)
                     .setValue(BWW, false)
@@ -59,12 +80,16 @@ public class GloomyMycelium2 extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, BWN, BWS, BWE, BWW); // Добавляем новое состояние в блок
+        builder.add(FACING, BWN, BWS, BWE, BWW, TWN, TWS, TWE, TWW); // Добавляем новое состояние в блок
     }
 
     // Возвращаем соответствующий хитбокс в зависимости от стороны установки
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        if (state.getValue(TWN)) return FLAT_TWN;
+        if (state.getValue(TWS)) return FLAT_TWS;
+        if (state.getValue(TWE)) return FLAT_TWE;
+        if (state.getValue(TWW)) return FLAT_TWW;
         if (state.getValue(BWN)) return FLAT_BWN;
         if (state.getValue(BWS)) return FLAT_BWS;
         if (state.getValue(BWE)) return FLAT_BWE;

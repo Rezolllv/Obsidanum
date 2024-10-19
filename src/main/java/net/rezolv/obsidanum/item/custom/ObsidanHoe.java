@@ -30,34 +30,37 @@ import java.util.List;
 
 public class ObsidanHoe extends HoeItem {
 
-    private boolean activated = false;
-    private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 10 * 20; // 60 seconds in ticks
-    private static final double BREAK_RADIUS_SQUARED = 20 * 20; // Radius of 20 blocks squared
+    private static final long COOLDOWN_DURATION = 10 * 20; // 10 seconds in ticks
     private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
-
+    private static final String TAG_ACTIVATED = "Activated";
+    private static final String TAG_LAST_ACTIVATION_TIME = "LastActivationTime";
 
     public ObsidanHoe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
-    public boolean isActivated() {
-        return activated;
+
+    public boolean isActivated(ItemStack stack) {
+        return stack.getOrCreateTag().getBoolean(TAG_ACTIVATED);
     }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
         ItemStack itemStack = playerIn.getItemInHand(handIn);
 
-        if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
+        // Get the last activation time from the item stack
+        long lastActivationTime = itemStack.getOrCreateTag().getLong(TAG_LAST_ACTIVATION_TIME);
+
+        if (!isActivated(itemStack) && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate(itemStack);
-                lastActivationTime = currentTime;
+                activate(itemStack, currentTime);
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
         } else {
             return new InteractionResultHolder<>(InteractionResult.FAIL, itemStack);
         }
     }
+
     private static final BlockState[] TARGET_BLOCKS = {
             Blocks.GRASS.defaultBlockState(),
             Blocks.TALL_GRASS.defaultBlockState(),
@@ -69,78 +72,64 @@ public class ObsidanHoe extends HoeItem {
             Blocks.LARGE_FERN.defaultBlockState(),
             Blocks.NETHER_SPROUTS.defaultBlockState()
     };
+
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, net.minecraft.world.entity.LivingEntity entity) {
-        if (!level.isClientSide && activated) {
-            // Проверка, является ли разрушенный блок целевым блоком
+        if (!level.isClientSide && isActivated(stack)) {
             for (BlockState targetBlock : TARGET_BLOCKS) {
                 if (state.getBlock() == targetBlock.getBlock()) {
-                    int radiusSquared = (int) Math.sqrt(BREAK_RADIUS_SQUARED);
-                    // Получение позиции игрока
                     BlockPos playerPos = entity.blockPosition();
-
-                    // Проверка каждого блока в радиусе вокруг игрока
-                    for (int x = -radiusSquared; x <= radiusSquared; x++) {
-                        for (int y = -radiusSquared; y <= radiusSquared; y++) {
-                            for (int z = -radiusSquared; z <= radiusSquared; z++) {
-                                BlockPos blockPos = playerPos.offset(x, y, z);
-                                // Проверка, находится ли блок в пределах мира
-                                if (level.isLoaded(blockPos)) {
-                                    // Проверка, является ли блок одним из целевых блоков
-                                    for (BlockState grassBlock : TARGET_BLOCKS) {
-                                        if (level.getBlockState(blockPos).getBlock() == grassBlock.getBlock()) {
-                                            // Уничтожение блока
-                                            level.destroyBlock(blockPos, true);
-                                            break; // Прерывание цикла после первого совпадения
-                                        }
-                                    }
-                                }
-                            }
+                    // Destroy blocks in the radius
+                    for (BlockPos blockPos : BlockPos.betweenClosed(playerPos.offset(-20, -20, -20), playerPos.offset(20, 20, 20))) {
+                        if (level.isLoaded(blockPos) && TARGET_BLOCKS[0].getBlock() == level.getBlockState(blockPos).getBlock()) {
+                            level.destroyBlock(blockPos, true);
                         }
                     }
-                    deactivate(stack,(Player) entity);
+                    deactivate(stack, (Player) entity);
                     break;
                 }
             }
         }
         return super.mineBlock(stack, level, state, pos, entity);
     }
+
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        if(Screen.hasShiftDown()) {
+        if (Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
             list.add(Component.translatable("item.obsidan.description.hoe").withStyle(ChatFormatting.DARK_GRAY));
         } else {
             list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }
-
-
     }
 
-    public void activate(ItemStack stack) {
-        activated = true;
-        stack.getOrCreateTag().putBoolean("Activated", true);
-        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
+    public void activate(ItemStack stack, long currentTime) {
+        stack.getOrCreateTag().putBoolean(TAG_ACTIVATED, true);
+        stack.getOrCreateTag().putLong(TAG_LAST_ACTIVATION_TIME, currentTime); // Save the activation time
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Update model
     }
-
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
+        if (!world.isClientSide && isActivated(stack)) {
+            long currentTime = world.getGameTime();
+            long lastActivationTime = stack.getOrCreateTag().getLong(TAG_LAST_ACTIVATION_TIME);
 
-        if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-            if (entity instanceof Player) {
-                deactivate(stack, (Player) entity);
+            if (currentTime - lastActivationTime >= ACTIVATION_DURATION) {
+                if (entity instanceof Player) {
+                    deactivate(stack, (Player) entity);
+                }
             }
         }
     }
-    public void deactivate(ItemStack stack,Player player) {
-        activated = false;
-        stack.getOrCreateTag().putBoolean("Activated", false);
-        stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
 
+    public void deactivate(ItemStack stack, Player player) {
+        stack.getOrCreateTag().putBoolean(TAG_ACTIVATED, false);
+        stack.getOrCreateTag().putInt("CustomModelData", 0); // Return to default model
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Set cooldown
     }
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();

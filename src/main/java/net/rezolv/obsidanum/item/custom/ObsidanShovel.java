@@ -27,11 +27,8 @@ import java.util.List;
 
 public class ObsidanShovel extends ShovelItem {
 
-    private boolean activated = false;
-    private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 50 * 20; // 60 seconds in ticks
-    private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
-
+    private static final long COOLDOWN_DURATION = 50 * 20; // 60 секунд в тиках
+    private static final long ACTIVATION_DURATION = 5 * 20; // 5 секунд в тиках
 
     public ObsidanShovel(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
@@ -41,24 +38,27 @@ public class ObsidanShovel extends ShovelItem {
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
 
-        if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
-            if (entity instanceof Player) {
-                deactivate(stack, (Player) entity, world); // Передаем stack и player в метод деактивации
+        if (!world.isClientSide && isActivated(stack)) {
+            long currentTime = world.getGameTime();
+            long lastActivationTime = stack.getOrCreateTag().getLong("LastActivationTime");
+
+            if (currentTime - lastActivationTime >= ACTIVATION_DURATION) {
+                if (entity instanceof Player) {
+                    deactivate(stack, (Player) entity, world); // Деактивируем, если прошло время активации
+                }
             }
         }
     }
-    public boolean isActivated() {
-        return activated;
-    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack stack = playerIn.getItemInHand(handIn); // Получаем предмет
+        ItemStack stack = playerIn.getItemInHand(handIn);
         long currentTime = worldIn.getGameTime();
+        long lastActivationTime = stack.getOrCreateTag().getLong("LastActivationTime");
 
-        if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
+        if (!isActivated(stack) && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate(stack); // Передаем stack в метод активации
-                lastActivationTime = currentTime;
+                activate(stack, currentTime); // Активируем лопату
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else {
@@ -68,10 +68,12 @@ public class ObsidanShovel extends ShovelItem {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (activated) {
+        if (isActivated(stack)) {
             double knockbackY = 4.0; // Подбрасываем цель вверх на 4 блока
             target.setDeltaMovement(target.getDeltaMovement().x, knockbackY, target.getDeltaMovement().z);
-            deactivate(stack, (Player) attacker, attacker.level()); // Передаем stack и player в метод деактивации
+            if (attacker instanceof Player) {
+                deactivate(stack, (Player) attacker, attacker.level()); // Деактивируем после удара
+            }
         }
         return super.hurtEnemy(stack, target, attacker);
     }
@@ -79,31 +81,28 @@ public class ObsidanShovel extends ShovelItem {
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        if(Screen.hasShiftDown()) {
+        if (Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
             list.add(Component.translatable("item.obsidan.description.shovel").withStyle(ChatFormatting.DARK_GRAY));
         } else {
             list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }
-
     }
 
-    public void activate(ItemStack stack) {
-        activated = true;
-        // Сохраняем состояние активации в NBT
+    public void activate(ItemStack stack, long currentTime) {
         stack.getOrCreateTag().putBoolean("Activated", true);
-        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
+        stack.getOrCreateTag().putLong("LastActivationTime", currentTime);
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Изменяем модель на активированную
     }
-
-
-
 
     public void deactivate(ItemStack stack, Player player, Level world) {
-        activated = false;
-        // Сохраняем состояние деактивации в NBT
         stack.getOrCreateTag().putBoolean("Activated", false);
         stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
 
         player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем кулдаун
+    }
+
+    public boolean isActivated(ItemStack stack) {
+        return stack.getOrCreateTag().getBoolean("Activated");
     }
 }

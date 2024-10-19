@@ -43,6 +43,8 @@ public class ItemsObs {
     public static final RegistryObject<Item> SPORES_OF_THE_GLOOMY_MUSHROOM = ITEMS.register("spores_of_the_gloomy_mushroom",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> FLAME_CROSSBOW = ITEMS.register("flame_crossbow",
+            () -> new CrossbowItem(new Item.Properties()));
 
     public static final RegistryObject<Item> OBSIDIAN_TEAR = ITEMS.register("obsidian_tear",
             () -> new Item(new Item.Properties()));
@@ -156,6 +158,7 @@ public class ItemsObs {
             () -> new ItemNameBlockItem(BlocksObs.STEM_GLOOMY_MUSHROOM.get(), new Item.Properties()));
     public static final RegistryObject<Item> CAP_GLOOMY_MUSHROOM = ITEMS.register("cap_gloomy_mushroom",
             () -> new ItemNameBlockItem(BlocksObs.CAP_GLOOMY_MUSHROOM.get(), new Item.Properties()));
+
 
 
 

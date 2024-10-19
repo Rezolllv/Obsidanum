@@ -163,6 +163,10 @@
 
   "death.attack.obsidian_totem": "%1$s was obliterated by the magic of %2$s's Obsidian Totem",
 
+  "death.attack.obsidian_totem.item": "%1$s was killed by %2$s using %3$s",
+  "death.attack.obsidian_totem.player": "Too impressive %2$s came back to life impressed %1$s",
+
+
 
   "effect.obsidanum.inviolability": "Inviolability",
   "effect.obsidanum.flash": "Confusion",

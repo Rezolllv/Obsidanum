@@ -1,14 +1,20 @@
 package net.rezolv.obsidanum.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -24,6 +30,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import net.minecraftforge.network.PacketDistributor;
 import net.rezolv.obsidanum.Obsidanum;
+import net.rezolv.obsidanum.damage_source.ObsidianTotemDamageSource;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.sound.SoundsObs;
 
@@ -102,19 +109,19 @@ public class EventObsidianTotemImmortal {
         for (Entity entity : nearbyEntities) {
             if (entity instanceof LivingEntity livingEntity) {
                 // Наносим 5 урона (2.5 сердечка)
-                livingEntity.hurt(player.damageSources().magic(), 5.0F);
+// Получаем Holder<DamageType> для вашего кастомного урона
+                Holder<DamageType> damageTypeHolder = player.level().registryAccess()
+                        .registryOrThrow(Registries.DAMAGE_TYPE)
+                        .getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation("obsidanum:obsidian_totem")));
+
+// Передаём Holder<DamageType> в конструктор
+                livingEntity.hurt(new ObsidianTotemDamageSource(damageTypeHolder, player), 10);
+
 
                 // Отталкиваем сущность от игрока
                 double dx = entity.getX() - player.getX();
                 double dz = entity.getZ() - player.getZ();
                 double distance = Math.sqrt(dx * dx + dz * dz);
-                // Проверяем, если это игрок и он умер от урона
-                if (livingEntity instanceof Player victimPlayer && victimPlayer.isDeadOrDying()) {
-                    // Создаём кастомное сообщение о смерти
-                    Component deathMessage = createDeathMessage(player, victimPlayer);
-                    // Отправляем сообщение в чат
-                    player.level().getServer().getPlayerList().broadcastSystemMessage(deathMessage, false);
-                }
                 // Добавляем небольшое значение для предотвращения деления на 0
                 if (distance != 0) {
                     // Отталкиваем с коэффициентом силы
@@ -125,11 +132,7 @@ public class EventObsidianTotemImmortal {
         }
     }
 
-    // Метод для создания кастомного сообщения о смерти с локализацией
-    private static Component createDeathMessage(Player killer, Player victim) {
-        // Используем Component.translatable() для поддержки локализации
-        return Component.translatable("death.attack.obsidian_totem", victim.getName(), killer.getName());
-    }
+
 
     private static void applyTotemEffects(Player player) {
         // Наложение сильного замедления и сопротивления

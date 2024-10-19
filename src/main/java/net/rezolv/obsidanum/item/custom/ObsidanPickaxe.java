@@ -28,10 +28,8 @@ import java.util.List;
 
 public class ObsidanPickaxe extends PickaxeItem {
 
-    private boolean activated = false;
-    private long lastActivationTime = 0;
-    private static final long COOLDOWN_DURATION = 120 * 20; // 30 seconds in ticks
-    private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
+    private static final long COOLDOWN_DURATION = 120 * 20; // 120 секунд в тиках
+    private static final long ACTIVATION_DURATION = 5 * 20; // 5 секунд в тиках
 
     public ObsidanPickaxe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
@@ -41,9 +39,15 @@ public class ObsidanPickaxe extends PickaxeItem {
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
 
-        if (!world.isClientSide && activated && world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
+        if (!world.isClientSide && isActivated(stack)) {
+            long currentTime = world.getGameTime();
+            long lastActivationTime = stack.getOrCreateTag().getLong("LastActivationTime");
 
-            deactivate(stack,(Player) entity);
+            if (currentTime - lastActivationTime >= ACTIVATION_DURATION) {
+                if (entity instanceof Player) {
+                    deactivate(stack, (Player) entity); // Деактивируем кирку после времени активации
+                }
+            }
         }
     }
 
@@ -51,24 +55,21 @@ public class ObsidanPickaxe extends PickaxeItem {
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         long currentTime = worldIn.getGameTime();
         ItemStack itemStack = playerIn.getItemInHand(handIn);
+        long lastActivationTime = itemStack.getOrCreateTag().getLong("LastActivationTime");
 
-        if (!activated && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
+        if (!isActivated(itemStack) && currentTime - lastActivationTime >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate(itemStack,playerIn);
-                lastActivationTime = currentTime;
+                activate(itemStack, currentTime);
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
-        }
-        else {
+        } else {
             return new InteractionResultHolder<>(InteractionResult.PASS, itemStack);
         }
     }
-    public boolean isActivated() {
-        return activated;
-    }
+
     @Override
     public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
-        if (!pLevel.isClientSide && activated) {
+        if (!pLevel.isClientSide && isActivated(pStack)) {
             Block block = pState.getBlock();
 
             if (isInstantBreakBlock(block)) {
@@ -82,40 +83,42 @@ public class ObsidanPickaxe extends PickaxeItem {
                 }
 
                 // Деактивируем кирку после разрушения блока
-                deactivate(pStack,(Player) pEntityLiving);
+                if (pEntityLiving instanceof Player) {
+                    deactivate(pStack, (Player) pEntityLiving);
+                }
             }
         }
 
         return super.mineBlock(pStack, pLevel, pState, pPos, pEntityLiving);
     }
 
-
-
-
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        if(Screen.hasShiftDown()) {
+        if (Screen.hasShiftDown()) {
             list.add(Component.translatable("obsidanum.press_shift2").withStyle(ChatFormatting.DARK_GRAY));
             list.add(Component.translatable("item.obsidan.description.pickaxe").withStyle(ChatFormatting.DARK_GRAY));
         } else {
             list.add(Component.translatable("obsidanum.press_shift").withStyle(ChatFormatting.DARK_GRAY));
         }
-
     }
 
-    public void activate(ItemStack stack,Player player) {
-        activated = true;
+    public void activate(ItemStack stack, long currentTime) {
         stack.getOrCreateTag().putBoolean("Activated", true);
-        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
+        stack.getOrCreateTag().putLong("LastActivationTime", currentTime);
+        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель на активированную
     }
 
-    public void deactivate(ItemStack stack,Player player) {
-        activated = false;
+    public void deactivate(ItemStack stack, Player player) {
         stack.getOrCreateTag().putBoolean("Activated", false);
         stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем визуальный кулдаун для общего кулдауна
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем кулдаун
     }
+
+    public boolean isActivated(ItemStack stack) {
+        return stack.getOrCreateTag().getBoolean("Activated");
+    }
+
     private static final Block[] INSTANT_BREAK_BLOCKS = {
             Blocks.STONE,
             Blocks.COBBLESTONE,

@@ -50,15 +50,15 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         ItemProperties.register(ItemsObs.OBSIDAN_SWORD.get(), new ResourceLocation("activated"),
-                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanSword && ((ObsidanSword) stack.getItem()).isActivated() ? 1.0F : 0.0F);
+                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanSword && ((ObsidanSword) stack.getItem()).isActivated(new ItemStack(ItemsObs.OBSIDAN_SWORD.get())) ? 1.0F : 0.0F);
         ItemProperties.register(ItemsObs.OBSIDAN_SHOVEL.get(), new ResourceLocation("activated"),
-                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanShovel && ((ObsidanShovel) stack.getItem()).isActivated() ? 1.0F : 0.0F);
+                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanShovel && ((ObsidanShovel) stack.getItem()).isActivated(new ItemStack(ItemsObs.OBSIDAN_SHOVEL.get())) ? 1.0F : 0.0F);
         ItemProperties.register(ItemsObs.OBSIDAN_HOE.get(), new ResourceLocation("activated"),
-                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanHoe && ((ObsidanHoe) stack.getItem()).isActivated() ? 1.0F : 0.0F);
+                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanHoe && ((ObsidanHoe) stack.getItem()).isActivated(new ItemStack(ItemsObs.OBSIDAN_HOE.get())) ? 1.0F : 0.0F);
         ItemProperties.register(ItemsObs.OBSIDAN_AXE.get(), new ResourceLocation("activated"),
-                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanAxe && ((ObsidanAxe) stack.getItem()).isActivated() ? 1.0F : 0.0F);
+                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanAxe && ((ObsidanAxe) stack.getItem()).isActivated(new ItemStack(ItemsObs.OBSIDAN_AXE.get())) ? 1.0F : 0.0F);
         ItemProperties.register(ItemsObs.OBSIDAN_PICKAXE.get(), new ResourceLocation("activated"),
-                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanPickaxe && ((ObsidanPickaxe) stack.getItem()).isActivated() ? 1.0F : 0.0F);
+                (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanPickaxe && ((ObsidanPickaxe) stack.getItem()).isActivated(new ItemStack(ItemsObs.OBSIDAN_PICKAXE.get())) ? 1.0F : 0.0F);
     }
 
     @SubscribeEvent

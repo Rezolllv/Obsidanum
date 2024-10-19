@@ -2,6 +2,9 @@ package net.rezolv.obsidanum.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -14,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FlameBannerBaggel extends Block {
@@ -78,6 +82,31 @@ public class FlameBannerBaggel extends Block {
                     .setValue(BOTTOM, false);
         }
     }
+
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        BlockState state = pLevel.getBlockState(pPos);
+        BlockPos abovePos = pPos.above();
+
+        // Проверяем, что выше нет блока
+        if (pLevel.isEmptyBlock(abovePos)) {
+            // Создаем блок над текущим
+            pLevel.setBlockAndUpdate(abovePos, this.defaultBlockState()
+                    .setValue(FACING, state.getValue(FACING))
+                    .setValue(TOP, false)
+                    .setValue(TOP_BELOW, false)
+                    .setValue(MIDDLE, false)
+                    .setValue(BOTTOM, false));
+
+            // Если нужно, вы можете воспроизвести звук или отправить сообщение игроку
+
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.PASS; // Если блок выше уже существует, ничего не делаем
+    }
+
+
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         Block thisBlock = this;
