@@ -2,9 +2,11 @@ package net.rezolv.obsidanum.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -82,31 +84,39 @@ public class FlameBannerBaggel extends Block {
                     .setValue(BOTTOM, false);
         }
     }
-
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        BlockState state = pLevel.getBlockState(pPos);
-        BlockPos abovePos = pPos.above();
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        Block blockInHand = player.getItemInHand(hand).getItem() instanceof BlockItem ? ((BlockItem)player.getItemInHand(hand).getItem()).getBlock() : null;
 
-        // Проверяем, что выше нет блока
-        if (pLevel.isEmptyBlock(abovePos)) {
-            // Создаем блок над текущим
-            pLevel.setBlockAndUpdate(abovePos, this.defaultBlockState()
-                    .setValue(FACING, state.getValue(FACING))
-                    .setValue(TOP, false)
-                    .setValue(TOP_BELOW, false)
-                    .setValue(MIDDLE, false)
-                    .setValue(BOTTOM, false));
-
-            // Если нужно, вы можете воспроизвести звук или отправить сообщение игроку
-
-            return InteractionResult.SUCCESS;
+        if (blockInHand != this) {
+            return InteractionResult.FAIL; // Если в руке не тот же блок, выходим
         }
 
-        return InteractionResult.PASS; // Если блок выше уже существует, ничего не делаем
+        // Начинаем проверку сверху
+        BlockPos currentPos = pos.below();
+
+        // Цикл для поиска первого свободного места сверху
+        while (level.getBlockState(currentPos).is(this)) {
+            currentPos = currentPos.below(); // Поднимаемся выше, если блок тот же
+        }
+
+        // Проверяем, можно ли установить блок
+        if (level.isEmptyBlock(currentPos)) {
+            // Устанавливаем блок выше
+            level.setBlock(currentPos, this.defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
+
+            // Уменьшаем количество блоков в руке игрока
+            if (!player.isCreative()) {
+                player.getItemInHand(hand).shrink(1);
+            }
+            level.playSound(null, pos, SoundEvents.WOOL_PLACE,
+                    net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+            return InteractionResult.SUCCESS;
+        } else {
+            // Если выше твёрдый блок, возвращаем неудачный результат
+            return InteractionResult.FAIL;
+        }
     }
-
-
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         Block thisBlock = this;

@@ -33,7 +33,7 @@ public class BlocksObs {
                 return 5;
             })));
     public static final RegistryObject<Block> THE_GLOOMY_MYCELIUM = BLOCKS.register("the_gloomy_mycelium",
-            () -> new GloomyMycelium2(BlockBehaviour.Properties.copy(Blocks.VINE).noOcclusion()));
+            () -> new MultifaceMushrooms(BlockBehaviour.Properties.copy(Blocks.VINE).noOcclusion()));
     public static final RegistryObject<Block> OBSIDAN_SAPLING = BLOCKS.register("obsidan_sapling",
             () -> new SaplingBlock(new ObsidanOak(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> OBSIDAN_WOOD_LOG = registerBlock("obsidan_wood_log",
