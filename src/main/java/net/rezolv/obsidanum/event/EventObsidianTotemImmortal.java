@@ -109,12 +109,12 @@ public class EventObsidianTotemImmortal {
         for (Entity entity : nearbyEntities) {
             if (entity instanceof LivingEntity livingEntity) {
                 // Наносим 5 урона (2.5 сердечка)
-// Получаем Holder<DamageType> для вашего кастомного урона
+                // Получаем Holder<DamageType> для вашего кастомного урона
                 Holder<DamageType> damageTypeHolder = player.level().registryAccess()
                         .registryOrThrow(Registries.DAMAGE_TYPE)
                         .getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation("obsidanum:obsidian_totem")));
 
-// Передаём Holder<DamageType> в конструктор
+                // Передаём Holder<DamageType> в конструктор
                 livingEntity.hurt(new ObsidianTotemDamageSource(damageTypeHolder, player), 10);
 
 
