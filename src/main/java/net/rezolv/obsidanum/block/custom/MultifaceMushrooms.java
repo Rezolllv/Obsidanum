@@ -3,7 +3,14 @@ package net.rezolv.obsidanum.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -15,12 +22,13 @@ import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.MultifaceSpreader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.rezolv.obsidanum.item.ItemsObs;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -55,7 +63,35 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
                 .setValue(HAS_WEST, false)
         );
     }
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            if (player.getItemInHand(hand).getItem() instanceof ShearsItem) {
+                // Проверяем стадию роста
+                if (state.getValue(GROWTH_STAGE) == 1) {
+                    // Сбрасываем стадию роста до 0
+                    level.setBlock(pos, state.setValue(GROWTH_STAGE, 0), 2);
 
+                    // Выпадение предмета GLOOMY_MUSHROOM
+                    popResource(level, pos, ItemsObs.GLOOMY_MUSHROOM.get().getDefaultInstance());
+                    ItemStack itemStack = player.getItemInHand(hand);
+
+                    // Добавляем повреждение ножницам
+                    itemStack.hurtAndBreak(1, player, (p) -> {
+                        p.broadcastBreakEvent(hand);
+                    });
+                    // Звук стрижки
+                    level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                    // Движение руки
+                    player.swing(hand, true);
+
+                    return InteractionResult.SUCCESS;
+                }
+            }
+        }
+        return super.use(state, level, pos, player, hand, hitResult);
+    }
     @Override
     public MultifaceSpreader getSpreader() {
         return null; // Пока не используется
@@ -75,7 +111,7 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (random.nextInt(100) < 50) { // Вероятность роста 50%
+        if (random.nextInt(100) < 5) { // Вероятность роста 50%
             grow(level, pos, state);
         }
     }
@@ -211,7 +247,7 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
     @Override
     public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         // Вероятность успеха костной муки возможна только на первой стадии роста
-        return blockState.getValue(GROWTH_STAGE) == 0;
+        return blockState.getValue(GROWTH_STAGE) == 0 && randomSource.nextInt(100) < 25;
     }
 
     @Override
