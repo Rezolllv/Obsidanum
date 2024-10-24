@@ -43,12 +43,12 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
     public static final BooleanProperty HAS_EAST = BooleanProperty.create("has_east");
     public static final BooleanProperty HAS_WEST = BooleanProperty.create("has_west");
 
-    private static final VoxelShape MUSHROOM_SHAPE_DOWN = Block.box(0.0, 0.0, 0.0, 16.0, 5.0, 16.0);
-    private static final VoxelShape MUSHROOM_SHAPE_UP = Block.box(0.0, 11.0, 0.0, 16.0, 16.0, 16.0);
-    private static final VoxelShape MUSHROOM_SHAPE_NORTH = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 5.0);
-    private static final VoxelShape MUSHROOM_SHAPE_SOUTH = Block.box(0.0, 0.0, 11.0, 16.0, 16.0, 16.0);
-    private static final VoxelShape MUSHROOM_SHAPE_EAST = Block.box(11.0, 0.0, 0.0, 16.0, 16.0, 16.0);
-    private static final VoxelShape MUSHROOM_SHAPE_WEST = Block.box(0.0, 0.0, 0.0, 5.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_DOWN = Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_UP = Block.box(0.0, 4.0, 0.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_NORTH = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 9.0);
+    private static final VoxelShape MUSHROOM_SHAPE_SOUTH = Block.box(0.0, 0.0, 7.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_EAST = Block.box(7.0, 0.0, 0.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_WEST = Block.box(0.0, 0.0, 0.0, 9.0, 16.0, 16.0);
 
     public MultifaceMushrooms(Properties properties) {
         super(properties);
@@ -111,7 +111,7 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (random.nextInt(100) < 5) { // Вероятность роста 50%
+        if (random.nextInt(100) < 1) { // Вероятность роста 50%
             grow(level, pos, state);
         }
     }

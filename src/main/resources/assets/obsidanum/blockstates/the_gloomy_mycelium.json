@@ -273,7 +273,7 @@
     {
       "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium_apeak",
-        "uvlock": true,
+        "uvlock": false,
         "x": 270
       },
       "when": {
@@ -295,7 +295,7 @@
     {
       "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium_apeak",
-        "uvlock": true,
+        "uvlock": false,
         "x": 90
       },
       "when": {
