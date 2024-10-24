@@ -11,10 +11,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -117,6 +115,43 @@ public class FlameBannerBaggel extends Block {
             return InteractionResult.FAIL;
         }
     }
+
+// Проверка на прикрепление к стене или потолку
+    private boolean isAttachedToWallOrCeiling(LevelAccessor level, BlockPos pos, Direction facing) {
+        BlockPos offsetPos = pos.relative(facing.getOpposite()); // Проверка по направлению FACING
+        BlockState sideState = level.getBlockState(offsetPos);
+        BlockState aboveState = level.getBlockState(pos.above());
+
+        // Проверяем наличие крепления на стене (согласно FACING) или потолке
+        boolean isAttachedToWall = sideState.isFaceSturdy(level, offsetPos, facing);
+        boolean isAttachedToCeiling = aboveState.isFaceSturdy(level, pos.above(), Direction.DOWN);
+
+        // Возвращаем true, если блок прикреплён к стене или потолку
+        return isAttachedToWall || isAttachedToCeiling;
+    }
+
+    // Рекурсивное удаление блоков
+    private void destroyBlockChain(LevelAccessor level, BlockPos pos) {
+        BlockPos currentPos = pos;
+
+        // Удаляем блоки вниз по цепочке с дропом
+        while (level.getBlockState(currentPos).is(this)) {
+            BlockState blockState = level.getBlockState(currentPos);
+
+            // Проверяем, не прикреплён ли блок к стене или потолку
+            if (isAttachedToWallOrCeiling(level, currentPos, blockState.getValue(FACING))) {
+                // Прерываем цепочку, если блок прикреплён к стене или потолку
+                break;
+            }
+
+            if (level instanceof Level) {
+                // Вызываем метод для дропа предметов
+                Block.popResource((Level) level, currentPos, this.asItem().getDefaultInstance());
+            }
+            level.destroyBlock(currentPos, false); // Удаляем блок без дропа стандартных ресурсов
+            currentPos = currentPos.below();
+        }
+    }
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         Block thisBlock = this;
@@ -139,17 +174,30 @@ public class FlameBannerBaggel extends Block {
         }
         // Если есть только блок ниже, это верхний блок с состоянием "top-below"
         else if (hasBlockBelow) {
-            return state.setValue(TOP, true)
-                    .setValue(TOP_BELOW, true)
-                    .setValue(MIDDLE, false)
-                    .setValue(BOTTOM, false);
+            // Проверяем, прикреплён ли блок к стене или потолку
+            if (isAttachedToWallOrCeiling(level, pos, state.getValue(FACING))) {
+                return state.setValue(TOP, true)
+                        .setValue(TOP_BELOW, true)
+                        .setValue(MIDDLE, false)
+                        .setValue(BOTTOM, false);
+            } else {
+                // Удаляем этот и нижние блоки
+                destroyBlockChain(level, pos);
+                return Blocks.AIR.defaultBlockState();
+            }
         }
         // Если нет блоков ни сверху, ни снизу, это обычный верхний блок
         else {
-            return state.setValue(TOP, true)
-                    .setValue(TOP_BELOW, false)
-                    .setValue(MIDDLE, false)
-                    .setValue(BOTTOM, false);
+            if (isAttachedToWallOrCeiling(level, pos, state.getValue(FACING))) {
+                return state.setValue(TOP, true)
+                        .setValue(TOP_BELOW, false)
+                        .setValue(MIDDLE, false)
+                        .setValue(BOTTOM, false);
+            } else {
+                // Удаляем этот блок
+                level.destroyBlock(pos, false);
+                return Blocks.AIR.defaultBlockState();
+            }
         }
     }
     public BlockState rotate(BlockState state, Rotation rot) {
@@ -159,5 +207,24 @@ public class FlameBannerBaggel extends Block {
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        // Получаем направление, на которое указывает FACING
+        Direction facing = state.getValue(FACING);
+        BlockPos offsetPos = pos.relative(facing.getOpposite());
 
+        // Получаем состояние блока в направлении FACING и проверяем, является ли он полным блоком
+        BlockState wallState = level.getBlockState(offsetPos);
+
+        // Блок должен быть полным, чтобы блок можно было установить на стену
+        boolean canAttachToWall = wallState.isSolidRender(level, offsetPos);
+
+        // Проверка на потолок (если блок прикрепляется сверху)
+        BlockPos ceilingPos = pos.above();
+        BlockState ceilingState = level.getBlockState(ceilingPos);
+        boolean canAttachToCeiling = ceilingState.isFaceSturdy(level, ceilingPos, Direction.DOWN);
+
+        // Блок может быть установлен либо на стене, либо на потолке
+        return canAttachToWall || canAttachToCeiling;
+    }
 }
