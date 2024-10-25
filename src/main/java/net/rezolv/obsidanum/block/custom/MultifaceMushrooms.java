@@ -35,7 +35,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBlock {
-    public static final IntegerProperty GROWTH_STAGE = IntegerProperty.create("growth_stage", 0, 1);
+    public static final IntegerProperty GROWTH_STAGE = IntegerProperty.create("growth_stage", 0, 2);
     public static final BooleanProperty HAS_UP = BooleanProperty.create("has_up");
     public static final BooleanProperty HAS_DOWN = BooleanProperty.create("has_down");
     public static final BooleanProperty HAS_NORTH = BooleanProperty.create("has_north");
@@ -50,6 +50,12 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
     private static final VoxelShape MUSHROOM_SHAPE_EAST = Block.box(7.0, 0.0, 0.0, 16.0, 16.0, 16.0);
     private static final VoxelShape MUSHROOM_SHAPE_WEST = Block.box(0.0, 0.0, 0.0, 9.0, 16.0, 16.0);
 
+    private static final VoxelShape MUSHROOM_SHAPE_DOWN_1 = Block.box(0.0, 0.0, 0.0, 16.0, 5.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_UP_1 = Block.box(0.0, 11.0, 0.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_NORTH_1 = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 5.0);
+    private static final VoxelShape MUSHROOM_SHAPE_SOUTH_1 = Block.box(0.0, 0.0, 11.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_EAST_1 = Block.box(11.0, 0.0, 0.0, 16.0, 16.0, 16.0);
+    private static final VoxelShape MUSHROOM_SHAPE_WEST_1 = Block.box(0.0, 0.0, 0.0, 5.0, 16.0, 16.0);
     public MultifaceMushrooms(Properties properties) {
         super(properties);
         // Инициализация начального состояния блока
@@ -68,7 +74,7 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
         if (!level.isClientSide) {
             if (player.getItemInHand(hand).getItem() instanceof ShearsItem) {
                 // Проверяем стадию роста
-                if (state.getValue(GROWTH_STAGE) == 1) {
+                if (state.getValue(GROWTH_STAGE) == 2) {
                     // Сбрасываем стадию роста до 0
                     level.setBlock(pos, state.setValue(GROWTH_STAGE, 0), 2);
 
@@ -118,7 +124,7 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
 
     public void grow(ServerLevel world, BlockPos pos, BlockState state) {
         int currentStage = state.getValue(GROWTH_STAGE);
-        if (currentStage < 1 )  {
+        if (currentStage < 2 )  {
             // Увеличиваем стадию роста
             world.setBlock(pos, state.setValue(GROWTH_STAGE, currentStage + 1), 2);
         }
@@ -128,23 +134,42 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
         VoxelShape baseShape = super.getShape(state, world, pos, context);
 
         // Проверяем, что грибы могут расти только на верхней грани
-        if (state.getValue(HAS_DOWN) && state.getValue(GROWTH_STAGE) == 1) {
+        if (state.getValue(HAS_DOWN) && state.getValue(GROWTH_STAGE) == 2) {
             return Shapes.or(baseShape, MUSHROOM_SHAPE_DOWN);
         }
-       else if (state.getValue(HAS_UP) && state.getValue(GROWTH_STAGE) == 1) {
+       else if (state.getValue(HAS_UP) && state.getValue(GROWTH_STAGE) == 2) {
             return Shapes.or(baseShape, MUSHROOM_SHAPE_UP);
         }
-        else if (state.getValue(HAS_NORTH) && state.getValue(GROWTH_STAGE) == 1) {
+        else if (state.getValue(HAS_NORTH) && state.getValue(GROWTH_STAGE) == 2) {
             return Shapes.or(baseShape, MUSHROOM_SHAPE_NORTH);
         }
-        else if (state.getValue(HAS_SOUTH) && state.getValue(GROWTH_STAGE) == 1) {
+        else if (state.getValue(HAS_SOUTH) && state.getValue(GROWTH_STAGE) == 2) {
             return Shapes.or(baseShape, MUSHROOM_SHAPE_SOUTH);
         }
-        else if (state.getValue(HAS_EAST) && state.getValue(GROWTH_STAGE) == 1) {
+        else if (state.getValue(HAS_EAST) && state.getValue(GROWTH_STAGE) == 2) {
             return Shapes.or(baseShape, MUSHROOM_SHAPE_EAST);
         }
-        else if (state.getValue(HAS_WEST) && state.getValue(GROWTH_STAGE) == 1) {
+        else if (state.getValue(HAS_WEST) && state.getValue(GROWTH_STAGE) == 2) {
             return Shapes.or(baseShape, MUSHROOM_SHAPE_WEST);
+        }
+
+        else if (state.getValue(HAS_DOWN) && state.getValue(GROWTH_STAGE) == 1) {
+            return Shapes.or(baseShape, MUSHROOM_SHAPE_DOWN_1);
+        }
+        else if (state.getValue(HAS_UP) && state.getValue(GROWTH_STAGE) == 1) {
+            return Shapes.or(baseShape, MUSHROOM_SHAPE_UP_1);
+        }
+        else if (state.getValue(HAS_NORTH) && state.getValue(GROWTH_STAGE) == 1) {
+            return Shapes.or(baseShape, MUSHROOM_SHAPE_NORTH_1);
+        }
+        else if (state.getValue(HAS_SOUTH) && state.getValue(GROWTH_STAGE) == 1) {
+            return Shapes.or(baseShape, MUSHROOM_SHAPE_SOUTH_1);
+        }
+        else if (state.getValue(HAS_EAST) && state.getValue(GROWTH_STAGE) == 1) {
+            return Shapes.or(baseShape, MUSHROOM_SHAPE_EAST_1);
+        }
+        else if (state.getValue(HAS_WEST) && state.getValue(GROWTH_STAGE) == 1) {
+            return Shapes.or(baseShape, MUSHROOM_SHAPE_WEST_1);
         }
 
         return baseShape;
@@ -241,13 +266,13 @@ public class MultifaceMushrooms extends MultifaceBlock implements BonemealableBl
     @Override
     public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean b) {
         // Костная мука работает только на первой стадии роста
-        return blockState.getValue(GROWTH_STAGE) == 0;
+        return blockState.getValue(GROWTH_STAGE) == 0 || blockState.getValue(GROWTH_STAGE) == 1;
     }
 
     @Override
     public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         // Вероятность успеха костной муки возможна только на первой стадии роста
-        return blockState.getValue(GROWTH_STAGE) == 0 && randomSource.nextInt(100) < 25;
+        return blockState.getValue(GROWTH_STAGE) == 0 || blockState.getValue(GROWTH_STAGE) == 1  && randomSource.nextInt(100) < 25;
     }
 
     @Override

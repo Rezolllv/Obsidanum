@@ -68,45 +68,4 @@ public class NetherFlame extends Item {
             }
         }
     }
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        // Получаем необходимые объекты из контекста использования
-        Player player = context.getPlayer();
-        Level world = context.getLevel();
-        BlockPos pos = context.getClickedPos();
-        InteractionHand hand = context.getHand();
-        ItemStack itemStack = context.getItemInHand();
-        Direction clickedFace = context.getClickedFace();
-
-        // Проверяем, есть ли игрок и является ли предмет `NetherFlame`
-        if (player != null && itemStack.getItem() == this) {
-            // Определяем позицию для установки лавы
-            BlockPos posBelow = pos.relative(clickedFace);
-
-            // Проверяем, можно ли установить текучую лаву на указанном месте
-            if (world.isEmptyBlock(posBelow) && world instanceof ServerLevel) {
-                // Создайте FluidState текучей лавы
-                FluidState lavaFluidState = ModFluids.FLOWING_NETHER_FIRE_LAVA.get().getFlowing(7, false);  // 1 - уровень жидкости
-
-                // Преобразуйте FluidState в BlockState
-                BlockState lavaBlockState = lavaFluidState.createLegacyBlock();
-
-                // Установите текучую лаву (BlockState) на выбранной позиции
-                ((ServerLevel) world).setBlockAndUpdate(posBelow, lavaBlockState);
-
-                // Уменьшите прочность предмета
-                itemStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-
-                // Проиграйте анимацию руки игрока
-                player.swing(hand);
-                world.playSound(null, posBelow, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                // Верните успешный результат
-                return InteractionResult.SUCCESS;
-            }
-        }
-
-        // Если ничего не выполнено, возвращаем стандартный результат использования
-        return InteractionResult.PASS;
-    }
 }

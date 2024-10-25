@@ -167,6 +167,16 @@
     },
     {
       "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium_wall",
+        "uvlock": true
+      },
+      "when": {
+        "has_north": "true",
+        "growth_stage": 2
+      }
+    },
+    {
+      "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium"
       },
       "when": {
@@ -195,6 +205,20 @@
     },
     {
       "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium"
+      },
+      "when": {
+        "has_down": "false",
+        "has_east": "false",
+        "has_north": "false",
+        "has_south": "false",
+        "has_up": "false",
+        "has_west": "false",
+        "growth_stage": 2
+      }
+    },
+    {
+      "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium",
         "uvlock": true,
         "y": 90
@@ -213,6 +237,17 @@
       "when": {
         "has_east": "true",
         "growth_stage": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium_wall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "has_east": "true",
+        "growth_stage": 2
       }
     },
     {
@@ -239,6 +274,17 @@
     },
     {
       "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium_wall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "has_south": "true",
+        "growth_stage": 2
+      }
+    },
+    {
+      "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium",
         "uvlock": true,
         "y": 270
@@ -261,6 +307,17 @@
     },
     {
       "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium_wall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "has_west": "true",
+        "growth_stage": 2
+      }
+    },
+    {
+      "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium",
         "uvlock": true,
         "x": 270
@@ -283,6 +340,17 @@
     },
     {
       "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium_apeak",
+        "uvlock": false,
+        "x": 270
+      },
+      "when": {
+        "has_up": "true",
+        "growth_stage": 2
+      }
+    },
+    {
+      "apply": {
         "model": "obsidanum:block/the_gloomy_mycelium",
         "uvlock": true,
         "x": 90
@@ -301,6 +369,17 @@
       "when": {
         "has_down": "true",
         "growth_stage": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "obsidanum:block/the_gloomy_mycelium_apeak",
+        "uvlock": false,
+        "x": 90
+      },
+      "when": {
+        "has_down": "true",
+        "growth_stage": 2
       }
     }
   ]
