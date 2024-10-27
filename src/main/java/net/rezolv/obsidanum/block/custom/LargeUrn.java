@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -128,10 +129,32 @@ public class LargeUrn extends HalfTransparentBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if (!state.getValue(TOP_FOUR_BLOCK_URN)) {
-            BlockState topFourUrnState = BlocksObs.LARGE_URN.get().defaultBlockState().setValue(BOTTOM_FOUR_BLOCK_URN, true); // Замените на ваш блок
-            level.setBlockAndUpdate(pos.offset(0, 0, 0), topFourUrnState);
+        // Проверяем позиции, на которые должен повлиять блок
+        BlockPos[] positionsToCheck = new BlockPos[] {
+                pos.offset(0, 1, 0),   // Сверху
+                pos.offset(1, 0, 0),   // Справа
+                pos.offset(0, 0, 1),   // Сзади
+                pos.offset(1, 1, 0),   // Сверху справа
+                pos.offset(0, 1, 1),   // Сверху сзади
+                pos.offset(1, 1, 1)    // Справа-сзади сверху
+        };
+
+        for (BlockPos checkPos : positionsToCheck) {
+            if (!level.isEmptyBlock(checkPos)) {
+                // Прерываем установку блока, если одна из позиций занята
+                level.destroyBlock(pos, false); // Удаляем текущий блок без выброса предмета
+                return;
+            }
         }
+
+        // Если все позиции пусты, продолжаем стандартное поведение
+        super.setPlacedBy(level, pos, state, placer, stack);
+        // Далее логика установки блока
+        if (!state.getValue(TOP_FOUR_BLOCK_URN)) {
+            BlockState topFourUrnState = BlocksObs.LARGE_URN.get().defaultBlockState().setValue(BOTTOM_FOUR_BLOCK_URN, true);
+            level.setBlockAndUpdate(pos, topFourUrnState);
+        }
+
         // Проверяем состояние VOID_URN
         if (!state.getValue(VOID_URN)) {
             // Устанавливаем блоки вокруг
@@ -213,5 +236,26 @@ public class LargeUrn extends HalfTransparentBlock {
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        // Проверяем все необходимые позиции
+        BlockPos[] positionsToCheck = new BlockPos[] {
+                pos.above(),           // Сверху
+                pos.east(),            // Справа
+                pos.south(),           // Спереди
+                pos.south().east(),           // Спереди и справа
+                pos.above().east(),    // Сверху справа
+                pos.above().south(),   // Сверху спереди
+                pos.above().east().south() // Сверху справа спереди
+        };
+
+        for (BlockPos checkPos : positionsToCheck) {
+            if (!level.isEmptyBlock(checkPos)) {
+                return false; // Если хотя бы одна позиция занята, блок не может быть установлен
+            }
+        }
+        return true; // Все позиции свободны, блок может быть установлен
     }
 }

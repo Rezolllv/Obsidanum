@@ -4,7 +4,7 @@
 	"ambientocclusion": false,
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "obsidanum:block/the_gloomy_mycelium_wall"
+		"1": "obsidanum:block/the_gloomy_mycelium_apeak"
 	},
 	"elements": [
 		{

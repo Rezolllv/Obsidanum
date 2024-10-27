@@ -329,7 +329,7 @@
     },
     {
       "apply": {
-        "model": "obsidanum:block/the_gloomy_mycelium_apeak",
+        "model": "obsidanum:block/the_gloomy_mycelium_apeak_1",
         "uvlock": false,
         "x": 270
       },
@@ -362,7 +362,7 @@
     },
     {
       "apply": {
-        "model": "obsidanum:block/the_gloomy_mycelium_apeak",
+        "model": "obsidanum:block/the_gloomy_mycelium_apeak_1",
         "uvlock": false,
         "x": 90
       },
