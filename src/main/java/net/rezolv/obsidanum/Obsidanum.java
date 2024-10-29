@@ -39,6 +39,7 @@ import net.rezolv.obsidanum.item.item_entity.arrows.DispenserRegistry;
 import net.rezolv.obsidanum.item.item_entity.arrows.EntityTypeInit;
 import net.rezolv.obsidanum.item.item_entity.arrows.obsidian_arrow.ObsidianArrowRenderer;
 import net.rezolv.obsidanum.particle.ParticlesObs;
+import net.rezolv.obsidanum.recipes.ObsidanRecipes;
 import net.rezolv.obsidanum.sound.SoundsObs;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
 import net.rezolv.obsidanum.world.wood.ModWoodTypes;
@@ -66,7 +67,7 @@ public class Obsidanum {
                 .encoder(TotemAnimationMessage::encode)
                 .consumerMainThread(TotemAnimationMessage::handle)
                 .add();
-
+        ObsidanRecipes.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         ItemsObs.register(modEventBus);
         BlocksObs.register(modEventBus);

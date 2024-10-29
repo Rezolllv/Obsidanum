@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "obsidanum:block/bagel_anvil_block"
+        },
+        "facing=east": {
+            "model": "obsidanum:block/bagel_anvil_block",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "obsidanum:block/bagel_anvil_block",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "obsidanum:block/bagel_anvil_block",
+            "y": 270
+        }
+    }
+}

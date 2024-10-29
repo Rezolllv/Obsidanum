@@ -1,0 +1,35 @@
+{
+	"render_type": "cutout",
+	"parent": "wall_forge",
+	"texture_size": [64, 64],
+	"textures": {
+		"2": "obsidanum:block/wall_forge",
+		"particle": "obsidanum:block/wall_forge"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 10, 4, 12], "texture": "#2"},
+				"east": {"uv": [0, 10, 4, 12], "texture": "#2"},
+				"south": {"uv": [0, 10, 4, 12], "texture": "#2"},
+				"west": {"uv": [0, 10, 4, 12], "texture": "#2"},
+				"up": {"uv": [7, 10, 3, 6], "texture": "#2"},
+				"down": {"uv": [11, 4.5, 7, 8.5], "texture": "#2"}
+			}
+		},
+		{
+			"from": [0, 8, 4],
+			"to": [16, 15, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 8, 4]},
+			"faces": {
+				"north": {"uv": [10, 0, 14, 1.75], "texture": "#2"},
+				"east": {"uv": [0, 6.25, 3, 8], "texture": "#2"},
+				"south": {"uv": [10, 0, 14, 1.75], "texture": "#2"},
+				"west": {"uv": [0, 8, 3, 9.75], "texture": "#2"},
+				"up": {"uv": [11, 11.5, 7, 8.5], "texture": "#2"}
+			}
+		}
+	]
+}

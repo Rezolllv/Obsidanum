@@ -74,12 +74,15 @@ public class ObsidanHoe extends HoeItem {
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, net.minecraft.world.entity.LivingEntity entity) {
         if (!level.isClientSide && isActivated(stack)) {
             for (BlockState targetBlock : TARGET_BLOCKS) {
-                if (state.getBlock() == targetBlock.getBlock()) {
+                if (state.is(targetBlock.getBlock())) {
                     BlockPos playerPos = entity.blockPosition();
-                    // Destroy blocks in the radius
                     for (BlockPos blockPos : BlockPos.betweenClosed(playerPos.offset(-20, -20, -20), playerPos.offset(20, 20, 20))) {
-                        if (level.isLoaded(blockPos) && TARGET_BLOCKS[0].getBlock() == level.getBlockState(blockPos).getBlock()) {
-                            level.destroyBlock(blockPos, true);
+                        BlockState targetState = level.getBlockState(blockPos);
+                        for (BlockState targetBlockInner : TARGET_BLOCKS) {
+                            if (targetState.is(targetBlockInner.getBlock())) {
+                                level.destroyBlock(blockPos, true);
+                                break;
+                            }
                         }
                     }
                     deactivate(stack, (Player) entity);

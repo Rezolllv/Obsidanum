@@ -24,6 +24,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(ModHangingSignBlockEntity::new,
                             BlocksObs.OBSIDAN_HANGING_SIGN.get(), BlocksObs.OBSIDAN_WALL_HANGING_SIGN.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<RightForgeScrollEntity>> RIGHT_FORGE_SCROLL =
+            BLOCK_ENTITIES.register("right_forge_scroll", () ->
+                    BlockEntityType.Builder.of(RightForgeScrollEntity::new,
+                            BlocksObs.RIGHT_FORGE_SCROLL.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

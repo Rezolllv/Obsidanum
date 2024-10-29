@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "obsidanum:block/hammer_forge_inactive"
+        },
+        "facing=east": {
+            "model": "obsidanum:block/hammer_forge_inactive",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "obsidanum:block/hammer_forge_inactive",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "obsidanum:block/hammer_forge_inactive",
+            "y": 270
+        }
+    }
+}

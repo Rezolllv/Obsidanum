@@ -212,6 +212,13 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.STRIPPED_OBSIDAN_WOOD.get());
                         pOutput.accept(ItemsObs.OBSIDAN_WOOD_LEAVES.get());
 
+                        pOutput.accept(BlocksObs.RIGHT_FORGE_SCROLL.get());
+                        pOutput.accept(BlocksObs.FORGE_CRUCIBLE.get());
+                        pOutput.accept(BlocksObs.LEFT_CORNER_LEVEL.get());
+                        pOutput.accept(BlocksObs.WALL_FORGE.get());
+                        pOutput.accept(BlocksObs.HAMMER_FORGE.get());
+                        pOutput.accept(BlocksObs.BAGEL_ANVIL_BLOCK.get());
+
                     })
                     .build());
 

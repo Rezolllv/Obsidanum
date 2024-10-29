@@ -11,6 +11,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
@@ -122,11 +123,6 @@ public class NetherFlameBlock extends LiquidBlock {
         return false;
     }
 
-    /** @deprecated */
-    @Deprecated
-    private boolean isFlammable(LevelReader pLevel, BlockPos pPos) {
-        return pPos.getY() >= pLevel.getMinBuildHeight() && pPos.getY() < pLevel.getMaxBuildHeight() && !pLevel.hasChunkAt(pPos) ? false : pLevel.getBlockState(pPos).ignitedByLava();
-    }
 
     private boolean isFlammable(LevelReader level, BlockPos pos, Direction face) {
         return pos.getY() >= level.getMinBuildHeight() && pos.getY() < level.getMaxBuildHeight() && !level.hasChunkAt(pos) ? false : level.getBlockState(pos).isFlammable(level, pos, face);
@@ -135,7 +131,9 @@ public class NetherFlameBlock extends LiquidBlock {
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
         super.entityInside(state, world, pos, entity);
 
-        // Если сущность не имеет иммунитета к огню, зажгите ее
+        if (entity instanceof ItemEntity && !entity.fireImmune()) {
+            world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
         if (!entity.fireImmune()) {
             entity.setSecondsOnFire(15);
             entity.hurt(new DamageSource(world.registryAccess().

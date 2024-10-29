@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "obsidanum:block/right_forge_no_scroll"
+        },
+        "facing=east": {
+            "model": "obsidanum:block/right_forge_no_scroll",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "obsidanum:block/right_forge_no_scroll",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "obsidanum:block/right_forge_no_scroll",
+            "y": 270
+        }
+    }
+}
