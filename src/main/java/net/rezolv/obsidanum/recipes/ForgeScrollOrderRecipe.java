@@ -9,18 +9,21 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.rezolv.obsidanum.Obsidanum;
 
 import javax.annotation.Nullable;
 
-public class ForgeScrollRecipe implements Recipe<SimpleContainer> {
+public class ForgeScrollOrderRecipe implements Recipe<SimpleContainer> {
 
     private final NonNullList<ItemStack> inputItems;
     private final ItemStack output;
     private final ResourceLocation id;
-    public ForgeScrollRecipe(NonNullList<ItemStack> inputItems, ItemStack output, ResourceLocation id) {
+    public ForgeScrollOrderRecipe(NonNullList<ItemStack> inputItems, ItemStack output, ResourceLocation id) {
         this.inputItems = inputItems;
         this.output = output;
         this.id = id;
@@ -52,23 +55,23 @@ public class ForgeScrollRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+        return Serializer.FORGE_SCROOL_ORDER;
     }
 
     @Override
     public RecipeType<?> getType() {
-        return Type.INSTANCE;
+        return Type.FORGE_SCROOL_ORDER;
     }
-    public static class Type implements RecipeType<ForgeScrollRecipe> {
-        public static final Type INSTANCE = new Type();
-        public static final String ID = "forge_scroll";
+    public static class Type implements RecipeType<ForgeScrollOrderRecipe> {
+        public static final Type FORGE_SCROOL_ORDER = new Type();
+        public static final String ID = "forge_scroll_order";
     }
-    public static class Serializer implements RecipeSerializer<ForgeScrollRecipe> {
-        public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(Obsidanum.MOD_ID, "forge_scroll");
+    public static class Serializer implements RecipeSerializer<ForgeScrollOrderRecipe> {
+        public static final Serializer FORGE_SCROOL_ORDER = new Serializer();
+        public static final ResourceLocation ID = new ResourceLocation(Obsidanum.MOD_ID, "forge_scroll_order");
 
         @Override
-        public ForgeScrollRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
+        public ForgeScrollOrderRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(serializedRecipe, "output"));
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(serializedRecipe, "ingredients");
@@ -80,11 +83,11 @@ public class ForgeScrollRecipe implements Recipe<SimpleContainer> {
                 inputs.add(itemStack);
             }
 
-            return new ForgeScrollRecipe(inputs, output, recipeId);
+            return new ForgeScrollOrderRecipe(inputs, output, recipeId);
         }
 
         @Override
-        public @Nullable ForgeScrollRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public @Nullable ForgeScrollOrderRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             int inputSize = buffer.readInt();
             NonNullList<ItemStack> inputs = NonNullList.withSize(inputSize, ItemStack.EMPTY);
 
@@ -93,11 +96,11 @@ public class ForgeScrollRecipe implements Recipe<SimpleContainer> {
             }
 
             ItemStack output = buffer.readItem();
-            return new ForgeScrollRecipe(inputs, output, recipeId);
+            return new ForgeScrollOrderRecipe(inputs, output, recipeId);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, ForgeScrollRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, ForgeScrollOrderRecipe recipe) {
             buffer.writeInt(recipe.inputItems.size());
 
             for (ItemStack stack : recipe.inputItems) {

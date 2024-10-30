@@ -1,16 +1,27 @@
 package net.rezolv.obsidanum.tab;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.item.ItemsObs;
+import net.rezolv.obsidanum.recipes.ForgeScrollCatacombsRecipe;
+import net.rezolv.obsidanum.recipes.ForgeScrollNetherRecipe;
+import net.rezolv.obsidanum.recipes.ForgeScrollOrderRecipe;
+import net.rezolv.obsidanum.recipes.ObsidanRecipes;
 
 public class CreativeTabObs extends CreativeModeTab {
 
@@ -21,7 +32,7 @@ public class CreativeTabObs extends CreativeModeTab {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Obsidanum.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> OBSIDANUM_TAB = CREATIVE_MODE_TABS.register("obsidanum_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemsObs.OBSIDIAN_TEAR.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemsObs.OBSIDAN.get()))
                     .title(Component.translatable("creativetab.obsidanum"))
                     .displayItems((pParameters, pOutput) -> {
                         //Items
@@ -221,6 +232,35 @@ public class CreativeTabObs extends CreativeModeTab {
 
                     })
                     .build());
+
+    public static final RegistryObject<CreativeModeTab> SCROLLS_TAB = CREATIVE_MODE_TABS.register("scrolls_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemsObs.ORDER_PLAN.get()))
+                    .title(Component.translatable("creativetab.scrolls"))
+                    .displayItems((pParameters, pOutput) -> {
+                        //Items
+                        Level level = Minecraft.getInstance().level;
+                        // Эта фигня отобразит все предметы с заданым рецептом
+                        if (level != null) {
+                            level.getRecipeManager().getRecipes().forEach(recipe -> {
+                                ItemStack result = null;
+                                if (recipe.getType() == ForgeScrollNetherRecipe.Type.FORGE_SCROOL_NETHER) {
+                                    result = ItemsObs.NETHER_PLAN.get().getDefaultInstance();
+                                } else if (recipe.getType() == ForgeScrollOrderRecipe.Type.FORGE_SCROOL_ORDER) {
+                                    result = ItemsObs.ORDER_PLAN.get().getDefaultInstance();
+                                } else if (recipe.getType() == ForgeScrollCatacombsRecipe.Type.FORGE_SCROOL_CATACOMBS) {
+                                    result = ItemsObs.CATACOMBS_PLAN.get().getDefaultInstance();
+                                }
+
+                                if (result != null && !result.isEmpty()) {
+                                    result.setCount(1);
+                                    result.getOrCreateTag().putString("RecipePath", recipe.getId().getNamespace() + "/recipes/" + recipe.getId().getPath());
+                                    pOutput.accept(result);
+                                }
+                            });
+                        }
+                    })
+                    .build());
+
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);

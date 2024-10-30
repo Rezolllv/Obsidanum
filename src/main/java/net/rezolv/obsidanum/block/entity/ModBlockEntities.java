@@ -29,6 +29,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(RightForgeScrollEntity::new,
                             BlocksObs.RIGHT_FORGE_SCROLL.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<ForgeCrucibleEntity>> FORGE_CRUCIBLE =
+            BLOCK_ENTITIES.register("forge_crucible", () ->
+                    BlockEntityType.Builder.of(ForgeCrucibleEntity::new,
+                            BlocksObs.FORGE_CRUCIBLE.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

@@ -67,7 +67,20 @@ public class ObsidanHoe extends HoeItem {
             Blocks.WARPED_ROOTS.defaultBlockState(),
             Blocks.FIRE.defaultBlockState(),
             Blocks.LARGE_FERN.defaultBlockState(),
-            Blocks.NETHER_SPROUTS.defaultBlockState()
+            Blocks.NETHER_SPROUTS.defaultBlockState(),
+            Blocks.SCULK.defaultBlockState(),
+            Blocks.SCULK_VEIN.defaultBlockState(),
+            Blocks.SCULK_SENSOR.defaultBlockState(),
+            Blocks.SCULK_SHRIEKER.defaultBlockState(),
+            Blocks.KELP.defaultBlockState(),
+            Blocks.KELP_PLANT.defaultBlockState(),
+            Blocks.LILY_PAD.defaultBlockState(),
+            Blocks.MOSS_BLOCK.defaultBlockState(),
+            Blocks.CAVE_VINES.defaultBlockState(),
+            Blocks.CAVE_VINES_PLANT.defaultBlockState(),
+            Blocks.MOSS_CARPET.defaultBlockState(),
+            Blocks.SPORE_BLOSSOM.defaultBlockState(),
+            Blocks.GLOW_LICHEN.defaultBlockState()
     };
 
     @Override
