@@ -24,12 +24,13 @@ import java.util.function.Supplier;
 public class BlocksObs {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, Obsidanum.MOD_ID);
-
+    public static final RegistryObject<Block> FLAME_DISPENSER = registerBlock("flame_dispenser",
+            () -> new FlameDispenser(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> RIGHT_FORGE_SCROLL = registerBlock("right_forge_scroll",
             () -> new RightForgeScroll(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> FORGE_CRUCIBLE = registerBlock("forge_crucible",
-            () -> new ForgeCrucible(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new ForgeCrucible(BlockBehaviour.Properties.of().noOcclusion().randomTicks().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> LEFT_CORNER_LEVEL = registerBlock("left_corner_level",
             () -> new LeftCornerLevel(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> WALL_FORGE = registerBlock("wall_forge",
@@ -387,7 +388,4 @@ public class BlocksObs {
         return ItemsObs.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    public static void register(IEventBus eventBus) {
-        BLOCKS.register(eventBus);
-    }
 }

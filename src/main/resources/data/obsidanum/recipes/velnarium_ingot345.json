@@ -1,5 +1,5 @@
 {
-  "type": "obsidanum:forge_scroll_catacombs",
+  "type": "obsidanum:forge_scroll_order",
   "ingredients": [
     {
       "item": "obsidanum:velnarium_ore",
@@ -7,7 +7,7 @@
     },
     {
       "item": "minecraft:lapis_lazuli",
-      "count": 6
+      "count": 1
     },
     {
       "item": "minecraft:iron_ingot",
@@ -16,6 +16,6 @@
   ],
   "output": {
     "item": "obsidanum:velnarium_ingot",
-    "count": 1
+    "count": 3
   }
 }

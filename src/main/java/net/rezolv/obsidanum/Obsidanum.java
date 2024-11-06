@@ -1,4 +1,5 @@
 package net.rezolv.obsidanum;
+
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -72,20 +73,20 @@ public class Obsidanum {
                 .encoder(TotemAnimationMessage::encode)
                 .consumerMainThread(TotemAnimationMessage::handle)
                 .add();
-        ObsidanRecipes.register(modEventBus);
+        ObsidanRecipes.SERIALIZERS.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
-        ItemsObs.register(modEventBus);
-        BlocksObs.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
+        ItemsObs.ITEMS.register(modEventBus);
+        BlocksObs.BLOCKS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
-        ModEntitiesItem.register(modEventBus);
-        ParticlesObs.register(modEventBus);
+        ModEntitiesItem.ENTITIES.register(modEventBus);
+        ParticlesObs.PARTICLE_TYPES.register(modEventBus);
         EntityTypeInit.ENTITY_TYPES.register(modEventBus);
         SoundsObs.register(modEventBus);
-        EffectsObs.register(modEventBus);
-        ModEntities.register(modEventBus);
-        CreativeTabObs.register(modEventBus);
+        EffectsObs.MOB_EFFECTS.register(modEventBus);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
+        CreativeTabObs.CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
@@ -128,7 +129,6 @@ public class Obsidanum {
         public static void onClientSetup(FMLClientSetupEvent event) {
 
 
-
             EntityRenderers.register(EntityTypeInit.OBSIDIAN_ARROW.get(), ObsidianArrowRenderer::new);
             EntityRenderers.register(ModEntities.OBSIDIAN_ELEMENTAL.get(), ObsidianElementalRenderer::new);
             EntityRenderers.register(ModEntities.MEET_BEETLE.get(), MeetBeetleRenderer::new);
@@ -148,6 +148,5 @@ public class Obsidanum {
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NETHER_FIRE_LAVA.get(), RenderType.solid());
             Sheets.addWoodType(ModWoodTypes.OBSIDAN);
         }
-
     }
 }

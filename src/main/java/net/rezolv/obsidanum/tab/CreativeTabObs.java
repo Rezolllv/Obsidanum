@@ -101,6 +101,7 @@ public class CreativeTabObs extends CreativeModeTab {
 
                         //Blocks
                         pOutput.accept(BlocksObs.OBSIDAN_PLANKS.get());
+                        pOutput.accept(BlocksObs.FLAME_DISPENSER.get());
                         pOutput.accept(BlocksObs.FLAME_BANNER_BAGGEL.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_TABLET.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_INLAID_COLUMN.get());
@@ -253,7 +254,7 @@ public class CreativeTabObs extends CreativeModeTab {
 
                                 if (result != null && !result.isEmpty()) {
                                     result.setCount(1);
-                                    result.getOrCreateTag().putString("RecipePath", recipe.getId().getNamespace() + "/recipes/" + recipe.getId().getPath());
+                                    result.getOrCreateTag().putString("RecipesPlans", recipe.getId().getNamespace() + "/recipes/" + recipe.getId().getPath());
                                     pOutput.accept(result);
                                 }
                             });
@@ -262,7 +263,5 @@ public class CreativeTabObs extends CreativeModeTab {
                     .build());
 
 
-    public static void register(IEventBus eventBus) {
-        CREATIVE_MODE_TABS.register(eventBus);
-    }
+
 }

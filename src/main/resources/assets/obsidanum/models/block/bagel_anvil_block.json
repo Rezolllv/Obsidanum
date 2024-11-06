@@ -4,7 +4,8 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
-		"4": "obsidanum:block/bagel_anvil_block"
+		"4": "obsidanum:block/bagel_anvil_block",
+		"particle": "obsidanum:block/bagel_anvil_block"
 	},
 	"elements": [
 		{

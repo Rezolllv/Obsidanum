@@ -25,7 +25,4 @@ public class ModEntities {
             ENTITY_TYPES.register("gart", () -> EntityType.Builder.of(Gart::new, MobCategory.MONSTER)
                     .sized(1f, 1.2f).build("gart"));
 
-    public static void register(IEventBus eventBus) {
-        ENTITY_TYPES.register(eventBus);
-    }
 }

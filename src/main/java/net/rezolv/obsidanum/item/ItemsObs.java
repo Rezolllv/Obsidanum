@@ -27,11 +27,11 @@ public class ItemsObs {
 
     // Свитки для печи
     public static final RegistryObject<Item> ORDER_PLAN = ITEMS.register("order_plan",
-            () -> new Item(new Item.Properties()));
+            () -> new PlansText(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> NETHER_PLAN = ITEMS.register("nether_plan",
-            () -> new Item(new Item.Properties()));
+            () -> new PlansText(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> CATACOMBS_PLAN = ITEMS.register("catacombs_plan",
-            () -> new Item(new Item.Properties()));
+            () -> new PlansText(new Item.Properties().stacksTo(1)));
 
 
     public static final RegistryObject<Item> OBSIDAN_ESSENCE = ITEMS.register("obsidan_essence",
@@ -185,7 +185,6 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> OBSIDIAN_ELEMENTAL_SPANW_EGG = ITEMS.register("obsidian_elemental_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.OBSIDIAN_ELEMENTAL, 0x240935, 0xdeb6f3, new Item.Properties()));
-    public static void register(IEventBus eventBus){
-        ITEMS.register(eventBus);
-    }
+
+
 }

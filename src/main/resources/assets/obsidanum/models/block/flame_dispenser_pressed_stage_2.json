@@ -1,0 +1,36 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "flame_dispenser",
+	"texture_size": [64, 64],
+	"textures": {
+		"6": "obsidanum:block/flame_dispenser_2",
+		"particle": "obsidanum:block/flame_dispenser_2"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#6"},
+				"east": {"uv": [0, 0, 4, 4], "texture": "#6"},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#6"},
+				"west": {"uv": [0, 0, 4, 4], "texture": "#6"},
+				"up": {"uv": [4, 8, 0, 4], "texture": "#6"},
+				"down": {"uv": [8, 0, 4, 4], "texture": "#6"}
+			}
+		},
+		{
+			"from": [2, 2, -0.25],
+			"to": [14, 14, 0.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 2, -0.25]},
+			"faces": {
+				"north": {"uv": [4, 4, 7, 7], "texture": "#6"},
+				"east": {"uv": [7, 4, 7.25, 7], "texture": "#6"},
+				"south": {"uv": [4, 7, 7, 10], "texture": "#6"},
+				"west": {"uv": [7, 4, 7.25, 7], "texture": "#6"},
+				"up": {"uv": [10, 7.25, 7, 7], "texture": "#6"},
+				"down": {"uv": [10.25, 4, 7.25, 4.25], "texture": "#6"}
+			}
+		}
+	]
+}

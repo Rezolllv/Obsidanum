@@ -14,15 +14,19 @@ public class ModBlockEntities {
 
 
 
+
+
+
     public static final RegistryObject<BlockEntityType<ModSignBlockEntity>> OBSIDAN_SIGN =
-            BLOCK_ENTITIES.register("mod_sign", () ->
+            BLOCK_ENTITIES.register("obsidan_sign", () ->
                     BlockEntityType.Builder.of(ModSignBlockEntity::new,
                             BlocksObs.OBSIDAN_SIGN.get(), BlocksObs.OBSIDAN_WALL_SIGN.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<ModHangingSignBlockEntity>> OBSIDAN_HANGING_SIGN =
-            BLOCK_ENTITIES.register("mod_hanging_sign", () ->
+            BLOCK_ENTITIES.register("obsidan_hanging_sign", () ->
                     BlockEntityType.Builder.of(ModHangingSignBlockEntity::new,
                             BlocksObs.OBSIDAN_HANGING_SIGN.get(), BlocksObs.OBSIDAN_WALL_HANGING_SIGN.get()).build(null));
+
 
     public static final RegistryObject<BlockEntityType<RightForgeScrollEntity>> RIGHT_FORGE_SCROLL =
             BLOCK_ENTITIES.register("right_forge_scroll", () ->
@@ -33,9 +37,8 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("forge_crucible", () ->
                     BlockEntityType.Builder.of(ForgeCrucibleEntity::new,
                             BlocksObs.FORGE_CRUCIBLE.get()).build(null));
-
-
-    public static void register(IEventBus eventBus) {
-        BLOCK_ENTITIES.register(eventBus);
-    }
+    public static final RegistryObject<BlockEntityType<ForgeCrucibleEntity>> FLAME_DISPENSER =
+            BLOCK_ENTITIES.register("flame_dispenser", () ->
+                    BlockEntityType.Builder.of(ForgeCrucibleEntity::new,
+                            BlocksObs.FLAME_DISPENSER.get()).build(null));
 }

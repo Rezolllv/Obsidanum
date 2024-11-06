@@ -3,8 +3,8 @@
 	"parent": "right_corner",
 	"texture_size": [64, 64],
 	"textures": {
-		"4": "obsidanum:block/right_forge_scroll_1",
-		"particle": "obsidanum:block/right_forge_scroll_1"
+		"4": "obsidanum:block/right_forge_scroll_catacombs",
+		"particle": "obsidanum:block/right_forge_scroll_catacombs"
 	},
 	"elements": [
 		{

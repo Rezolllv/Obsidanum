@@ -18,7 +18,4 @@ public class ObsidanRecipes {
     public static final RegistryObject<RecipeSerializer<ForgeScrollCatacombsRecipe>> FORGE_SCROLL_CATACOMBS_SERIALIZER =
             SERIALIZERS.register("forge_scroll_catacombs", () -> ForgeScrollCatacombsRecipe.Serializer.FORGE_SCROOL_CATACOMBS);
 
-    public static void register(IEventBus eventBus) {
-        SERIALIZERS.register(eventBus);
-    }
 }

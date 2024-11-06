@@ -26,7 +26,4 @@ public class ModEntitiesItem {
 
 
 
-    public static void register(IEventBus eventBus) {
-        ENTITIES.register(eventBus);
-    }
 }

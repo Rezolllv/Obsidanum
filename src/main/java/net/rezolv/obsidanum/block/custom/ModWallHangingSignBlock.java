@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.rezolv.obsidanum.block.entity.ModHangingSignBlockEntity;
 
 public class ModWallHangingSignBlock extends WallHangingSignBlock {
-    public ModWallHangingSignBlock(Properties pProperties, WoodType pType) {
-        super(pProperties, pType);
+    public ModWallHangingSignBlock(Properties properties, WoodType woodType) {
+        super(properties, woodType);
     }
 
     @Override

@@ -22,7 +22,4 @@ public class EffectsObs {
     public static final RegistryObject<MobEffect> FLASH = MOB_EFFECTS.register("flash",
             () -> new Confusion(MobEffectCategory.HARMFUL, 0xFFFFFF));
 
-    public static void register(IEventBus eventBus) {
-        MOB_EFFECTS.register(eventBus);
-    }
 }

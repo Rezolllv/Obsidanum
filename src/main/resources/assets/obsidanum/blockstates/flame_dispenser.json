@@ -1,0 +1,124 @@
+{
+    "variants": {
+        "facing=north,stage=0,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_0"
+        },
+        "facing=north,stage=1,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_1"
+        },
+        "facing=north,stage=2,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_2"
+        },
+        "facing=north,stage=3,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_3"
+        },
+        "facing=north,stage=0,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_0"
+        },
+        "facing=north,stage=1,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_1"
+        },
+        "facing=north,stage=2,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_2"
+        },
+        "facing=north,stage=3,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_3"
+        },
+        "facing=east,stage=0,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_0",
+            "y": 90
+        },
+        "facing=east,stage=1,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_1",
+            "y": 90
+        },
+        "facing=east,stage=2,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_2",
+            "y": 90
+        },
+        "facing=east,stage=3,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_3",
+            "y": 90
+        },
+        "facing=east,stage=0,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_0",
+            "y": 90
+        },
+        "facing=east,stage=1,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_1",
+            "y": 90
+        },
+        "facing=east,stage=2,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_2",
+            "y": 90
+        },
+        "facing=east,stage=3,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_3",
+            "y": 90
+        },
+        "facing=south,stage=0,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_0",
+            "y": 180
+        },
+        "facing=south,stage=1,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_1",
+            "y": 180
+        },
+        "facing=south,stage=2,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_2",
+            "y": 180
+        },
+        "facing=south,stage=3,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_3",
+            "y": 180
+        },
+        "facing=south,stage=0,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_0",
+            "y": 180
+        },
+        "facing=south,stage=1,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_1",
+            "y": 180
+        },
+        "facing=south,stage=2,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_2",
+            "y": 180
+        },
+        "facing=south,stage=3,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_3",
+            "y": 180
+        },
+        "facing=west,stage=0,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_0",
+            "y": 270
+        },
+        "facing=west,stage=1,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_1",
+            "y": 270
+        },
+        "facing=west,stage=2,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_2",
+            "y": 270
+        },
+        "facing=west,stage=3,is_pressed=false": {
+            "model": "obsidanum:block/flame_dispenser_stage_3",
+            "y": 270
+        },
+        "facing=west,stage=0,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_0",
+            "y": 270
+        },
+        "facing=west,stage=1,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_1",
+            "y": 270
+        },
+        "facing=west,stage=2,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_2",
+            "y": 270
+        },
+        "facing=west,stage=3,is_pressed=true": {
+            "model": "obsidanum:block/flame_dispenser_pressed_stage_3",
+            "y": 270
+        }
+    }
+}
