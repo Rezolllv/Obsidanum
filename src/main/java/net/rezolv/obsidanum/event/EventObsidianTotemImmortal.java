@@ -137,6 +137,6 @@ public class EventObsidianTotemImmortal {
     private static void applyTotemEffects(Player player) {
         // Наложение сильного замедления и сопротивления
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10 * 20, 3)); // Замедление
-        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 35 * 20, 5)); // Сопротивление
+        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 35 * 20, 3)); // Сопротивление
     }
 }

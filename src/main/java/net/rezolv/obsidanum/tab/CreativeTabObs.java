@@ -254,7 +254,7 @@ public class CreativeTabObs extends CreativeModeTab {
 
                                 if (result != null && !result.isEmpty()) {
                                     result.setCount(1);
-                                    result.getOrCreateTag().putString("RecipesPlans", recipe.getId().getNamespace() + "/recipes/" + recipe.getId().getPath());
+                                    result.getOrCreateTag().putString("RecipesPlans", "recipes/" + recipe.getId().getPath());
                                     pOutput.accept(result);
                                 }
                             });

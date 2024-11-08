@@ -78,19 +78,22 @@ public class FlameDispenser extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack item = player.getItemInHand(hand);
 
-        // Проверка на то, что в главной руке нет NetherFlame и кнопка не нажата
-        if ((hand == InteractionHand.MAIN_HAND && item.getItem() != ItemsObs.NETHER_FLAME.get()) && !state.getValue(IS_PRESSED)) {
-            // Воспроизводим звук нажатия
-            level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
+        // Проверяем, что игрок взаимодействует с лицевой стороной
+        if (hitResult.getDirection() == state.getValue(FACING)) {
+            // Проверка на то, что в главной руке нет NetherFlame и кнопка не нажата
+            if ((hand == InteractionHand.MAIN_HAND && item.getItem() != ItemsObs.NETHER_FLAME.get()) && !state.getValue(IS_PRESSED)) {
+                // Воспроизводим звук нажатия
+                level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-            // Переключаем состояние нажатия
-            level.setBlock(pos, state.setValue(IS_PRESSED, true), 2);
+                // Переключаем состояние нажатия
+                level.setBlock(pos, state.setValue(IS_PRESSED, true), 2);
 
-            // Анимация взмаха рукой
-            player.swing(InteractionHand.MAIN_HAND, true);
+                // Анимация взмаха рукой
+                player.swing(InteractionHand.MAIN_HAND, true);
 
-            // Запланировать возврат состояния в false
-            level.scheduleTick(pos, this, 40);  // 10 тиков = ~0.5 секунд
+                // Запланировать возврат состояния в false
+                level.scheduleTick(pos, this, 40);  // 10 тиков = ~0.5 секунд
+            }
         }
 
         if (!level.isClientSide) {
@@ -111,17 +114,6 @@ public class FlameDispenser extends BaseEntityBlock {
         }
 
         return super.use(state, level, pos, player, hand, hitResult);
-    }
-
-    @Override
-    public boolean isSignalSource(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getSignal(BlockState pState, BlockGetter pLevel, BlockPos pPos, Direction pDirection) {
-        int stage = pState.getValue(STAGE);
-        return stage * 3;
     }
 
     public BlockState rotate(BlockState state, Rotation rot) {

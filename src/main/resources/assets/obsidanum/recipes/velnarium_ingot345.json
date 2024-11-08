@@ -1,0 +1,21 @@
+{
+  "type": "obsidanum:forge_scroll_order",
+  "ingredients": [
+    {
+      "item": "obsidanum:velnarium_ore",
+      "count": 3
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "count": 1
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 2
+    }
+  ],
+  "output": {
+    "item": "obsidanum:velnarium_ingot",
+    "count": 3
+  }
+}
