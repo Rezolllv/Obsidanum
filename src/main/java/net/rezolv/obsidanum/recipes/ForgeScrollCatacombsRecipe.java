@@ -32,7 +32,9 @@ public class ForgeScrollCatacombsRecipe implements Recipe<SimpleContainer> {
     public boolean matches(SimpleContainer simpleContainer, Level level) {
         return true;
     }
-
+    public NonNullList<ItemStack> getInputItems() {
+        return inputItems;
+    }
     @Override
     public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
         return output.copy();
@@ -80,6 +82,7 @@ public class ForgeScrollCatacombsRecipe implements Recipe<SimpleContainer> {
             for (int i = 0; i < ingredients.size(); i++) {
                 JsonObject ingredientObject = ingredients.get(i).getAsJsonObject();
                 ItemStack itemStack = ShapedRecipe.itemStackFromJson(ingredientObject);
+                itemStack.setCount(GsonHelper.getAsInt(ingredientObject, "count", 1)); // Устанавливаем количество
                 inputs.add(itemStack);
             }
 

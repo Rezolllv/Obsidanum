@@ -1,17 +1,12 @@
 package net.rezolv.obsidanum.block.custom;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.packs.resources.Resource;
-import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -31,9 +26,6 @@ import net.rezolv.obsidanum.block.entity.RightForgeScrollEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 public class ForgeCrucible extends BaseEntityBlock {
@@ -86,19 +78,30 @@ public class ForgeCrucible extends BaseEntityBlock {
             if (!scrollNBT.isEmpty()) {
                 System.out.println("RightForgeScroll NBT Data at " + rightPos + ": " + scrollNBT);
 
-                // Проверка на наличие "RecipesPlans" и обработка рецепта
-                if (scrollNBT.contains("RecipesPlans")) {
-                    String recipePath = scrollNBT.getString("RecipesPlans");
-                    System.out.println("Recipe Path: " + recipePath);
-
-                    // Загружаем данные рецепта на основе пути
-                    loadRecipeData(recipePath, level, pos);
-
-                } else {
-                    System.out.println("No valid recipe data found in RightForgeScroll NBT.");
+                // Извлечение информации о рецепте
+                if (scrollNBT.contains("type")) {
+                    String type = scrollNBT.getString("type");
+                    System.out.println("Recipe Type: " + type);
                 }
 
-                // Обновление данных в ForgeCrucibleEntity
+                if (scrollNBT.contains("ingredients", Tag.TAG_LIST)) {
+                    ListTag ingredientsList = scrollNBT.getList("ingredients", Tag.TAG_COMPOUND);
+                    System.out.println("Ingredients:");
+                    for (Tag ingredientTag : ingredientsList) {
+                        CompoundTag ingredientNBT = (CompoundTag) ingredientTag;
+                        String item = ingredientNBT.getString("item");
+                        int count = ingredientNBT.getInt("count");
+                        System.out.println("- Item: " + item + ", Count: " + count);
+                    }
+                }
+
+                if (scrollNBT.contains("output", Tag.TAG_COMPOUND)) {
+                    CompoundTag outputNBT = scrollNBT.getCompound("output");
+                    String outputItem = outputNBT.getString("item");
+                    int outputCount = outputNBT.getInt("count");
+                    System.out.println("Output Item: " + outputItem + ", Count: " + outputCount);
+                }
+
                 BlockEntity crucibleEntity = level.getBlockEntity(pos);
                 if (crucibleEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
                     forgeCrucibleEntity.updateFromScrollNBT(scrollNBT);
@@ -108,68 +111,6 @@ public class ForgeCrucible extends BaseEntityBlock {
             } else {
                 System.out.println("RightForgeScroll NBT Data is empty at " + rightPos);
             }
-        }
-    }
-
-    // Метод для загрузки данных рецепта
-    private void loadRecipeData(String recipePath, Level level, BlockPos pos) {
-        // Используем правильный путь для ресурса, если необходимо
-        ResourceLocation recipeLocation = new ResourceLocation("obsidanum", recipePath);
-        ResourceManager resourceManager = level.getServer().getResourceManager();
-
-        try {
-            // Попытка получить ресурс
-            Resource resource = resourceManager.getResource(recipeLocation).orElseThrow(
-                    () -> new IOException("Resource not found: " + recipeLocation)
-            );
-
-            // Чтение JSON из ресурса
-            try (InputStreamReader reader = new InputStreamReader(resource.open())) {
-                JsonObject recipeJson = JsonParser.parseReader(reader).getAsJsonObject();
-
-                // Проверяем, что "type" существует
-                if (recipeJson.has("type")) {
-                    String type = recipeJson.get("type").getAsString();
-                    System.out.println("Recipe Type: " + type);
-                } else {
-                    System.out.println("No 'type' found in recipe JSON.");
-                }
-
-                // Извлечение ингредиентов
-                if (recipeJson.has("ingredients")) {
-                    System.out.println("Ingredients:");
-                    for (var ingredient : recipeJson.getAsJsonArray("ingredients")) {
-                        JsonObject ingredientObj = ingredient.getAsJsonObject();
-                        if (ingredientObj.has("item") && ingredientObj.has("count")) {
-                            String item = ingredientObj.get("item").getAsString();
-                            int count = ingredientObj.get("count").getAsInt();
-                            System.out.println("- Item: " + item + ", Count: " + count);
-                        } else {
-                            System.out.println("Invalid ingredient format.");
-                        }
-                    }
-                } else {
-                    System.out.println("No ingredients found in recipe JSON.");
-                }
-
-                // Извлечение выходного элемента
-                if (recipeJson.has("output")) {
-                    JsonObject output = recipeJson.getAsJsonObject("output");
-                    if (output.has("item") && output.has("count")) {
-                        String outputItem = output.get("item").getAsString();
-                        int outputCount = output.get("count").getAsInt();
-                        System.out.println("Output Item: " + outputItem + ", Count: " + outputCount);
-                    } else {
-                        System.out.println("Invalid output format.");
-                    }
-                } else {
-                    System.out.println("No output found in recipe JSON.");
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println("Failed to load recipe data for: " + recipePath);
-            e.printStackTrace();
         }
     }
 

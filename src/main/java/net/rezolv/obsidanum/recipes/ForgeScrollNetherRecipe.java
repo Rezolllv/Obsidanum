@@ -20,14 +20,20 @@ public class ForgeScrollNetherRecipe implements Recipe<SimpleContainer> {
     private final NonNullList<ItemStack> inputItems;
     private final ItemStack output;
     private final ResourceLocation id;
+
     public ForgeScrollNetherRecipe(NonNullList<ItemStack> inputItems, ItemStack output, ResourceLocation id) {
         this.inputItems = inputItems;
         this.output = output;
         this.id = id;
     }
+
     @Override
     public boolean matches(SimpleContainer simpleContainer, Level level) {
         return true;
+    }
+
+    public NonNullList<ItemStack> getInputItems() {
+        return inputItems;
     }
 
     @Override
@@ -59,10 +65,12 @@ public class ForgeScrollNetherRecipe implements Recipe<SimpleContainer> {
     public RecipeType<?> getType() {
         return Type.FORGE_SCROOL_NETHER;
     }
+
     public static class Type implements RecipeType<ForgeScrollNetherRecipe> {
         public static final Type FORGE_SCROOL_NETHER = new Type();
         public static final String ID = "forge_scroll_nether";
     }
+
     public static class Serializer implements RecipeSerializer<ForgeScrollNetherRecipe> {
         public static final Serializer FORGE_SCROOL_NETHER = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(Obsidanum.MOD_ID, "forge_scroll_nether");
@@ -70,13 +78,14 @@ public class ForgeScrollNetherRecipe implements Recipe<SimpleContainer> {
         @Override
         public ForgeScrollNetherRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(serializedRecipe, "output"));
-
+            output.setCount(GsonHelper.getAsInt(serializedRecipe, "count", 1)); // Default to 1 if not specified
             JsonArray ingredients = GsonHelper.getAsJsonArray(serializedRecipe, "ingredients");
             NonNullList<ItemStack> inputs = NonNullList.create();
 
             for (int i = 0; i < ingredients.size(); i++) {
                 JsonObject ingredientObject = ingredients.get(i).getAsJsonObject();
                 ItemStack itemStack = ShapedRecipe.itemStackFromJson(ingredientObject);
+                itemStack.setCount(GsonHelper.getAsInt(ingredientObject, "count", 1)); // Устанавливаем количество
                 inputs.add(itemStack);
             }
 

@@ -260,5 +260,9 @@
   "item.smoldering_obsidian.description.instrument": "\n§oThe ever-burning liquid flame damaged, but did not destroy the instrument. Sparkling sparks of the substance became one with the obsidian, dotted on the surface like stars in the firmament, and the handle was charred. You feel a pleasant warmth emanating from the working part, but touching it you get burned... The smoldering part of the edge responds to the touch with the roaring flame of the Lower World.\n\n§2Features: §fNezer's flame gave the tool the ability to melt mined blocks, as well as a 20% chance to set fire to the enemy.",
   "item.smoldering_obsidian.description.sword": "\n§oThis Sword is no longer sharpenable...Its blade is disfigured by smoldering lights, the pattern of which develops into an intimidating pattern capable of forcing the enemy to surrender without a fight. When you squeeze it in your hand, you feel like you are filled with anger and rage, along with the desire to split the skull of a couple of rebellious skeletons, driving the blade between their empty eye sockets. \n\n§2Features: §fNezer's flame gave the Sword a 40% chance of igniting enemies.",
   "obsidanum.press_shift": "Hold down [§7Shift§8]§8, to see the description",
-  "obsidanum.press_shift2": "Hold down [§fShift§8]§8, to see the description"
+  "obsidanum.press_shift2": "Hold down [§fShift§8]§8, to see the description",
+
+  "tooltip.scrolls.recipe": "Scrolls recipe",
+  "tooltip.scrolls.result": "Scrolls result",
+  "tooltip.scrolls.ingredients": "Scrolls ingredients"
 }
