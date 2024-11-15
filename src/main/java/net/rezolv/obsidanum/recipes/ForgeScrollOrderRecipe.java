@@ -75,7 +75,7 @@ public class ForgeScrollOrderRecipe implements Recipe<SimpleContainer> {
         @Override
         public ForgeScrollOrderRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(serializedRecipe, "output"));
-
+            output.setCount(GsonHelper.getAsInt(serializedRecipe, "count", 1)); // Default to 1 if not specified
             JsonArray ingredients = GsonHelper.getAsJsonArray(serializedRecipe, "ingredients");
             NonNullList<ItemStack> inputs = NonNullList.create();
 
@@ -110,7 +110,7 @@ public class ForgeScrollOrderRecipe implements Recipe<SimpleContainer> {
                 buffer.writeItemStack(stack, false);
             }
 
-            buffer.writeItemStack(recipe.output, false);
+            buffer.writeItemStack(recipe.output, true);
         }
     }
 }
