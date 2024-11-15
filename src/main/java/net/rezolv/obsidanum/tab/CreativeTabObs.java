@@ -269,6 +269,8 @@ public class CreativeTabObs extends CreativeModeTab {
                                     handleScrollCatacombsRecipe(result, resultTag, level, forgeScrollCatacombsRecipe);
                                 }
 
+                                result.setCount(1);
+
                                 pOutput.accept(result);
                             }
                         });

@@ -75,7 +75,8 @@ public class ForgeScrollCatacombsRecipe implements Recipe<SimpleContainer> {
         @Override
         public ForgeScrollCatacombsRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(serializedRecipe, "output"));
-            output.setCount(GsonHelper.getAsInt(serializedRecipe, "count", 1)); // Default to 1 if not specified
+            JsonObject outputJson = GsonHelper.getAsJsonObject(serializedRecipe, "output");
+            output.setCount(GsonHelper.getAsInt(outputJson, "count", 1)); // Default to 1 if not specified
             JsonArray ingredients = GsonHelper.getAsJsonArray(serializedRecipe, "ingredients");
             NonNullList<ItemStack> inputs = NonNullList.create();
 
