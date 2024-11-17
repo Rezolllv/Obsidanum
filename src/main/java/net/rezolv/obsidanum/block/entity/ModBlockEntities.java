@@ -12,11 +12,6 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Obsidanum.MOD_ID);
 
-
-
-
-
-
     public static final RegistryObject<BlockEntityType<ModSignBlockEntity>> OBSIDAN_SIGN =
             BLOCK_ENTITIES.register("obsidan_sign", () ->
                     BlockEntityType.Builder.of(ModSignBlockEntity::new,
@@ -37,6 +32,9 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("forge_crucible", () ->
                     BlockEntityType.Builder.of(ForgeCrucibleEntity::new,
                             BlocksObs.FORGE_CRUCIBLE.get()).build(null));
+
+
+
     public static final RegistryObject<BlockEntityType<ForgeCrucibleEntity>> FLAME_DISPENSER =
             BLOCK_ENTITIES.register("flame_dispenser", () ->
                     BlockEntityType.Builder.of(ForgeCrucibleEntity::new,

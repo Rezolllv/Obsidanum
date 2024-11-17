@@ -4,6 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,8 +18,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.rezolv.obsidanum.recipes.ForgeScrollCatacombsRecipe;
 import net.rezolv.obsidanum.recipes.ForgeScrollNetherRecipe;
 import net.rezolv.obsidanum.recipes.ForgeScrollOrderRecipe;
@@ -26,18 +34,66 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ForgeCrucibleEntity extends BaseContainerBlockEntity implements WorldlyContainer {
+public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer {
     private static final int INVENTORY_SIZE = 9; // Количество слотов в инвентаре
     private List<ItemStack> items = new ArrayList<>(INVENTORY_SIZE);
+    private final ItemStackHandler itemHandler = new ItemStackHandler(2) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide()) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    };
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+    }
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        lazyItemHandler.invalidate();
+    }
     public ForgeCrucibleEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.RIGHT_FORGE_SCROLL.get(), pPos, pBlockState);
+        super(ModBlockEntities.FORGE_CRUCIBLE.get(), pPos, pBlockState);
         for (int i = 0; i < INVENTORY_SIZE; i++) {
             items.add(ItemStack.EMPTY); // Инициализация слотов пустыми стеками
         }
     }
+    private boolean stickVisible = false;
 
+    public boolean isStickVisible() {
+        return stickVisible;
+    }
 
+    @Override
+    public AABB getRenderBoundingBox() {
+        return super.getRenderBoundingBox();
+    }
+
+    public void setStickVisible(boolean visible) {
+        this.stickVisible = visible;
+    }
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putBoolean("StickVisible", stickVisible);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        stickVisible = tag.getBoolean("StickVisible");
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
+    }
     private CompoundTag scrollNBT = new CompoundTag();
 
     public List<ItemStack> getRecipeIngredients() {
@@ -140,15 +196,7 @@ public class ForgeCrucibleEntity extends BaseContainerBlockEntity implements Wor
         return true; // Позволяет забирать предметы через любую сторону
     }
 
-    @Override
-    protected Component getDefaultName() {
-        return Component.literal("Forge Crucible");
-    }
 
-    @Override
-    protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return null; // Реализуйте создание меню, если нужно
-    }
 
     @Override
     public int getContainerSize() {
@@ -210,5 +258,17 @@ public class ForgeCrucibleEntity extends BaseContainerBlockEntity implements Wor
         for (int i = 0; i < INVENTORY_SIZE; i++) {
             items.add(ItemStack.EMPTY);
         }
+    }
+
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
     }
 }
