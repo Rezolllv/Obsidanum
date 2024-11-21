@@ -12,6 +12,14 @@
     {
       "item": "minecraft:iron_ingot",
       "count": 2
+    },
+    {
+      "item": "minecraft:apple",
+      "count": 4
+    },
+    {
+      "item": "minecraft:cake",
+      "count": 2
     }
   ],
   "output": {

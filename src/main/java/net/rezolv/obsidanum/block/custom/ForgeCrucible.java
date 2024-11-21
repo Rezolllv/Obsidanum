@@ -5,9 +5,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -18,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.rezolv.obsidanum.block.entity.ForgeCrucibleEntity;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.block.entity.RightForgeScrollEntity;
@@ -90,17 +94,53 @@ public class ForgeCrucible extends BaseEntityBlock {
                         System.out.println("- Item: " + item + ", Count: " + count);
                     }
                 }
-
-                if (scrollNBT.contains("output", Tag.TAG_COMPOUND)) {
-                    CompoundTag outputNBT = scrollNBT.getCompound("output");
-                    String outputItem = outputNBT.getString("item");
-                    int outputCount = outputNBT.getInt("count");
-                    System.out.println("Output Item: " + outputItem + ", Count: " + outputCount);
+                if (!scrollNBT.contains("output", Tag.TAG_COMPOUND)) {
+                    BlockEntity crucibleEntity = level.getBlockEntity(pos);
+                    if (crucibleEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
+                        forgeCrucibleEntity.setOutput(ItemStack.EMPTY);
+                        forgeCrucibleEntity.setChanged();
+                        level.sendBlockUpdated(pos, state, state, 3);
+                    }
                 }
+                if (scrollNBT.contains("RecipeResult", Tag.TAG_LIST)) {
+                    ListTag recipeResultList = scrollNBT.getList("RecipeResult", Tag.TAG_COMPOUND);
+                    if (!recipeResultList.isEmpty()) {
+                        CompoundTag outputTag = recipeResultList.getCompound(0); // Берем первый элемент
+                        String itemId = outputTag.getString("id");
+                        int count = outputTag.getInt("Count");
+                        Item outputItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+                        if (outputItem != null) {
+                            ItemStack output = new ItemStack(outputItem, count);
+
+                            BlockEntity crucibleEntity = level.getBlockEntity(pos);
+                            if (crucibleEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
+                                forgeCrucibleEntity.setOutput(output);
+                                forgeCrucibleEntity.setChanged();
+                                level.sendBlockUpdated(pos, state, state, 3);
+                            }
+                            System.out.println("Set output: " + output);
+                        }
+                    }
+                }
+
+
 
                 BlockEntity crucibleEntity = level.getBlockEntity(pos);
                 if (crucibleEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
                     forgeCrucibleEntity.updateFromScrollNBT(scrollNBT);
+                    forgeCrucibleEntity.setChanged();
+                    level.sendBlockUpdated(pos, state, state, 3);
+                }
+            } else if (scrollNBT.isEmpty()) {
+                // Print a message indicating the ingredients list is empty
+                System.out.println("RightForgeScroll NBT Data is empty at " + rightPos);
+                System.out.println("Ingredients list is empty.");
+
+                // Get the BlockEntity for the current position
+                BlockEntity crucibleEntity = level.getBlockEntity(pos);
+                if (crucibleEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
+                    // Update the crucible entity (you can decide what specific update is needed)
+                    forgeCrucibleEntity.clear(); // Assuming there's a method to clear ingredients
                     forgeCrucibleEntity.setChanged();
                     level.sendBlockUpdated(pos, state, state, 3);
                 }

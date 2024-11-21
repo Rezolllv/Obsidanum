@@ -187,6 +187,8 @@
   "item.obsidan.description.shovel": "\n§oThe Shovel is shaped like an ordinary Shovel, but in fact, if you want to, it will send any enemy on a long journey.\n\n§2Properties: §fBy activating the ancient magic contained in this tool, you will be able to deliver a powerful blow to the enemy, throwing him up to the height of several blocks. CD 40 sec.",
   "item.obsidan.description.sword": "\n§oA Sword made from a magic-soaked alloy. The will of the owner can ignite this blade with a Secret Fire that will make the next blow deadly. \n\n§2Properties: §fWhen activating ancient magic, the damage to the attacked increases by 1.5 times. CD 80 sec.",
   "item.obsidanum.bagell_fuel": "§bBagell Fuel",
+  "item.velnarium_sword.description.in_nether": "Additional damage is dealt by 4 more",
+  "item.velnarium_sword.description.not_in_nether": "Deals additional damage in the nether",
 
 
   "item.obsidanum.crucible": "Crucible",

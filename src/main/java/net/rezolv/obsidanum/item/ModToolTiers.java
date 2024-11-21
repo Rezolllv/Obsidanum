@@ -6,6 +6,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.tags.TagsObs;
@@ -25,5 +26,10 @@ public class ModToolTiers {
             new ForgeTier(2, 550, 6, 4f, 1,
                     TagsObs.Blocks.NEEDS_OBSIDIAN_TOOL, () -> Ingredient.of(Items.OBSIDIAN)),
             new ResourceLocation(Obsidanum.MOD_ID, "smoldering"), List.of(Tiers.IRON), List.of());
+
+    public static final Tier VELNARIUM = TierSortingRegistry.registerTier(
+            new ForgeTier(2, 400, 10, 4f, 30,
+                    Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsObs.VELNARIUM_INGOT.get())),
+            new ResourceLocation(Obsidanum.MOD_ID, "velnarium"), List.of(Tiers.IRON), List.of());
 
 }

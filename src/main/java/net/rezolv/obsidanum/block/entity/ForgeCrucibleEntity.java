@@ -3,36 +3,29 @@ package net.rezolv.obsidanum.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.rezolv.obsidanum.recipes.ForgeScrollCatacombsRecipe;
-import net.rezolv.obsidanum.recipes.ForgeScrollNetherRecipe;
-import net.rezolv.obsidanum.recipes.ForgeScrollOrderRecipe;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer {
     private static final int INVENTORY_SIZE = 9; // Количество слотов в инвентаре
@@ -47,6 +40,7 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
         }
     };
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
 
     @Override
     public void onLoad() {
@@ -64,111 +58,160 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
             items.add(ItemStack.EMPTY); // Инициализация слотов пустыми стеками
         }
     }
-    private boolean stickVisible = false;
+    public List<ItemStack> getIngredients() {
+        List<ItemStack> ingredients = new ArrayList<>();
 
-    public boolean isStickVisible() {
-        return stickVisible;
+        CompoundTag blockEntityNBT = this.getPersistentData();
+        if (blockEntityNBT.contains("ingredients", Tag.TAG_LIST)) {
+            ListTag ingredientsList = blockEntityNBT.getList("ingredients", Tag.TAG_COMPOUND);
+            for (int i = 0; i < ingredientsList.size(); i++) {
+                CompoundTag ingredientNBT = ingredientsList.getCompound(i);
+                String item = ingredientNBT.getString("item");
+                int count = ingredientNBT.getInt("count");
+
+                Item itemById = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
+                ItemStack ingredientStack = new ItemStack(itemById, count);
+                ingredients.add(ingredientStack);
+            }
+        }
+        return ingredients;
     }
+
+    public void setIngredients(List<ItemStack> ingredients) {
+        CompoundTag ingredientsNBT = new CompoundTag();
+        ListTag ingredientsList = new ListTag();
+
+        for (ItemStack ingredient : ingredients) {
+            if (!ingredient.isEmpty()) { // добавим проверку на пустой стэк
+                CompoundTag ingredientNBT = new CompoundTag();
+                ingredientNBT.putString("item", ForgeRegistries.ITEMS.getKey(ingredient.getItem()).toString());
+                ingredientNBT.putInt("count", ingredient.getCount());
+                ingredientsList.add(ingredientNBT);
+            }
+        }
+
+        // Сохраняем список ингредиентов в NBT
+        this.getPersistentData().put("ingredients", ingredientsList);
+    }
+
+    private ItemStack output = ItemStack.EMPTY;
+
+
+    public void setOutput(ItemStack output) {
+        this.output = output.isEmpty() ? ItemStack.EMPTY : output.copy();
+
+        CompoundTag outputNBT = new CompoundTag();
+        if (!output.isEmpty()) { // Проверка на пустой стэк
+            outputNBT.putString("item", ForgeRegistries.ITEMS.getKey(output.getItem()).toString());
+            outputNBT.putInt("count", output.getCount());
+        }
+        // Сохраняем output в NBT
+        this.getPersistentData().put("output", outputNBT);
+    }
+
+    public ItemStack getOutput() {
+
+        CompoundTag blockEntityNBT = this.getPersistentData();
+        if (blockEntityNBT.contains("output", Tag.TAG_COMPOUND)) {
+            CompoundTag outputNBT = blockEntityNBT.getCompound("output");
+            String item = outputNBT.getString("item");
+            int count = outputNBT.getInt("count");
+
+            Item itemById = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
+            if (itemById != null) {
+                return new ItemStack(itemById, count);
+            }
+        }
+
+        return this.output.isEmpty() ? ItemStack.EMPTY : this.output.copy();
+
+    }
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+
+        // Загрузка ингредиентов
+        if (tag.contains("RecipeIngredients", Tag.TAG_LIST)) {
+            ListTag recipeIngredientsList = tag.getList("RecipeIngredients", Tag.TAG_COMPOUND);
+            if (!recipeIngredientsList.isEmpty()) {
+                List<ItemStack> ingredients = new ArrayList<>();
+                for (int i = 0; i < recipeIngredientsList.size(); i++) {
+                    CompoundTag ingredientTag = recipeIngredientsList.getCompound(i);
+                    String itemId = ingredientTag.getString("id");
+                    int count = ingredientTag.getInt("Count");
+                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+                    if (item != null) {
+                        ingredients.add(new ItemStack(item, count));
+                    }
+                }
+                this.setIngredients(ingredients);
+                System.out.println("Loaded ingredients: " + ingredients);
+            } else {
+                System.out.println("No ingredients found in NBT data.");
+            }
+        }
+
+        // Загрузка output
+        if (tag.contains("RecipeOutput", Tag.TAG_COMPOUND)) {
+            CompoundTag outputTag = tag.getCompound("RecipeOutput");
+            String outputItemId = outputTag.getString("id");
+            int outputCount = outputTag.getInt("Count");
+            Item outputItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(outputItemId));
+            if (outputItem != null) {
+                this.output = new ItemStack(outputItem, outputCount);
+                System.out.println("Loaded output: " + this.output);
+            } else {
+                System.out.println("Invalid output item ID: " + outputItemId);
+            }
+        } else {
+            System.out.println("No output found in NBT data.");
+        }
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
+        // Сохранение ингредиентов
+        ListTag ingredientsList = new ListTag();
+        for (ItemStack ingredient : this.getIngredients()) {
+            CompoundTag ingredientNBT = new CompoundTag();
+            ingredientNBT.putString("id", ForgeRegistries.ITEMS.getKey(ingredient.getItem()).toString());
+            ingredientNBT.putInt("Count", ingredient.getCount());
+            ingredientsList.add(ingredientNBT);
+        }
+        tag.put("RecipeIngredients", ingredientsList);
+        System.out.println("Saved ingredients: " + ingredientsList);
+
+        // Сохранение output
+        if (!this.output.isEmpty()) {
+            CompoundTag outputTag = new CompoundTag();
+            outputTag.putString("id", ForgeRegistries.ITEMS.getKey(this.output.getItem()).toString());
+            outputTag.putInt("Count", this.output.getCount());
+            tag.put("RecipeOutput", outputTag);
+            System.out.println("Saved output: " + this.output);
+        } else {
+            System.out.println("No output to save.");
+        }
+    }
+
+
 
     @Override
     public AABB getRenderBoundingBox() {
         return super.getRenderBoundingBox();
     }
 
-    public void setStickVisible(boolean visible) {
-        this.stickVisible = visible;
-    }
-    @Override
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putBoolean("StickVisible", stickVisible);
-    }
 
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        stickVisible = tag.getBoolean("StickVisible");
-    }
+
+
+
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
         load(tag);
     }
-    private CompoundTag scrollNBT = new CompoundTag();
 
-    public List<ItemStack> getRecipeIngredients() {
-        Level level = this.level;
-        if (level == null) return new ArrayList<>();
-
-        RecipeManager recipeManager = level.getRecipeManager();
-        SimpleContainer container = new SimpleContainer(getContainerSize());
-
-        List<ItemStack> ingredients = new ArrayList<>();
-
-        // Проверка для каждого типа рецепта
-        Optional<ForgeScrollOrderRecipe> scrollRecipe = recipeManager.getRecipeFor(ForgeScrollOrderRecipe.Type.FORGE_SCROOL_ORDER, container, level);
-        Optional<ForgeScrollNetherRecipe> netherRecipe = recipeManager.getRecipeFor(ForgeScrollNetherRecipe.Type.FORGE_SCROOL_NETHER, container, level);
-        Optional<ForgeScrollCatacombsRecipe> catacombsRecipe = recipeManager.getRecipeFor(ForgeScrollCatacombsRecipe.Type.FORGE_SCROOL_CATACOMBS, container, level);
-
-        if (scrollRecipe.isPresent()) {
-            for (Ingredient ingredient : scrollRecipe.get().getIngredients()) {
-                if (ingredient.getItems().length > 0) {
-                    ingredients.add(ingredient.getItems()[0].copy());
-                }
-            }
-        } else if (netherRecipe.isPresent()) {
-            for (Ingredient ingredient : netherRecipe.get().getIngredients()) {
-                if (ingredient.getItems().length > 0) {
-                    ingredients.add(ingredient.getItems()[0].copy());
-                }
-            }
-        } else if (catacombsRecipe.isPresent()) {
-            for (Ingredient ingredient : catacombsRecipe.get().getIngredients()) {
-                if (ingredient.getItems().length > 0) {
-                    ingredients.add(ingredient.getItems()[0].copy());
-                }
-            }
-        }
-        if (scrollRecipe.isPresent()) {
-            // Debug output
-            System.out.println("Found scroll recipe.");
-            for (Ingredient ingredient : scrollRecipe.get().getIngredients()) {
-                if (ingredient.getItems().length > 0) {
-                    ingredients.add(ingredient.getItems()[0].copy());
-                    System.out.println("Added ingredient: " + ingredient.getItems()[0].getDisplayName().getString());
-                }
-            }
-        }
-        return ingredients;
-    }
-
-    // Получение результата текущего рецепта
-    public ItemStack getRecipeResult() {
-        Level level = this.level;
-        if (level == null) return ItemStack.EMPTY;
-
-        RecipeManager recipeManager = level.getRecipeManager();
-        SimpleContainer container = new SimpleContainer(getContainerSize());
-
-        // Проверка для каждого типа рецепта
-        Optional<ForgeScrollOrderRecipe> scrollRecipe = recipeManager.getRecipeFor(ForgeScrollOrderRecipe.Type.FORGE_SCROOL_ORDER, container, level);
-        Optional<ForgeScrollNetherRecipe> netherRecipe = recipeManager.getRecipeFor(ForgeScrollNetherRecipe.Type.FORGE_SCROOL_NETHER, container, level);
-        Optional<ForgeScrollCatacombsRecipe> catacombsRecipe = recipeManager.getRecipeFor(ForgeScrollCatacombsRecipe.Type.FORGE_SCROOL_CATACOMBS, container, level);
-
-        if (scrollRecipe.isPresent()) {
-            return scrollRecipe.get().getResultItem(level.registryAccess()).copy();
-        } else if (netherRecipe.isPresent()) {
-            return netherRecipe.get().getResultItem(level.registryAccess()).copy();
-        } else if (catacombsRecipe.isPresent()) {
-            return catacombsRecipe.get().getResultItem(level.registryAccess()).copy();
-        }
-
-        return ItemStack.EMPTY;
-    }
-    public void setScrollNBT(CompoundTag tag) {
-        this.scrollNBT = tag.copy();
-        this.setChanged();
-    }
 
     public void updateFromScrollNBT(CompoundTag scrollNBT) {
         if (scrollNBT != null && !scrollNBT.isEmpty()) {
@@ -260,7 +303,30 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
         }
     }
 
+    public void clear() {
+        // Очистить внутренний список предметов
+        items.clear();
+        for (int i = 0; i < INVENTORY_SIZE; i++) {
+            items.add(ItemStack.EMPTY); // Инициализируем все слоты как пустые
+        }
 
+        // Очистить все данные в NBT
+        CompoundTag blockEntityNBT = this.getPersistentData();
+        blockEntityNBT.remove("ingredients");  // Удаляем ключ "ingredients"
+        blockEntityNBT.remove("output");       // Удаляем ключ "output"
+        blockEntityNBT.remove("type");         // Удаляем ключ "type"
+        blockEntityNBT.remove("RecipeResult"); // Удаляем ключ "RecipeResult"
+
+        // Обновить состояние блока
+        if (!level.isClientSide()) {
+            setChanged(); // Обозначить, что блок изменился
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3); // Отправить обновление блока
+        }
+
+        // Сбросить данные состояния, если нужно
+        // Например, сбросить другие флаги или переменные
+        this.output = ItemStack.EMPTY; // Очистить output
+    }
     @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {

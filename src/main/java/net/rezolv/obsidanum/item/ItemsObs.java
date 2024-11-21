@@ -23,7 +23,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> VELNARIUM_ORE = ITEMS.register("velnarium_ore",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ORDER_SWORD = ITEMS.register("order_sword",
-            () -> new Item(new Item.Properties()));
+            () -> new VelnariumSword(ModToolTiers.VELNARIUM,1,-1.8f,new Item.Properties()));
 
     // Свитки для печи
     public static final RegistryObject<Item> ORDER_PLAN = ITEMS.register("order_plan",
