@@ -15,15 +15,12 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.rezolv.obsidanum.block.entity.ForgeCrucibleEntity;
-import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.block.entity.RightForgeScrollEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -52,7 +49,13 @@ public class ForgeCrucible extends BaseEntityBlock {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
 
+
+
+        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+    }
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
