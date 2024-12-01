@@ -332,7 +332,11 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
-
+    public void setPersistentData(CompoundTag tag) {
+        this.getPersistentData().put("ingredients", tag.getList("ingredients", Tag.TAG_COMPOUND));
+        this.getPersistentData().put("output", tag.getCompound("output"));
+        // Add any additional persistence logic here
+    }
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();

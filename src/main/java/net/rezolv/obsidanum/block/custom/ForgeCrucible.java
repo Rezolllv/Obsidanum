@@ -6,13 +6,19 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,10 +57,119 @@ public class ForgeCrucible extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        // Вызываем getIngredients для обработки ингредиентов
+        getIngredients(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), pPlayer);
+        if (pPlayer.isCrouching()) {
+            giveBackIngredients(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), pPlayer);
+        }
+        // Возвращаем результат по умолчанию
+        return InteractionResult.SUCCESS; // Лучше использовать InteractionResult.SUCCESS, чтобы избежать ненужных изменений состояния блока.
+    }
+    public static void giveBackIngredients(LevelAccessor world, double x, double y, double z, Entity entity) {
+        if (entity == null || !(entity instanceof Player player)) {
+            return;
+        }
 
+        BlockPos pos = BlockPos.containing(x, y, z);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
 
+        if (blockEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
+            CompoundTag crucibleNBT = forgeCrucibleEntity.getPersistentData();
+            if (crucibleNBT.contains("ingredients", Tag.TAG_LIST)) {
+                ListTag ingredientsList = crucibleNBT.getList("ingredients", Tag.TAG_COMPOUND);
 
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+                for (Tag ingredientTag : ingredientsList) {
+                    CompoundTag ingredientNBT = (CompoundTag) ingredientTag;
+                    String requiredItemId = ingredientNBT.getString("item");
+
+                    // Получаем количество ингредиентов
+                    int ingredientCount = ingredientNBT.getInt("count");
+
+                    // Проверяем, был ли ингредиент использован
+                    if (ingredientCount < ingredientNBT.getInt("originalCount")) {
+                        // Рассчитываем недостающее количество ингредиентов
+                        int missingCount = ingredientNBT.getInt("originalCount") - ingredientCount;
+                        ItemStack ingredientItem = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(requiredItemId)), missingCount);
+
+                        // Добавляем недостающие ингредиенты в инвентарь игрока
+                        player.getInventory().add(ingredientItem);
+
+                        // Логируем возвращенные ингредиенты
+                        System.out.println("Returned ingredients: " + ingredientItem);
+
+                        // Восстанавливаем количество ингредиентов в NBT
+                        ingredientNBT.putInt("count", ingredientNBT.getInt("originalCount"));
+
+                        // Логируем восстановленное количество
+                        System.out.println("Restored ingredient count: " + ingredientNBT.getInt("count"));
+                    }
+                }
+
+                // Сохраняем изменения в блоке после возвращения ингредиентов и тегов
+                forgeCrucibleEntity.setPersistentData(crucibleNBT);
+            }
+        }
+    }
+
+    public static void getIngredients(LevelAccessor world, double x, double y, double z, Entity entity) {
+        if (entity == null || !(entity instanceof Player player)) {
+            return;
+        }
+
+        ItemStack heldItem = player.getMainHandItem();
+
+        // Логируем количество предметов в руке перед действиями
+        System.out.println("Items in hand before: " + heldItem.getCount());
+
+        if (heldItem.isEmpty()) {
+            System.out.println("Player's hand is empty.");
+            return;
+        }
+
+        BlockPos pos = BlockPos.containing(x, y, z);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+
+        if (blockEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
+            CompoundTag crucibleNBT = forgeCrucibleEntity.getPersistentData();
+            if (crucibleNBT.contains("ingredients", Tag.TAG_LIST)) {
+                ListTag ingredientsList = crucibleNBT.getList("ingredients", Tag.TAG_COMPOUND);
+
+                for (Tag ingredientTag : ingredientsList) {
+                    CompoundTag ingredientNBT = (CompoundTag) ingredientTag;
+                    String requiredItemId = ingredientNBT.getString("item");
+
+                    // Сравниваем предмет из руки с нужным ингредиентом
+                    if (heldItem.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(requiredItemId))) {
+                        int ingredientCount = ingredientNBT.getInt("count");
+
+                        // Проверяем, достаточно ли ингредиентов
+                        if (ingredientCount <= 0) {
+                            System.out.println("Not enough ingredients to interact.");
+                            return;  // Прекращаем взаимодействие, если количество ингредиентов < 1
+                        }
+
+                        // Уменьшаем количество предметов в руке игрока на количество, которое необходимо для взаимодействия
+                        int amountToRemove = Math.min(heldItem.getCount(), ingredientCount);
+                        heldItem.shrink(amountToRemove);
+
+                        // Уменьшаем количество ингредиента в NBT на это количество
+                        ingredientNBT.putInt("count", ingredientCount - amountToRemove);  // Уменьшаем количество
+
+                        // Логируем изменения
+                        System.out.println("Ingredient count in NBT after decrease: " + ingredientNBT.getInt("count"));
+                        System.out.println("Items in hand after: " + heldItem.getCount());
+
+                        // Сохраняем изменения в блоке
+                        forgeCrucibleEntity.setPersistentData(crucibleNBT);
+
+                        // Сохраняем оригинальное количество ингредиентов для последующего возвращения
+                        ingredientNBT.putInt("originalCount", ingredientCount);
+
+                        return;  // Завершаем выполнение, если ингредиент найден и обработан
+                    }
+                }
+            }
+        }
     }
 
     @Override
