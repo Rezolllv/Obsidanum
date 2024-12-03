@@ -65,8 +65,51 @@ public class ForgeCrucible extends BaseEntityBlock {
         // Возвращаем результат по умолчанию
         return InteractionResult.SUCCESS; // Лучше использовать InteractionResult.SUCCESS, чтобы избежать ненужных изменений состояния блока.
     }
-    public static void giveBackIngredients(LevelAccessor world, double x, double y, double z, Entity entity) {
 
+    public static void giveBackIngredients(LevelAccessor world, double x, double y, double z, Entity entity) {
+        if (entity == null || !(entity instanceof Player player)) {
+            return;
+        }
+
+        BlockPos pos = BlockPos.containing(x, y, z);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+
+        if (blockEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
+            CompoundTag crucibleNBT = forgeCrucibleEntity.getPersistentData();
+
+            if (crucibleNBT.contains("originalIngredients", Tag.TAG_LIST)) {
+                ListTag originalList = crucibleNBT.getList("originalIngredients", Tag.TAG_COMPOUND);
+                ListTag currentIngredients = crucibleNBT.getList("ingredients", Tag.TAG_COMPOUND);
+
+                for (int i = 0; i < originalList.size(); i++) {
+                    CompoundTag originalNBT = originalList.getCompound(i);
+                    String itemId = originalNBT.getString("item");
+                    int originalCount = originalNBT.getInt("count");
+
+                    for (int j = 0; j < currentIngredients.size(); j++) {
+                        CompoundTag currentNBT = currentIngredients.getCompound(j);
+                        if (currentNBT.getString("item").equals(itemId)) {
+                            int currentCount = currentNBT.getInt("count");
+                            int returnedCount = originalCount - currentCount;
+
+                            if (returnedCount > 0) {
+                                ItemStack returnedStack = new ItemStack(
+                                        ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId)), returnedCount
+                                );
+
+                                if (!player.addItem(returnedStack)) {
+                                    player.drop(returnedStack, false);
+                                }
+
+                                currentNBT.putInt("count", originalCount); // Восстанавливаем NBT
+                            }
+                        }
+                    }
+                }
+
+                forgeCrucibleEntity.setPersistentData(crucibleNBT);
+            }
+        }
     }
     public static void getIngredients(LevelAccessor world, double x, double y, double z, Entity entity) {
         if (entity == null || !(entity instanceof Player player)) {
@@ -74,9 +117,6 @@ public class ForgeCrucible extends BaseEntityBlock {
         }
 
         ItemStack heldItem = player.getMainHandItem();
-
-        // Логируем количество предметов в руке перед действиями
-        System.out.println("Items in hand before: " + heldItem.getCount());
 
         if (heldItem.isEmpty()) {
             System.out.println("Player's hand is empty.");
@@ -88,6 +128,15 @@ public class ForgeCrucible extends BaseEntityBlock {
 
         if (blockEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
             CompoundTag crucibleNBT = forgeCrucibleEntity.getPersistentData();
+
+            // Проверяем и запоминаем изначальные значения ингредиентов
+            if (!crucibleNBT.contains("originalIngredients")) {
+                if (crucibleNBT.contains("ingredients", Tag.TAG_LIST)) {
+                    ListTag originalList = crucibleNBT.getList("ingredients", Tag.TAG_COMPOUND).copy();
+                    crucibleNBT.put("originalIngredients", originalList);
+                }
+            }
+
             if (crucibleNBT.contains("ingredients", Tag.TAG_LIST)) {
                 ListTag ingredientsList = crucibleNBT.getList("ingredients", Tag.TAG_COMPOUND);
 
@@ -95,31 +144,19 @@ public class ForgeCrucible extends BaseEntityBlock {
                     CompoundTag ingredientNBT = (CompoundTag) ingredientTag;
                     String requiredItemId = ingredientNBT.getString("item");
 
-                    // Сравниваем предмет из руки с нужным ингредиентом
                     if (heldItem.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(requiredItemId))) {
                         int ingredientCount = ingredientNBT.getInt("count");
 
-                        // Проверяем, достаточно ли ингредиентов
                         if (ingredientCount <= 0) {
                             System.out.println("Not enough ingredients to interact.");
-                            return;  // Прекращаем взаимодействие, если количество ингредиентов < 1
+                            return;
                         }
 
-                        // Уменьшаем количество предметов в руке
                         heldItem.shrink(1);
+                        ingredientNBT.putInt("count", ingredientCount - 1);
 
-                        // Уменьшаем количество ингредиента в NBT
-                        ingredientNBT.putInt("count", ingredientCount - 1);  // Уменьшаем количество
-
-                        // Логируем изменения
-                        System.out.println("Ingredient count in NBT after decrease: " + ingredientNBT.getInt("count"));
-                        System.out.println("Player received experience for matching ingredients: " + heldItem);
-                        System.out.println("Items in hand after: " + heldItem.getCount());
-
-                        // Сохраняем изменения в блоке
                         forgeCrucibleEntity.setPersistentData(crucibleNBT);
-
-                        return;  // Завершаем выполнение, если ингредиент найден и обработан
+                        return;
                     }
                 }
             }

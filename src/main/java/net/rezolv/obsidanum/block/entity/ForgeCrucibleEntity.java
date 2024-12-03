@@ -13,8 +13,6 @@ import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -207,10 +205,6 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
 
 
 
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-    }
 
 
     public void updateFromScrollNBT(CompoundTag scrollNBT) {
@@ -339,6 +333,13 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
     }
     @Override
     public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+        CompoundTag tag = super.getUpdateTag();
+        saveAdditional(tag);
+        return tag;
     }
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
+    }
+
 }
