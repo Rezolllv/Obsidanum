@@ -32,7 +32,8 @@ public class BlocksObs {
     public static final RegistryObject<Block> FORGE_CRUCIBLE = registerBlock("forge_crucible",
             () -> new ForgeCrucible(BlockBehaviour.Properties.of().noOcclusion().randomTicks().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> LEFT_CORNER_LEVEL = registerBlock("left_corner_level",
-            () -> new LeftCornerLevel(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+            () -> new LeftCornerLevel(BlockBehaviour.Properties.of()
+                    .noOcclusion().strength(-1.0F, 3600000.0F).randomTicks().sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> WALL_FORGE = registerBlock("wall_forge",
             () -> new WallForge(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> HAMMER_FORGE = registerBlock("hammer_forge",
