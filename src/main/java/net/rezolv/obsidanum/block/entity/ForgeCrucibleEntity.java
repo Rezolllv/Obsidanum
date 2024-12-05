@@ -298,6 +298,9 @@ public class ForgeCrucibleEntity extends BlockEntity implements WorldlyContainer
     }
 
     public void clear() {
+
+
+
         // Очистить внутренний список предметов
         items.clear();
         for (int i = 0; i < INVENTORY_SIZE; i++) {

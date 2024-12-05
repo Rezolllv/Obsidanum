@@ -34,7 +34,7 @@ public class ObsidianElemental extends Monster {
         super.registerGoals();
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 48.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D)); // Случайное передвижение
+        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D));
         this.targetSelector.addGoal(2, new ObsidianElementalAttackGoal(this, 1.2D, true)
         {
             @Override
@@ -158,12 +158,12 @@ public class ObsidianElemental extends Monster {
 
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
-        return false; // Отключение урона от падения
+        return false;
     }
 
     @Override
     public boolean canBreatheUnderwater() {
-        return true; // Возможность дышать под водой
+        return true;
     }
 
     @Override
