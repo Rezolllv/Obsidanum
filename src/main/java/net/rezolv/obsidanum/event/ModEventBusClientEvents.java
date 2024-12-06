@@ -39,7 +39,8 @@ public class ModEventBusClientEvents {
 
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(ParticlesObs.NETHER_FLAME_PARTICLES.get(), NetherFlameParticle.Provider::new);
+        event.registerSpriteSet(ParticlesObs.NETHER_FLAME_PARTICLES.get(), NetherFlameProjectileParticle.Provider::new);
+        event.registerSpriteSet(ParticlesObs.NETHER_FLAME_PROJECTILE_PARTICLES.get(), NetherFlameProjectileParticle.Provider::new);
         event.registerSpriteSet(ParticlesObs.NETHER_FLAME2_PARTICLES.get(), Nether2FlameParticle.Provider::new);
         event.registerSpriteSet(ParticlesObs.BAGELL_FLAME_PARTICLES.get(), BagellFlameParticle.Provider::new);
         event.registerSpriteSet(ParticlesObs.BAGELL_TABLE_PARTICLES.get(), BagelEnchantParticle.Provider::new);

@@ -25,6 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 import net.rezolv.obsidanum.entity.ModItemEntities;
 import net.rezolv.obsidanum.item.ItemsObs;
+import net.rezolv.obsidanum.particle.ParticlesObs;
 
 public class NetherFlameEntity extends ThrowableItemProjectile {
     public NetherFlameEntity(EntityType<? extends NetherFlameEntity> entityType, Level level) {
@@ -47,12 +48,22 @@ public class NetherFlameEntity extends ThrowableItemProjectile {
 
         // Проверяем, что мы на стороне клиента, чтобы создать частицы
         if (this.level().isClientSide) {
-            for (int i = 0; i < 2; i++) { // Два партикла за тик для более насыщенного эффекта
+            for (int i = 0; i < 3; i++) { // Два партикла за тик для более насыщенного эффекта
                 double offsetX = this.random.nextGaussian() * 0.02; // Небольшое случайное смещение по X
                 double offsetY = this.random.nextGaussian() * 0.2; // Небольшое случайное смещение по Y
                 double offsetZ = this.random.nextGaussian() * 0.02; // Небольшое случайное смещение по Z
-
                 this.level().addParticle(ParticleTypes.SMOKE,
+                        this.getX() + offsetX, // Текущее положение снаряда
+                        this.getY() + offsetY,
+                        this.getZ() + offsetZ,
+                        0, 0, 0); // Скорость партикла (0 = партикл "стоит на месте")
+
+            }
+            for (int i = 0; i < 1; i++) { // Два партикла за тик для более насыщенного эффекта
+                double offsetX = this.random.nextGaussian() * 0.02; // Небольшое случайное смещение по X
+                double offsetY = this.random.nextGaussian() * 0.2; // Небольшое случайное смещение по Y
+                double offsetZ = this.random.nextGaussian() * 0.02; // Небольшое случайное смещение по Z
+                this.level().addParticle(ParticlesObs.NETHER_FLAME_PROJECTILE_PARTICLES.get(),
                         this.getX() + offsetX, // Текущее положение снаряда
                         this.getY() + offsetY,
                         this.getZ() + offsetZ,
