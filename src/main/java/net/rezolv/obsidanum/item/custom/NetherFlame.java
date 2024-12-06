@@ -1,11 +1,16 @@
 package net.rezolv.obsidanum.item.custom;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.rezolv.obsidanum.item.projectile_functions.StrikeNetherFlame;
 
 @Mod.EventBusSubscriber
 public class NetherFlame extends Item {
@@ -30,6 +35,16 @@ public class NetherFlame extends Item {
             return ItemStack.EMPTY;
         }
         return retval;
+    }
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player entity, InteractionHand hand) {
+        entity.startUsingItem(hand);
+
+        StrikeNetherFlame.execute(entity,level,entity.getX(),entity.getY(),entity.getZ());
+
+        // Кулдаун
+        entity.getCooldowns().addCooldown(this, 100);
+        return new InteractionResultHolder(InteractionResult.SUCCESS, entity.getItemInHand(hand));
     }
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {

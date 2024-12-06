@@ -68,6 +68,10 @@ public class ItemsObs {
             () -> new BagellFuel(new Item.Properties(), 24000));
     public static final RegistryObject<Item> NETHER_FLAME = ITEMS.register("nether_flame",
             () -> new NetherFlame(new Item.Properties().durability(25)));
+    public static final RegistryObject<Item> NETHER_FLAME_ENTITY = ITEMS.register("nether_flame_entity",
+            () -> new NetherFlame(new Item.Properties()));
+    public static final RegistryObject<Item> NETHER_FLAME_ENTITY_MINI = ITEMS.register("nether_flame_entity_mini",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRYSTALLIZED_COPPER_ORE = ITEMS.register("crystallized_copper_ore",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRYSTALLIZED_IRON_ORE = ITEMS.register("crystallized_iron_ore",

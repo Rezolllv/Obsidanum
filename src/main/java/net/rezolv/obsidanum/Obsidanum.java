@@ -31,6 +31,7 @@ import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.SCRegistry;
 import net.rezolv.obsidanum.effect.EffectsObs;
 import net.rezolv.obsidanum.entity.ModEntities;
+import net.rezolv.obsidanum.entity.ModItemEntities;
 import net.rezolv.obsidanum.entity.gart.GartRenderer;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleRenderer;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
@@ -86,6 +87,7 @@ public class Obsidanum {
         SoundsObs.register(modEventBus);
         EffectsObs.MOB_EFFECTS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
+        ModItemEntities.ENTITY_TYPES.register(modEventBus);
         CreativeTabObs.CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
