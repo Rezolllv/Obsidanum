@@ -28,6 +28,7 @@ public class CreativeTabObs extends CreativeModeTab {
     protected CreativeTabObs(Builder builder) {
         super(builder);
     }
+
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Obsidanum.MOD_ID);
 
@@ -96,7 +97,6 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.DEMONIC_BONECRUSHER.get());
                         pOutput.accept(ItemsObs.SPORES_OF_THE_GLOOMY_MUSHROOM.get());
                         pOutput.accept(ItemsObs.OBSIDAN_ESSENCE.get());
-
 
 
                         //Blocks
@@ -238,9 +238,8 @@ public class CreativeTabObs extends CreativeModeTab {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemsObs.ORDER_PLAN.get()))
                     .title(Component.translatable("creativetab.scrolls"))
                     .displayItems((pParameters, pOutput) -> {
-                        //Items
-                        Level level = Minecraft.getInstance().level;
-                        // Эта фигня отобразит все предметы с заданым рецептом
+                        Level level = Minecraft.getInstance().getCameraEntity().level();
+                        // 🐗
                         if (level != null) {
                             level.getRecipeManager().getRecipes().forEach(recipe -> {
                                 ItemStack result = null;
@@ -261,7 +260,6 @@ public class CreativeTabObs extends CreativeModeTab {
                         }
                     })
                     .build());
-
 
 
 }
