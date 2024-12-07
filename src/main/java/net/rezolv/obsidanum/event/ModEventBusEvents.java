@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -23,7 +24,7 @@ import net.rezolv.obsidanum.entity.gart.Gart;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetle;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 
-@Mod.EventBusSubscriber(modid = Obsidanum.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Obsidanum.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerAttributesElemental(EntityAttributeCreationEvent event) {

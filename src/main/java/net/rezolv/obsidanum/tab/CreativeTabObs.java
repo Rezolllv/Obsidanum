@@ -39,6 +39,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         //Items
                         pOutput.accept(ItemsObs.OBSIDIAN_TEAR.get());
                         pOutput.accept(ItemsObs.FLAME_CROSSBOW.get());
+                        pOutput.accept(ItemsObs.FLAME_BOLT.get());
                         pOutput.accept(ItemsObs.OBSIDAN.get());
                         pOutput.accept(ItemsObs.RAW_MEET_BEETLE.get());
                         pOutput.accept(ItemsObs.COCKED_MEET_BEETLE.get());
@@ -240,8 +241,9 @@ public class CreativeTabObs extends CreativeModeTab {
                     .icon(() -> new ItemStack(ItemsObs.ORDER_PLAN.get()))
                     .title(Component.translatable("creativetab.scrolls"))
                     .displayItems((pParameters, pOutput) -> {
+
                         Level level = Minecraft.getInstance().level;
-                        if (level == null) {
+                        if (level == null && level.isClientSide) {
                             return; // Не продолжаем, если уровень недоступен
                         }
 

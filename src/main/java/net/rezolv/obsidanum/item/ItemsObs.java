@@ -49,6 +49,8 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> FLAME_CROSSBOW = ITEMS.register("flame_crossbow",
             () -> new CrossbowItem(new Item.Properties()));
+    public static final RegistryObject<Item> FLAME_BOLT = ITEMS.register("flame_bolt",
+            () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> OBSIDIAN_TEAR = ITEMS.register("obsidian_tear",
             () -> new Item(new Item.Properties()));
