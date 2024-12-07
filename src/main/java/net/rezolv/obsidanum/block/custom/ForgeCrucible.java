@@ -211,7 +211,7 @@ public class ForgeCrucible extends BaseEntityBlock {
                         && leftBlockState.getValue(LeftCornerLevel.IS_PRESSED)
                         && totalIngredientCount == 0) {
 
-                    getOutputItems(level,pos,state,crucibleNBT);
+                    getClearedItems(level,pos,state,crucibleNBT);
 
                     if (crucibleNBT.contains("originalIngredients", Tag.TAG_LIST)) {
                         ListTag originalList = crucibleNBT.getList("originalIngredients", Tag.TAG_COMPOUND);
@@ -286,44 +286,22 @@ public class ForgeCrucible extends BaseEntityBlock {
 
     }
 
+
     private void getClearedItems(Level level, BlockPos pos, BlockState state, CompoundTag scrollNBT) {
-        if (!scrollNBT.contains("ingredients", Tag.TAG_LIST) || !scrollNBT.contains("originalIngredients", Tag.TAG_LIST)) {
+        BlockPos dropPos = pos.above();
+        if (!scrollNBT.contains("output", Tag.TAG_COMPOUND)) {
             return;
         }
-
-        ListTag originalIngredients = scrollNBT.getList("originalIngredients", Tag.TAG_COMPOUND);
-        ListTag currentIngredients = scrollNBT.getList("ingredients", Tag.TAG_COMPOUND);
-
-        // Позиция для выпадения предметов
-        BlockPos dropPos = pos.above();
-
-        for (int i = 0; i < originalIngredients.size(); i++) {
-            CompoundTag originalNBT = originalIngredients.getCompound(i);
-            String itemId = originalNBT.getString("item");
-            int originalCount = originalNBT.getInt("count");
-
-            int currentCount = 0; // Если ингредиента нет в текущем списке, считаем, что его количество равно 0
-            for (int j = 0; j < currentIngredients.size(); j++) {
-                CompoundTag currentNBT = currentIngredients.getCompound(j);
-                if (currentNBT.getString("item").equals(itemId)) {
-                    currentCount = currentNBT.getInt("count");
-                    break;
-                }
-            }
-
-            int missingCount = originalCount - currentCount;
-            if (missingCount > 0) {
-                // Выпадение недостающих ингредиентов
-                Item ingredientItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
-                if (ingredientItem != null) {
-                    ItemStack missingStack = new ItemStack(ingredientItem, missingCount);
-
-                    // Создаем сущность предмета и добавляем её в мир
-                    ItemEntity itemEntity = new ItemEntity(level, dropPos.getX(), dropPos.getY(), dropPos.getZ(), missingStack);
-                    level.addFreshEntity(itemEntity);
-                }
-            }
+        CompoundTag outputTag = scrollNBT.getCompound("output");
+        String itemId = outputTag.getString("item");
+        int count = outputTag.getInt("count");
+        Item outputItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+        if (outputItem == null) {
+            return;
         }
+        ItemStack outputItemStack = new ItemStack(outputItem, count);
+        ItemEntity outputItemEntity = new ItemEntity(level, dropPos.getX(), dropPos.getY(), dropPos.getZ(), outputItemStack);
+        level.addFreshEntity(outputItemEntity);
     }
 
 
@@ -391,7 +369,7 @@ public class ForgeCrucible extends BaseEntityBlock {
             BlockEntity crucibleEntity = level.getBlockEntity(pos);
             if (crucibleEntity instanceof ForgeCrucibleEntity forgeCrucibleEntity) {
                 // Вызов getClearedItems перед очисткой
-                getClearedItems(level, pos, state, forgeCrucibleEntity.getPersistentData());
+                getOutputItems(level, pos, state, forgeCrucibleEntity.getPersistentData());
 
                 forgeCrucibleEntity.clear();
                 forgeCrucibleEntity.setChanged();
