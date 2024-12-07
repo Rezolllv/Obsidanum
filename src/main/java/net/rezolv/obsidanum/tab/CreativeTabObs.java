@@ -242,9 +242,9 @@ public class CreativeTabObs extends CreativeModeTab {
                     .title(Component.translatable("creativetab.scrolls"))
                     .displayItems((pParameters, pOutput) -> {
 
-                        Level level = Minecraft.getInstance().level;
-                        if (level == null && level.isClientSide) {
-                            return; // Не продолжаем, если уровень недоступен
+                        Level level = Minecraft.getInstance().getCameraEntity().level();
+                        if (level == null) {
+                            return; // 🐗
                         }
 
                         level.getRecipeManager().getRecipes().forEach(recipe -> {
