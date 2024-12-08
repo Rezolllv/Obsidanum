@@ -14,6 +14,7 @@ import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.ModBoatEntity;
+import net.rezolv.obsidanum.item.item_entity.arrows.flame_arrow.FlameArrow;
 import net.rezolv.obsidanum.sound.SoundsObs;
 
 public class ItemsObs {
@@ -48,9 +49,10 @@ public class ItemsObs {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> FLAME_CROSSBOW = ITEMS.register("flame_crossbow",
-            () -> new CrossbowItem(new Item.Properties()));
+            () -> new FlameCrossbowItem(new Item.Properties().stacksTo(1).durability(1001)));
+
     public static final RegistryObject<Item> FLAME_BOLT = ITEMS.register("flame_bolt",
-            () -> new Item(new Item.Properties()));
+            () -> new FlameArrowItem(new Item.Properties()));
 
     public static final RegistryObject<Item> OBSIDIAN_TEAR = ITEMS.register("obsidian_tear",
             () -> new Item(new Item.Properties()));

@@ -1,0 +1,6 @@
+{
+    "parent": "item/crossbow",
+    "textures": {
+        "layer0": "obsidanum:item/flame_crossbow_pulling_1"
+    }
+}
