@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side_alt",
+  "textures": {
+    "fire": "obsidanum:block/nether_fire_1"
+  },"render_type": "cutout"
+}

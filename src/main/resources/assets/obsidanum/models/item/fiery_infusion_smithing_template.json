@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "obsidanum:item/fiery_infusion_smithing_template"
+  }
+}

@@ -98,6 +98,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.DEMONIC_BONECRUSHER.get());
                         pOutput.accept(ItemsObs.SPORES_OF_THE_GLOOMY_MUSHROOM.get());
                         pOutput.accept(ItemsObs.OBSIDAN_ESSENCE.get());
+                        pOutput.accept(ItemsObs.FIERY_INFUSION_SMITHING_TEMPLATE.get());
 
 
 

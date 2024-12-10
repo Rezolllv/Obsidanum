@@ -16,6 +16,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
+import net.rezolv.obsidanum.block.custom.NetherFireBlock;
 import net.rezolv.obsidanum.entity.ModItemEntities;
 import net.rezolv.obsidanum.entity.projectile_entity.NetherFlameEntityMini;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -61,7 +62,8 @@ public class FlameArrow extends AbstractArrow {
             if (!(entity instanceof Mob) || net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), entity)) {
                 BlockPos blockpos = p_37384_.getBlockPos().relative(p_37384_.getDirection());
                 if (this.level().isEmptyBlock(blockpos)) {
-                    this.level().setBlockAndUpdate(blockpos, BaseFireBlock.getState(this.level(), blockpos));
+
+                    this.level().setBlockAndUpdate(blockpos, NetherFireBlock.getState(this.level(), blockpos));
                 }
             }
 
@@ -72,12 +74,13 @@ public class FlameArrow extends AbstractArrow {
     protected void onHitEntity(EntityHitResult hitResult) {
         super.onHitEntity(hitResult);
         Entity targetEntity = hitResult.getEntity();
-        targetEntity.hurt(this.damageSources().magic(), 6.0F);
+
         if (random.nextFloat() < 0.12) { // 7% вероятность
             targetEntity.setSecondsOnFire(8); // Поджигаем на 6 секунд
         } else {
             targetEntity.setSecondsOnFire(4);
         }
+        targetEntity.hurt(this.damageSources().magic(), 7.0F);
     }
 
 
@@ -109,17 +112,6 @@ public class FlameArrow extends AbstractArrow {
                 miniProjectile.shoot(scatterDirection.x, scatterDirection.y, scatterDirection.z, 0.25f, 0.1f);
                 this.level().addFreshEntity(miniProjectile);
             }
-            Vec3 hitPos = hitResult.getLocation(); // Получение позиции попадания
-
-            this.level().explode(
-                    this.getOwner(),                // Виновник взрыва
-                    hitPos.x, hitPos.y, hitPos.z,  // Координаты взрыва
-                    0.5f,                          // Сила взрыва
-                    false,                         // Наносить ли урон игрокам
-                    Level.ExplosionInteraction.NONE // Обработка блоков
-            );
-
-
             // Звук и удаление сущности
             this.level().playSound(
                     null,

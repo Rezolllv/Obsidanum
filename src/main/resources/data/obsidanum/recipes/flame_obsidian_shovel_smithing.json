@@ -9,5 +9,6 @@
   "result": {
     "item": "obsidanum:smoldering_obsidian_shovel"
   },
-  "template": []
-}
+  "template": {
+    "item": "obsidanum:fiery_infusion_smithing_template"
+  }}

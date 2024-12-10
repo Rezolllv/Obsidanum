@@ -1,5 +1,8 @@
 package net.rezolv.obsidanum.item;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -17,6 +20,8 @@ import net.rezolv.obsidanum.item.entity.ModBoatEntity;
 import net.rezolv.obsidanum.item.item_entity.arrows.flame_arrow.FlameArrow;
 import net.rezolv.obsidanum.sound.SoundsObs;
 
+import java.util.List;
+
 public class ItemsObs {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Obsidanum.MOD_ID);
@@ -24,7 +29,7 @@ public class ItemsObs {
     public static final RegistryObject<Item> VELNARIUM_ORE = ITEMS.register("velnarium_ore",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ORDER_SWORD = ITEMS.register("order_sword",
-            () -> new VelnariumSword(ModToolTiers.VELNARIUM,1,-1.8f,new Item.Properties()));
+            () -> new VelnariumSword(ModToolTiers.VELNARIUM, 1, -1.8f, new Item.Properties()));
 
     // Свитки для печи
     public static final RegistryObject<Item> ORDER_PLAN = ITEMS.register("order_plan",
@@ -127,58 +132,74 @@ public class ItemsObs {
                     .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 2), 1.0F) // Абсорбция
                     .alwaysEat().build())));
     public static final RegistryObject<Item> OBSIDAN_SWORD = ITEMS.register("obsidan_sword",
-            () -> new ObsidanSword(ModToolTiers.OBSIDAN,2,-2F, new Item.Properties()));
+            () -> new ObsidanSword(ModToolTiers.OBSIDAN, 2, -2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_AXE = ITEMS.register("obsidan_axe",
-            () -> new ObsidanAxe(ModToolTiers.OBSIDAN,3,-2.8F, new Item.Properties()));
+            () -> new ObsidanAxe(ModToolTiers.OBSIDAN, 3, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_PICKAXE = ITEMS.register("obsidan_pickaxe",
-            () -> new ObsidanPickaxe(ModToolTiers.OBSIDAN,-1,-2F, new Item.Properties()));
+            () -> new ObsidanPickaxe(ModToolTiers.OBSIDAN, -1, -2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SHOVEL = ITEMS.register("obsidan_shovel",
-            () -> new ObsidanShovel(ModToolTiers.OBSIDAN,1,-2.6F, new Item.Properties()));
+            () -> new ObsidanShovel(ModToolTiers.OBSIDAN, 1, -2.6F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_HOE = ITEMS.register("obsidan_hoe",
-            () -> new ObsidanHoe(ModToolTiers.OBSIDAN,-4,2F, new Item.Properties()));
+            () -> new ObsidanHoe(ModToolTiers.OBSIDAN, -4, 2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_ARROW = ITEMS.register("obsidian_arrow",
             () -> new ObsidianArrowItem(new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_CHAKRAM = ITEMS.register("obsidian_chakram",
             () -> new Chakram(new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_PICKAXE = ITEMS.register("smoldering_obsidian_pickaxe",
-            () -> new SmolderingPickaxe(ModToolTiers.SMOLDERING,0,-2.9F, new Item.Properties()));
+            () -> new SmolderingPickaxe(ModToolTiers.SMOLDERING, 0, -2.9F, new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_HOE = ITEMS.register("smoldering_obsidian_hoe",
-            () -> new SmolderingHoe(ModToolTiers.SMOLDERING,-3,-2F, new Item.Properties()));
+            () -> new SmolderingHoe(ModToolTiers.SMOLDERING, -3, -2F, new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_AXE = ITEMS.register("smoldering_obsidian_axe",
-            () -> new SmolderingAxe(ModToolTiers.SMOLDERING,4,-3.1F, new Item.Properties()));
+            () -> new SmolderingAxe(ModToolTiers.SMOLDERING, 4, -3.1F, new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_SWORD = ITEMS.register("smoldering_obsidian_sword",
             () -> new SmolderingSword(ModToolTiers.SMOLDERING, 2, -2.7f, new Item.Properties()));
     public static final RegistryObject<Item> SMOLDERING_OBSIDIAN_SHOVEL = ITEMS.register("smoldering_obsidian_shovel",
-            () -> new SmolderingShovel(ModToolTiers.SMOLDERING,-1,-3.1F, new Item.Properties()));
+            () -> new SmolderingShovel(ModToolTiers.SMOLDERING, -1, -3.1F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_AXE = ITEMS.register("obsidian_axe",
-            () -> new ObsAxe(ModToolTiers.OBSIDIANUM,5,-3.2F, new Item.Properties()));
+            () -> new ObsAxe(ModToolTiers.OBSIDIANUM, 5, -3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_HOE = ITEMS.register("obsidian_hoe",
-            () -> new ObsHoe(ModToolTiers.OBSIDIANUM,-1,-3.2F, new Item.Properties()));
+            () -> new ObsHoe(ModToolTiers.OBSIDIANUM, -1, -3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_PICKAXE = ITEMS.register("obsidian_pickaxe",
-            () -> new ObsPickaxe(ModToolTiers.OBSIDIANUM,1,-3F, new Item.Properties()));
+            () -> new ObsPickaxe(ModToolTiers.OBSIDIANUM, 1, -3F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SHOVEL = ITEMS.register("obsidian_shovel",
-            () -> new ObsShovel(ModToolTiers.OBSIDIANUM,1.5F,-3.2F, new Item.Properties()));
+            () -> new ObsShovel(ModToolTiers.OBSIDIANUM, 1.5F, -3.2F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDIAN_SWORD = ITEMS.register("obsidian_sword",
-            () -> new ObsSword(ModToolTiers.OBSIDIANUM,3,-3F, new Item.Properties()));
+            () -> new ObsSword(ModToolTiers.OBSIDIANUM, 3, -3F, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_SIGN = ITEMS.register("obsidan_sign",
             () -> new SignItem(new Item.Properties().stacksTo(16), BlocksObs.OBSIDAN_SIGN.get(), BlocksObs.OBSIDAN_WALL_SIGN.get()));
     public static final RegistryObject<Item> OBSIDAN_HANGING_SIGN = ITEMS.register("obsidan_hanging_sign",
             () -> new HangingSignItem(BlocksObs.OBSIDAN_HANGING_SIGN.get(), BlocksObs.OBSIDAN_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<Item> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
-            () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(),new Item.Properties()));
+            () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(), new Item.Properties()));
     public static final RegistryObject<Item> THE_GLOOMY_MYCELIUM = ITEMS.register("the_gloomy_mycelium",
-            () -> new ItemNameBlockItem(BlocksObs.THE_GLOOMY_MYCELIUM.get(),new Item.Properties()));
+            () -> new ItemNameBlockItem(BlocksObs.THE_GLOOMY_MYCELIUM.get(), new Item.Properties()));
     public static final RegistryObject<Item> STEM_GLOOMY_MUSHROOM = ITEMS.register("stem_gloomy_mushroom",
             () -> new ItemNameBlockItem(BlocksObs.STEM_GLOOMY_MUSHROOM.get(), new Item.Properties()));
     public static final RegistryObject<Item> CAP_GLOOMY_MUSHROOM = ITEMS.register("cap_gloomy_mushroom",
             () -> new ItemNameBlockItem(BlocksObs.CAP_GLOOMY_MUSHROOM.get(), new Item.Properties()));
 
-
+    public static final RegistryObject<Item> FIERY_INFUSION_SMITHING_TEMPLATE = ITEMS.register(
+            "fiery_infusion_smithing_template",
+            () -> new ObsFieryInfusionTemplateItem(
+                    Component.translatable("item.obsidanum.fiery_infusion_apply_to").withStyle(ChatFormatting.BLUE), // displayName
+                    Component.translatable("item.obsidanum.fiery_infusion_smithing_template.base_slot").withStyle(ChatFormatting.BLUE), // baseSlotDescription
+                    Component.translatable("item.obsidanum.fiery_infusion_smithing_template.add_slot").withStyle(ChatFormatting.GRAY), // addSlotDescription
+                    Component.translatable("item.obsidanum.fiery_infusion_smithing_template.base_tooltip"), // baseSlotTooltip
+                    Component.translatable("item.obsidanum.fiery_infusion_smithing_template.add_tooltip"), // addSlotTooltip
+                    List.of( // baseSlotIcons
+                                new ResourceLocation("minecraft:item/empty_slot_sword"),
+                            new ResourceLocation("minecraft:item/empty_slot_pickaxe"),
+                            new ResourceLocation("minecraft:item/empty_slot_shovel"),
+                            new ResourceLocation("minecraft:item/empty_slot_axe")
+                    ),
+                    List.of(new ResourceLocation("obsidanum:item/empty_slot_crucible")) // addSlotIcons
+            )
+    );
 
 
     public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
-            () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(),new Item.Properties(), 450));
+            () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(), new Item.Properties(), 450));
     public static final RegistryObject<Item> OBSIDAN_BOAT = ITEMS.register("obsidan_boat",
             () -> new ModBoatItem(false, ModBoatEntity.Type.OBSIDAN, new Item.Properties()));
     public static final RegistryObject<Item> OBSIDAN_CHEST_BOAT = ITEMS.register("obsidan_chest_boat",

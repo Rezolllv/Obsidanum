@@ -9,10 +9,12 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.SoulFireBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.PlayMessages;
+import net.rezolv.obsidanum.block.custom.NetherFireBlock;
 import net.rezolv.obsidanum.entity.ModItemEntities;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.particle.ParticlesObs;
@@ -73,7 +75,7 @@ public class NetherFlameEntityMini extends ThrowableItemProjectile {
             if (!(entity instanceof Mob) || net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), entity)) {
                 BlockPos blockpos = p_37384_.getBlockPos().relative(p_37384_.getDirection());
                 if (this.level().isEmptyBlock(blockpos)) {
-                    this.level().setBlockAndUpdate(blockpos, BaseFireBlock.getState(this.level(), blockpos));
+                    this.level().setBlockAndUpdate(blockpos, NetherFireBlock.getState(this.level(), blockpos));
                 }
             }
 

@@ -232,7 +232,12 @@
   "item.obsidanum.smoldering_obsidian_sword": "Тлеющий обсидиановый меч",
   "item.obsidanum.the_gloomy_mycelium": "Сумрачная грибница",
   "item.obsidanum.velnarium_ingot": "§bВельнариумовый слиток",
-
+  "item.obsidanum.fiery_infusion_smithing_template": "Кузнечный шаблон",
+  "item.obsidanum.fiery_infusion_apply_to": "Обсидиановый инструмент",
+  "item.obsidanum.fiery_infusion_smithing_template.base_slot": "Тигель с пламенем незера",
+  "item.obsidanum.fiery_infusion_smithing_template.add_slot": "Огненное вливание",
+  "item.obsidanum.fiery_infusion_smithing_template.base_tooltip": "Поместите обсидиановый инструмент",
+  "item.obsidanum.fiery_infusion_smithing_template.add_tooltip": "Поместите тигель",
   "item.obsidan.description.obsidian_shard_inviolability": "(Знак неприкосновенности)",
   "item.obsidan.description.obsidian_shard_key": "(Знак ключа)",
   "item.obsidan.description.obsidian_shard_arrow": "(Знак защиты от стрел)",
