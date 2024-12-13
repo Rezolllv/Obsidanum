@@ -38,7 +38,10 @@ public class DrillingCrystallizer extends Item {
     public DrillingCrystallizer(Properties properties) {
         super(properties);
     }
-
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false; 
+    }
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
         if(Screen.hasShiftDown()) {

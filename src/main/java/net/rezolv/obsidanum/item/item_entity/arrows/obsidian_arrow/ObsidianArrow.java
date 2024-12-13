@@ -76,7 +76,7 @@ public class ObsidianArrow extends AbstractArrow {
             else if (chance < 80) {
                 livingTarget.addEffect(new MobEffectInstance(MobEffects.POISON, 5 * 20)); // 5 секунд
             }
-            livingTarget.hurt(new DamageSource(level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), 7);
+            livingTarget.hurt(new DamageSource(level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.ARROW)), 7);
 
         }
     }

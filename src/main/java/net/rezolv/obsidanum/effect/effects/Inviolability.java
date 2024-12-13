@@ -20,10 +20,14 @@ public class Inviolability extends MobEffect {
         super.applyInstantenousEffect(pSource, pIndirectSource, pLivingEntity, pAmplifier, pHealth);
         // Проверка, является ли сущность игроком
         if (pLivingEntity instanceof Player player) {
+            player.setInvisible(true);
+
             // Перебираем всех агрессивных мобов в области
             for (Entity entity : player.getCommandSenderWorld().getEntities(player, player.getBoundingBox().inflate(200.0D))) {
                 if (entity instanceof Mob monster) {
                     // Устанавливаем агрессивность моба в false
+                    player.setInvisible(true);
+
                     monster.setTarget(null);
                     monster.setAggressive(false); // Устанавливаем нейтральное состояние
                 }
@@ -35,16 +39,17 @@ public class Inviolability extends MobEffect {
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         // Проверка, является ли сущность игроком
         if (pLivingEntity instanceof Player player) {
+            player.setInvisible(true);
+
             // Перебираем всех агрессивных мобов в области
             for (Entity entity : player.getCommandSenderWorld().getEntities(player, player.getBoundingBox().inflate(200.0D))) {
                 if (entity instanceof Mob monster) {
                     // Устанавливаем агрессивность моба в false
+                    player.setInvisible(true);
+
                     monster.setTarget(null);
-                    monster.setArrowCount(0);
                     monster.setAggressive(false); // Устанавливаем нейтральное состояние
-                    if (monster instanceof Skeleton skeleton) {
-                        skeleton.setArrowCount(0); // Останавливаем стрельбу
-                    }
+
                 }
 
             }

@@ -25,6 +25,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.rezolv.obsidanum.effect.EffectsObs;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ai.ObsidianElementalAttackGoal;
+import net.rezolv.obsidanum.sound.SoundsObs;
 
 public class Gart extends Monster {
     public Gart(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -76,11 +77,10 @@ public class Gart extends Monster {
     private void dealFlashToPlayer() {
         this.level().players().forEach(player -> {
             if (player.hasLineOfSight(this)) {
-                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60)); // 60 тиков = 3 секунды
+                player.addEffect(new MobEffectInstance(EffectsObs.FLASH.get(), 45)); // 60 тиков = 3 секунды
             }
         });
     }
-
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 12)

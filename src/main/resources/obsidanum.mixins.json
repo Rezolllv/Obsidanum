@@ -6,6 +6,7 @@
   "refmap": "obsidanum.refmap.json",
   "mixins": [
     "EnchantmentTableBlockMixin",
+    "LivingEntityMixin",
     "PortalShapeMixin"
   ],
   "injectors": {

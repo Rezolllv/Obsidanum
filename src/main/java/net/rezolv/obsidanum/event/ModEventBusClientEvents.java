@@ -1,5 +1,6 @@
 package net.rezolv.obsidanum.event;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
@@ -10,12 +11,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.block.entity.renderer.ForgeCrucibleEntityRenderer;
+import net.rezolv.obsidanum.effect.effects.effect_overlay.ConfusionOverlay;
 import net.rezolv.obsidanum.entity.ModModelLayers;
 import net.rezolv.obsidanum.entity.gart.GartModel;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleModel;
