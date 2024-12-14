@@ -6,6 +6,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 
 import net.rezolv.obsidanum.entity.gart.GartModel;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleModel;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGartModel;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalModel;
 
 public class ModModelLayers {
@@ -26,5 +27,11 @@ public class ModModelLayers {
 
     public static void registerLayersGart(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(GART, GartModel::createBodyLayer);
+    }
+    public static final ModelLayerLocation MUTATED_GART = new ModelLayerLocation(
+            new ResourceLocation("obsidanum", "mutated_gart"), "main");
+
+    public static void registerLayersMutatedGart(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(MUTATED_GART, MutatedGartModel::createBodyLayer);
     }
 }

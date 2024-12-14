@@ -22,6 +22,7 @@ import net.rezolv.obsidanum.effect.effects.effect_overlay.ConfusionOverlay;
 import net.rezolv.obsidanum.entity.ModModelLayers;
 import net.rezolv.obsidanum.entity.gart.GartModel;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleModel;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGartModel;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalModel;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.custom.*;
@@ -38,6 +39,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.OBSIDIAN_ELEMENTAL, ObsidianElementalModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.MEET_BEETLE, MeetBeetleModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.GART, GartModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.MUTATED_GART, MutatedGartModel::createBodyLayer);
     }
 
     @SubscribeEvent

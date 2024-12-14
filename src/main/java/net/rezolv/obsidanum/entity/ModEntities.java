@@ -9,6 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.entity.gart.Gart;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetle;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 
 public class ModEntities {
@@ -24,5 +25,8 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Gart>> GART =
             ENTITY_TYPES.register("gart", () -> EntityType.Builder.of(Gart::new, MobCategory.MONSTER)
                     .sized(1f, 1.2f).build("gart"));
+    public static final RegistryObject<EntityType<MutatedGart>> MUTATED_GART =
+            ENTITY_TYPES.register("mutated_gart", () -> EntityType.Builder.of(MutatedGart::new, MobCategory.MONSTER)
+                    .sized(1.5f, 2f).build("mutated_gart"));
 
 }

@@ -7,6 +7,7 @@ import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.gart.Gart;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetle;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
 
 @Mod.EventBusSubscriber(modid = Obsidanum.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -24,6 +25,10 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerAttributesGart(EntityAttributeCreationEvent event) {
         event.put(ModEntities.GART.get(), Gart.createAttributes().build());
+    }
+    @SubscribeEvent
+    public static void registerAttributesMutatedGart(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.MUTATED_GART.get(), MutatedGart.createAttributes().build());
     }
 
 }

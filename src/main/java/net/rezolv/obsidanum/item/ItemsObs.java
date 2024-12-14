@@ -208,6 +208,8 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> GART_SPANW_EGG = ITEMS.register("gart_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.GART, 0x240935, 0x008000, new Item.Properties()));
+    public static final RegistryObject<Item> MUTATED_GART_SPANW_EGG = ITEMS.register("mutated_gart_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MUTATED_GART, 0x1faee9, 0x483d8b, new Item.Properties()));
 
     public static final RegistryObject<Item> MEET_BEETLE_SPANW_EGG = ITEMS.register("meet_beetle_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MEET_BEETLE, 0x613613, 0xf2e8c9, new Item.Properties()));

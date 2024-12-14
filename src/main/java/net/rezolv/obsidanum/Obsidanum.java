@@ -34,6 +34,8 @@ import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.ModItemEntities;
 import net.rezolv.obsidanum.entity.gart.GartRenderer;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleRenderer;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGartRenderer;
 import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalRenderer;
 import net.rezolv.obsidanum.event.BlockBreakEventHandler;
 import net.rezolv.obsidanum.event.TotemAnimationMessage;
@@ -115,6 +117,7 @@ public class Obsidanum {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(ItemsObs.GART_SPANW_EGG);
+            event.accept(ItemsObs.MUTATED_GART_SPANW_EGG);
             event.accept(ItemsObs.MEET_BEETLE_SPANW_EGG);
             event.accept(ItemsObs.OBSIDIAN_ELEMENTAL_SPANW_EGG);
         }
@@ -139,6 +142,7 @@ public class Obsidanum {
             EntityRenderers.register(ModEntities.OBSIDIAN_ELEMENTAL.get(), ObsidianElementalRenderer::new);
             EntityRenderers.register(ModEntities.MEET_BEETLE.get(), MeetBeetleRenderer::new);
             EntityRenderers.register(ModEntities.GART.get(), GartRenderer::new);
+            EntityRenderers.register(ModEntities.MUTATED_GART.get(), MutatedGartRenderer::new);
             EntityRenderers.register(ModEntitiesItem.MOD_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
             EntityRenderers.register(ModEntitiesItem.MOD_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
             event.enqueueWork(() -> {
