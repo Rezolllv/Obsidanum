@@ -95,10 +95,11 @@ public class ObsidianElementalModel<T extends Entity> extends HierarchicalModel<
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-            // Установка углов поворота головы
-            this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-            this.head.xRot = headPitch * ((float) Math.PI / 180F);
+        // Установка углов поворота головы
+        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+        this.head.xRot = headPitch * ((float) Math.PI / 180F);
         this.animateWalk(ObsidianElementalAnimation.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
         this.animate(((ObsidianElemental) entity).idleAnimationState, ObsidianElementalAnimation.idle, ageInTicks, 1f);
+        this.animate(((ObsidianElemental) entity).attackAnimationState, ObsidianElementalAnimation.attack, ageInTicks, 1f);
     }
 }

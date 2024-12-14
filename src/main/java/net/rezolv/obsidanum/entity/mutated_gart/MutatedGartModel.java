@@ -13,6 +13,8 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElemental;
+import net.rezolv.obsidanum.entity.obsidian_elemental.ObsidianElementalAnimation;
 
 public class MutatedGartModel<T extends Entity> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -166,6 +168,7 @@ public class MutatedGartModel<T extends Entity> extends HierarchicalModel<T> {
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
+		this.animate(((MutatedGart) entity).attackAnimationState, MutatedGartAnimation.punch, ageInTicks, 1f);
 
 		this.animateWalk(MutatedGartAnimation.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((MutatedGart) entity).idleAnimationState, MutatedGartAnimation.idle, ageInTicks, 1f);

@@ -24,8 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.rezolv.obsidanum.effect.EffectsObs;
-import net.rezolv.obsidanum.entity.obsidian_elemental.ai.ObsidianElementalAttackGoal;
-import net.rezolv.obsidanum.sound.SoundsObs;
 
 public class Gart extends Monster {
     public Gart(EntityType<? extends Monster> pEntityType, Level pLevel) {
