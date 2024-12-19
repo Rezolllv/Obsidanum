@@ -13,8 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class LivingEntityMixin {
 
     // Внедряем наш код в существующий метод hurt
-    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-    public void onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
 
         // Проверка на наличие эффекта заморозки и огненного источника урона

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,12 +15,6 @@ import net.rezolv.obsidanum.effect.effects.effect_overlay.ConfusionOverlay;
 
 @Mod.EventBusSubscriber(modid = Obsidanum.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventBusEvents {
-    @SubscribeEvent
-    public static void onRenderGuiOverlay(RenderGuiOverlayEvent.Pre event) {
-        if (Minecraft.getInstance().player != null) {
-            ConfusionOverlay.renderOverlay(event.getGuiGraphics());
-        }
-    }
     @SubscribeEvent
     public static void onLivingVisibilityCheck(LivingEvent.LivingVisibilityEvent event) {
         // Проверяем, является ли сущность игроком

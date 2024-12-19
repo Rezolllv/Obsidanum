@@ -24,6 +24,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.rezolv.obsidanum.entity.mutated_gart.ai.MutatedGartAttackGoal;
+import net.rezolv.obsidanum.entity.mutated_gart.ai.MutatedGartRangedAttackGoal;
 
 public class MutatedGart extends Monster {
     private final ServerBossEvent BOSS_INFO = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.YELLOW, ServerBossEvent.BossBarOverlay.PROGRESS);
@@ -77,7 +78,10 @@ public class MutatedGart extends Monster {
         super.stopSeenByPlayer(player);
         this.BOSS_INFO.removePlayer(player);
     }
-
+    @Override
+    public boolean fireImmune() {
+        return true;
+    }
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
@@ -102,19 +106,20 @@ public class MutatedGart extends Monster {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(2, new MutatedGartAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(3, new MutatedGartRangedAttackGoal(this,7));       // Дальняя атака, если дальше 7 блоков
 
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 15.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D));
         this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, 10, true, false,
-                target -> this.distanceTo(target) <= 5.0));
+                target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, 10, true, false,
-                target -> this.distanceTo(target) <= 5.0));
+                target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, SnowGolem.class, 10, true, false,
-                target -> this.distanceTo(target) <= 5.0));
+                target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
-                target -> this.distanceTo(target) <= 5.0));
+                target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
     }
 
@@ -136,7 +141,7 @@ public class MutatedGart extends Monster {
                 .add(Attributes.MAX_HEALTH, 200)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
-                .add(Attributes.FOLLOW_RANGE, 12)
+                .add(Attributes.FOLLOW_RANGE, 7)
                 .add(Attributes.ATTACK_DAMAGE, 16)
                 .add(Attributes.ATTACK_KNOCKBACK, 5)
                 .add(Attributes.ATTACK_SPEED, 4)

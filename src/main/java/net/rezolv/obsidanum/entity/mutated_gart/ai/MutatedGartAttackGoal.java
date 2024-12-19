@@ -16,6 +16,12 @@ public class MutatedGartAttackGoal extends MeleeAttackGoal {
         this.entity = gart;
     }
 
+
+
+    @Override
+    protected double getAttackReachSqr(LivingEntity entity) {
+        return 16.0; // 3 блока в квадрате
+    }
     @Override
     public void start() {
         super.start();
@@ -41,7 +47,11 @@ public class MutatedGartAttackGoal extends MeleeAttackGoal {
             entity.attackAnimationTimeout = 0;
         }
     }
-
+    @Override
+    public boolean canUse() {
+        LivingEntity target = this.entity.getTarget();
+        return target != null && target.isAlive() && this.entity.distanceTo(target) < 5.0D; // Если цель дальше 7 блоков
+    }
     private boolean isEnemyWithinAttackDistance(LivingEntity pEnemy, double pDistToEnemySqr) {
         return pDistToEnemySqr <= this.getAttackReachSqr(pEnemy);
     }
