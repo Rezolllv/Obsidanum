@@ -20,6 +20,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -105,7 +107,7 @@ public class MutatedGart extends Monster {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(2, new MutatedGartAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(1, new MutatedGartAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(3, new MutatedGartRangedAttackGoal(this,7));       // Дальняя атака, если дальше 7 блоков
 
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 15.0F));
@@ -119,6 +121,10 @@ public class MutatedGart extends Monster {
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, SnowGolem.class, 10, true, false,
                 target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
+                target -> this.distanceTo(target) <= 18.0));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Witch.class, 10, true, false,
+                target -> this.distanceTo(target) <= 18.0));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ZombifiedPiglin.class, 10, true, false,
                 target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
     }
@@ -141,7 +147,7 @@ public class MutatedGart extends Monster {
                 .add(Attributes.MAX_HEALTH, 200)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
-                .add(Attributes.FOLLOW_RANGE, 7)
+                .add(Attributes.FOLLOW_RANGE, 20)
                 .add(Attributes.ATTACK_DAMAGE, 16)
                 .add(Attributes.ATTACK_KNOCKBACK, 5)
                 .add(Attributes.ATTACK_SPEED, 4)
