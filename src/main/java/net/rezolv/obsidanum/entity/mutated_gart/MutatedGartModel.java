@@ -169,6 +169,7 @@ public class MutatedGartModel<T extends Entity> extends HierarchicalModel<T> {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 		this.animate(((MutatedGart) entity).attackAnimationState, MutatedGartAnimation.punch, ageInTicks, 1f);
+		this.animate(((MutatedGart) entity).attackAnimationMagicArrowState, MutatedGartAnimation.magic_punch, ageInTicks, 1f);
 
 		this.animateWalk(MutatedGartAnimation.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((MutatedGart) entity).idleAnimationState, MutatedGartAnimation.idle, ageInTicks, 1f);

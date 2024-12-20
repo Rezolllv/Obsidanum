@@ -13,6 +13,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
+import net.rezolv.obsidanum.entity.projectile_entity.MagicArrow;
 import net.rezolv.obsidanum.entity.projectile_entity.NetherFlameEntity;
 import net.rezolv.obsidanum.entity.projectile_entity.NetherFlameEntityMini;
 
@@ -27,6 +28,13 @@ public class ModItemEntities {
     public static final RegistryObject<EntityType<NetherFlameEntity>> NETHER_FLAME_ENTITY = register("projectile_nether_flame_entity",
             EntityType.Builder.<NetherFlameEntity>of(NetherFlameEntity::new, MobCategory.MISC).setCustomClientFactory(NetherFlameEntity::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(20).setUpdateInterval(1).sized(0.2f, 0.2f));
+
+
+    public static final RegistryObject<EntityType<MagicArrow>> MAGIC_ARROW_NETHER_FLAME_ENTITY = register("magic_arrow_entity",
+            EntityType.Builder.<MagicArrow>of(MagicArrow::new, MobCategory.MISC).setCustomClientFactory(MagicArrow::new)
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(20).setUpdateInterval(1).sized(0.2f, 0.2f));
+
+
     public static final RegistryObject<EntityType<NetherFlameEntityMini>> NETHER_FLAME_ENTITY_MINI = register("projectile_nether_flame_entity_mini",
             EntityType.Builder.<NetherFlameEntityMini>of(NetherFlameEntityMini::new, MobCategory.MISC).setCustomClientFactory(NetherFlameEntityMini::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(20).setUpdateInterval(1).sized(0.2f, 0.2f));

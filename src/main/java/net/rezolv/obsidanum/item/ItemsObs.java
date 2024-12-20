@@ -81,6 +81,8 @@ public class ItemsObs {
             () -> new NetherFlame(new Item.Properties()));
     public static final RegistryObject<Item> NETHER_FLAME_ENTITY_MINI = ITEMS.register("nether_flame_entity_mini",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> MAGIC_ARROW = ITEMS.register("magic_arrow",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRYSTALLIZED_COPPER_ORE = ITEMS.register("crystallized_copper_ore",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CRYSTALLIZED_IRON_ORE = ITEMS.register("crystallized_iron_ore",
