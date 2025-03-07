@@ -3,7 +3,6 @@ package net.rezolv.obsidanum.item;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tiers;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.custom.FlameCrossbowItem;
 

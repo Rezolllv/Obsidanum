@@ -10,19 +10,10 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.chests.block.entity.IronChestsBlockEntityTypes;
@@ -65,7 +56,7 @@ public class Obsidanum {
 
     // Сеть для анимации тотема
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MOD_ID, "main"),
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "main"),
             () -> "1.0",
             s -> true,
             s -> true
@@ -96,9 +87,9 @@ public class Obsidanum {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModItemEntities.ENTITY_TYPES.register(modEventBus);
         CreativeTabObs.CREATIVE_MODE_TABS.register(modEventBus);
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
+        NeoForge.EVENT_BUS.register(new BlockBreakEventHandler());
 
         IronChestsBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         IronChestsContainerTypes.CONTAINERS.register(modEventBus);
