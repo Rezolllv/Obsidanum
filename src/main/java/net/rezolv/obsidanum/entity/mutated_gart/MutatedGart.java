@@ -186,7 +186,7 @@ public class MutatedGart extends Monster implements RangedAttackMob {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new MutatedGartAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 15.0F));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 15.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D));
         this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0));
@@ -199,7 +199,7 @@ public class MutatedGart extends Monster implements RangedAttackMob {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, SnowGolem.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Witch.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ZombifiedPiglin.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -212,8 +212,8 @@ public class MutatedGart extends Monster implements RangedAttackMob {
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
                 .add(Attributes.FOLLOW_RANGE, 20)
-                .add(Attributes.ATTACK_DAMAGE, 12)
-                .add(Attributes.ATTACK_KNOCKBACK, 5)
+                .add(Attributes.ATTACK_DAMAGE, 0.1)
+                .add(Attributes.ATTACK_KNOCKBACK, 0)
                 .add(Attributes.ATTACK_SPEED, 4)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.3)
                 .add(Attributes.ARMOR, 0.0);

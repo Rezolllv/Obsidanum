@@ -171,13 +171,18 @@ public class MutatedGartModel<T extends Entity> extends HierarchicalModel<T> {
 
 		MutatedGart gart = (MutatedGart) entity;
 
-		if (gart.isMagicAttacking()) {
-			this.animate(gart.magicAttackAnimationState, MutatedGartAnimation.magic_punch, ageInTicks, 1f);
-		} else if (gart.attackAnimationState.isStarted()) {
+		// Приоритет: если начата анимация ближнего боя, воспроизводим её
+		if (gart.attackAnimationState.isStarted()) {
 			this.animate(gart.attackAnimationState, MutatedGartAnimation.punch, ageInTicks, 1f);
-		} else if (gart.isMoving()) {
+		}
+		// Если ближняя атака не идёт, но идёт магическая – воспроизводим магическую анимацию
+		else if (gart.isMagicAttacking()) {
+			this.animate(gart.magicAttackAnimationState, MutatedGartAnimation.magic_punch, ageInTicks, 1f);
+		}
+		else if (gart.isMoving()) {
 			this.animateWalk(MutatedGartAnimation.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
-		} else {
+		}
+		else {
 			this.animate(gart.idleAnimationState, MutatedGartAnimation.idle, ageInTicks, 1f);
 		}
 	}

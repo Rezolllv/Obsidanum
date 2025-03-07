@@ -7,9 +7,9 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
 
 public class MutatedGartAttackGoal extends MeleeAttackGoal {
-    private final MutatedGart entity; // Сущность, к которой привязана цель
-    private static final int ATTACK_WINDUP = 15; // Удар наносится на 15-м тике
-    private static final int ATTACK_COOLDOWN = 15; // Общая длительность анимации (15 тиков)
+    private final MutatedGart entity;
+    private static final int ATTACK_WINDUP = 15; // Момент нанесения удара
+    private static final int ATTACK_COOLDOWN = 40; // Общая длительность цикла атаки (задержка между атаками)
     private int attackTimer = 0; // Таймер атаки
 
     // Конструктор
@@ -18,46 +18,56 @@ public class MutatedGartAttackGoal extends MeleeAttackGoal {
         this.entity = gart;
     }
 
-    // Определение дальности атаки
+    // Момент нанесения удара – только когда цель очень близко (4 блока)
     @Override
     protected double getAttackReachSqr(LivingEntity enemy) {
         return 16.0; // 4 блока в квадрате
     }
 
-    // Проверка, можно ли использовать атаку
+    // Активация melee-цели, если цель в пределах 7 блоков (7² = 49)
     @Override
     public boolean canUse() {
         LivingEntity target = this.entity.getTarget();
-        return target != null && target.isAlive() && this.entity.distanceTo(target) < 4.0D;
+        return target != null
+                && target.isAlive()
+                && this.entity.distanceToSqr(target) <= 49.0D;
     }
 
-    // Обновление логики атаки
+    @Override
+    public boolean canContinueToUse() {
+        LivingEntity target = this.entity.getTarget();
+        return target != null
+                && target.isAlive()
+                && this.entity.distanceToSqr(target) <= 49.0D;
+    }
+
     @Override
     public void tick() {
         super.tick();
         LivingEntity target = this.entity.getTarget();
         if (target == null || !target.isAlive()) {
-            stop(); // Остановка, если цель мертва или отсутствует
+            stop();
             return;
         }
         double distanceSqr = this.entity.distanceToSqr(target);
+        // Если цель вне предела удара (4 блока), сбрасываем таймер атаки
         if (distanceSqr > getAttackReachSqr(target)) {
-            resetAttack(); // Сброс атаки, если цель вне досягаемости
+            resetAttack();
             return;
         }
         // Остановка навигации, чтобы сущность не двигалась во время атаки
         this.entity.getNavigation().stop();
 
         if (attackTimer == 0) {
-            // Запуск анимации удара, если она ещё не запущена
+            // Запуск анимации удара (сбрасываем магическую анимацию)
             entity.setAttacking(true);
-            entity.magicAttackAnimationState.stop(); // Остановка магической анимации
+            entity.magicAttackAnimationState.stop();
         }
 
-        attackTimer++; // Увеличение таймера
+        attackTimer++;
 
         if (attackTimer == ATTACK_WINDUP) {
-            // На 15-м тике наносим урон
+            // На ATTACK_WINDUP наносим урон
             performAttack(target);
         } else if (attackTimer >= ATTACK_COOLDOWN) {
             // Сброс таймера для повторения атаки
@@ -65,23 +75,20 @@ public class MutatedGartAttackGoal extends MeleeAttackGoal {
         }
     }
 
-    // Нанесение урона
     private void performAttack(LivingEntity enemy) {
-        this.entity.swing(InteractionHand.MAIN_HAND); // Анимация удара
-        this.entity.doHurtTarget(enemy); // Нанесение урона цели
+        this.entity.swing(InteractionHand.MAIN_HAND);
+        this.entity.doHurtTarget(enemy);
     }
 
-    // Сброс состояния атаки
     private void resetAttack() {
-        attackTimer = 0; // Сброс таймера
-        entity.setAttacking(false); // Остановка анимации атаки
-        entity.magicAttackAnimationState.stop(); // Остановка магической анимации
+        attackTimer = 0;
+        entity.setAttacking(false);
+        entity.magicAttackAnimationState.stop();
     }
 
-    // Остановка цели
     @Override
     public void stop() {
-        resetAttack(); // Сброс атаки
+        resetAttack();
         super.stop();
     }
 }

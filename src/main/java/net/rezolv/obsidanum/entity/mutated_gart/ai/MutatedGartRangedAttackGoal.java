@@ -20,14 +20,20 @@ public class MutatedGartRangedAttackGoal extends Goal {
     @Override
     public boolean canUse() {
         LivingEntity target = mob.getTarget();
+        // Добавлена проверка: дистанция должна быть не меньше 7 блоков (49)
         return target != null
+                && mob.distanceToSqr(target) >= 49.0F
                 && mob.distanceToSqr(target) <= attackRadiusSq
                 && mob.hasLineOfSight(target);
     }
 
     @Override
     public boolean canContinueToUse() {
-        return mob.getTarget() != null;
+        LivingEntity target = mob.getTarget();
+        // Если цель стала ближе 7 блоков, прекращаем дальнюю атаку
+        return target != null
+                && mob.distanceToSqr(target) >= 49.0F
+                && mob.hasLineOfSight(target);
     }
 
     @Override
