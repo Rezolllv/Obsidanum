@@ -17,7 +17,6 @@ import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.item.custom.*;
 import net.rezolv.obsidanum.item.entity.ModBoatEntity;
-import net.rezolv.obsidanum.sound.SoundsObs;
 
 import java.util.List;
 
@@ -168,23 +167,23 @@ public class ItemsObs {
             () -> new ObsShovel(ModToolTiers.OBSIDIANUM, 1.5F, -3.2F, new Item.Properties()));
     public static final DeferredHolder<Item, ObsSword> OBSIDIAN_SWORD = ITEMS.register("obsidian_sword",
             () -> new ObsSword(ModToolTiers.OBSIDIANUM, 3, -3F, new Item.Properties()));
-    public static final RegistryObject<Item> OBSIDAN_SIGN = ITEMS.register("obsidan_sign",
+    public static final DeferredHolder<Item, SignItem> OBSIDAN_SIGN = ITEMS.register("obsidan_sign",
             () -> new SignItem(new Item.Properties().stacksTo(16), BlocksObs.OBSIDAN_SIGN.get(), BlocksObs.OBSIDAN_WALL_SIGN.get()));
-    public static final RegistryObject<Item> OBSIDAN_HANGING_SIGN = ITEMS.register("obsidan_hanging_sign",
+    public static final DeferredHolder<Item, HangingSignItem> OBSIDAN_HANGING_SIGN = ITEMS.register("obsidan_hanging_sign",
             () -> new HangingSignItem(BlocksObs.OBSIDAN_HANGING_SIGN.get(), BlocksObs.OBSIDAN_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
 
-    public static final RegistryObject<Item> OBSIDIAN_BRICKS = ITEMS.register("obsidian_bricks",
+    public static final DeferredHolder<Item, ItemNameBlockItem> OBSIDIAN_BRICKS = ITEMS.register("obsidian_bricks",
             () -> new ItemNameBlockItem(BlocksObs.OBSIDIAN_BRICKS.get(), new Item.Properties()));
-    public static final RegistryObject<Item> AZURE_OBSIDIAN_BRICKS = ITEMS.register("azure_obsidian_bricks",
+    public static final DeferredHolder<Item, ItemNameBlockItem> AZURE_OBSIDIAN_BRICKS = ITEMS.register("azure_obsidian_bricks",
             () -> new ItemNameBlockItem(BlocksObs.AZURE_OBSIDIAN_BRICKS.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
+    public static final DeferredHolder<Item, ItemNameBlockItem> OBSIDAN_WOOD_LEAVES = ITEMS.register("obsidan_wood_leaves",
             () -> new ItemNameBlockItem(BlocksObs.OBSIDAN_WOOD_LEAVES.get(), new Item.Properties()));
-    public static final RegistryObject<Item> THE_GLOOMY_MYCELIUM = ITEMS.register("the_gloomy_mycelium",
+    public static final DeferredHolder<Item, ItemNameBlockItem> THE_GLOOMY_MYCELIUM = ITEMS.register("the_gloomy_mycelium",
             () -> new ItemNameBlockItem(BlocksObs.THE_GLOOMY_MYCELIUM.get(), new Item.Properties()));
-    public static final RegistryObject<Item> STEM_GLOOMY_MUSHROOM = ITEMS.register("stem_gloomy_mushroom",
+    public static final DeferredHolder<Item, ItemNameBlockItem> STEM_GLOOMY_MUSHROOM = ITEMS.register("stem_gloomy_mushroom",
             () -> new ItemNameBlockItem(BlocksObs.STEM_GLOOMY_MUSHROOM.get(), new Item.Properties()));
-    public static final RegistryObject<Item> CAP_GLOOMY_MUSHROOM = ITEMS.register("cap_gloomy_mushroom",
+    public static final DeferredHolder<Item, ItemNameBlockItem> CAP_GLOOMY_MUSHROOM = ITEMS.register("cap_gloomy_mushroom",
             () -> new ItemNameBlockItem(BlocksObs.CAP_GLOOMY_MUSHROOM.get(), new Item.Properties()));
 
     public static final DeferredHolder<Item, ObsFieryInfusionTemplateItem> FIERY_INFUSION_SMITHING_TEMPLATE = ITEMS.register(
@@ -206,7 +205,7 @@ public class ItemsObs {
     );
 
 
-    public static final RegistryObject<Item> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
+    public static final DeferredHolder<Item, FuelItemBlock> OBSIDAN_SAPLING = ITEMS.register("obsidan_sapling",
             () -> new FuelItemBlock(BlocksObs.OBSIDAN_SAPLING.get(), new Item.Properties(), 450));
     public static final DeferredHolder<Item, ModBoatItem> OBSIDAN_BOAT = ITEMS.register("obsidan_boat",
             () -> new ModBoatItem(false, ModBoatEntity.Type.OBSIDAN, new Item.Properties()));

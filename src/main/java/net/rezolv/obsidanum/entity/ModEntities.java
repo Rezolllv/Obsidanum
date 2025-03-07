@@ -2,10 +2,8 @@ package net.rezolv.obsidanum.entity;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.entity.gart.Gart;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetle;

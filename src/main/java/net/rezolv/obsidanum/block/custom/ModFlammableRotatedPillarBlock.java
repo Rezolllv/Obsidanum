@@ -11,7 +11,6 @@ import net.minecraftforge.common.ToolAction;
 import net.rezolv.obsidanum.block.BlocksObs;
 
 import javax.annotation.Nullable;
-import java.util.Properties;
 
 public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
     public ModFlammableRotatedPillarBlock(Properties pProperties) {

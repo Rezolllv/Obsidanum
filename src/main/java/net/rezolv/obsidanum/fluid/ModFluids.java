@@ -1,23 +1,21 @@
 package net.rezolv.obsidanum.fluid;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.item.ItemsObs;
 
 public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, Obsidanum.MOD_ID);
+            DeferredRegister.create(BuiltInRegistries.FLUID, Obsidanum.MOD_ID);
 
-    public static final RegistryObject<FlowingFluid> SOURCE_NETHER_FIRE_LAVA = FLUIDS.register("nether_fire_fluid",
+    public static final DeferredRegister<FlowingFluid> SOURCE_NETHER_FIRE_LAVA = FLUIDS.register("nether_fire_fluid",
             () -> new ForgeFlowingFluid.Source(ModFluids.NETHER_FIRE_LAVA_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_NETHER_FIRE_LAVA = FLUIDS.register("flowing_nether_fire",
+    public static final DeferredRegister<FlowingFluid> FLOWING_NETHER_FIRE_LAVA = FLUIDS.register("flowing_nether_fire",
             () -> new ForgeFlowingFluid.Flowing(ModFluids.NETHER_FIRE_LAVA_FLUID_PROPERTIES));
 
 
