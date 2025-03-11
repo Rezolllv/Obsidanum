@@ -28,129 +28,125 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.rezolv.obsidanum.block.custom.obsidian_door.DoorPart;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.sound.SoundsObs;
 
 
 public class ObsidianDoor extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final EnumProperty<Part> PART = EnumProperty.create("part", Part.class);
-    public static final BooleanProperty ACTIVE_1 = BooleanProperty.create("active_1");
-    public static final BooleanProperty ACTIVE_2 = BooleanProperty.create("active_2");
-    public static final BooleanProperty ACTIVE_3= BooleanProperty.create("active_3");
-    public static final BooleanProperty ACTIVE_4 = BooleanProperty.create("active_4");
-    public static final BooleanProperty ACTIVE_TOP = BooleanProperty.create("active_top");
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
-
-    private static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 6, 16, 16, 10);
-    private static final VoxelShape SHAPE_SOUTH = Block.box(0, 0, 6, 16, 16, 10);
-    private static final VoxelShape SHAPE_EAST = Block.box(6, 0, 0, 10, 16, 16);
-    private static final VoxelShape SHAPE_WEST = Block.box(6, 0, 0, 10, 16, 16);
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+    public static final EnumProperty<DoorPart> PART = EnumProperty.create("part", DoorPart.class);
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 4);
 
     public ObsidianDoor(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(PART, Part.CENTER)
-                .setValue(ACTIVE_1, false)
-                .setValue(ACTIVE_2, false)
-                .setValue(ACTIVE_3, false)
-                .setValue(ACTIVE_4, false)
-                .setValue(OPEN, false));
-    }
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return state.getValue(OPEN) ? Shapes.empty() : super.getCollisionShape(state, world, pos, context);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(OPEN, false)
+                .setValue(ACTIVE, false)
+                .setValue(PART, DoorPart.C));
     }
 
-    @Override
-    public boolean isCollisionShapeFullBlock(BlockState state, BlockGetter world, BlockPos pos) {
-        return !state.getValue(OPEN);
-    }
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        switch (state.getValue(FACING)) {
-            case NORTH:
-                return SHAPE_NORTH;
-            case SOUTH:
-                return SHAPE_SOUTH;
-            case EAST:
-                return SHAPE_EAST;
-            case WEST:
-                return SHAPE_WEST;
-            default:
-                return Shapes.block();
-        }
-    }
+
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, PART, ACTIVE_1, ACTIVE_2, ACTIVE_3, ACTIVE_4, ACTIVE_TOP, OPEN);
+        builder.add(FACING, OPEN, ACTIVE, PART);
+    }
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        // Убираем getOpposite() для правильного направления
+        return this.defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection());
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())) {
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, level, pos, oldState, isMoving);
+
+        if (!level.isClientSide && !state.getValue(ACTIVE)) {
             Direction facing = state.getValue(FACING);
+            BlockPos basePos = pos; // Используем текущую позицию как базовую
+                createDoorStructure(level, basePos, facing);
+        }
+    }
 
-            for (int x = -1; x <= 1; x++) {
-                for (int y = -1; y <= 1; y++) {
-                    BlockPos partPos = getPartPos(pos, facing, x, y);
-                    BlockState partState = level.getBlockState(partPos);
-
-                    if (partState.getBlock() == this) {
-                        level.destroyBlock(partPos, false);
-                    }
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        Direction facing = state.getValue(FACING);
+        return switch (facing) {
+            case NORTH -> Block.box(0, 0, 0, 16, 16, 4);
+            case SOUTH -> Block.box(0, 0, 12, 16, 16, 16);
+            case EAST -> Block.box(12, 0, 0, 16, 16, 16);
+            case WEST -> Block.box(0, 0, 0, 4, 16, 16);
+            default -> SHAPE;
+        };
+    }
+    private boolean canFormDoor(Level level, BlockPos basePos, Direction facing) {
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = 0; dy < 3; dy++) {
+                BlockPos checkPos = basePos.relative(facing.getClockWise(), dx).above(dy);
+                if (!level.getBlockState(checkPos).canBeReplaced()) {
+                    return false;
                 }
             }
         }
-        super.onRemove(state, level, pos, newState, isMoving);
+        return true;
     }
 
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction facing = context.getHorizontalDirection().getOpposite();
-        BlockPos pos = context.getClickedPos();
-        Level level = context.getLevel();
-
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                BlockPos partPos = getPartPos(pos, facing, x, y);
-                Part part = Part.getPart(x, y);
-                BlockState partState = this.defaultBlockState().setValue(FACING, facing)
-                        .setValue(PART, part)
-                        .setValue(ACTIVE_1, false)
-                        .setValue(ACTIVE_2, false)
-                        .setValue(ACTIVE_3, false)
-                        .setValue(ACTIVE_4, false)
-                        .setValue(ACTIVE_TOP, false)
-                        .setValue(OPEN, false);
-                level.setBlock(partPos, partState, 3);
-                level.sendBlockUpdated(partPos, partState, partState, 3);
+    private void createDoorStructure(Level level, BlockPos basePos, Direction facing) {
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = 0; dy < 3; dy++) {
+                BlockPos placePos = basePos.relative(facing.getClockWise(), dx).above(dy);
+                DoorPart part = determinePart(dx, dy);
+                level.setBlock(placePos, this.defaultBlockState()
+                        .setValue(FACING, facing)
+                        .setValue(ACTIVE, true)
+                        .setValue(PART, part), 3);
             }
         }
-        return this.defaultBlockState().setValue(FACING, facing)
-                .setValue(PART, Part.CENTER)
-                .setValue(ACTIVE_1, false)
-                .setValue(ACTIVE_2, false)
-                .setValue(ACTIVE_3, false)
-                .setValue(ACTIVE_4, false)
-                .setValue(ACTIVE_TOP, false)
-                .setValue(OPEN, false);
     }
-
-    private BlockPos getPartPos(BlockPos pos, Direction facing, int x, int y) {
-        switch (facing) {
-            case NORTH:
-                return pos.offset(x, y, 0);
-            case SOUTH:
-                return pos.offset(-x, y, 0);
-            case EAST:
-                return pos.offset(0, y, x);
-            case WEST:
-                return pos.offset(0, y, -x);
-            default:
-                return pos;
+    private DoorPart determinePart(int dx, int dy) {
+        if (dy == 0) { // Нижний ряд
+            switch (dx) {
+                case -1:
+                    return DoorPart.BL;
+                case 0:
+                    return DoorPart.BC;
+                case 1:
+                    return DoorPart.BR;
+                default:
+                    return DoorPart.C;
+            }
+        } else if (dy == 1) { // Средний ряд
+            switch (dx) {
+                case -1:
+                    return DoorPart.CL;
+                case 0:
+                    return DoorPart.C;
+                case 1:
+                    return DoorPart.CR;
+                default:
+                    return DoorPart.C;
+            }
+        } else if (dy == 2) { // Верхний ряд
+            switch (dx) {
+                case -1:
+                    return DoorPart.TL;
+                case 0:
+                    return DoorPart.TC;
+                case 1:
+                    return DoorPart.TR;
+                default:
+                    return DoorPart.C;
+            }
+        } else {
+            return DoorPart.C;
         }
     }
+
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
@@ -164,129 +160,8 @@ public class ObsidianDoor extends Block {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (state.getValue(PART) == Part.CENTER) {
-            if (!state.getValue(ACTIVE_1) && player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_DOOR_KEY_1.get()) {
-                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                world.setBlock(pos, state.setValue(ACTIVE_1, true), 3);
-                if (!player.isCreative()) {
-                    player.getItemInHand(hand).shrink(1);
-                }
-                if (state.getValue(ACTIVE_4) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_3)) {
-                    Direction facing = state.getValue(FACING);
-                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
-                    BlockState topCenterState = world.getBlockState(topCenterPos);
-                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
-                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
-                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-           else if (!state.getValue(ACTIVE_2) && player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_DOOR_KEY_2.get()) {
-                world.setBlock(pos, state.setValue(ACTIVE_2, true), 3);
-                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                if (!player.isCreative()) {
-                    player.getItemInHand(hand).shrink(1);
-                }
-                if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_3) && state.getValue(ACTIVE_4)) {
-                    Direction facing = state.getValue(FACING);
-                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
-                    BlockState topCenterState = world.getBlockState(topCenterPos);
-                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
-                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
-                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-            else if (!state.getValue(ACTIVE_3) && player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_DOOR_KEY_3.get()) {
-                world.setBlock(pos, state.setValue(ACTIVE_3, true), 3);
-                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                if (!player.isCreative()) {
-                    player.getItemInHand(hand).shrink(1);
-                }if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_4)) {
-                    Direction facing = state.getValue(FACING);
-                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
-                    BlockState topCenterState = world.getBlockState(topCenterPos);
-                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
-                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
-                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-            else if (!state.getValue(ACTIVE_4) && player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_DOOR_KEY_4.get()) {
-                world.setBlock(pos, state.setValue(ACTIVE_4, true), 3);
-                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                if (!player.isCreative()) {
-                    player.getItemInHand(hand).shrink(1);
-                }if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_3)) {
-                    Direction facing = state.getValue(FACING);
-                    BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
-                    BlockState topCenterState = world.getBlockState(topCenterPos);
-                    if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
-                        world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
-                        world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-            else if (state.getValue(ACTIVE_1) && state.getValue(ACTIVE_2) && state.getValue(ACTIVE_3) && state.getValue(ACTIVE_4)) {
-                // Set ACTIVE_TOP to true for the TOP_CENTER part
-                Direction facing = state.getValue(FACING);
-                BlockPos topCenterPos = getPartPos(pos, facing, 0, 1);
-                BlockState topCenterState = world.getBlockState(topCenterPos);
-                if (topCenterState.getBlock() == this && topCenterState.getValue(PART) == Part.TOP_CENTER && !topCenterState.getValue(ACTIVE_TOP)) {
-                    world.setBlock(topCenterPos, topCenterState.setValue(ACTIVE_TOP, true), 3);
-                    world.playSound(null, topCenterPos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                }
 
-                boolean isOpen = state.getValue(OPEN);
-                for (int x = -1; x <= 1; x++) {
-                    for (int y = -1; y <= 1; y++) {
-                        BlockPos partPos = getPartPos(pos, facing, x, y);
-                        BlockState partState = world.getBlockState(partPos);
-                        if (partState.getBlock() == this) {
-                            BlockState newState = partState.setValue(OPEN, !isOpen);
-                            world.setBlock(partPos, newState, 3);
-                        }
-                    }
-                }
-                SoundEvent soundEvent = isOpen ? SoundsObs.CLOSE_OBSIDIAN_DOOR.get() : SoundsObs.OPEN_OBSIDIAN_DOOR.get();
-                world.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
-                return InteractionResult.SUCCESS;
-            }
-        }
         return InteractionResult.PASS;
     }
 
-    public enum Part implements StringRepresentable {
-        BOTTOM_RIGHT,
-        BOTTOM_CENTER,
-        BOTTOM_LEFT,
-        CENTER_RIGHT,
-        CENTER,
-        CENTER_LEFT,
-        TOP_RIGHT,
-        TOP_CENTER,
-        TOP_LEFT;
-
-        public static Part getPart(int x, int y) {
-            if (x == -1 && y == -1) return BOTTOM_RIGHT;
-            if (x == 0 && y == -1) return BOTTOM_CENTER;
-            if (x == 1 && y == -1) return BOTTOM_LEFT;
-            if (x == -1 && y == 0) return CENTER_RIGHT;
-            if (x == 0 && y == 0) return CENTER;
-            if (x == 1 && y == 0) return CENTER_LEFT;
-            if (x == -1 && y == 1) return TOP_RIGHT;
-            if (x == 0 && y == 1) return TOP_CENTER;
-            if (x == 1 && y == 1) return TOP_LEFT;
-            return CENTER;
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name().toLowerCase();
-        }
-    }
 }

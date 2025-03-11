@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "obsidanum:item/obsidian_door_key_2"
-  }
-}
