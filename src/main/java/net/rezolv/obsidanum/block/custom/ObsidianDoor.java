@@ -46,10 +46,8 @@ public class ObsidianDoor extends Block {
                 .setValue(FACING, Direction.NORTH)
                 .setValue(OPEN, false)
                 .setValue(ACTIVE, false)
-                .setValue(PART, DoorPart.C));
+                .setValue(PART, DoorPart.BC));
     }
-
-
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -66,10 +64,10 @@ public class ObsidianDoor extends Block {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
 
-        if (!level.isClientSide && !state.getValue(ACTIVE)) {
+        if (!level.isClientSide && state.getValue(PART) == DoorPart.BC) {
             Direction facing = state.getValue(FACING);
-            BlockPos basePos = pos; // Используем текущую позицию как базовую
-                createDoorStructure(level, basePos, facing);
+                createDoorStructure(level, pos, facing);
+
         }
     }
 
@@ -84,69 +82,46 @@ public class ObsidianDoor extends Block {
             default -> SHAPE;
         };
     }
-    private boolean canFormDoor(Level level, BlockPos basePos, Direction facing) {
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = 0; dy < 3; dy++) {
-                BlockPos checkPos = basePos.relative(facing.getClockWise(), dx).above(dy);
-                if (!level.getBlockState(checkPos).canBeReplaced()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     private void createDoorStructure(Level level, BlockPos basePos, Direction facing) {
+        // Создаем 3x3 структуру относительно базового блока BC
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = 0; dy < 3; dy++) {
                 BlockPos placePos = basePos.relative(facing.getClockWise(), dx).above(dy);
+
                 DoorPart part = determinePart(dx, dy);
+                if (part == DoorPart.BC) continue; // Пропускаем базовый блок
+
                 level.setBlock(placePos, this.defaultBlockState()
                         .setValue(FACING, facing)
-                        .setValue(ACTIVE, true)
                         .setValue(PART, part), 3);
             }
         }
     }
-    private DoorPart determinePart(int dx, int dy) {
-        if (dy == 0) { // Нижний ряд
-            switch (dx) {
-                case -1:
-                    return DoorPart.BL;
-                case 0:
-                    return DoorPart.BC;
-                case 1:
-                    return DoorPart.BR;
-                default:
-                    return DoorPart.C;
-            }
-        } else if (dy == 1) { // Средний ряд
-            switch (dx) {
-                case -1:
-                    return DoorPart.CL;
-                case 0:
-                    return DoorPart.C;
-                case 1:
-                    return DoorPart.CR;
-                default:
-                    return DoorPart.C;
-            }
-        } else if (dy == 2) { // Верхний ряд
-            switch (dx) {
-                case -1:
-                    return DoorPart.TL;
-                case 0:
-                    return DoorPart.TC;
-                case 1:
-                    return DoorPart.TR;
-                default:
-                    return DoorPart.C;
-            }
-        } else {
-            return DoorPart.C;
-        }
-    }
 
+    private DoorPart determinePart(int dx, int dy) {
+        return switch (dy) {
+            case 0 -> switch (dx) { // Нижний ряд
+                case -1 -> DoorPart.BL;
+                case 0 -> DoorPart.BC;
+                case 1 -> DoorPart.BR;
+                default -> DoorPart.BC;
+            };
+            case 1 -> switch (dx) { // Средний ряд
+                case -1 -> DoorPart.CL;
+                case 0 -> DoorPart.C;
+                case 1 -> DoorPart.CR;
+                default -> DoorPart.C;
+            };
+            case 2 -> switch (dx) { // Верхний ряд
+                case -1 -> DoorPart.TL;
+                case 0 -> DoorPart.TC;
+                case 1 -> DoorPart.TR;
+                default -> DoorPart.TC;
+            };
+            default -> DoorPart.BC;
+        };
+    }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
@@ -160,8 +135,29 @@ public class ObsidianDoor extends Block {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        // Логика открытия/закрытия двери
+        DoorPart part = state.getValue(PART);
 
+        if (player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_KEY.get()) {
+            if (part == DoorPart.C && !state.getValue(ACTIVE)) {
+                player.getItemInHand(hand).shrink(1);
+                // Логика для открытия/закрытия двери или другие действия
+                world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+                return InteractionResult.SUCCESS;
+            }
+            if (part == DoorPart.CR && !state.getValue(ACTIVE)) {
+                player.getItemInHand(hand).shrink(1);
+                // Логика для открытия/закрытия двери или другие действия
+                world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+                return InteractionResult.SUCCESS;
+            }
+            if (part == DoorPart.CL && !state.getValue(ACTIVE)) {
+                player.getItemInHand(hand).shrink(1);
+                // Логика для открытия/закрытия двери или другие действия
+                world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+                return InteractionResult.SUCCESS;
+            }
+        }
         return InteractionResult.PASS;
     }
-
 }
