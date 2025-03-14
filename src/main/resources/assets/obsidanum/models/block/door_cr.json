@@ -3,7 +3,8 @@
 	"textures": {
 		"front": "obsidanum:block/door_cr",
 		"side": "obsidanum:block/door_cr",
-		"top": "obsidanum:block/door_tc"
+		"top": "obsidanum:block/door_cr",
+		"particle": "obsidanum:block/door_tc"
 	},"render_type": "cutout",
 	"elements": [
 		{
