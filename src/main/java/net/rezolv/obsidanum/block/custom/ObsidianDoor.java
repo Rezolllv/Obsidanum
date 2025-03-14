@@ -53,6 +53,7 @@ public class ObsidianDoor extends Block {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, OPEN, ACTIVE, PART);
     }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Убираем getOpposite() для правильного направления
@@ -66,19 +67,35 @@ public class ObsidianDoor extends Block {
 
         if (!level.isClientSide && state.getValue(PART) == DoorPart.BC) {
             Direction facing = state.getValue(FACING);
-                createDoorStructure(level, pos, facing);
+            createDoorStructure(level, pos, facing);
 
         }
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(OPEN)) {
+            return Shapes.empty(); // Пустой коллайдер, если дверь открыта
+        }
+
+        Direction facing = state.getValue(FACING);
+        return switch (facing) {
+            case NORTH -> Block.box(0, 0, 6, 16, 16, 10);
+            case SOUTH -> Block.box(0, 0, 6, 16, 16, 10);
+            case EAST -> Block.box(6, 0, 0, 10, 16, 16);
+            case WEST -> Block.box(6, 0, 0, 10, 16, 16);
+            default -> SHAPE;
+        };
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(FACING);
         return switch (facing) {
-            case NORTH -> Block.box(0, 0, 0, 16, 16, 4);
-            case SOUTH -> Block.box(0, 0, 12, 16, 16, 16);
-            case EAST -> Block.box(12, 0, 0, 16, 16, 16);
-            case WEST -> Block.box(0, 0, 0, 4, 16, 16);
+            case NORTH -> Block.box(0, 0, 6, 16, 16, 10);
+            case SOUTH -> Block.box(0, 0, 6, 16, 16, 10);
+            case EAST -> Block.box(6, 0, 0, 10, 16, 16);
+            case WEST -> Block.box(6, 0, 0, 10, 16, 16);
             default -> SHAPE;
         };
     }
@@ -88,6 +105,9 @@ public class ObsidianDoor extends Block {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = 0; dy < 3; dy++) {
                 BlockPos placePos = basePos.relative(facing.getClockWise(), dx).above(dy);
+
+                // Пропускаем не воздушные блоки
+                if (!level.getBlockState(placePos).isAir()) continue;
 
                 DoorPart part = determinePart(dx, dy);
                 if (part == DoorPart.BC) continue; // Пропускаем базовый блок
@@ -137,27 +157,136 @@ public class ObsidianDoor extends Block {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // Логика открытия/закрытия двери
         DoorPart part = state.getValue(PART);
+        Direction facing = state.getValue(FACING);
 
         if (player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_KEY.get()) {
             if (part == DoorPart.C && !state.getValue(ACTIVE)) {
                 player.getItemInHand(hand).shrink(1);
-                // Логика для открытия/закрытия двери или другие действия
                 world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+                // Звук активации
+                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             }
             if (part == DoorPart.CR && !state.getValue(ACTIVE)) {
                 player.getItemInHand(hand).shrink(1);
-                // Логика для открытия/закрытия двери или другие действия
                 world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+                // Звук активации
+                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             }
             if (part == DoorPart.CL && !state.getValue(ACTIVE)) {
                 player.getItemInHand(hand).shrink(1);
-                // Логика для открытия/закрытия двери или другие действия
                 world.setBlock(pos, state.setValue(ACTIVE, true), 3);
+                // Звук активации
+                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.PASS;
+
+        // Для любой части двери
+        if (!world.isClientSide()) {
+            // 1. Находим базовый блок BC
+            BlockPos basePos = findBaseFromAnyPart(pos, facing, part);
+
+            // 2. Проверяем активность C/CL/CR
+            if (checkCenterPartsActive(world, basePos, facing)) {
+                // 3. Переключаем состояние OPEN
+                boolean newOpenState = !state.getValue(OPEN);
+                updateAllParts(world, basePos, facing, newOpenState);
+
+                // 4. Воспроизводим звук
+                SoundEvent sound = newOpenState ?
+                        SoundsObs.OPEN_OBSIDIAN_DOOR.get() :
+                        SoundsObs.CLOSE_OBSIDIAN_DOOR.get();
+                world.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+        }
+
+        return InteractionResult.SUCCESS;
+    }
+
+    // Находим позицию базового блока BC относительно TL
+    private BlockPos findBaseFromAnyPart(BlockPos anyPartPos, Direction facing, DoorPart part) {
+        // Определяем смещение относительно BC
+        int dx = switch(part) {
+            case BL, CL, TL -> -1;
+            case BC, C, TC -> 0;
+            case BR, CR, TR -> 1;
+        };
+
+        int dy = switch(part) {
+            case BL, BC, BR -> 0;
+            case CL, C, CR -> 1;
+            case TL, TC, TR -> 2;
+        };
+
+        return anyPartPos
+                .relative(facing.getClockWise(), -dx)
+                .below(dy);
+    }
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!level.isClientSide && state.getBlock() != newState.getBlock()) {
+            // Если это не базовая часть (BC), находим базовый блок
+            if (state.getValue(PART) != DoorPart.BC) {
+                BlockPos basePos = findBaseFromAnyPart(pos, state.getValue(FACING), state.getValue(PART));
+                BlockState baseState = level.getBlockState(basePos);
+
+                // Убедимся, что базовый блок существует и является частью двери
+                if (baseState.getBlock() == this) {
+                    breakDoorStructure(level, basePos, state.getValue(FACING));
+                }
+            } else {
+                // Если это базовая часть, сразу ломаем всю структуру
+                breakDoorStructure(level, pos, state.getValue(FACING));
+            }
+        }
+
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+    private void breakDoorStructure(Level level, BlockPos basePos, Direction facing) {
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = 0; dy < 3; dy++) {
+                BlockPos partPos = basePos.relative(facing.getClockWise(), dx).above(dy);
+                BlockState partState = level.getBlockState(partPos);
+
+                // Удаляем только части двери
+                if (partState.getBlock() == this) {
+                    level.destroyBlock(partPos, true); // true - дропает предметы
+                }
+            }
+        }
+    }
+    // Проверяем активность C/CL/CR
+    private boolean checkCenterPartsActive(Level level, BlockPos basePos, Direction facing) {
+        BlockPos cPos  = basePos.above(1);
+        BlockPos clPos = cPos.relative(facing.getCounterClockWise());
+        BlockPos crPos = cPos.relative(facing.getClockWise());
+
+        return isPartActive(level, cPos, facing) &&
+                isPartActive(level, clPos, facing) &&
+                isPartActive(level, crPos, facing);
+    }
+
+    // Проверка активности конкретной части
+    private boolean isPartActive(Level level, BlockPos pos, Direction facing) {
+        BlockState state = level.getBlockState(pos);
+        return state.getBlock() == this &&
+                state.getValue(ACTIVE) &&
+                state.getValue(FACING) == facing;
+    }
+
+    // Обновляем все части двери
+    private void updateAllParts(Level level, BlockPos basePos, Direction facing, boolean open) {
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = 0; dy < 3; dy++) {
+                BlockPos partPos = basePos.relative(facing.getClockWise(), dx).above(dy);
+                BlockState partState = level.getBlockState(partPos);
+
+                if (partState.getBlock() == this) {
+                    level.setBlock(partPos, partState.setValue(OPEN, open), Block.UPDATE_ALL);
+                }
+            }
+        }
     }
 }

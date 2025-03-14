@@ -1,0 +1,25 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/orientable",
+	"render_type": "cutout",
+	"textures": {
+		"1": "obsidanum:block/null_door",
+		"top": "obsidanum:block/door_tr",
+		"particle": "obsidanum:block/door_tc"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 6],
+			"to": [16, 16, 10],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#top"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#1"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#1"}
+			}
+		}
+	]
+}
