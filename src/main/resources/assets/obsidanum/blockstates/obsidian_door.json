@@ -31,17 +31,20 @@
     "facing=south,part=tr,open=true": { "model": "obsidanum:block/door_tr_open", "y": 180 },
     "facing=west,part=tr,open=true":  { "model": "obsidanum:block/door_tr_open", "y": 270 },
 
-
-
     "facing=north,part=cr,open=false,active=false": { "model": "obsidanum:block/door_cr" },
     "facing=east,part=cr,open=false,active=false":  { "model": "obsidanum:block/door_cr", "y": 90 },
     "facing=south,part=cr,open=false,active=false": { "model": "obsidanum:block/door_cr", "y": 180 },
     "facing=west,part=cr,open=false,active=false":  { "model": "obsidanum:block/door_cr", "y": 270 },
 
-    "facing=north,part=cr,open=false,active=true": { "model": "obsidanum:block/door_cr_active" },
-    "facing=east,part=cr,open=false,active=true":  { "model": "obsidanum:block/door_cr_active", "y": 90 },
-    "facing=south,part=cr,open=false,active=true": { "model": "obsidanum:block/door_cr_active", "y": 180 },
-    "facing=west,part=cr,open=false,active=true":  { "model": "obsidanum:block/door_cr_active", "y": 270 },
+    "facing=north,part=cr,open=false,active=true,all_active=true": { "model": "obsidanum:block/door_cr_active_all" },
+    "facing=east,part=cr,open=false,active=true,all_active=true":  { "model": "obsidanum:block/door_cr_active_all", "y": 90 },
+    "facing=south,part=cr,open=false,active=true,all_active=true": { "model": "obsidanum:block/door_cr_active_all", "y": 180 },
+    "facing=west,part=cr,open=false,active=true,all_active=true":  { "model": "obsidanum:block/door_cr_active_all", "y": 270 },
+
+    "facing=north,part=cr,open=false,active=true,all_active=false": { "model": "obsidanum:block/door_cr_active" },
+    "facing=east,part=cr,open=false,active=true,all_active=false":  { "model": "obsidanum:block/door_cr_active", "y": 90 },
+    "facing=south,part=cr,open=false,active=true,all_active=false": { "model": "obsidanum:block/door_cr_active", "y": 180 },
+    "facing=west,part=cr,open=false,active=true,all_active=false":  { "model": "obsidanum:block/door_cr_active", "y": 270 },
 
     "facing=north,part=cr,open=true": { "model": "obsidanum:block/door_cr_open" },
     "facing=east,part=cr,open=true":  { "model": "obsidanum:block/door_cr_open", "y": 90 },
@@ -58,20 +61,30 @@
     "facing=south,part=cl,open=false,active=false": { "model": "obsidanum:block/door_cl", "y": 180 },
     "facing=west,part=cl,open=false,active=false":  { "model": "obsidanum:block/door_cl", "y": 270 },
 
-    "facing=north,part=cl,open=false,active=true": { "model": "obsidanum:block/door_cl_active" },
-    "facing=east,part=cl,open=false,active=true":  { "model": "obsidanum:block/door_cl_active", "y": 90 },
-    "facing=south,part=cl,open=false,active=true": { "model": "obsidanum:block/door_cl_active", "y": 180 },
-    "facing=west,part=cl,open=false,active=true":  { "model": "obsidanum:block/door_cl_active", "y": 270 },
+    "facing=north,part=cl,open=false,active=true,all_active=true": { "model": "obsidanum:block/door_cl_active_all" },
+    "facing=east,part=cl,open=false,active=true,all_active=true":  { "model": "obsidanum:block/door_cl_active_all", "y": 90 },
+    "facing=south,part=cl,open=false,active=true,all_active=true": { "model": "obsidanum:block/door_cl_active_all", "y": 180 },
+    "facing=west,part=cl,open=false,active=true,all_active=true":  { "model": "obsidanum:block/door_cl_active_all", "y": 270 },
+
+    "facing=north,part=cl,open=false,active=true,all_active=false": { "model": "obsidanum:block/door_cl_active" },
+    "facing=east,part=cl,open=false,active=true,all_active=false":  { "model": "obsidanum:block/door_cl_active", "y": 90 },
+    "facing=south,part=cl,open=false,active=true,all_active=false": { "model": "obsidanum:block/door_cl_active", "y": 180 },
+    "facing=west,part=cl,open=false,active=true,all_active=false":  { "model": "obsidanum:block/door_cl_active", "y": 270 },
 
     "facing=north,part=c,open=false,active=false": { "model": "obsidanum:block/door_c" },
     "facing=east,part=c,open=false,active=false":  { "model": "obsidanum:block/door_c", "y": 90 },
     "facing=south,part=c,open=false,active=false": { "model": "obsidanum:block/door_c", "y": 180 },
     "facing=west,part=c,open=false,active=false":  { "model": "obsidanum:block/door_c", "y": 270 },
 
-    "facing=north,part=c,open=false,active=true": { "model": "obsidanum:block/door_c_active" },
-    "facing=east,part=c,open=false,active=true":  { "model": "obsidanum:block/door_c_active", "y": 90 },
-    "facing=south,part=c,open=false,active=true": { "model": "obsidanum:block/door_c_active", "y": 180 },
-    "facing=west,part=c,open=false,active=true":  { "model": "obsidanum:block/door_c_active", "y": 270 },
+    "facing=north,part=c,open=false,active=true,all_active=true": { "model": "obsidanum:block/door_c_active_all" },
+    "facing=east,part=c,open=false,active=true,all_active=true":  { "model": "obsidanum:block/door_c_active_all", "y": 90 },
+    "facing=south,part=c,open=false,active=true,all_active=true": { "model": "obsidanum:block/door_c_active_all", "y": 180 },
+    "facing=west,part=c,open=false,active=true,all_active=true":  { "model": "obsidanum:block/door_c_active_all", "y": 270 },
+
+    "facing=north,part=c,open=false,active=true,all_active=false": { "model": "obsidanum:block/door_c_active" },
+    "facing=east,part=c,open=false,active=true,all_active=false":  { "model": "obsidanum:block/door_c_active", "y": 90 },
+    "facing=south,part=c,open=false,active=true,all_active=false": { "model": "obsidanum:block/door_c_active", "y": 180 },
+    "facing=west,part=c,open=false,active=true,all_active=false":  { "model": "obsidanum:block/door_c_active", "y": 270 },
 
     "facing=north,part=c,open=true": { "model": "obsidanum:block/door_c_open" },
     "facing=east,part=c,open=true":  { "model": "obsidanum:block/door_c_open", "y": 90 },

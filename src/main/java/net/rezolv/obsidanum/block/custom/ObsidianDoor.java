@@ -37,6 +37,7 @@ public class ObsidianDoor extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+    public static final BooleanProperty ALL_ACTIVE = BooleanProperty.create("all_active");
     public static final EnumProperty<DoorPart> PART = EnumProperty.create("part", DoorPart.class);
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 4);
 
@@ -46,12 +47,13 @@ public class ObsidianDoor extends Block {
                 .setValue(FACING, Direction.NORTH)
                 .setValue(OPEN, false)
                 .setValue(ACTIVE, false)
+                .setValue(ALL_ACTIVE, false)
                 .setValue(PART, DoorPart.BC));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN, ACTIVE, PART);
+        builder.add(FACING, OPEN, ACTIVE, ALL_ACTIVE, PART);
     }
 
     @Override
@@ -155,46 +157,26 @@ public class ObsidianDoor extends Block {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        // Логика открытия/закрытия двери
         DoorPart part = state.getValue(PART);
         Direction facing = state.getValue(FACING);
 
         if (player.getItemInHand(hand).getItem() == ItemsObs.OBSIDIAN_KEY.get()) {
-            if (part == DoorPart.C && !state.getValue(ACTIVE)) {
+            if ((part == DoorPart.C || part == DoorPart.CL || part == DoorPart.CR) && !state.getValue(ACTIVE)) {
                 player.getItemInHand(hand).shrink(1);
                 world.setBlock(pos, state.setValue(ACTIVE, true), 3);
-                // Звук активации
                 world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
-            }
-            if (part == DoorPart.CR && !state.getValue(ACTIVE)) {
-                player.getItemInHand(hand).shrink(1);
-                world.setBlock(pos, state.setValue(ACTIVE, true), 3);
-                // Звук активации
-                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
-            }
-            if (part == DoorPart.CL && !state.getValue(ACTIVE)) {
-                player.getItemInHand(hand).shrink(1);
-                world.setBlock(pos, state.setValue(ACTIVE, true), 3);
-                // Звук активации
-                world.playSound(null, pos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                checkAndUpdateAllActive(world, pos, facing); // Обновляем ALL_ACTIVE
                 return InteractionResult.SUCCESS;
             }
         }
 
-        // Для любой части двери
         if (!world.isClientSide()) {
-            // 1. Находим базовый блок BC
             BlockPos basePos = findBaseFromAnyPart(pos, facing, part);
 
-            // 2. Проверяем активность C/CL/CR
             if (checkCenterPartsActive(world, basePos, facing)) {
-                // 3. Переключаем состояние OPEN
                 boolean newOpenState = !state.getValue(OPEN);
                 updateAllParts(world, basePos, facing, newOpenState);
 
-                // 4. Воспроизводим звук
                 SoundEvent sound = newOpenState ?
                         SoundsObs.OPEN_OBSIDIAN_DOOR.get() :
                         SoundsObs.CLOSE_OBSIDIAN_DOOR.get();
@@ -205,6 +187,28 @@ public class ObsidianDoor extends Block {
         return InteractionResult.SUCCESS;
     }
 
+    private void checkAndUpdateAllActive(Level level, BlockPos pos, Direction facing) {
+        BlockPos basePos = findBaseFromAnyPart(pos, facing, level.getBlockState(pos).getValue(PART));
+        BlockPos cPos  = basePos.above(1);
+        BlockPos clPos = cPos.relative(facing.getCounterClockWise());
+        BlockPos crPos = cPos.relative(facing.getClockWise());
+
+        boolean allActive = isPartActive(level, cPos, facing) &&
+                isPartActive(level, clPos, facing) &&
+                isPartActive(level, crPos, facing);
+
+        // Обновляем состояние ALL_ACTIVE для всех частей двери
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = 0; dy < 3; dy++) {
+                BlockPos partPos = basePos.relative(facing.getClockWise(), dx).above(dy);
+                BlockState partState = level.getBlockState(partPos);
+
+                if (partState.getBlock() == this) {
+                    level.setBlock(partPos, partState.setValue(ALL_ACTIVE, allActive), Block.UPDATE_ALL);
+                }
+            }
+        }
+    }
     // Находим позицию базового блока BC относительно TL
     private BlockPos findBaseFromAnyPart(BlockPos anyPartPos, Direction facing, DoorPart part) {
         // Определяем смещение относительно BC
@@ -275,7 +279,6 @@ public class ObsidianDoor extends Block {
                 state.getValue(ACTIVE) &&
                 state.getValue(FACING) == facing;
     }
-
     // Обновляем все части двери
     private void updateAllParts(Level level, BlockPos basePos, Direction facing, boolean open) {
         for (int dx = -1; dx <= 1; dx++) {
