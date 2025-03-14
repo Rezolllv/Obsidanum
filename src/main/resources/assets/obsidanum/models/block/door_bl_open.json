@@ -5,8 +5,8 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"1": "obsidanum:block/null_door",
-		"particle": "obsidanum:block/null_door",
-		"top": "obsidanum:block/door_tc"
+		"particle": "obsidanum:block/door_tc",
+		"top": "obsidanum:block/door_bl_open"
 	},
 	"elements": [
 		{
