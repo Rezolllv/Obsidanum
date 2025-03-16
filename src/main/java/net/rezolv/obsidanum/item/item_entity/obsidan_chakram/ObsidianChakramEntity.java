@@ -1,5 +1,6 @@
 package net.rezolv.obsidanum.item.item_entity.obsidan_chakram;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -19,10 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.rezolv.obsidanum.item.ItemsObs;
@@ -32,11 +30,14 @@ import net.rezolv.obsidanum.sound.SoundsObs;
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class ObsidianChakramEntity extends ThrowableItemProjectile {
 
+    private static final EntityDataAccessor<Float> STOPPED_YAW = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> STOPPED_PITCH = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Byte> ID_FLAGS = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.BYTE);
+
     private boolean stopped = false;
     private boolean inGround = false;
     private ItemStack tridentItem;
     private BlockState lastState;
-    private static final EntityDataAccessor<Byte> ID_FLAGS = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.BYTE);
     public int shakeTime;
     public AbstractArrow.Pickup pickup = AbstractArrow.Pickup.ALLOWED;
 
@@ -53,6 +54,14 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
     public ObsidianChakramEntity(Level world, LivingEntity owner) {
         super(ModEntitiesItem.OBSIDIAN_CHAKRAM.get(), owner, world);
         this.tridentItem = new ItemStack(ItemsObs.OBSIDIAN_CHAKRAM.get());
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(STOPPED_YAW, 0.0F);
+        this.entityData.define(STOPPED_PITCH, 0.0F);
+        this.entityData.define(ID_FLAGS, (byte) 0);
     }
 
     @Override
@@ -77,7 +86,6 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHit(HitResult result) {
-        super.onHit(result);
         if (result.getType() == HitResult.Type.BLOCK) {
             onHitBlock((BlockHitResult) result);
         } else if (result.getType() == HitResult.Type.ENTITY) {
@@ -85,28 +93,63 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
         }
     }
 
+
     protected void onHitBlock(BlockHitResult pResult) {
+        if (this.inGround) return;
+
+        // Смещаем позицию внутрь блока на 2 пикселя
+        Direction hitDirection = pResult.getDirection();
+        Vec3 newPos = pResult.getLocation().add(
+                hitDirection.getNormal().getX() * 0.125,
+                hitDirection.getNormal().getY() * 0.125,
+                hitDirection.getNormal().getZ() * 0.125
+        );
+        this.setPos(newPos.x, newPos.y, newPos.z);
+
+        // Сохраняем вращение при ударе
+        Vec3 motionBeforeHit = this.getDeltaMovement();
+        float horizontalSpeed = (float) Math.sqrt(motionBeforeHit.x * motionBeforeHit.x + motionBeforeHit.z * motionBeforeHit.z);
+        float yaw = (horizontalSpeed > 0.001F)
+                ? (float) (Math.atan2(motionBeforeHit.x, motionBeforeHit.z) * (180 / Math.PI))
+                : this.getYRot();
+        float pitch = (horizontalSpeed > 0.001F)
+                ? (float) (Math.atan2(motionBeforeHit.y, horizontalSpeed) * (180 / Math.PI))
+                : this.getXRot();
+
+        this.getEntityData().set(STOPPED_YAW, yaw);
+        this.getEntityData().set(STOPPED_PITCH, pitch);
         this.lastState = this.level().getBlockState(pResult.getBlockPos());
-        super.onHitBlock(pResult);
-        Vec3 vec3 = pResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
-        this.setDeltaMovement(vec3);
-        Vec3 vec31 = vec3.normalize().scale(0.255000000074505806);
-        this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
+
+        // Фиксируем чакрам в блоке
+        this.setDeltaMovement(Vec3.ZERO);
         this.inGround = true;
-        this.setNoGravity(false);
         this.stopped = true;
-        // Play arrow hit sound
-        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundsObs.CHAKRAM_HIT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                SoundsObs.CHAKRAM_HIT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+    }
+
+
+    public float getStoppedYaw() {
+        return this.entityData.get(STOPPED_YAW);
+    }
+
+    public float getStoppedPitch() {
+        return this.entityData.get(STOPPED_PITCH);
     }
 
     @Override
     public void tick() {
         super.tick();
+
         if (this.stopped) {
-            this.setDeltaMovement(0, 0, 0); // Останавливаем движение
+            this.setDeltaMovement(Vec3.ZERO);
+        } else {
+            // Проверка на слишком резкое замедление
+            if (this.getDeltaMovement().lengthSqr() < 0.01 && !this.inGround) {
+                this.setDeltaMovement(this.getDeltaMovement().scale(1.05)); // Ускоряем, если слишком замедлился
+            }
         }
     }
-
     public boolean isStopped() {
         return stopped;
     }
@@ -137,12 +180,4 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
         }
     }
 
-    private void setFlag(int pId, boolean pValue) {
-        byte b0 = (Byte) this.entityData.get(ID_FLAGS);
-        if (pValue) {
-            this.entityData.set(ID_FLAGS, (byte) (b0 | pId));
-        } else {
-            this.entityData.set(ID_FLAGS, (byte) (b0 & ~pId));
-        }
-    }
 }
