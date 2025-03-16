@@ -226,6 +226,27 @@ public class BlocksObs {
 
 
 
+    // BLUE OBSIDIAN HOLE
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_1 = registerBlock("obsidian_hole_1",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_2 = registerBlock("obsidian_hole_2",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_3 = registerBlock("obsidian_hole_3",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_4 = registerBlock("obsidian_hole_4",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_5 = registerBlock("obsidian_hole_5",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_6 = registerBlock("obsidian_hole_6",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_7 = registerBlock("obsidian_hole_7",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_8 = registerBlock("obsidian_hole_8",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> OBSIDIAN_HOLE_9 = registerBlock("obsidian_hole_9",
+            () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+
     // Blue OBSIDIAN
     public static final RegistryObject<Block> AZURE_OBSIDIAN_BRICKS = BLOCKS.register("azure_obsidian_bricks",
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
