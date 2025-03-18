@@ -1,6 +1,12 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "block/cube",
   "textures": {
-    "all": "obsidanum:block/obsidian_hole_2"
+    "particle": "obsidanum:block/obsidian_hole_2",
+    "down": "obsidanum:block/azure_obsidian_bricks",
+    "up": "obsidanum:block/azure_obsidian_bricks",
+    "north": "obsidanum:block/azure_obsidian_bricks",
+    "south": "obsidanum:block/obsidian_hole_2",
+    "west": "obsidanum:block/azure_obsidian_bricks",
+    "east": "obsidanum:block/azure_obsidian_bricks"
   }
 }

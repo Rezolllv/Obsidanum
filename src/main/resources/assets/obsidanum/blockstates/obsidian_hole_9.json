@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "obsidanum:block/obsidian_hole_9"
-    }
+    "facing=north": { "model": "obsidanum:block/obsidian_hole_9" },
+    "facing=east":  { "model": "obsidanum:block/obsidian_hole_9", "y": 90 },
+    "facing=south": { "model": "obsidanum:block/obsidian_hole_9", "y": 180 },
+    "facing=west":  { "model": "obsidanum:block/obsidian_hole_9", "y": 270 }
   }
 }
