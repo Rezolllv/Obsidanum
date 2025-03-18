@@ -1,5 +1,7 @@
 {
 	"parent": "ritual_drum",
+	"ambientocclusion": false,
+
 	"texture_size": [96, 96],
 	"textures": {
 		"0": "obsidanum:block/ritual_drum",

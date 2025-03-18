@@ -30,8 +30,8 @@ import net.rezolv.obsidanum.sound.SoundsObs;
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class ObsidianChakramEntity extends ThrowableItemProjectile {
 
-    private static final EntityDataAccessor<Float> STOPPED_YAW = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.FLOAT);
-    private static final EntityDataAccessor<Float> STOPPED_PITCH = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Float> STOPPED_YAW = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Float> STOPPED_PITCH = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Byte> ID_FLAGS = SynchedEntityData.defineId(ObsidianChakramEntity.class, EntityDataSerializers.BYTE);
 
     private boolean stopped = false;
@@ -63,7 +63,29 @@ public class ObsidianChakramEntity extends ThrowableItemProjectile {
         this.entityData.define(STOPPED_PITCH, 0.0F);
         this.entityData.define(ID_FLAGS, (byte) 0);
     }
+    @Override
+    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+        super.shoot(x, y, z, velocity, inaccuracy);
 
+        // Обновляем углы при запуске
+        Vec3 motion = new Vec3(x, y, z).normalize();
+        float yaw = (float) Math.toDegrees(Math.atan2(motion.x, motion.z));
+        float pitch = (float) Math.toDegrees(Math.asin(motion.y));
+
+        // Корректируем ориентацию для вертикального броска
+        if (Math.abs(motion.y) > 0.9) { // Если игрок смотрит почти вертикально
+            yaw += 90.0F; // Поворачиваем чакрам на 90 градусов, чтобы он был ребром
+        }
+
+        this.setYRot(yaw);
+        this.setXRot(pitch);
+        this.yRotO = yaw;
+        this.xRotO = pitch;
+
+        // Сохраняем ориентацию в синхронизированных данных
+        this.getEntityData().set(STOPPED_YAW, yaw);
+        this.getEntityData().set(STOPPED_PITCH, pitch);
+    }
     @Override
     protected Item getDefaultItem() {
         return ItemsObs.OBSIDIAN_CHAKRAM.get();

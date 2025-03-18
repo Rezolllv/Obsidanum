@@ -31,47 +31,49 @@ public class ObsidianChakramRenderer extends EntityRenderer<ObsidianChakramEntit
     }
 
     @Override
-    public void render(ObsidianChakramEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(ObsidianChakramEntity entity, float entityYaw, float partialTicks,
+                       PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
-        float computedYaw, computedPitch;
+        // Получаем сохранённые углы ориентации
+        float yaw = entity.isStopped() ?
+                entity.getStoppedYaw() :
+                entity.getYRot();
 
-        if (entity.isStopped()) {
-            // Используем синхронизированные углы
-            computedYaw = entity.getStoppedYaw() + 90.0F; // Смещение для ориентации
-            computedPitch = entity.getStoppedPitch();
-        } else {
-            Vec3 motion = entity.getDeltaMovement();
-            float horizontalSpeed = (float) Math.sqrt(motion.x * motion.x + motion.z * motion.z);
-            if (horizontalSpeed > 0.001F) {
-                computedYaw = (float) (Math.atan2(motion.x, motion.z) * (180 / Math.PI));
-                computedPitch = (float) (Math.atan2(motion.y, horizontalSpeed) * (180 / Math.PI));
-            } else {
-                computedYaw = entityYaw;
-                computedPitch = (motion.y > 0) ? -90.0F : 90.0F;
-            }
-            computedYaw += 90.0F; // Смещение для ориентации
+        float pitch = entity.isStopped() ?
+                entity.getStoppedPitch() :
+                entity.getXRot();
+
+        // Применяем повороты ориентации
+        poseStack.mulPose(Axis.YP.rotationDegrees(yaw - 90)); // Корректировка для ориентации ребром
+        poseStack.mulPose(Axis.XP.rotationDegrees(pitch));
+        if (Math.abs(entity.getDeltaMovement().y) > 0.9) {
+            poseStack.mulPose(Axis.YP.rotationDegrees(90.0F)); // Дополнительный поворот для вертикального полёта
         }
-
-        // Применяем повороты
-        poseStack.mulPose(Axis.YP.rotationDegrees(computedYaw));
-        poseStack.mulPose(Axis.XP.rotationDegrees(computedPitch));
-
-        // Вращение в полете
+        // Вращение в полёте
         if (!entity.isStopped()) {
-            float spinAngle = (entity.tickCount + partialTicks) * -20.0F;
-            poseStack.mulPose(Axis.ZP.rotationDegrees(spinAngle));
+            float spin = (entity.tickCount + partialTicks) * -45.0F;
+            poseStack.mulPose(Axis.ZP.rotationDegrees(spin));
         }
 
-        // Корректировка позиции
-        poseStack.translate(0.0D, -0.1D, 0.0D);
+        // Корректировка позиции и масштаба
+        poseStack.translate(0, -0.15, 0);
+        poseStack.scale(1.2F, 1.2F, 1.2F);
 
         // Рендер модели
-        ItemStack itemStack = new ItemStack(ItemsObs.OBSIDIAN_CHAKRAM.get());
-        BakedModel model = itemRenderer.getModel(itemStack, entity.level(), null, 0);
-        itemRenderer.render(itemStack, ItemDisplayContext.GROUND, false, poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, model);
+        ItemStack stack = new ItemStack(ItemsObs.OBSIDIAN_CHAKRAM.get());
+        BakedModel model = itemRenderer.getModel(stack, entity.level(), null, 0);
+        itemRenderer.render(
+                stack,
+                ItemDisplayContext.GROUND,
+                false,
+                poseStack,
+                buffer,
+                packedLight,
+                OverlayTexture.NO_OVERLAY,
+                model
+        );
 
         poseStack.popPose();
-        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 }

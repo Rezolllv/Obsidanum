@@ -50,8 +50,13 @@ public class BlocksObs {
     public static final RegistryObject<Block> PRANA_CRYSTALL = registerBlock("prana_crystall",
             () -> new PranaCrystall(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
                     .sound(SoundType.AMETHYST)));
+
+
+    public static final RegistryObject<Block> INVISIBLE_PART = registerBlock("invisible_part",
+            () -> new InvisiblePart(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
+                    .sound(SoundType.AMETHYST)));
     public static final RegistryObject<Block> RITUAL_DRUM = registerBlock("ritual_drum",
-            () -> new RitualDrum(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
+            () -> new RitualDrum(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
                     .sound(SoundType.AMETHYST)));
 
     public static final RegistryObject<Block> RIGHT_FORGE_SCROLL = registerBlock("right_forge_scroll",
@@ -245,6 +250,7 @@ public class BlocksObs {
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> OBSIDIAN_HOLE_9 = registerBlock("obsidian_hole_9",
             () -> new Block(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
 
 
     // Blue OBSIDIAN

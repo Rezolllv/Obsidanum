@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -31,8 +32,8 @@ public class ObsidanAxe extends AxeItem {
     private static final TagKey<Block> MINEABLE_LOGS_TAG = BlockTags.create(new ResourceLocation("minecraft", "logs"));
     private static final TagKey<Block> MINEABLE_LEAVES_TAG = BlockTags.create(new ResourceLocation("minecraft", "leaves"));
 
-    private static final long COOLDOWN_DURATION = 40 * 20; // 60 seconds in ticks
-    private static final long ACTIVATION_DURATION = 5 * 20; // 5 seconds in ticks
+    private static final long COOLDOWN_DURATION = 40 * 20; // 40 секунд в тиках
+    private static final long ACTIVATION_DURATION = 5 * 20;  // 5 секунд в тиках
 
     public ObsidanAxe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
@@ -45,7 +46,7 @@ public class ObsidanAxe extends AxeItem {
             long lastActivationTime = getLastActivationTime(stack);
             if (world.getGameTime() - lastActivationTime >= ACTIVATION_DURATION) {
                 if (entity instanceof Player) {
-                    deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
+                    deactivate(stack, (Player) entity);
                 }
             }
         }
@@ -58,7 +59,7 @@ public class ObsidanAxe extends AxeItem {
 
         if (!isActivated(stack) && currentTime - getLastActivationTime(stack) >= COOLDOWN_DURATION) {
             if (!worldIn.isClientSide) {
-                activate(stack); // Передаем stack в метод активации
+                activate(stack);
                 setLastActivationTime(stack, currentTime);
             }
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
@@ -92,71 +93,160 @@ public class ObsidanAxe extends AxeItem {
 
     public void activate(ItemStack stack) {
         stack.getOrCreateTag().putBoolean("Activated", true);
-        stack.getOrCreateTag().putInt("CustomModelData", 1); // Обновляем модель
+        stack.getOrCreateTag().putInt("CustomModelData", 1);
+        stack.getOrCreateTag().putBoolean("DurabilityLost", false);
     }
 
     public void deactivate(ItemStack stack, Player player) {
         stack.getOrCreateTag().putBoolean("Activated", false);
-        stack.getOrCreateTag().putInt("CustomModelData", 0); // Возвращаем обычную модель
-        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION); // Устанавливаем кулдаун
+        stack.getOrCreateTag().putInt("CustomModelData", 0);
+        stack.getOrCreateTag().putBoolean("DurabilityLost", false);
+        player.getCooldowns().addCooldown(this, (int) COOLDOWN_DURATION);
     }
 
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!world.isClientSide && isActivated(stack) && entity instanceof Player) {
-            Block block = state.getBlock();
-            if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG)) {
-                chainBreak(world, pos, (Player) entity, stack); // Передаем stack
-                deactivate(stack, (Player) entity); // Передаем stack и player в метод деактивации
+            // Если блок является обычным стволом, листьями или незерским стволом – выполняем цепное разрушение
+            if (state.is(MINEABLE_LOGS_TAG) || state.is(MINEABLE_LEAVES_TAG) || isNetherLog(state) || isNetherFungus(state)) {
+                chainBreak(world, pos, (Player) entity, stack, state);
+                deactivate(stack, (Player) entity);
                 return true;
             }
         }
         return super.mineBlock(stack, world, state, pos, entity);
     }
 
-    private void chainBreak(Level world, BlockPos pos, Player player, ItemStack stack) {
-        Queue<BlockPos> queue = new LinkedList<>();
-        Set<BlockPos> visited = new HashSet<>();
-        AtomicInteger blockBreakCount = new AtomicInteger(0);
+    /**
+     * Определяем, является ли блок незерским стволом (Crimson или Warped)
+     */
+    private boolean isNetherLog(BlockState state) {
+        return state.getBlock() == Blocks.CRIMSON_STEM || state.getBlock() == Blocks.WARPED_STEM;
+    }
 
-        queue.offer(pos);
-        visited.add(pos);
+    /**
+     * Определяем, является ли блок незерским наростом или светогрибом.
+     */
+    private boolean isNetherFungus(BlockState state) {
+        return state.getBlock() == Blocks.NETHER_WART_BLOCK ||
+                state.getBlock() == Blocks.WARPED_WART_BLOCK ||
+                state.getBlock() == Blocks.SHROOMLIGHT;
+    }
 
-        while (!queue.isEmpty() && blockBreakCount.get() < 300) {
-            BlockPos currentPos = queue.poll();
-            breakBlock(world, currentPos, player, stack, visited, queue, blockBreakCount);
+    /**
+     * Для незерских блоков при добыче: разрушаем ВСЁ, что относится к дереву (и ствол, и наросты, и светогриб)
+     */
+    private void chainBreak(Level world, BlockPos pos, Player player, ItemStack stack, BlockState state) {
+        if (isNetherLog(state) || isNetherFungus(state)) {
+            breakNetherTree(world, pos, player, stack);
+        }
+        else if (state.is(MINEABLE_LOGS_TAG)) {
+            breakTree(world, pos, player, stack);
+        }
+        else if (state.is(MINEABLE_LEAVES_TAG)) {
+            breakPlants(world, pos, player, stack);
         }
     }
 
-    private void breakBlock(Level world, BlockPos pos, Player player, ItemStack stack, Set<BlockPos> visited, Queue<BlockPos> queue, AtomicInteger blockBreakCount) {
-        BlockState state = world.getBlockState(pos);
-        Block block = state.getBlock();
+    /**
+     * Обработка обычных деревьев (сбор ствола и листьев)
+     */
+    private void breakTree(Level world, BlockPos startPos, Player player, ItemStack stack) {
+        Set<BlockPos> logs = new HashSet<>();
+        Set<BlockPos> leaves = new HashSet<>();
 
-        if (block.defaultBlockState().is(MINEABLE_LOGS_TAG) || block.defaultBlockState().is(MINEABLE_LEAVES_TAG) || block == Blocks.NETHER_WART_BLOCK || block == Blocks.WARPED_WART_BLOCK || block == Blocks.SHROOMLIGHT) {
-            world.destroyBlock(pos, true);
-            blockBreakCount.incrementAndGet();
+        findConnectedBlocks(world, startPos, logs, MINEABLE_LOGS_TAG, 1024);
 
-            // Добавляем соседние блоки
-            for (BlockPos offset : getNeighbors(pos)) {
-                if (!visited.contains(offset)) {
-                    visited.add(offset);
-                    queue.offer(offset);
-                }
+        for (BlockPos logPos : logs) {
+            findLeaves(world, logPos, leaves, 2048);
+        }
+
+        destroyBlocks(world, logs, player, stack);
+        destroyBlocks(world, leaves, player, stack);
+    }
+
+    /**
+     * Обработка незерских деревьев – собираем ВСЕ связанные блоки, относящиеся к дереву (и ствол, и наросты, и светогриб)
+     */
+    private void breakNetherTree(Level world, BlockPos startPos, Player player, ItemStack stack) {
+        Set<BlockPos> netherBlocks = new HashSet<>();
+        findConnectedNetherTreeBlocks(world, startPos, netherBlocks, 2048);
+        destroyBlocks(world, netherBlocks, player, stack);
+    }
+
+    /**
+     * Рекурсивно ищем связанные незерские блоки (как ствол, так и наросты/светогриб)
+     */
+    private void findConnectedNetherTreeBlocks(Level world, BlockPos pos, Set<BlockPos> result, int max) {
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        queue.add(pos);
+
+        while (!queue.isEmpty() && result.size() < max) {
+            BlockPos current = queue.poll();
+            if (result.contains(current)) continue;
+            BlockState state = world.getBlockState(current);
+            if (isNetherLog(state) || isNetherFungus(state)) {
+                result.add(current);
+                queue.add(current.offset(1, 0, 0));
+                queue.add(current.offset(-1, 0, 0));
+                queue.add(current.offset(0, 0, 1));
+                queue.add(current.offset(0, 0, -1));
+                queue.add(current.offset(0, 1, 0));
+                queue.add(current.offset(0, -1, 0));
             }
         }
     }
 
-    private Iterable<BlockPos> getNeighbors(BlockPos pos) {
-        List<BlockPos> neighbors = new ArrayList<>();
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dz = -1; dz <= 1; dz++) {
-                    if (dx != 0 || dy != 0 || dz != 0) {
-                        neighbors.add(pos.offset(dx, dy, dz));
+    private void findConnectedBlocks(Level world, BlockPos pos, Set<BlockPos> result, TagKey<Block> tag, int max) {
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        queue.add(pos);
+
+        while (!queue.isEmpty() && result.size() < max) {
+            BlockPos current = queue.poll();
+            if (result.contains(current)) continue;
+
+            BlockState state = world.getBlockState(current);
+            if (state.is(tag)) {
+                result.add(current);
+                queue.add(current.offset(1, 0, 0));
+                queue.add(current.offset(-1, 0, 0));
+                queue.add(current.offset(0, 0, 1));
+                queue.add(current.offset(0, 0, -1));
+                queue.add(current.offset(0, 1, 0));
+                queue.add(current.offset(0, -1, 0));
+            }
+        }
+    }
+
+    private void findLeaves(Level world, BlockPos pos, Set<BlockPos> result, int max) {
+        BlockPos.betweenClosedStream(pos.offset(-5, -3, -5), pos.offset(5, 3, 5))
+                .filter(p -> world.getBlockState(p).is(MINEABLE_LEAVES_TAG))
+                .limit(max)
+                .forEach(p -> result.add(p.immutable()));
+    }
+
+    private void breakPlants(Level world, BlockPos pos, Player player, ItemStack stack) {
+        AtomicInteger counter = new AtomicInteger(0);
+        BlockPos.betweenClosedStream(pos.offset(-7, -3, -7), pos.offset(7, 3, 7))
+                .filter(p -> world.getBlockState(p).is(MINEABLE_LEAVES_TAG))
+                .limit(300)
+                .forEach(p -> {
+                    if (counter.getAndIncrement() < 300) {
+                        world.destroyBlock(p, true);
                     }
+                });
+    }
+
+    private void destroyBlocks(Level world, Collection<BlockPos> positions, Player player, ItemStack stack) {
+        boolean durabilityLost = stack.getOrCreateTag().getBoolean("DurabilityLost");
+
+        positions.forEach(p -> {
+            if (p.distSqr(player.blockPosition()) < 4096) {
+                world.destroyBlock(p, true);
+                if (!durabilityLost) {
+                    stack.getOrCreateTag().putBoolean("DurabilityLost", true);
                 }
             }
-        }
-        return neighbors;
+        });
     }
 }
