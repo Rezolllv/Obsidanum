@@ -18,10 +18,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class InvisiblePart extends Block {
+public class InvisiblePartDrum extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING; // Поддержка всех 6 направлений
 
-    public InvisiblePart(Properties properties) {
+    public InvisiblePartDrum(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }

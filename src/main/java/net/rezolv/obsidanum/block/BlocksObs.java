@@ -52,8 +52,8 @@ public class BlocksObs {
                     .sound(SoundType.AMETHYST)));
 
 
-    public static final RegistryObject<Block> INVISIBLE_PART = registerBlock("invisible_part",
-            () -> new InvisiblePart(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
+    public static final RegistryObject<Block> INVISIBLE_PART_DRUM = registerBlock("invisible_part_drum",
+            () -> new InvisiblePartDrum(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
                     .sound(SoundType.AMETHYST)));
     public static final RegistryObject<Block> RITUAL_DRUM = registerBlock("ritual_drum",
             () -> new RitualDrum(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)

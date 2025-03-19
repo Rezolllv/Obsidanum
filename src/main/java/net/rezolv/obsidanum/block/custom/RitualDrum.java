@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -71,11 +70,11 @@ public class RitualDrum extends Block {
     @Override
     public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (!worldIn.isClientSide()) {
-            worldIn.setBlock(pos.north(), BlocksObs.INVISIBLE_PART.get().defaultBlockState().setValue(InvisiblePart.FACING, Direction.NORTH), 3);
-            worldIn.setBlock(pos.south(), BlocksObs.INVISIBLE_PART.get().defaultBlockState().setValue(InvisiblePart.FACING, Direction.SOUTH), 3);
-            worldIn.setBlock(pos.east(), BlocksObs.INVISIBLE_PART.get().defaultBlockState().setValue(InvisiblePart.FACING, Direction.EAST), 3);
-            worldIn.setBlock(pos.west(), BlocksObs.INVISIBLE_PART.get().defaultBlockState().setValue(InvisiblePart.FACING, Direction.WEST), 3);
-            worldIn.setBlock(pos.above(), BlocksObs.INVISIBLE_PART.get().defaultBlockState().setValue(InvisiblePart.FACING, Direction.UP), 3);
+            worldIn.setBlock(pos.north(), BlocksObs.INVISIBLE_PART_DRUM.get().defaultBlockState().setValue(InvisiblePartDrum.FACING, Direction.NORTH), 3);
+            worldIn.setBlock(pos.south(), BlocksObs.INVISIBLE_PART_DRUM.get().defaultBlockState().setValue(InvisiblePartDrum.FACING, Direction.SOUTH), 3);
+            worldIn.setBlock(pos.east(), BlocksObs.INVISIBLE_PART_DRUM.get().defaultBlockState().setValue(InvisiblePartDrum.FACING, Direction.EAST), 3);
+            worldIn.setBlock(pos.west(), BlocksObs.INVISIBLE_PART_DRUM.get().defaultBlockState().setValue(InvisiblePartDrum.FACING, Direction.WEST), 3);
+            worldIn.setBlock(pos.above(), BlocksObs.INVISIBLE_PART_DRUM.get().defaultBlockState().setValue(InvisiblePartDrum.FACING, Direction.UP), 3);
         }
         super.onPlace(state, worldIn, pos, oldState, isMoving);
     }
@@ -95,7 +94,7 @@ public class RitualDrum extends Block {
 
     private void removePart(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof InvisiblePart) {
+        if (state.getBlock() instanceof InvisiblePartDrum) {
             world.removeBlock(pos, false);
         }
     }
