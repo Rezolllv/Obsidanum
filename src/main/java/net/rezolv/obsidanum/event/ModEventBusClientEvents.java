@@ -1,17 +1,24 @@
 package net.rezolv.obsidanum.event;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -20,6 +27,7 @@ import net.rezolv.obsidanum.block.entity.HammerForgeEntity;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.block.entity.renderer.ForgeCrucibleEntityRenderer;
 import net.rezolv.obsidanum.block.entity.renderer.HammerForgeRenderer;
+import net.rezolv.obsidanum.block.entity.renderer.PranaCrystallRenderer;
 import net.rezolv.obsidanum.effect.effects.effect_overlay.ConfusionOverlay;
 import net.rezolv.obsidanum.entity.ModModelLayers;
 import net.rezolv.obsidanum.entity.gart.GartModel;
@@ -76,6 +84,7 @@ public class ModEventBusClientEvents {
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.FORGE_CRUCIBLE.get(), ForgeCrucibleEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.HAMMER_FORGE.get(), HammerForgeRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.PRANA_CRYSTALL.get(), PranaCrystallRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntities.OBSIDAN_SIGN.get(), SignRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.OBSIDAN_HANGING_SIGN.get(), HangingSignRenderer::new);

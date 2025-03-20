@@ -50,4 +50,9 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("hammer_forge", () ->
                     BlockEntityType.Builder.of(HammerForgeEntity::new,
                             BlocksObs.HAMMER_FORGE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<PranaCrystallEntity>> PRANA_CRYSTALL =
+            BLOCK_ENTITIES.register("prana_crystall", () ->
+                    BlockEntityType.Builder.of(PranaCrystallEntity::new,
+                            BlocksObs.PRANA_CRYSTALL.get()).build(null));
 }

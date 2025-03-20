@@ -30,6 +30,7 @@ import java.util.OptionalInt;
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> OBSIDAN_TREE = registerKey("obsidan_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_ONYX_KEY = registerKey("onyx");
+
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 

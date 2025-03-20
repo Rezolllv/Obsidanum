@@ -49,7 +49,11 @@ public class BlocksObs {
 
     public static final RegistryObject<Block> PRANA_CRYSTALL = registerBlock("prana_crystall",
             () -> new PranaCrystall(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
-                    .sound(SoundType.AMETHYST)));
+                    .sound(SoundType.AMETHYST).randomTicks().lightLevel((i) -> 15).mapColor(MapColor.COLOR_YELLOW).emissiveRendering((state, level, pos) -> true)));
+
+
+    public static final RegistryObject<Block> LIGHT_PRANA_CRYSTALL = registerBlock("light_prana_crystall",
+            () -> new LightPranaCrystall(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.8F).noLootTable().noOcclusion().replaceable().lightLevel(((state -> 15)))));
 
 
     public static final RegistryObject<Block> INVISIBLE_PART_DRUM = registerBlock("invisible_part_drum",

@@ -1,5 +1,6 @@
 package net.rezolv.obsidanum;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -25,6 +27,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
+import net.rezolv.obsidanum.block.entity.renderer.PranaCrystallRenderer;
 import net.rezolv.obsidanum.chests.block.entity.IronChestsBlockEntityTypes;
 import net.rezolv.obsidanum.chests.client.render.IronChestRenderer;
 import net.rezolv.obsidanum.chests.client.screen.IronChestScreen;
@@ -54,6 +57,7 @@ import net.rezolv.obsidanum.sound.SoundsObs;
 import net.rezolv.obsidanum.structures.WDAStructures;
 import net.rezolv.obsidanum.structures.processors.RSProcessors;
 import net.rezolv.obsidanum.tab.CreativeTabObs;
+import net.rezolv.obsidanum.world.features.ObsidanumFeatureRegistry;
 import net.rezolv.obsidanum.world.wood.ModWoodTypes;
 import org.slf4j.Logger;
 
@@ -80,6 +84,7 @@ public class Obsidanum {
                 .encoder(TotemAnimationMessage::encode)
                 .consumerMainThread(TotemAnimationMessage::handle)
                 .add();
+        ObsidanumFeatureRegistry.DEF_REG.register(modEventBus);
         WDAStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
         ObsidanRecipes.SERIALIZERS.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
@@ -120,7 +125,13 @@ public class Obsidanum {
             event.accept(ItemsObs.OBSIDIAN_ELEMENTAL_SPANW_EGG);
         }
     }
+    @SubscribeEvent
+    public void postRenderStage(RenderLevelStageEvent event) {
 
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
+            RenderSystem.runAsFancy(() -> PranaCrystallRenderer.renderEntireBatch(event.getLevelRenderer(), event.getPoseStack(), event.getRenderTick(), event.getCamera(), event.getPartialTick()));
+        }
+    }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
