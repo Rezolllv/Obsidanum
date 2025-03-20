@@ -33,23 +33,22 @@ public class PranaCrystallRenderer<T extends PranaCrystallEntity> implements Blo
     private static final int SHINE_CENTER_G = 200;
     private static final int SHINE_CENTER_B = 120;
 
-
-    public PranaCrystallRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+    public PranaCrystallRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     public static void renderEntireBatch(LevelRenderer levelRenderer, PoseStack poseStack, int renderTick, Camera camera, float partialTick) {
         if (!allOnScreen.isEmpty()) {
-            List<BlockPos> sortedPoses = new ArrayList<BlockPos>(allOnScreen.keySet());
-            Collections.sort(sortedPoses, (blockPos1, blockPos2) -> sortBlockPos(camera, blockPos1, blockPos2));
+            List<BlockPos> sortedPoses = new ArrayList<>(allOnScreen.keySet());
+            sortedPoses.sort((blockPos1, blockPos2) -> sortBlockPos(camera, blockPos1, blockPos2));
             poseStack.pushPose();
             Vec3 cameraPos = camera.getPosition();
             poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
+            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
             for (BlockPos pos : sortedPoses) {
                 Vec3 blockAt = Vec3.atCenterOf(pos);
                 poseStack.pushPose();
                 poseStack.translate(blockAt.x, blockAt.y, blockAt.z);
-                renderAt(allOnScreen.get(pos), partialTick, poseStack, multibuffersource$buffersource);
+                renderAt(allOnScreen.get(pos), partialTick, poseStack, bufferSource);
                 poseStack.popPose();
             }
             poseStack.popPose();
@@ -64,69 +63,87 @@ public class PranaCrystallRenderer<T extends PranaCrystallEntity> implements Blo
     }
 
     @Override
-    public void render(T ambersol, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        if (!ambersol.isRemoved()) {
-            allOnScreen.put(ambersol.getBlockPos(), ambersol);
+    public void render(T pranaCrystall, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        if (!pranaCrystall.isRemoved()) {
+            allOnScreen.put(pranaCrystall.getBlockPos(), pranaCrystall);
         } else {
-            allOnScreen.remove(ambersol.getBlockPos());
+            allOnScreen.remove(pranaCrystall.getBlockPos());
         }
-
     }
 
-    private static void renderAt(PranaCrystallEntity ambersol, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn) {
+    private static void renderAt(PranaCrystallEntity pranaCrystall, float partialTicks, PoseStack poseStack, MultiBufferSource buffer) {
         float scale = 1.0F;
         float time = 0;
         if (Minecraft.getInstance().getCameraEntity() != null) {
-            scale = ambersol.calculateShineScale(Minecraft.getInstance().getCameraEntity().getPosition(partialTicks));
+            scale = pranaCrystall.calculateShineScale(Minecraft.getInstance().getCameraEntity().getPosition(partialTicks));
             time = Minecraft.getInstance().getCameraEntity().tickCount + partialTicks;
         }
         if (scale > 0.0F) {
-            Quaternionf camera = Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation();
-            float time1 = time * ambersol.getRotSpeed() * 0.3F;
-            float time2 = time * 0.1F;
-            matrixStackIn.pushPose();
-            matrixStackIn.mulPose(camera);
-            VertexConsumer lightConsumer = bufferIn.getBuffer(ACRenderTypes.getAmbersolShine());
-            int lights = ambersol.getLights();
-            matrixStackIn.mulPose(Axis.ZN.rotationDegrees(ambersol.getRotOffset()));
+            Quaternionf cameraOrientation = Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation();
+            float rotationTime = time * pranaCrystall.getRotSpeed() * 0.3F;
+            float waveTime = time * 0.1F;
+            poseStack.pushPose();
+            poseStack.mulPose(cameraOrientation);
+            VertexConsumer vertexConsumer = buffer.getBuffer(ACRenderTypes.getAmbersolShine());
+            int lights = pranaCrystall.getLights();
+            poseStack.mulPose(Axis.ZN.rotationDegrees(pranaCrystall.getRotOffset()));
             for (int i = 0; i < lights; i++) {
-                float length = (float) (3F + Math.sin(time2 + i * 2)) * scale;
-                float width = (float) (1F - 0.2F * Math.abs(Math.cos(time2 - i * Math.PI * 0.5F))) * scale;
-                int j = 255;
+                float length = (float) (3F + Math.sin(waveTime + i * 2)) * scale;
+                float width = (float) (1F - 0.2F * Math.abs(Math.cos(waveTime - i * Math.PI * 0.5F))) * scale;
+                int alpha = 255;
                 float u = 0;
                 float v = 0;
-                matrixStackIn.pushPose();
-                matrixStackIn.mulPose(Axis.ZN.rotationDegrees(time1 - (i / (float) lights * 360)));
-                PoseStack.Pose posestack$pose = matrixStackIn.last();
-                Matrix4f matrix4f = posestack$pose.pose();
-                Matrix3f matrix3f = posestack$pose.normal();
-                shineOriginVertex(lightConsumer, matrix4f, matrix3f, j, u, v);
-                shineLeftCornerVertex(lightConsumer, matrix4f, matrix3f, length, width, u, v);
-                shineRightCornerVertex(lightConsumer, matrix4f, matrix3f, length, width, u, v);
-                shineLeftCornerVertex(lightConsumer, matrix4f, matrix3f, length, width, u, v);
-                matrixStackIn.popPose();
+                poseStack.pushPose();
+                poseStack.mulPose(Axis.ZN.rotationDegrees(rotationTime - (i / (float) lights * 360)));
+                PoseStack.Pose pose = poseStack.last();
+                Matrix4f poseMatrix = pose.pose();
+                Matrix3f normalMatrix = pose.normal();
+                renderShineOrigin(vertexConsumer, poseMatrix, normalMatrix, alpha, u, v);
+                renderShineLeftCorner(vertexConsumer, poseMatrix, normalMatrix, length, width, u, v);
+                renderShineRightCorner(vertexConsumer, poseMatrix, normalMatrix, length, width, u, v);
+                renderShineLeftCorner(vertexConsumer, poseMatrix, normalMatrix, length, width, u, v);
+                poseStack.popPose();
             }
-            //minecrafts janky render system wont do transparent blocks unless you render a selection box behind it.
-            PoseStack.Pose posestack$pose = matrixStackIn.last();
-            Matrix4f matrix4f = posestack$pose.pose();
-            Matrix3f matrix3f = posestack$pose.normal();
-            VertexConsumer lines = bufferIn.getBuffer(RenderType.lines());
-            matrixStackIn.popPose();
+            // Minecraft's render system requires a selection box for transparent blocks
+            PoseStack.Pose pose = poseStack.last();
+            Matrix4f poseMatrix = pose.pose();
+            Matrix3f normalMatrix = pose.normal();
+            VertexConsumer lines = buffer.getBuffer(RenderType.lines());
+            poseStack.popPose();
         }
     }
 
-    private static void shineOriginVertex(VertexConsumer p_114220_, Matrix4f p_114221_, Matrix3f p_114092_, int p_114222_, float xOffset, float yOffset) {
-        p_114220_.vertex(p_114221_, 0.0F, 0.0F, 0.0F).color(SHINE_CENTER_R, SHINE_CENTER_G, SHINE_CENTER_B, 230).uv(xOffset + 0.5F, yOffset).overlayCoords(NO_OVERLAY).uv2(240).normal(p_114092_, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void renderShineOrigin(VertexConsumer vertexConsumer, Matrix4f poseMatrix, Matrix3f normalMatrix, int alpha, float u, float v) {
+        vertexConsumer.vertex(poseMatrix, 0.0F, 0.0F, 0.0F)
+                .color(SHINE_CENTER_R, SHINE_CENTER_G, SHINE_CENTER_B, 230)
+                .uv(u + 0.5F, v)
+                .overlayCoords(NO_OVERLAY)
+                .uv2(240)
+                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
+                .endVertex();
     }
 
-    private static void shineLeftCornerVertex(VertexConsumer p_114215_, Matrix4f p_114216_, Matrix3f p_114092_, float p_114217_, float p_114218_, float xOffset, float yOffset) {
-        p_114215_.vertex(p_114216_, -HALF_SQRT_3 * p_114218_, p_114217_, 0).color(SHINE_R, SHINE_G, SHINE_B, 0).uv(xOffset, yOffset + 1).overlayCoords(NO_OVERLAY).uv2(240).normal(p_114092_, 0.0F, -1.0F, 0.0F).endVertex();
+    private static void renderShineLeftCorner(VertexConsumer vertexConsumer, Matrix4f poseMatrix, Matrix3f normalMatrix, float length, float width, float u, float v) {
+        vertexConsumer.vertex(poseMatrix, -HALF_SQRT_3 * width, length, 0)
+                .color(SHINE_R, SHINE_G, SHINE_B, 0)
+                .uv(u, v + 1)
+                .overlayCoords(NO_OVERLAY)
+                .uv2(240)
+                .normal(normalMatrix, 0.0F, -1.0F, 0.0F)
+                .endVertex();
     }
 
-    private static void shineRightCornerVertex(VertexConsumer p_114224_, Matrix4f p_114225_, Matrix3f p_114092_, float p_114226_, float p_114227_, float xOffset, float yOffset) {
-        p_114224_.vertex(p_114225_, HALF_SQRT_3 * p_114227_, p_114226_, 0).color(SHINE_R, SHINE_G, SHINE_B, 0).uv(xOffset + 1, yOffset + 1).overlayCoords(NO_OVERLAY).uv2(240).normal(p_114092_, 0.0F, -1.0F, 0.0F).endVertex();
+    private static void renderShineRightCorner(VertexConsumer vertexConsumer, Matrix4f poseMatrix, Matrix3f normalMatrix, float length, float width, float u, float v) {
+        vertexConsumer.vertex(poseMatrix, HALF_SQRT_3 * width, length, 0)
+                .color(SHINE_R, SHINE_G, SHINE_B, 0)
+                .uv(u + 1, v + 1)
+                .overlayCoords(NO_OVERLAY)
+                .uv2(240)
+                .normal(normalMatrix, 0.0F, -1.0F, 0.0F)
+                .endVertex();
     }
 
+    @Override
     public int getViewDistance() {
         return 256;
     }
