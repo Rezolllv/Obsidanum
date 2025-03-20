@@ -10,39 +10,49 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.rezolv.obsidanum.chests.block.IronChestsTypes;
+import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
 
 import javax.annotation.Nullable;
 
-public class IronChestMenu extends AbstractContainerMenu {
+public class ObsidanumChestMenu extends AbstractContainerMenu {
 
   private final Container container;
 
-  private final IronChestsTypes chestType;
+  private final ObsidanumChestsTypes chestType;
 
-  private IronChestMenu(@Nullable MenuType<?> menuType, int containerId, Inventory playerInventory) {
-    this(menuType, containerId, playerInventory, new SimpleContainer(IronChestsTypes.WOOD.size), IronChestsTypes.WOOD);
+  private ObsidanumChestMenu(@Nullable MenuType<?> menuType, int containerId, Inventory playerInventory) {
+    this(menuType, containerId, playerInventory, new SimpleContainer(ObsidanumChestsTypes.WOOD.size), ObsidanumChestsTypes.WOOD);
   }
 
 
 
-  public static IronChestMenu createObsidianContainer(int containerId, Inventory playerInventory) {
-    return new IronChestMenu(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), containerId, playerInventory, new SimpleContainer(IronChestsTypes.OBSIDIAN.size), IronChestsTypes.OBSIDIAN);
+  public static ObsidanumChestMenu createAzureObsidianContainer(int containerId, Inventory playerInventory) {
+    return new ObsidanumChestMenu(ObsidanumChestsContainerTypes.AZURE_OBSIDIAN_CHEST.get(), containerId, playerInventory, new SimpleContainer(ObsidanumChestsTypes.AZURE_OBSIDIAN.size), ObsidanumChestsTypes.AZURE_OBSIDIAN);
   }
 
-  public static IronChestMenu createObsidianContainer(int containerId, Inventory playerInventory, Container inventory) {
-    return new IronChestMenu(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), containerId, playerInventory, inventory, IronChestsTypes.OBSIDIAN);
-  }
-  public static IronChestMenu createRunicObsidianContainer(int containerId, Inventory playerInventory) {
-    return new IronChestMenu(IronChestsContainerTypes.RUNIC_OBSIDIAN_CHEST.get(), containerId, playerInventory, new SimpleContainer(IronChestsTypes.RUNIC_OBSIDIAN.size), IronChestsTypes.RUNIC_OBSIDIAN);
+  public static ObsidanumChestMenu createAzureObsidianContainer(int containerId, Inventory playerInventory, Container inventory) {
+    return new ObsidanumChestMenu(ObsidanumChestsContainerTypes.AZURE_OBSIDIAN_CHEST.get(), containerId, playerInventory, inventory, ObsidanumChestsTypes.AZURE_OBSIDIAN);
   }
 
-  public static IronChestMenu createRunicObsidianContainer(int containerId, Inventory playerInventory, Container inventory) {
-    return new IronChestMenu(IronChestsContainerTypes.RUNIC_OBSIDIAN_CHEST.get(), containerId, playerInventory, inventory, IronChestsTypes.RUNIC_OBSIDIAN);
+  public static ObsidanumChestMenu createObsidianContainer(int containerId, Inventory playerInventory) {
+    return new ObsidanumChestMenu(ObsidanumChestsContainerTypes.OBSIDIAN_CHEST.get(), containerId, playerInventory, new SimpleContainer(ObsidanumChestsTypes.OBSIDIAN.size), ObsidanumChestsTypes.OBSIDIAN);
+  }
+
+  public static ObsidanumChestMenu createObsidianContainer(int containerId, Inventory playerInventory, Container inventory) {
+    return new ObsidanumChestMenu(ObsidanumChestsContainerTypes.OBSIDIAN_CHEST.get(), containerId, playerInventory, inventory, ObsidanumChestsTypes.OBSIDIAN);
   }
 
 
-  protected IronChestMenu(@Nullable MenuType<?> menuType, int containerId, Inventory playerInventory, Container inventory, IronChestsTypes chestType) {
+  public static ObsidanumChestMenu createRunicObsidianContainer(int containerId, Inventory playerInventory) {
+    return new ObsidanumChestMenu(ObsidanumChestsContainerTypes.RUNIC_OBSIDIAN_CHEST.get(), containerId, playerInventory, new SimpleContainer(ObsidanumChestsTypes.RUNIC_OBSIDIAN.size), ObsidanumChestsTypes.RUNIC_OBSIDIAN);
+  }
+
+  public static ObsidanumChestMenu createRunicObsidianContainer(int containerId, Inventory playerInventory, Container inventory) {
+    return new ObsidanumChestMenu(ObsidanumChestsContainerTypes.RUNIC_OBSIDIAN_CHEST.get(), containerId, playerInventory, inventory, ObsidanumChestsTypes.RUNIC_OBSIDIAN);
+  }
+
+
+  protected ObsidanumChestMenu(@Nullable MenuType<?> menuType, int containerId, Inventory playerInventory, Container inventory, ObsidanumChestsTypes chestType) {
     super(menuType, containerId);
 
     checkContainerSize(inventory, chestType.size);
@@ -117,7 +127,7 @@ public class IronChestMenu extends AbstractContainerMenu {
   }
 
   @OnlyIn(Dist.CLIENT)
-  public IronChestsTypes getChestType() {
+  public ObsidanumChestsTypes getChestType() {
     return this.chestType;
   }
 }

@@ -154,6 +154,9 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(BlocksObs.LOCKED_CHEST_RUNIC.get());
 
                         pOutput.accept(BlocksObs.OBSIDIAN_TABLET.get());
+
+
+                        pOutput.accept(BlocksObs.AZURE_OBSIDIAN_CHEST.get());
                         pOutput.accept(BlocksObs.OBSIDIAN_CHEST.get());
                         pOutput.accept(BlocksObs.RUNIC_OBSIDIAN_CHEST.get());
 

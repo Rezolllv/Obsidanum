@@ -13,10 +13,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.block.custom.*;
-import net.rezolv.obsidanum.chests.block.IronChestsTypes;
+import net.rezolv.obsidanum.chests.block.AzureObsidianChestBlock;
+import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
 import net.rezolv.obsidanum.chests.block.ObsidianChestBlock;
 import net.rezolv.obsidanum.chests.block.RunicObsidianChestBlock;
-import net.rezolv.obsidanum.chests.item.IronChestBlockItem;
+import net.rezolv.obsidanum.chests.item.ObsidanumChestBlockItem;
 import net.rezolv.obsidanum.fluid.ModFluids;
 import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.world.tree.ObsidanOak;
@@ -49,7 +50,7 @@ public class BlocksObs {
 
     public static final RegistryObject<Block> PRANA_CRYSTALL = registerBlock("prana_crystall",
             () -> new PranaCrystall(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
-                    .sound(SoundType.AMETHYST).randomTicks().lightLevel((i) -> 15).mapColor(MapColor.COLOR_YELLOW).emissiveRendering((state, level, pos) -> true)));
+                    .sound(SoundType.AMETHYST).randomTicks().lightLevel((i) -> 10).mapColor(MapColor.COLOR_YELLOW).emissiveRendering((state, level, pos) -> true)));
 
 
     public static final RegistryObject<Block> LIGHT_PRANA_CRYSTALL = registerBlock("light_prana_crystall",
@@ -107,13 +108,18 @@ public class BlocksObs {
                     .mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().noOcclusion()));
 
 
+    public static final RegistryObject<AzureObsidianChestBlock> AZURE_OBSIDIAN_CHEST = registerChests("azure_obsidian_chest",
+            () -> new AzureObsidianChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F)),
+            ObsidanumChestsTypes.AZURE_OBSIDIAN);
+
+
     public static final RegistryObject<ObsidianChestBlock> OBSIDIAN_CHEST = registerChests("obsidian_chest",
             () -> new ObsidianChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F)),
-            IronChestsTypes.OBSIDIAN);
+            ObsidanumChestsTypes.OBSIDIAN);
 
     public static final RegistryObject<RunicObsidianChestBlock> RUNIC_OBSIDIAN_CHEST = registerChests("runic_obsidian_chest",
             () -> new RunicObsidianChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F)),
-            IronChestsTypes.RUNIC_OBSIDIAN);
+            ObsidanumChestsTypes.RUNIC_OBSIDIAN);
 
 
     public static final RegistryObject<Block> OBSIDIAN_INLAID_COLUMN = registerBlock("obsidian_inlaid_column",
@@ -525,7 +531,7 @@ public class BlocksObs {
         return ItemsObs.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    private static <T extends Block> RegistryObject<T> registerChests(String name, Supplier<? extends T> sup, IronChestsTypes chestType) {
+    private static <T extends Block> RegistryObject<T> registerChests(String name, Supplier<? extends T> sup, ObsidanumChestsTypes chestType) {
         return registerChestItem(name, sup, block -> item(block, () -> () -> chestType));
     }
 
@@ -539,7 +545,7 @@ public class BlocksObs {
         return BLOCKS.register(name, sup);
     }
 
-    private static Supplier<BlockItem> item(final RegistryObject<? extends Block> block, Supplier<Callable<IronChestsTypes>> chestType) {
-        return () -> new IronChestBlockItem(block.get(), new Item.Properties(), chestType);
+    private static Supplier<BlockItem> item(final RegistryObject<? extends Block> block, Supplier<Callable<ObsidanumChestsTypes>> chestType) {
+        return () -> new ObsidanumChestBlockItem(block.get(), new Item.Properties(), chestType);
     }
 }

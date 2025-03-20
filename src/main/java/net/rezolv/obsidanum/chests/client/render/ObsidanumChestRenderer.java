@@ -30,22 +30,21 @@ import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.rezolv.obsidanum.chests.block.AbstractIronChestBlock;
-import net.rezolv.obsidanum.chests.block.IronChestsTypes;
-import net.rezolv.obsidanum.chests.block.entity.AbstractIronChestBlockEntity;
-import net.rezolv.obsidanum.chests.client.model.IronChestsModels;
+import net.rezolv.obsidanum.chests.block.AbstractObsidanumChestBlock;
+import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
+import net.rezolv.obsidanum.chests.block.entity.AbstractObsidanumChestBlockEntity;
+import net.rezolv.obsidanum.chests.client.model.ObsidanumChestsModels;
 import net.rezolv.obsidanum.chests.client.model.inventory.ModelItem;
-import net.rezolv.obsidanum.chests.events.IronChestsClientEvents;
+import net.rezolv.obsidanum.chests.events.ObsidanumChestsClientEvents;
 import org.joml.Vector3f;
 
 import java.util.Arrays;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implements BlockEntityRenderer<T> {
+public class ObsidanumChestRenderer<T extends BlockEntity & LidBlockEntity> implements BlockEntityRenderer<T> {
 
   private final ModelPart lid;
   private final ModelPart bottom;
@@ -65,8 +64,8 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
     new ModelItem(new Vector3f(0.5F, 0.32F, 0.5F), 3.0F)
   );
 
-  public IronChestRenderer(BlockEntityRendererProvider.Context context) {
-    ModelPart modelPart = context.bakeLayer(IronChestsClientEvents.IRON_CHEST);
+  public ObsidanumChestRenderer(BlockEntityRendererProvider.Context context) {
+    ModelPart modelPart = context.bakeLayer(ObsidanumChestsClientEvents.IRON_CHEST);
 
     this.renderer = context.getBlockEntityRenderDispatcher();
     this.bottom = modelPart.getChild("iron_bottom");
@@ -87,30 +86,30 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
 
   @Override
   public void render(T tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLightIn, int combinedOverlayIn) {
-    AbstractIronChestBlockEntity tileEntity = (AbstractIronChestBlockEntity) tileEntityIn;
+    AbstractObsidanumChestBlockEntity tileEntity = (AbstractObsidanumChestBlockEntity) tileEntityIn;
 
     Level level = tileEntity.getLevel();
     boolean useTileEntityBlockState = level != null;
 
-    BlockState blockState = useTileEntityBlockState ? tileEntity.getBlockState() : (BlockState) tileEntity.getBlockToUse().defaultBlockState().setValue(AbstractIronChestBlock.FACING, Direction.SOUTH);
+    BlockState blockState = useTileEntityBlockState ? tileEntity.getBlockState() : (BlockState) tileEntity.getBlockToUse().defaultBlockState().setValue(AbstractObsidanumChestBlock.FACING, Direction.SOUTH);
     Block block = blockState.getBlock();
-    IronChestsTypes chestType = IronChestsTypes.OBSIDIAN;
-    IronChestsTypes actualType = AbstractIronChestBlock.getTypeFromBlock(block);
+    ObsidanumChestsTypes chestType = ObsidanumChestsTypes.OBSIDIAN;
+    ObsidanumChestsTypes actualType = AbstractObsidanumChestBlock.getTypeFromBlock(block);
 
     if (actualType != null) {
       chestType = actualType;
     }
 
-    if (block instanceof AbstractIronChestBlock abstractChestBlock) {
+    if (block instanceof AbstractObsidanumChestBlock abstractChestBlock) {
       poseStack.pushPose();
 
-      float f = blockState.getValue(AbstractIronChestBlock.FACING).toYRot();
+      float f = blockState.getValue(AbstractObsidanumChestBlock.FACING).toYRot();
 
       poseStack.translate(0.5D, 0.5D, 0.5D);
       poseStack.mulPose(Axis.YP.rotationDegrees(-f));
       poseStack.translate(-0.5D, -0.5D, -0.5D);
 
-      DoubleBlockCombiner.NeighborCombineResult<? extends AbstractIronChestBlockEntity> neighborCombineResult;
+      DoubleBlockCombiner.NeighborCombineResult<? extends AbstractObsidanumChestBlockEntity> neighborCombineResult;
 
       if (useTileEntityBlockState) {
         neighborCombineResult = abstractChestBlock.combine(blockState, level, tileEntityIn.getBlockPos(), true);
@@ -118,14 +117,14 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
         neighborCombineResult = DoubleBlockCombiner.Combiner::acceptNone;
       }
 
-      float openness = neighborCombineResult.<Float2FloatFunction>apply(AbstractIronChestBlock.opennessCombiner(tileEntity)).get(partialTicks);
+      float openness = neighborCombineResult.<Float2FloatFunction>apply(AbstractObsidanumChestBlock.opennessCombiner(tileEntity)).get(partialTicks);
       openness = 1.0F - openness;
       openness = 1.0F - openness * openness * openness;
 
       int brightness = neighborCombineResult.<Int2IntFunction>apply(new BrightnessCombiner<>()).applyAsInt(combinedLightIn);
 
 
-      Material material = new Material(Sheets.CHEST_SHEET, IronChestsModels.chooseChestTexture(chestType));
+      Material material = new Material(Sheets.CHEST_SHEET, ObsidanumChestsModels.chooseChestTexture(chestType));
 
       VertexConsumer vertexConsumer = material.buffer(bufferSource, RenderType::entityCutout);
 

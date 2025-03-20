@@ -14,12 +14,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.function.Supplier;
 
 @OnlyIn(Dist.CLIENT)
-public class IronChestItemStackRenderer<T extends BlockEntity> extends BlockEntityWithoutLevelRenderer {
+public class ObsidanumChestItemStackRenderer<T extends BlockEntity> extends BlockEntityWithoutLevelRenderer {
 
   private final Supplier<T> te;
   private final BlockEntityRenderDispatcher blockEntityRenderDispatcher;
 
-  public IronChestItemStackRenderer(BlockEntityRenderDispatcher renderDispatcher, EntityModelSet modelSet, Supplier<T> te) {
+  public ObsidanumChestItemStackRenderer(BlockEntityRenderDispatcher renderDispatcher, EntityModelSet modelSet, Supplier<T> te) {
     super(renderDispatcher, modelSet);
 
     this.te = te;

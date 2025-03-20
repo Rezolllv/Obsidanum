@@ -10,25 +10,26 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.fml.DistExecutor;
 import net.rezolv.obsidanum.block.BlocksObs;
-import net.rezolv.obsidanum.chests.block.IronChestsTypes;
+import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
+import net.rezolv.obsidanum.chests.block.entity.AzureObsidianChestBlockEntity;
 import net.rezolv.obsidanum.chests.block.entity.ObsidianChestBlockEntity;
 import net.rezolv.obsidanum.chests.block.entity.RunicObsidianChestBlockEntity;
-import net.rezolv.obsidanum.chests.client.model.inventory.IronChestItemStackRenderer;
+import net.rezolv.obsidanum.chests.client.model.inventory.ObsidanumChestItemStackRenderer;
 
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class IronChestBlockItem extends BlockItem {
+public class ObsidanumChestBlockItem extends BlockItem {
 
-  protected Supplier<IronChestsTypes> type;
+  protected Supplier<ObsidanumChestsTypes> type;
 
   protected Supplier<Boolean> trapped;
 
-  public IronChestBlockItem(Block block, Properties properties, Supplier<Callable<IronChestsTypes>> type) {
+  public ObsidanumChestBlockItem(Block block, Properties properties, Supplier<Callable<ObsidanumChestsTypes>> type) {
     super(block, properties);
 
-    IronChestsTypes tempType = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, type);
+    ObsidanumChestsTypes tempType = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, type);
 
     this.type = tempType == null ? null : () -> tempType;
   }
@@ -44,10 +45,11 @@ public class IronChestBlockItem extends BlockItem {
 
           switch (type.get()) {
             case RUNIC_OBSIDIAN -> modelToUse = () -> new RunicObsidianChestBlockEntity(BlockPos.ZERO, BlocksObs.RUNIC_OBSIDIAN_CHEST.get().defaultBlockState());
+            case AZURE_OBSIDIAN -> modelToUse = () -> new AzureObsidianChestBlockEntity(BlockPos.ZERO, BlocksObs.AZURE_OBSIDIAN_CHEST.get().defaultBlockState());
 
             default -> modelToUse = () -> new ObsidianChestBlockEntity(BlockPos.ZERO, BlocksObs.OBSIDIAN_CHEST.get().defaultBlockState());
           }
-        return new IronChestItemStackRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels(), modelToUse);
+        return new ObsidanumChestItemStackRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels(), modelToUse);
       }
     });
   }

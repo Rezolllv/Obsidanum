@@ -36,7 +36,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.rezolv.obsidanum.chests.block.entity.AbstractIronChestBlockEntity;
+import net.rezolv.obsidanum.chests.block.entity.AbstractObsidanumChestBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
-public abstract class AbstractIronChestBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public abstract class AbstractObsidanumChestBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
@@ -52,14 +52,14 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
 
   protected static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
 
-  private static final DoubleBlockCombiner.Combiner<AbstractIronChestBlockEntity, Optional<Container>> CHEST_COMBINER = new DoubleBlockCombiner.Combiner<>() {
+  private static final DoubleBlockCombiner.Combiner<AbstractObsidanumChestBlockEntity, Optional<Container>> CHEST_COMBINER = new DoubleBlockCombiner.Combiner<>() {
     @Override
-    public Optional<Container> acceptDouble(AbstractIronChestBlockEntity blockEntityOne, AbstractIronChestBlockEntity blockEntityTwo) {
+    public Optional<Container> acceptDouble(AbstractObsidanumChestBlockEntity blockEntityOne, AbstractObsidanumChestBlockEntity blockEntityTwo) {
       return Optional.of(new CompoundContainer(blockEntityOne, blockEntityTwo));
     }
 
     @Override
-    public Optional<Container> acceptSingle(AbstractIronChestBlockEntity blockEntity) {
+    public Optional<Container> acceptSingle(AbstractObsidanumChestBlockEntity blockEntity) {
       return Optional.of(blockEntity);
     }
 
@@ -69,14 +69,14 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
     }
   };
 
-  private static final DoubleBlockCombiner.Combiner<AbstractIronChestBlockEntity, Optional<MenuProvider>> MENU_PROVIDER_COMBINER = new DoubleBlockCombiner.Combiner<>() {
+  private static final DoubleBlockCombiner.Combiner<AbstractObsidanumChestBlockEntity, Optional<MenuProvider>> MENU_PROVIDER_COMBINER = new DoubleBlockCombiner.Combiner<>() {
     @Override
-    public Optional<MenuProvider> acceptDouble(AbstractIronChestBlockEntity blockEntityOne, AbstractIronChestBlockEntity blockEntityTwo) {
+    public Optional<MenuProvider> acceptDouble(AbstractObsidanumChestBlockEntity blockEntityOne, AbstractObsidanumChestBlockEntity blockEntityTwo) {
       return Optional.empty();
     }
 
     @Override
-    public Optional<MenuProvider> acceptSingle(AbstractIronChestBlockEntity blockEntity) {
+    public Optional<MenuProvider> acceptSingle(AbstractObsidanumChestBlockEntity blockEntity) {
       return Optional.of(blockEntity);
     }
 
@@ -86,11 +86,11 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
     }
   };
 
-  private final IronChestsTypes type;
+  private final ObsidanumChestsTypes type;
 
-  protected final Supplier<BlockEntityType<? extends AbstractIronChestBlockEntity>> blockEntityType;
+  protected final Supplier<BlockEntityType<? extends AbstractObsidanumChestBlockEntity>> blockEntityType;
 
-  public AbstractIronChestBlock(Properties properties, Supplier<BlockEntityType<? extends AbstractIronChestBlockEntity>> blockEntityType, IronChestsTypes type) {
+  public AbstractObsidanumChestBlock(Properties properties, Supplier<BlockEntityType<? extends AbstractObsidanumChestBlockEntity>> blockEntityType, ObsidanumChestsTypes type) {
     super(properties);
 
     this.type = type;
@@ -146,11 +146,11 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
   public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-    if (blockEntity instanceof AbstractIronChestBlockEntity) {
-      ((AbstractIronChestBlockEntity) blockEntity).wasPlaced(livingEntity, itemStack);
+    if (blockEntity instanceof AbstractObsidanumChestBlockEntity) {
+      ((AbstractObsidanumChestBlockEntity) blockEntity).wasPlaced(livingEntity, itemStack);
 
       if (itemStack.hasCustomHoverName()) {
-        ((AbstractIronChestBlockEntity) blockEntity).setCustomName(itemStack.getHoverName());
+        ((AbstractObsidanumChestBlockEntity) blockEntity).setCustomName(itemStack.getHoverName());
       }
     }
   }
@@ -160,10 +160,10 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
   public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState newState, boolean isMoving) {
     if (!blockState.is(newState.getBlock())) {
       BlockEntity blockEntity = level.getBlockEntity(blockPos);
-      if (blockEntity instanceof AbstractIronChestBlockEntity) {
-        ((AbstractIronChestBlockEntity) blockEntity).removeAdornments();
+      if (blockEntity instanceof AbstractObsidanumChestBlockEntity) {
+        ((AbstractObsidanumChestBlockEntity) blockEntity).removeAdornments();
 
-        Containers.dropContents(level, blockPos, (AbstractIronChestBlockEntity) blockEntity);
+        Containers.dropContents(level, blockPos, (AbstractObsidanumChestBlockEntity) blockEntity);
         level.updateNeighbourForOutputSignal(blockPos, this);
       }
 
@@ -192,16 +192,16 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
     return Stats.CUSTOM.get(Stats.OPEN_CHEST);
   }
 
-  public BlockEntityType<? extends AbstractIronChestBlockEntity> blockEntityType() {
+  public BlockEntityType<? extends AbstractObsidanumChestBlockEntity> blockEntityType() {
     return this.blockEntityType.get();
   }
 
   @Nullable
-  public static Container getContainer(AbstractIronChestBlock chestBlock, BlockState blockState, Level level, BlockPos blockPos, boolean ignoreBlockedChest) {
+  public static Container getContainer(AbstractObsidanumChestBlock chestBlock, BlockState blockState, Level level, BlockPos blockPos, boolean ignoreBlockedChest) {
     return chestBlock.combine(blockState, level, blockPos, ignoreBlockedChest).<Optional<Container>>apply(CHEST_COMBINER).orElse((Container) null);
   }
 
-  public DoubleBlockCombiner.NeighborCombineResult<? extends AbstractIronChestBlockEntity> combine(BlockState blockState, Level level, BlockPos blockPos, boolean ignoreBlockedChest) {
+  public DoubleBlockCombiner.NeighborCombineResult<? extends AbstractObsidanumChestBlockEntity> combine(BlockState blockState, Level level, BlockPos blockPos, boolean ignoreBlockedChest) {
     BiPredicate<LevelAccessor, BlockPos> biPredicate;
 
     if (ignoreBlockedChest) {
@@ -209,10 +209,10 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
         return false;
       };
     } else {
-      biPredicate = AbstractIronChestBlock::isChestBlockedAt;
+      biPredicate = AbstractObsidanumChestBlock::isChestBlockedAt;
     }
 
-    return DoubleBlockCombiner.combineWithNeigbour(this.blockEntityType.get(), AbstractIronChestBlock::getBlockType, AbstractIronChestBlock::getConnectedDirection, FACING, blockState, level, blockPos, biPredicate);
+    return DoubleBlockCombiner.combineWithNeigbour(this.blockEntityType.get(), AbstractObsidanumChestBlock::getBlockType, AbstractObsidanumChestBlock::getConnectedDirection, FACING, blockState, level, blockPos, biPredicate);
   }
 
   @Nullable
@@ -220,13 +220,13 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
     return this.combine(blockState, level, blockPos, false).<Optional<MenuProvider>>apply(MENU_PROVIDER_COMBINER).orElse((MenuProvider) null);
   }
 
-  public static DoubleBlockCombiner.Combiner<AbstractIronChestBlockEntity, Float2FloatFunction> opennessCombiner(final LidBlockEntity lidBlockEntity) {
+  public static DoubleBlockCombiner.Combiner<AbstractObsidanumChestBlockEntity, Float2FloatFunction> opennessCombiner(final LidBlockEntity lidBlockEntity) {
     return new DoubleBlockCombiner.Combiner<>() {
-      public Float2FloatFunction acceptDouble(AbstractIronChestBlockEntity blockEntityOne, AbstractIronChestBlockEntity blockEntityTwo) {
+      public Float2FloatFunction acceptDouble(AbstractObsidanumChestBlockEntity blockEntityOne, AbstractObsidanumChestBlockEntity blockEntityTwo) {
         return (lidBlockEntity) -> Math.max(blockEntityOne.getOpenNess(lidBlockEntity), blockEntityTwo.getOpenNess(lidBlockEntity));
       }
 
-      public Float2FloatFunction acceptSingle(AbstractIronChestBlockEntity blockEntity) {
+      public Float2FloatFunction acceptSingle(AbstractObsidanumChestBlockEntity blockEntity) {
         return blockEntity::getOpenNess;
       }
 
@@ -239,7 +239,7 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
   @Override
   @Nullable
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? createTickerHelper(blockEntityType, this.blockEntityType(), AbstractIronChestBlockEntity::lidAnimateTick) : null;
+    return level.isClientSide ? createTickerHelper(blockEntityType, this.blockEntityType(), AbstractObsidanumChestBlockEntity::lidAnimateTick) : null;
   }
 
   public static boolean isChestBlockedAt(LevelAccessor levelAccessor, BlockPos blockPos) {
@@ -300,22 +300,22 @@ public abstract class AbstractIronChestBlock extends BaseEntityBlock implements 
   public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
     BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
 
-    if (blockEntity instanceof AbstractIronChestBlockEntity) {
-      ((AbstractIronChestBlockEntity) blockEntity).recheckOpen();
+    if (blockEntity instanceof AbstractObsidanumChestBlockEntity) {
+      ((AbstractObsidanumChestBlockEntity) blockEntity).recheckOpen();
     }
   }
 
   @Nullable
-  public static IronChestsTypes getTypeFromItem(Item itemIn) {
+  public static ObsidanumChestsTypes getTypeFromItem(Item itemIn) {
     return getTypeFromBlock(Block.byItem(itemIn));
   }
 
   @Nullable
-  public static IronChestsTypes getTypeFromBlock(Block block) {
-    return block instanceof AbstractIronChestBlock ? ((AbstractIronChestBlock) block).getType() : null;
+  public static ObsidanumChestsTypes getTypeFromBlock(Block block) {
+    return block instanceof AbstractObsidanumChestBlock ? ((AbstractObsidanumChestBlock) block).getType() : null;
   }
 
-  public IronChestsTypes getType() {
+  public ObsidanumChestsTypes getType() {
     return this.type;
   }
 }

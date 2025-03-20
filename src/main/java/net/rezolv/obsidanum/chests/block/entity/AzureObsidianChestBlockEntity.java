@@ -8,14 +8,14 @@ import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
 import net.rezolv.obsidanum.chests.inventory.ObsidanumChestMenu;
 
-public class RunicObsidianChestBlockEntity extends AbstractObsidanumChestBlockEntity {
+public class AzureObsidianChestBlockEntity extends AbstractObsidanumChestBlockEntity {
 
-  public RunicObsidianChestBlockEntity(BlockPos blockPos, BlockState blockState) {
-    super(ObsidanumChestsBlockEntityTypes.RUNIC_OBSIDIAN_CHEST.get(), blockPos, blockState, ObsidanumChestsTypes.RUNIC_OBSIDIAN, BlocksObs.RUNIC_OBSIDIAN_CHEST::get);
+  public AzureObsidianChestBlockEntity(BlockPos blockPos, BlockState blockState) {
+    super(ObsidanumChestsBlockEntityTypes.AZURE_OBSIDIAN_CHEST.get(), blockPos, blockState, ObsidanumChestsTypes.AZURE_OBSIDIAN, BlocksObs.AZURE_OBSIDIAN_CHEST::get);
   }
 
   @Override
   protected AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
-    return ObsidanumChestMenu.createRunicObsidianContainer(containerId, playerInventory, this);
+    return ObsidanumChestMenu.createAzureObsidianContainer(containerId, playerInventory, this);
   }
 }

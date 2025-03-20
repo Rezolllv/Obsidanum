@@ -19,47 +19,47 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.rezolv.obsidanum.Obsidanum;
-import net.rezolv.obsidanum.chests.block.AbstractIronChestBlock;
-import net.rezolv.obsidanum.chests.block.IronChestsTypes;
-import net.rezolv.obsidanum.chests.inventory.IronChestMenu;
+import net.rezolv.obsidanum.chests.block.AbstractObsidanumChestBlock;
+import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
+import net.rezolv.obsidanum.chests.inventory.ObsidanumChestMenu;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public abstract class AbstractIronChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
+public abstract class AbstractObsidanumChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
 
   private static final int EVENT_SET_OPEN_COUNT = 1;
   private NonNullList<ItemStack> items;
 
   private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
     protected void onOpen(Level level, BlockPos pos, BlockState blockState) {
-      AbstractIronChestBlockEntity.playSound(level, pos, blockState, SoundEvents.CHEST_OPEN);
+      AbstractObsidanumChestBlockEntity.playSound(level, pos, blockState, SoundEvents.CHEST_OPEN);
     }
 
     protected void onClose(Level level, BlockPos pos, BlockState blockState) {
-      AbstractIronChestBlockEntity.playSound(level, pos, blockState, SoundEvents.CHEST_CLOSE);
+      AbstractObsidanumChestBlockEntity.playSound(level, pos, blockState, SoundEvents.CHEST_CLOSE);
     }
 
     protected void openerCountChanged(Level level, BlockPos pos, BlockState blockState, int previousCount, int newCount) {
-      AbstractIronChestBlockEntity.this.signalOpenCount(level, pos, blockState, previousCount, newCount);
+      AbstractObsidanumChestBlockEntity.this.signalOpenCount(level, pos, blockState, previousCount, newCount);
     }
 
     protected boolean isOwnContainer(Player player) {
-      if (!(player.containerMenu instanceof IronChestMenu)) {
+      if (!(player.containerMenu instanceof ObsidanumChestMenu)) {
         return false;
       } else {
-        Container container = ((IronChestMenu) player.containerMenu).getContainer();
-        return container instanceof AbstractIronChestBlockEntity || container instanceof CompoundContainer && ((CompoundContainer) container).contains(AbstractIronChestBlockEntity.this);
+        Container container = ((ObsidanumChestMenu) player.containerMenu).getContainer();
+        return container instanceof AbstractObsidanumChestBlockEntity || container instanceof CompoundContainer && ((CompoundContainer) container).contains(AbstractObsidanumChestBlockEntity.this);
       }
     }
   };
 
   private final ChestLidController chestLidController = new ChestLidController();
 
-  private final IronChestsTypes chestType;
+  private final ObsidanumChestsTypes chestType;
   private final Supplier<Block> blockToUse;
 
-  protected AbstractIronChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IronChestsTypes chestTypeIn, Supplier<Block> blockToUseIn) {
+  protected AbstractObsidanumChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, ObsidanumChestsTypes chestTypeIn, Supplier<Block> blockToUseIn) {
     super(blockEntityType, blockPos, blockState);
 
     this.items = NonNullList.<ItemStack>withSize(chestTypeIn.size, ItemStack.EMPTY);
@@ -97,7 +97,7 @@ public abstract class AbstractIronChestBlockEntity extends RandomizableContainer
     }
   }
 
-  public static void lidAnimateTick(Level level, BlockPos blockPos, BlockState blockState, AbstractIronChestBlockEntity chestBlockEntity) {
+  public static void lidAnimateTick(Level level, BlockPos blockPos, BlockState blockState, AbstractObsidanumChestBlockEntity chestBlockEntity) {
     chestBlockEntity.chestLidController.tickLid();
   }
 
@@ -160,8 +160,8 @@ public abstract class AbstractIronChestBlockEntity extends RandomizableContainer
     if (blockstate.hasBlockEntity()) {
       BlockEntity blockentity = blockGetter.getBlockEntity(blockPos);
 
-      if (blockentity instanceof AbstractIronChestBlockEntity) {
-        return ((AbstractIronChestBlockEntity) blockentity).openersCounter.getOpenerCount();
+      if (blockentity instanceof AbstractObsidanumChestBlockEntity) {
+        return ((AbstractObsidanumChestBlockEntity) blockentity).openersCounter.getOpenerCount();
       }
     }
 
@@ -185,11 +185,11 @@ public abstract class AbstractIronChestBlockEntity extends RandomizableContainer
   public void removeAdornments() {
   }
 
-  public IronChestsTypes getChestType() {
-    IronChestsTypes type = IronChestsTypes.OBSIDIAN;
+  public ObsidanumChestsTypes getChestType() {
+    ObsidanumChestsTypes type = ObsidanumChestsTypes.OBSIDIAN;
 
     if (this.hasLevel()) {
-      IronChestsTypes typeFromBlock = AbstractIronChestBlock.getTypeFromBlock(this.getBlockState().getBlock());
+      ObsidanumChestsTypes typeFromBlock = AbstractObsidanumChestBlock.getTypeFromBlock(this.getBlockState().getBlock());
 
       if (typeFromBlock != null) {
         type = typeFromBlock;

@@ -25,13 +25,13 @@ public class PranaCrystallRenderer<T extends PranaCrystallEntity> implements Blo
 
     private static final Map<BlockPos, PranaCrystallEntity> allOnScreen = new HashMap<>();
     private static final float HALF_SQRT_3 = (float) (Math.sqrt(3.0D) / 2.0D);
-    private static final int SHINE_R = 80;
-    private static final int SHINE_G = 200;
-    private static final int SHINE_B = 120;
+    private static final int SHINE_R = 69;
+    private static final int SHINE_G = 206;
+    private static final int SHINE_B = 162;
 
-    private static final int SHINE_CENTER_R = 80;
-    private static final int SHINE_CENTER_G = 200;
-    private static final int SHINE_CENTER_B = 120;
+    private static final int SHINE_CENTER_R = 42;
+    private static final int SHINE_CENTER_G = 255;
+    private static final int SHINE_CENTER_B = 140;
 
     public PranaCrystallRenderer(BlockEntityRendererProvider.Context context) {
     }

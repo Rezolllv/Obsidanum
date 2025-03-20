@@ -9,19 +9,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.rezolv.obsidanum.chests.block.IronChestsTypes;
-import net.rezolv.obsidanum.chests.inventory.IronChestMenu;
+import net.rezolv.obsidanum.chests.block.ObsidanumChestsTypes;
+import net.rezolv.obsidanum.chests.inventory.ObsidanumChestMenu;
 
 @OnlyIn(Dist.CLIENT)
-public class IronChestScreen extends AbstractContainerScreen<IronChestMenu> implements MenuAccess<IronChestMenu> {
+public class ObsidanumChestScreen extends AbstractContainerScreen<ObsidanumChestMenu> implements MenuAccess<ObsidanumChestMenu> {
 
-  private final IronChestsTypes chestType;
+  private final ObsidanumChestsTypes chestType;
 
   private final int textureXSize;
 
   private final int textureYSize;
 
-  public IronChestScreen(IronChestMenu container, Inventory playerInventory, Component title) {
+  public ObsidanumChestScreen(ObsidanumChestMenu container, Inventory playerInventory, Component title) {
     super(container, playerInventory, title);
 
     this.chestType = container.getChestType();

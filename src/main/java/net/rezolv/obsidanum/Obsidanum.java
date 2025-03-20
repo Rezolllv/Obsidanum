@@ -24,14 +24,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.registries.RegistryObject;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.block.entity.ModBlockEntities;
 import net.rezolv.obsidanum.block.entity.renderer.PranaCrystallRenderer;
-import net.rezolv.obsidanum.chests.block.entity.IronChestsBlockEntityTypes;
-import net.rezolv.obsidanum.chests.client.render.IronChestRenderer;
-import net.rezolv.obsidanum.chests.client.screen.IronChestScreen;
-import net.rezolv.obsidanum.chests.inventory.IronChestsContainerTypes;
+import net.rezolv.obsidanum.chests.block.entity.ObsidanumChestsBlockEntityTypes;
+import net.rezolv.obsidanum.chests.client.render.ObsidanumChestRenderer;
+import net.rezolv.obsidanum.chests.client.screen.ObsidanumChestScreen;
+import net.rezolv.obsidanum.chests.inventory.ObsidanumChestsContainerTypes;
 import net.rezolv.obsidanum.effect.EffectsObs;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.ModItemEntities;
@@ -105,8 +104,8 @@ public class Obsidanum {
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
 
-        IronChestsBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
-        IronChestsContainerTypes.CONTAINERS.register(modEventBus);
+        ObsidanumChestsBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
+        ObsidanumChestsContainerTypes.CONTAINERS.register(modEventBus);
 
 
     }
@@ -146,10 +145,14 @@ public class Obsidanum {
 
 
 
-            MenuScreens.register(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), IronChestScreen::new);
-            BlockEntityRenderers.register(IronChestsBlockEntityTypes.OBSIDIAN_CHEST.get(), IronChestRenderer::new);
-            MenuScreens.register(IronChestsContainerTypes.RUNIC_OBSIDIAN_CHEST.get(), IronChestScreen::new);
-            BlockEntityRenderers.register(IronChestsBlockEntityTypes.RUNIC_OBSIDIAN_CHEST.get(), IronChestRenderer::new);
+            MenuScreens.register(ObsidanumChestsContainerTypes.OBSIDIAN_CHEST.get(), ObsidanumChestScreen::new);
+            BlockEntityRenderers.register(ObsidanumChestsBlockEntityTypes.OBSIDIAN_CHEST.get(), ObsidanumChestRenderer::new);
+
+            MenuScreens.register(ObsidanumChestsContainerTypes.AZURE_OBSIDIAN_CHEST.get(), ObsidanumChestScreen::new);
+            BlockEntityRenderers.register(ObsidanumChestsBlockEntityTypes.AZURE_OBSIDIAN_CHEST.get(), ObsidanumChestRenderer::new);
+
+            MenuScreens.register(ObsidanumChestsContainerTypes.RUNIC_OBSIDIAN_CHEST.get(), ObsidanumChestScreen::new);
+            BlockEntityRenderers.register(ObsidanumChestsBlockEntityTypes.RUNIC_OBSIDIAN_CHEST.get(), ObsidanumChestRenderer::new);
 
             event.enqueueWork(() -> ModItemProperties.register());
 

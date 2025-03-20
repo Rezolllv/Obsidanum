@@ -177,8 +177,10 @@
   "block.obsidanum.the_gloomy_mycelium": "Сумрачная грибница",
 
   "block.obsidanum.obsidian_chest": "Обсидиановый сундук",
+  "block.obsidanum.azure_obsidian_chest": "Лазурный обсидиановый сундук",
   "block.obsidanum.runic_obsidian_chest": "Рунический обсидиановый сундук",
   "obsidanum.container.obsidian_chest": "Обсидиановый сундук",
+  "obsidanum.container.azure_obsidian_chest": "Лазурный обсидиановый сундук",
   "obsidanum.container.runic_obsidian_chest": "Рунический сундук",
   "death.attack.obsidian_totem": "%1$s не выдержал тяжёлого возвращения к жизни %2$s через обсидиановый тотем",
   "death.attack.obsidian_totem.player": "Слишком эффектно %2$s вернулся к жизни впечатлив %1$s",

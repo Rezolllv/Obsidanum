@@ -182,8 +182,10 @@
   "block.obsidanum.the_gloomy_mycelium": "The Gloomy mycelium",
 
   "block.obsidanum.obsidian_chest": "Obsidian Chest",
+  "block.obsidanum.azure_obsidian_chest": "Azure Obsidian Chest",
   "block.obsidanum.runic_obsidian_chest": "Runic Obsidian Chest",
   "obsidanum.container.obsidian_chest": "Obsidian Chest",
+  "obsidanum.container.azure_obsidian_chest": "Azure Obsidian Chest",
   "obsidanum.container.runic_obsidian_chest": "Runic Obsidian Chest",
 
   "creativetab.obsidian_blocks": "Build",
