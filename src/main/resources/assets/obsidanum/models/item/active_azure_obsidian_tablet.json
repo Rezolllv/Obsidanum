@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "obsidanum:item/active_azure_obsidian_tablet"
+  }
+}

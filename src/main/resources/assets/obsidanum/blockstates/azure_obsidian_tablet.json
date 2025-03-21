@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,experienced=false,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet"
+    },
+    "facing=east,experienced=false,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet",
+      "y": 90
+    },
+    "facing=south,experienced=false,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet",
+      "y": 180
+    },
+    "facing=west,experienced=false,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet",
+      "y": 270
+    },
+    "facing=north,experienced=true,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_inactive"
+    },
+    "facing=east,experienced=true,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_inactive",
+      "y": 90
+    },
+    "facing=south,experienced=true,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_inactive",
+      "y": 180
+    },
+    "facing=west,experienced=true,active=false,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_inactive",
+      "y": 270
+    },
+    "facing=north,experienced=true,active=true,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_active"
+    },
+    "facing=east,experienced=true,active=true,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_active",
+      "y": 90
+    },
+    "facing=south,experienced=true,active=true,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_active",
+      "y": 180
+    },
+    "facing=west,experienced=true,active=true,enchanter=false": {
+      "model": "obsidanum:block/azure_obsidian_tablet_active",
+      "y": 270
+    },
+    "facing=north,experienced=true,active=false,enchanter=true": {
+      "model": "obsidanum:block/azure_obsidian_tablet_enchanter"
+    },
+    "facing=east,experienced=true,active=false,enchanter=true": {
+      "model": "obsidanum:block/azure_obsidian_tablet_enchanter",
+      "y": 90
+    },
+    "facing=south,experienced=true,active=false,enchanter=true": {
+      "model": "obsidanum:block/azure_obsidian_tablet_enchanter",
+      "y": 180
+    },
+    "facing=west,experienced=true,active=false,enchanter=true": {
+      "model": "obsidanum:block/azure_obsidian_tablet_enchanter",
+      "y": 270
+    }
+  }
+}

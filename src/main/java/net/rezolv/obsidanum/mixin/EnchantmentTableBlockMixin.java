@@ -67,11 +67,28 @@ public abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
                             (double) ((float) blockpos.getZ() + pRandom.nextFloat()) - 0.5);
                 }
             }
+            if (pRandom.nextInt(16) == 0 && isValidBookShelf(pLevel, pPos, blockpos) && !isValidAzureObsidianTablet(pLevel, pPos, blockpos)) {
+                pLevel.addParticle(ParticleTypes.ENCHANT, (double) pPos.getX() + 0.5, (double) pPos.getY() + 2.0, (double) pPos.getZ() + 0.5, (double) ((float) blockpos.getX() + pRandom.nextFloat()) - 0.5, (double) ((float) blockpos.getY() - pRandom.nextFloat() - 1.0F), (double) ((float) blockpos.getZ() + pRandom.nextFloat()) - 0.5);
+            } else if (pRandom.nextInt(16) == 0 && isValidBookShelf(pLevel, pPos, blockpos) && isValidAzureObsidianTablet(pLevel, pPos, blockpos)) {
+                for (int i = 0; i < 6; i++) { // Генерируем частицы 6 раз
+                    pLevel.addParticle(ParticlesObs.BAGELL_TABLE_PARTICLES.get(),
+                            (double) pPos.getX() + 0.5,
+                            (double) pPos.getY() + 2.0,
+                            (double) pPos.getZ() + 0.5,
+                            (double) ((float) blockpos.getX() + pRandom.nextFloat()) - 0.5,
+                            (double) ((float) blockpos.getY() - pRandom.nextFloat() - 1.0F),
+                            (double) ((float) blockpos.getZ() + pRandom.nextFloat()) - 0.5);
+                }
+            }
         }
     }
 
     private boolean isValidObsidianTablet(Level level, BlockPos enchantmentTablePos, BlockPos offset) {
         BlockPos targetPos = enchantmentTablePos.offset(offset);
         return level.getBlockState(targetPos).is(BlocksObs.OBSIDIAN_TABLET.get());
+    }
+    private boolean isValidAzureObsidianTablet(Level level, BlockPos enchantmentTablePos, BlockPos offset) {
+        BlockPos targetPos = enchantmentTablePos.offset(offset);
+        return level.getBlockState(targetPos).is(BlocksObs.AZURE_OBSIDIAN_TABLET.get());
     }
 }

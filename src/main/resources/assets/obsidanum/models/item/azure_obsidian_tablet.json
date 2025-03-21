@@ -1,0 +1,30 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 0
+      },
+      "model": "obsidanum:item/ancient_azure_obsidian_tablet"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "obsidanum:item/crashed_azure_obsidian_tablet"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "obsidanum:item/active_azure_obsidian_tablet"
+    }
+  ,
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "obsidanum:item/azure_obsidian_tablet_enchanter"
+    }
+  ]
+}

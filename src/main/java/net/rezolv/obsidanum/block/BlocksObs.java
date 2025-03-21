@@ -102,6 +102,11 @@ public class BlocksObs {
     public static final RegistryObject<Block> STRIPPED_OBSIDAN_WOOD = registerBlock("stripped_obsidan_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
 
+    public static final RegistryObject<Block> AZURE_OBSIDIAN_TABLET = registerBlock("azure_obsidian_tablet",
+            () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                    .strength(20, 500).sound(SoundType.CHERRY_WOOD)
+                    .mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().noOcclusion()));
+
     public static final RegistryObject<Block> OBSIDIAN_TABLET = registerBlock("obsidian_tablet",
             () -> new ObsidianTablet(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                     .strength(20, 500).sound(SoundType.CHERRY_WOOD)
