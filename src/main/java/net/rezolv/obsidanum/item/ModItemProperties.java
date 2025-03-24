@@ -3,34 +3,65 @@ package net.rezolv.obsidanum.item;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tiers;
 import net.rezolv.obsidanum.Obsidanum;
 import net.rezolv.obsidanum.item.custom.FlameCrossbowItem;
 
 public class ModItemProperties {
-
+    /**
+     * Регистрирует кастомные свойства предметов для анимаций и визуальных эффектов
+     */
     public static void register() {
-        // And finally, register the model predicates for the crossbow...
+        // Регистрация свойств для огненного арбалета (аналогично ванильному арбалету)
+        registerFlameCrossbowProperties();
+    }
 
+    private static void registerFlameCrossbowProperties() {
+        // Анимация натяжения (от 0.0 до 1.0 в процессе натягивания)
+        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(),
+                new ResourceLocation(Obsidanum.MOD_ID, "pull"),
+                (itemStack, level, livingEntity, seed) -> {
+                    if (livingEntity == null) {
+                        return 0.0F;
+                    }
+                    boolean isCharged = FlameCrossbowItem.isCharged(itemStack);
+                    int useDuration = itemStack.getUseDuration();
+                    int remainingTicks = livingEntity.getUseItemRemainingTicks();
 
+                    return isCharged ? 0.0F : (float)(useDuration - remainingTicks) /
+                            (float)FlameCrossbowItem.getChargeDuration(itemStack);
+                });
 
+        // Состояние натягивания (1.0 когда игрок натягивает, 0.0 когда нет)
+        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(),
+                new ResourceLocation(Obsidanum.MOD_ID, "pulling"),
+                (itemStack, level, livingEntity, seed) -> {
+                    boolean isPulling = livingEntity != null &&
+                            livingEntity.isUsingItem() &&
+                            livingEntity.getUseItem() == itemStack &&
+                            !FlameCrossbowItem.isCharged(itemStack);
 
-        //Copied from vanilla to mimic normal crossbow
-        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(), new ResourceLocation(Obsidanum.MOD_ID, "pull"), (p_239427_0_, p_239427_1_, p_239427_2_, intIn) -> {
-            if (p_239427_2_ == null) {
-                return 0.0F;
-            } else {
-                return FlameCrossbowItem.isCharged(p_239427_0_) ? 0.0F : (float)(p_239427_0_.getUseDuration() - p_239427_2_.getUseItemRemainingTicks()) / (float)FlameCrossbowItem.getChargeDuration(p_239427_0_);
-            }
-        });
-        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(), new ResourceLocation(Obsidanum.MOD_ID, "pulling"), (p_239426_0_, p_239426_1_, p_239426_2_, intIn) -> {
-            return p_239426_2_ != null && p_239426_2_.isUsingItem() && p_239426_2_.getUseItem() == p_239426_0_ && !FlameCrossbowItem.isCharged(p_239426_0_) ? 1.0F : 0.0F;
-        });
-        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(), new ResourceLocation(Obsidanum.MOD_ID, "charged"), (p_239425_0_, p_239425_1_, p_239425_2_, intIn) -> {
-            return p_239425_2_ != null && FlameCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
-        });
-        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(), new ResourceLocation(Obsidanum.MOD_ID, "firework"), (p_239424_0_, p_239424_1_, p_239424_2_, intIn) -> {
-            return p_239424_2_ != null && FlameCrossbowItem.isCharged(p_239424_0_) && FlameCrossbowItem.containsChargedProjectile(p_239424_0_, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
-        });
+                    return isPulling ? 1.0F : 0.0F;
+                });
+
+        // Состояние заряженности (1.0 когда заряжен, 0.0 когда нет)
+        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(),
+                new ResourceLocation(Obsidanum.MOD_ID, "charged"),
+                (itemStack, level, livingEntity, seed) -> {
+                    boolean isCharged = livingEntity != null &&
+                            FlameCrossbowItem.isCharged(itemStack);
+
+                    return isCharged ? 1.0F : 0.0F;
+                });
+
+        // Проверка на наличие фейерверка (1.0 если заряжен фейерверком)
+        ItemProperties.register(ItemsObs.FLAME_CROSSBOW.get(),
+                new ResourceLocation(Obsidanum.MOD_ID, "firework"),
+                (itemStack, level, livingEntity, seed) -> {
+                    boolean hasFirework = livingEntity != null &&
+                            FlameCrossbowItem.isCharged(itemStack) &&
+                            FlameCrossbowItem.containsChargedProjectile(itemStack, Items.FIREWORK_ROCKET);
+
+                    return hasFirework ? 1.0F : 0.0F;
+                });
     }
 }

@@ -48,7 +48,8 @@ import net.rezolv.obsidanum.item.entity.ModEntitiesItem;
 import net.rezolv.obsidanum.item.entity.client.ModBoatRenderer;
 import net.rezolv.obsidanum.item.item_entity.arrows.DispenserRegistry;
 import net.rezolv.obsidanum.item.item_entity.arrows.EntityTypeInit;
-import net.rezolv.obsidanum.item.item_entity.arrows.flame_arrow.FlameArrowRenderer;
+import net.rezolv.obsidanum.item.item_entity.arrows.flame_bolt.FlameBoltRenderer;
+import net.rezolv.obsidanum.item.item_entity.arrows.netherite_bolt.NetheriteBoltRenderer;
 import net.rezolv.obsidanum.item.item_entity.arrows.obsidian_arrow.ObsidianArrowRenderer;
 import net.rezolv.obsidanum.particle.ParticlesObs;
 import net.rezolv.obsidanum.recipes.ObsidanRecipes;
@@ -157,7 +158,8 @@ public class Obsidanum {
             event.enqueueWork(() -> ModItemProperties.register());
 
             EntityRenderers.register(EntityTypeInit.OBSIDIAN_ARROW.get(), ObsidianArrowRenderer::new);
-            EntityRenderers.register(EntityTypeInit.FLAME_ARROW.get(), FlameArrowRenderer::new);
+            EntityRenderers.register(EntityTypeInit.FLAME_ARROW.get(), FlameBoltRenderer::new);
+            EntityRenderers.register(EntityTypeInit.NETHERITE_BOLT.get(), NetheriteBoltRenderer::new);
             EntityRenderers.register(ModEntities.OBSIDIAN_ELEMENTAL.get(), ObsidianElementalRenderer::new);
             EntityRenderers.register(ModEntities.MEET_BEETLE.get(), MeetBeetleRenderer::new);
             EntityRenderers.register(ModEntities.GART.get(), GartRenderer::new);

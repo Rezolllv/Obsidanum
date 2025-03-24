@@ -57,7 +57,17 @@ public class ItemsObs {
             () -> new FlameCrossbowItem(new Item.Properties().stacksTo(1).durability(1001)));
 
     public static final RegistryObject<Item> FLAME_BOLT = ITEMS.register("flame_bolt",
-            () -> new FlameArrowItem(new Item.Properties()));
+            () -> new FlameBoltItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> NETHERITE_BOLT = ITEMS.register("netherite_bolt",
+            () -> new NetheriteBoltItem(new Item.Properties()));
+    public static final RegistryObject<Item> LEAF_LIVE = ITEMS.register("leaf_live",
+            () -> new Item(new Item.Properties()
+                    .food(new FoodProperties.Builder().nutrition(1).saturationMod(0.5f).alwaysEat()
+                            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 100, 0), 1F)
+                            .build()
+            )));
+
 
     public static final RegistryObject<Item> OBSIDIAN_TEAR = ITEMS.register("obsidian_tear",
             () -> new Item(new Item.Properties()));

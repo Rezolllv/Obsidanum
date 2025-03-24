@@ -117,6 +117,7 @@ public class CreativeTabObs extends CreativeModeTab {
                     .title(Component.translatable("creativetab.obsidian_blocks"))
                     .displayItems((pParameters, pOutput) -> {
 
+                        pOutput.accept(BlocksObs.BLOCK_OF_STITCHED_LEATHER.get());
                         pOutput.accept(BlocksObs.CRIMSON_GRASS.get());
                         pOutput.accept(BlocksObs.CRIMSON_GRASS_BLOCK.get());
                         pOutput.accept(BlocksObs.ALCHEMICAL_DIRT.get());
@@ -227,6 +228,8 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.OBSIDIAN_TEAR.get());
                         pOutput.accept(ItemsObs.FLAME_CROSSBOW.get());
                         pOutput.accept(ItemsObs.FLAME_BOLT.get());
+                        pOutput.accept(ItemsObs.NETHERITE_BOLT.get());
+                        pOutput.accept(ItemsObs.LEAF_LIVE.get());
                         pOutput.accept(ItemsObs.OBSIDAN.get());
                         pOutput.accept(ItemsObs.RAW_MEET_BEETLE.get());
                         pOutput.accept(ItemsObs.COCKED_MEET_BEETLE.get());

@@ -1,4 +1,4 @@
-package net.rezolv.obsidanum.item.item_entity.arrows.flame_arrow;
+package net.rezolv.obsidanum.item.item_entity.arrows.flame_bolt;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -22,29 +22,30 @@ import net.rezolv.obsidanum.item.ItemsObs;
 import net.rezolv.obsidanum.item.item_entity.arrows.EntityTypeInit;
 import net.rezolv.obsidanum.particle.ParticlesObs;
 
-public class FlameArrow extends AbstractArrow {
+public class FlameBolt extends AbstractArrow {
 
-    public FlameArrow(EntityType<? extends FlameArrow> p_37411_, Level p_37412_) {
-        super(p_37411_, p_37412_);
+    public FlameBolt(EntityType<? extends FlameBolt> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public FlameArrow(Level p_37419_, LivingEntity p_37420_) {
-        super(EntityTypeInit.FLAME_ARROW.get(), p_37420_, p_37419_);
+    public FlameBolt(Level level, LivingEntity shooter) {
+        super(EntityTypeInit.FLAME_ARROW.get(), shooter, level);
     }
 
-    public FlameArrow(Level p_37414_, double p_37415_, double p_37416_, double p_37417_) {
-        super(EntityTypeInit.FLAME_ARROW.get(), p_37415_, p_37416_, p_37417_, p_37414_);
+    public FlameBolt(Level level, double x, double y, double z) {
+        super(EntityTypeInit.FLAME_ARROW.get(), x, y, z, level);
     }
 
-    public FlameArrow(PlayMessages.SpawnEntity spawnEntity, Level world) {
-        this(EntityTypeInit.FLAME_ARROW.get(), world);
+    public FlameBolt(PlayMessages.SpawnEntity spawnPacket, Level level) {
+        this(EntityTypeInit.FLAME_ARROW.get(), level);
     }
 
     @Override
     public void tick() {
         super.tick();
         if (this.level().isClientSide && !this.inGround) {
-            this.level().addParticle(ParticlesObs.NETHER_FLAME_PROJECTILE_PARTICLES.get(), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+            this.level().addParticle(ParticlesObs.NETHER_FLAME_PROJECTILE_PARTICLES.get(),
+                    this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -53,35 +54,31 @@ public class FlameArrow extends AbstractArrow {
         return new ItemStack(ItemsObs.FLAME_BOLT.get());
     }
 
-
-    protected void onHitBlock(BlockHitResult p_37384_) {
-        super.onHitBlock(p_37384_);
+    protected void onHitBlock(BlockHitResult blockHitResult) {
+        super.onHitBlock(blockHitResult);
         if (!this.level().isClientSide) {
-            Entity entity = this.getOwner();
-            if (!(entity instanceof Mob) || net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), entity)) {
-                BlockPos blockpos = p_37384_.getBlockPos().relative(p_37384_.getDirection());
-                if (this.level().isEmptyBlock(blockpos)) {
-
-                    this.level().setBlockAndUpdate(blockpos, NetherFireBlock.getState(this.level(), blockpos));
+            Entity owner = this.getOwner();
+            if (!(owner instanceof Mob) || net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), owner)) {
+                BlockPos adjacentPos = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
+                if (this.level().isEmptyBlock(adjacentPos)) {
+                    this.level().setBlockAndUpdate(adjacentPos, NetherFireBlock.getState(this.level(), adjacentPos));
                 }
             }
-
         }
     }
 
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
         super.onHitEntity(hitResult);
-        Entity targetEntity = hitResult.getEntity();
+        Entity target = hitResult.getEntity();
 
-        if (random.nextFloat() < 0.12) { // 7% вероятность
-            targetEntity.setSecondsOnFire(8); // Поджигаем на 6 секунд
+        if (random.nextFloat() < 0.12) { // 12% chance
+            target.setSecondsOnFire(8); // Set on fire for 8 seconds
         } else {
-            targetEntity.setSecondsOnFire(4);
+            target.setSecondsOnFire(4); // Set on fire for 4 seconds
         }
-        targetEntity.hurt(this.damageSources().arrow(this,this), 7.0F);
+        target.hurt(this.damageSources().arrow(this, this), 7.0F);
     }
-
 
     @Override
     protected void onHit(HitResult hitResult) {
@@ -93,10 +90,12 @@ public class FlameArrow extends AbstractArrow {
                 hitDirection = Vec3.atLowerCornerOf(blockHit.getDirection().getNormal());
             }
             this.discard();
-            // Первая группа снарядов (поблизости, по кругу)
+
+            // First group of projectiles (nearby, in a circle)
             int miniProjectileCount = 4 + this.random.nextInt(8);
             for (int i = 0; i < miniProjectileCount; i++) {
-                NetherFlameEntityMini miniProjectile = new NetherFlameEntityMini(ModItemEntities.NETHER_FLAME_ENTITY_MINI.get(), this.level());
+                NetherFlameEntityMini miniProjectile = new NetherFlameEntityMini(
+                        ModItemEntities.NETHER_FLAME_ENTITY_MINI.get(), this.level());
                 miniProjectile.setOwner(this.getOwner());
                 miniProjectile.setPos(this.getX(), this.getY(), this.getZ());
 
@@ -111,7 +110,8 @@ public class FlameArrow extends AbstractArrow {
                 miniProjectile.shoot(scatterDirection.x, scatterDirection.y, scatterDirection.z, 0.25f, 0.1f);
                 this.level().addFreshEntity(miniProjectile);
             }
-            // Звук и удаление сущности
+
+            // Sound and entity removal
             this.level().playSound(
                     null,
                     this.getX(), this.getY(), this.getZ(),
@@ -121,7 +121,6 @@ public class FlameArrow extends AbstractArrow {
                     0.8f + this.random.nextFloat() * 0.4f
             );
             this.level().broadcastEntityEvent(this, (byte) 3);
-
         }
     }
 }

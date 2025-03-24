@@ -32,6 +32,9 @@ public class BlocksObs {
             DeferredRegister.create(ForgeRegistries.BLOCKS, Obsidanum.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = ItemsObs.ITEMS;
 
+    public static final RegistryObject<Block> BLOCK_OF_STITCHED_LEATHER = registerBlock("block_of_stitched_leather",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.GUITAR).strength(0.8F).sound(SoundType.WOOL).ignitedByLava()));
+
     public static final RegistryObject<Block> CRIMSON_GRASS = registerBlock("crimson_grass",
             () -> new TallCrimsonGrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollission()
                     .instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XYZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));

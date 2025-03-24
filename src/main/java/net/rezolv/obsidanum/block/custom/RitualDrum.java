@@ -2,8 +2,11 @@ package net.rezolv.obsidanum.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +25,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.rezolv.obsidanum.block.BlocksObs;
+import net.rezolv.obsidanum.entity.ModEntities;
+import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
+
+import java.util.Random;
 
 
 public class RitualDrum extends Block {
@@ -45,12 +52,89 @@ public class RitualDrum extends Block {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide()) {
-            // Ваша логика взаимодействия (вызывается ТОЛЬКО для основного блока)
-            ItemEntity apple = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, new ItemStack(Items.APPLE));
-            level.addFreshEntity(apple);
+            // Генерируем 20 случайных позиций для поиска
+            BlockPos spawnPos = findValidSpawnPosition(level, pos, 20);
+
+            if (spawnPos != null) {
+                MutatedGart boss = new MutatedGart(ModEntities.MUTATED_GART.get(), level);
+                boss.moveTo(
+                        spawnPos.getX() + 0.5,
+                        spawnPos.getY(),
+                        spawnPos.getZ() + 0.5,
+                        player.getYRot(),
+                        player.getXRot()
+                );
+                level.addFreshEntity(boss);
+            } else {
+                player.sendSystemMessage(Component.literal("Недостаточно места для призыва! Нужно пространство 3x3x2 блока"));
+            }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
+
+    private BlockPos findValidSpawnPosition(Level level, BlockPos center, int attempts) {
+        Random random = new Random();
+        int searchRadius = 5;
+
+        for (int i = 0; i < attempts; i++) {
+            // Генерируем случайное смещение
+            int xOffset = random.nextInt(searchRadius * 2) - searchRadius;
+            int zOffset = random.nextInt(searchRadius * 2) - searchRadius;
+
+            // Пропускаем позиции слишком близко к блоку
+            if (Math.abs(xOffset) < 2 && Math.abs(zOffset) < 2) continue;
+
+            BlockPos checkPos = center.offset(xOffset, 0, zOffset);
+            BlockPos surfacePos = findSurfaceAt(level, checkPos);
+
+            if (surfacePos != null && isValidSpawnArea(level, surfacePos)) {
+                return surfacePos;
+            }
+        }
+        return null;
+    }
+
+    private BlockPos findSurfaceAt(Level level, BlockPos pos) {
+        // Ищем поверхность на том же Y уровне или ниже
+        for (int y = pos.getY(); y >= pos.getY() - 3; y--) {
+            BlockPos checkPos = new BlockPos(pos.getX(), y, pos.getZ());
+            if (isSolidSurface(level, checkPos.below()) &&
+                    hasEnoughAir(level, checkPos)) {
+                return checkPos;
+            }
+        }
+        return null;
+    }
+
+    private boolean isSolidSurface(Level level, BlockPos pos) {
+        return level.getBlockState(pos).isSolid();
+    }
+
+    private boolean hasEnoughAir(Level level, BlockPos pos) {
+        // Проверяем 3 блока в высоту
+        return level.getBlockState(pos).isAir() &&
+                level.getBlockState(pos.above()).isAir() &&
+                level.getBlockState(pos.above(2)).isAir();
+    }
+
+    private boolean isValidSpawnArea(Level level, BlockPos pos) {
+        // Проверяем пространство 3x3x2 вокруг позиции
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
+                for (int y = 0; y <= 1; y++) {
+                    BlockPos check = pos.offset(x, y, z);
+                    // Игнорируем центральный столб воздуха
+                    if (Math.abs(x) < 2 && Math.abs(z) < 2 && y < 2) continue;
+
+                    if (level.getBlockState(check).isSolid()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());

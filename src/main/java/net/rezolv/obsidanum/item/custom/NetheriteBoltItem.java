@@ -8,19 +8,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.rezolv.obsidanum.item.item_entity.arrows.flame_arrow.FlameArrow;
+import net.rezolv.obsidanum.item.item_entity.arrows.netherite_bolt.NetheriteBolt;
 
-public class FlameArrowItem extends ArrowItem {
-    public FlameArrowItem(Properties properties) {
+public class NetheriteBoltItem extends ArrowItem {
+    public NetheriteBoltItem(Properties properties) {
         super(properties);
     }
     @Override
     public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
-        return new FlameArrow(world, shooter);
+        return new NetheriteBolt(world, shooter);
     }
     public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
         int enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
-        return enchant <= 0 ? false : this.getClass() == FlameArrowItem.class;
+        return enchant <= 0 ? false : this.getClass() == NetheriteBoltItem.class;
     }
 
 }

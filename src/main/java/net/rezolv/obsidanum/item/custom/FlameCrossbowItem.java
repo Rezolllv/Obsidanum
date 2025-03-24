@@ -1,14 +1,10 @@
 package net.rezolv.obsidanum.item.custom;
 
 import com.google.common.collect.Lists;
-import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -29,21 +25,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.rezolv.obsidanum.item.ItemsObs;
-import net.rezolv.obsidanum.item.item_entity.arrows.flame_arrow.FlameArrow;
+import net.rezolv.obsidanum.item.item_entity.arrows.flame_bolt.FlameBolt;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class FlameCrossbowItem extends CrossbowItem implements Vanishable {
-    protected static final Predicate<ItemStack> PREDICATE_BOLTS_ONLY = (itemstack) -> {
-        return itemstack.getItem() instanceof FlameArrowItem;
+    protected static final Predicate<ItemStack> PREDICATE_BOLTS = (itemstack) -> {
+        return itemstack.getItem() instanceof FlameBoltItem || itemstack.getItem() instanceof NetheriteBoltItem;
     };
+
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
-        return PREDICATE_BOLTS_ONLY;
+        return PREDICATE_BOLTS;
     }
     public FlameCrossbowItem(Properties pProperties) {
         super(pProperties);
@@ -72,7 +68,13 @@ public class FlameCrossbowItem extends CrossbowItem implements Vanishable {
         int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, pCrossbowStack);
         int j = i == 0 ? 1 : 3;
         boolean flag = pShooter instanceof Player && ((Player)pShooter).getAbilities().instabuild;
-        ItemStack itemstack = pShooter.getProjectile(pCrossbowStack);
+
+        // Ищем сначала Netherite болты
+        ItemStack itemstack = findProjectile(pShooter, ItemsObs.NETHERITE_BOLT.get());
+        if (itemstack.isEmpty()) {
+            // Если Netherite не найден, ищем Flame болты
+            itemstack = pShooter.getProjectile(pCrossbowStack);
+        }
         ItemStack itemstack1 = itemstack.copy();
 
         for(int k = 0; k < j; ++k) {
@@ -81,7 +83,8 @@ public class FlameCrossbowItem extends CrossbowItem implements Vanishable {
             }
 
             if (itemstack.isEmpty() && flag) {
-                itemstack = new ItemStack(ItemsObs.FLAME_BOLT.get());
+                // В креативном режиме создаем Netherite болт по умолчанию
+                itemstack = new ItemStack(ItemsObs.NETHERITE_BOLT.get());
                 itemstack1 = itemstack.copy();
             }
 
@@ -91,6 +94,19 @@ public class FlameCrossbowItem extends CrossbowItem implements Vanishable {
         }
 
         return true;
+    }
+
+    // Вспомогательный метод для поиска болтов в инвентаре
+    private static ItemStack findProjectile(LivingEntity shooter, Item projectileItem) {
+        if (shooter instanceof Player player) {
+            for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+                ItemStack stack = player.getInventory().getItem(i);
+                if (stack.getItem() == projectileItem && !stack.isEmpty()) {
+                    return stack;
+                }
+            }
+        }
+        return ItemStack.EMPTY;
     }
     private static boolean loadProjectile(LivingEntity pShooter, ItemStack pCrossbowStack, ItemStack pAmmoStack, boolean pHasAmmo, boolean pIsCreative) {
         if (pAmmoStack.isEmpty()) {
@@ -223,7 +239,7 @@ public class FlameCrossbowItem extends CrossbowItem implements Vanishable {
             } else {
                 projectile = getArrow(pLevel, pShooter, pCrossbowStack, pAmmoStack);
                 if (pIsCreativeMode || pProjectileAngle != 0.0F) {
-                    ((FlameArrow)projectile).pickup = FlameArrow.Pickup.CREATIVE_ONLY;
+                    ((FlameBolt)projectile).pickup = FlameBolt.Pickup.CREATIVE_ONLY;
                 }
             }
 
@@ -247,8 +263,18 @@ public class FlameCrossbowItem extends CrossbowItem implements Vanishable {
 
     }
     private static AbstractArrow getArrow(Level pLevel, LivingEntity pLivingEntity, ItemStack pCrossbowStack, ItemStack pAmmoStack) {
-        FlameArrowItem arrowitem = (FlameArrowItem)(pAmmoStack.getItem() instanceof FlameArrowItem ? pAmmoStack.getItem() :ItemsObs.FLAME_BOLT.get());
-        AbstractArrow abstractarrow = arrowitem.createArrow(pLevel, pAmmoStack, pLivingEntity);
+        AbstractArrow abstractarrow;
+
+        // Проверяем тип болта и создаем соответствующий снаряд
+        if (pAmmoStack.getItem() instanceof NetheriteBoltItem) {
+            NetheriteBoltItem boltItem = (NetheriteBoltItem) pAmmoStack.getItem();
+            abstractarrow = boltItem.createArrow(pLevel, pAmmoStack, pLivingEntity);
+        } else {
+            // По умолчанию используем FlameArrowItem
+            FlameBoltItem arrowItem = (FlameBoltItem) (pAmmoStack.getItem() instanceof FlameBoltItem ? pAmmoStack.getItem() : ItemsObs.FLAME_BOLT.get());
+            abstractarrow = arrowItem.createArrow(pLevel, pAmmoStack, pLivingEntity);
+        }
+
         if (pLivingEntity instanceof Player) {
             abstractarrow.setCritArrow(true);
         }

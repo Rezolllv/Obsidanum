@@ -180,6 +180,8 @@
   "block.obsidanum.obsidian_chest": "Обсидиановый сундук",
   "block.obsidanum.azure_obsidian_chest": "Лазурный обсидиановый сундук",
   "block.obsidanum.runic_obsidian_chest": "Рунический обсидиановый сундук",
+  "block.obsidanum.block_of_stitched_leather": "Блок сшитой кожи",
+
   "obsidanum.container.obsidian_chest": "Обсидиановый сундук",
   "obsidanum.container.azure_obsidian_chest": "Лазурный обсидиановый сундук",
   "obsidanum.container.runic_obsidian_chest": "Рунический сундук",
@@ -224,6 +226,8 @@
   "item.obsidanum.gloomy_mushroom": "Сумрачный гриб",
   "item.obsidanum.flame_crossbow": "Пламенный самострел",
   "item.obsidanum.flame_bolt": "Огненный болт",
+  "item.obsidanum.leaf_live": "Живительный лист",
+  "item.obsidanum.netherite_bolt": "Незеритовый болт",
   "item.obsidanum.nether_flame": "§eПламя Незера",
   "item.obsidanum.obsidan": "§bОбсидан",
   "item.obsidanum.obsidan_apple": "§bОбсидановое яблоко",

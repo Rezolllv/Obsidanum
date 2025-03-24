@@ -26,6 +26,7 @@ public class ModFlammableBlocks {
 
             setFlammableMethod.invoke(fireBlock, BlocksObs.OBSIDAN_FENCE.get(), 5, 20);
             setFlammableMethod.invoke(fireBlock, BlocksObs.OBSIDAN_FENCE_GATE.get(), 5, 20);
+            setFlammableMethod.invoke(fireBlock, BlocksObs.BLOCK_OF_STITCHED_LEATHER.get(), 10, 35);
         } catch (Exception e) {
             // Если происходит ошибка (например, метод не найден), она будет выведена в консоль
             e.printStackTrace();
