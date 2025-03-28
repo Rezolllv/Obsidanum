@@ -189,11 +189,11 @@ public class MutatedGart extends Monster implements RangedAttackMob {
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 15.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2D));
-        this.goalSelector.addGoal(2, new MoveTowardsRestrictionGoal(this, 1.0));
+        this.goalSelector.addGoal(1, new MoveTowardsRestrictionGoal(this, 1.0));
 
         // Инициализация цели дальнего боя
         this.rangedAttackGoal = new MutatedGartRangedAttackGoal(this, 1.0, 10.0F);
-        this.goalSelector.addGoal(2, this.rangedAttackGoal);
+        this.goalSelector.addGoal(3, this.rangedAttackGoal);
 
         // Цели для атаки
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, 10, true, false, target -> this.distanceTo(target) <= 18.0));
@@ -213,8 +213,7 @@ public class MutatedGart extends Monster implements RangedAttackMob {
                 .add(Attributes.ARMOR_TOUGHNESS, 0.8D)
                 .add(Attributes.FOLLOW_RANGE, 20)
                 .add(Attributes.ATTACK_DAMAGE, 12)
-                .add(Attributes.ATTACK_KNOCKBACK, 5)
-                .add(Attributes.ATTACK_SPEED, 4)
+                .add(Attributes.ATTACK_KNOCKBACK, 0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.3)
                 .add(Attributes.ARMOR, 0.0);
     }

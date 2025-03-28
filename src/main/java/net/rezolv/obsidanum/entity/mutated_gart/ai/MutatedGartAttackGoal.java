@@ -9,7 +9,7 @@ import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
 public class MutatedGartAttackGoal extends MeleeAttackGoal {
     private final MutatedGart entity; // Сущность, к которой привязана цель
     private static final int ATTACK_WINDUP = 15; // Удар наносится на 15-м тике
-    private static final int ATTACK_COOLDOWN = 15; // Общая длительность анимации (15 тиков)
+    private static final int ATTACK_COOLDOWN = 30; // Общая длительность анимации (15 тиков)
     private int attackTimer = 0; // Таймер атаки
 
     // Конструктор
@@ -28,7 +28,7 @@ public class MutatedGartAttackGoal extends MeleeAttackGoal {
     @Override
     public boolean canUse() {
         LivingEntity target = this.entity.getTarget();
-        return target != null && target.isAlive() && this.entity.distanceTo(target) < 4.0D;
+        return target != null && target.isAlive() && this.entity.distanceTo(target) <= 4.0D;
     }
 
     // Обновление логики атаки

@@ -3,14 +3,10 @@ package net.rezolv.obsidanum.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +16,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -27,16 +24,20 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.rezolv.obsidanum.block.BlocksObs;
 import net.rezolv.obsidanum.entity.ModEntities;
 import net.rezolv.obsidanum.entity.mutated_gart.MutatedGart;
-
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import java.util.Random;
 
 
 public class RitualDrum extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final IntegerProperty USES = IntegerProperty.create("uses", 0, 2);
 
     public RitualDrum(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(USES, 0));
     }
 
     // Пример: можно использовать кастомную фигуру или вернуть Shapes.block()
@@ -47,29 +48,57 @@ public class RitualDrum extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, USES);
     }
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide()) {
-            // Генерируем 20 случайных позиций для поиска
-            BlockPos spawnPos = findValidSpawnPosition(level, pos, 20);
+            int currentUses = state.getValue(USES);
 
-            if (spawnPos != null) {
-                MutatedGart boss = new MutatedGart(ModEntities.MUTATED_GART.get(), level);
-                boss.moveTo(
-                        spawnPos.getX() + 0.5,
-                        spawnPos.getY(),
-                        spawnPos.getZ() + 0.5,
-                        player.getYRot(),
-                        player.getXRot()
-                );
-                level.addFreshEntity(boss);
+            if (currentUses < 2) {
+                switch(currentUses) {
+                    case 0 -> {
+                        playBeeSound(level, pos, SoundEvents.BEE_LOOP);
+                        player.sendSystemMessage(Component.translatable("message.obsidanum.drum_first"));
+                    }
+                    case 1 -> {
+                        playBeeSound(level, pos, SoundEvents.BEE_LOOP_AGGRESSIVE);
+                        player.sendSystemMessage(Component.translatable("message.obsidanum.drum_second"));
+                    }
+                }
+
+                level.setBlock(pos, state.setValue(USES, currentUses + 1), 3);
             } else {
-                player.sendSystemMessage(Component.literal("Недостаточно места для призыва! Нужно пространство 3x3x2 блока"));
+                playBeeSound(level, pos, SoundEvents.BEE_STING);
+                player.sendSystemMessage(Component.translatable("message.obsidanum.drum_final"));
+
+                BlockPos spawnPos = findValidSpawnPosition(level, pos, 20);
+                if (spawnPos != null) {
+                    MutatedGart boss = new MutatedGart(ModEntities.MUTATED_GART.get(), level);
+                    boss.moveTo(
+                            spawnPos.getX() + 0.5,
+                            spawnPos.getY(),
+                            spawnPos.getZ() + 0.5,
+                            player.getYRot(),
+                            player.getXRot()
+                    );
+                    level.addFreshEntity(boss);
+                }
+                level.destroyBlock(pos, true);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    private void playBeeSound(Level level, BlockPos pos, SoundEvent sound) {
+        level.playSound(
+                null, // Для всех игроков
+                pos,
+                sound,
+                SoundSource.BLOCKS,
+                1.0f,
+                0.8f + level.random.nextFloat() * 0.4f // Случайная высота тона
+        );
     }
 
     private BlockPos findValidSpawnPosition(Level level, BlockPos center, int attempts) {

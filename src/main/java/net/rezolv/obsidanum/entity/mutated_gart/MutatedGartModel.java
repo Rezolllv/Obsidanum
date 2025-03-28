@@ -173,7 +173,8 @@ public class MutatedGartModel<T extends Entity> extends HierarchicalModel<T> {
 
 		if (gart.isMagicAttacking()) {
 			this.animate(gart.magicAttackAnimationState, MutatedGartAnimation.magic_punch, ageInTicks, 1f);
-		} else if (gart.attackAnimationState.isStarted()) {
+		}
+		if (gart.attackAnimationState.isStarted()) {
 			this.animate(gart.attackAnimationState, MutatedGartAnimation.punch, ageInTicks, 1f);
 		} else if (gart.isMoving()) {
 			this.animateWalk(MutatedGartAnimation.walk, limbSwing, limbSwingAmount, 2f, 2.5f);

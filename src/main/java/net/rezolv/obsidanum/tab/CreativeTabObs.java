@@ -226,6 +226,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         //Items
 
                         pOutput.accept(ItemsObs.OBSIDIAN_TEAR.get());
+                        pOutput.accept(ItemsObs.PRANA_CRYSTALL_SHARD.get());
                         pOutput.accept(ItemsObs.FLAME_CROSSBOW.get());
                         pOutput.accept(ItemsObs.FLAME_BOLT.get());
                         pOutput.accept(ItemsObs.NETHERITE_BOLT.get());

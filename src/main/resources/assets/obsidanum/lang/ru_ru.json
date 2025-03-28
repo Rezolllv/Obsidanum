@@ -176,6 +176,7 @@
   "block.obsidanum.stripped_obsidan_wood": "Обтёсанная древесина обсиданового дерева",
   "block.obsidanum.stripped_obsidan_wood_log": "Обтёсанная бревно обсиданового дерева",
   "block.obsidanum.the_gloomy_mycelium": "Сумрачная грибница",
+  "block.obsidanum.prana_crystall": "Прана кристалл",
 
   "block.obsidanum.obsidian_chest": "Обсидиановый сундук",
   "block.obsidanum.azure_obsidian_chest": "Лазурный обсидиановый сундук",
@@ -227,6 +228,7 @@
   "item.obsidanum.flame_crossbow": "Пламенный самострел",
   "item.obsidanum.flame_bolt": "Огненный болт",
   "item.obsidanum.leaf_live": "Живительный лист",
+  "item.obsidanum.prana_crystall_shard": "Осколок прана кристалла",
   "item.obsidanum.netherite_bolt": "Незеритовый болт",
   "item.obsidanum.nether_flame": "§eПламя Незера",
   "item.obsidanum.obsidan": "§bОбсидан",

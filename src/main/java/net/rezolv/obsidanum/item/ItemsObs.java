@@ -61,6 +61,10 @@ public class ItemsObs {
 
     public static final RegistryObject<Item> NETHERITE_BOLT = ITEMS.register("netherite_bolt",
             () -> new NetheriteBoltItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> PRANA_CRYSTALL_SHARD = ITEMS.register("prana_crystall_shard",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> LEAF_LIVE = ITEMS.register("leaf_live",
             () -> new Item(new Item.Properties()
                     .food(new FoodProperties.Builder().nutrition(1).saturationMod(0.5f).alwaysEat()

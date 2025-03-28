@@ -52,7 +52,7 @@ public class BlocksObs {
             () -> new FlamePipe(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> PRANA_CRYSTALL = registerBlock("prana_crystall",
-            () -> new PranaCrystall(BlockBehaviour.Properties.of().noOcclusion().strength(-1.0F, 3600000.0F)
+            () -> new PranaCrystall(BlockBehaviour.Properties.of().noOcclusion().strength(1.0F, 3600000.0F)
                     .sound(SoundType.AMETHYST).randomTicks().lightLevel((i) -> 10).mapColor(MapColor.COLOR_YELLOW).emissiveRendering((state, level, pos) -> true)));
 
 

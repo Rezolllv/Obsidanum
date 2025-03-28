@@ -75,72 +75,82 @@ public class SmolderingShovel extends ShovelItem {
     public boolean mineBlock(ItemStack itemstack, Level world, BlockState blockstate, BlockPos pos, LivingEntity entity) {
         boolean retval = super.mineBlock(itemstack, world, blockstate, pos, entity);
 
-        // Определяем уровень сервера
         ServerLevel serverLevel = (world instanceof ServerLevel) ? (ServerLevel) world : null;
-        // Добавляем огненные частицы
+        if (serverLevel == null) return retval;
 
-        // Получаем дропы с учетом инструмента и зачарования удачи
         List<ItemStack> drops = Block.getDrops(blockstate, serverLevel, pos, world.getBlockEntity(pos), entity, itemstack);
 
-        // Создаем список для хранения результатов (переплавленные или исходные предметы)
-        List<ItemStack> results = new ArrayList<>();
-        int totalExp = 0;
+        if (!drops.isEmpty()) {
+            List<ItemStack> results = new ArrayList<>();
+            int totalExp = 0;
 
-        // Перебираем все дропы
-        for (ItemStack drop : drops) {
-            // Проверяем, можно ли дроп переплавить
-            Optional<SmeltingRecipe> recipeOpt = serverLevel.getRecipeManager()
-                    .getRecipeFor(RecipeType.SMELTING, new SimpleContainer(drop), serverLevel);
+            for (ItemStack drop : drops) {
+                Optional<SmeltingRecipe> recipeOpt = serverLevel.getRecipeManager()
+                        .getRecipeFor(RecipeType.SMELTING, new SimpleContainer(drop), serverLevel);
 
-            if (recipeOpt.isPresent()) {
-                // Получаем результат переплавки
-                if (world instanceof ServerLevel) {
+                if (recipeOpt.isPresent()) {
+                    // Добавление частиц
                     for (int i = 0; i < 5; i++) {
                         double offsetX = world.random.nextDouble() * 0.5 - 0.25;
                         double offsetY = world.random.nextDouble() * 0.5 - 0.25;
                         double offsetZ = world.random.nextDouble() * 0.5 - 0.25;
-                        serverLevel.sendParticles(ParticlesObs.NETHER_FLAME2_PARTICLES.get(), pos.getX() + 0.5 + offsetX, pos.getY() + 0.5 + offsetY, pos.getZ() + 0.5 + offsetZ, 1, 0.0, 0.0, 0.0, 0.0);
+                        serverLevel.sendParticles(ParticlesObs.NETHER_FLAME2_PARTICLES.get(),
+                                pos.getX() + 0.5 + offsetX,
+                                pos.getY() + 0.5 + offsetY,
+                                pos.getZ() + 0.5 + offsetZ,
+                                1, 0.0, 0.0, 0.0, 0.0);
                     }
+
+                    ItemStack smeltedResult = recipeOpt.get().getResultItem(serverLevel.registryAccess()).copy();
+                    smeltedResult.setCount(drop.getCount());
+                    results.add(smeltedResult);
+                    totalExp += recipeOpt.get().getExperience() * 2;
+                } else {
+                    results.add(drop);
                 }
-                ItemStack smeltedResult = recipeOpt.get().getResultItem(serverLevel.registryAccess()).copy();
-                smeltedResult.setCount(drop.getCount());  // Сохраняем количество исходного дропа
-                results.add(smeltedResult);
-                // Добавляем опыт за переплавку
-                totalExp += recipeOpt.get().getExperience() * 10;
-            } else {
-                // Если переплавка невозможна, добавляем исходный дроп
-                results.add(drop);
             }
-        }
 
-        // Спавним каждый предмет из списка результатов
-        for (ItemStack result : results) {
-            ItemEntity entityToSpawn = new ItemEntity(serverLevel, pos.getX(), pos.getY(), pos.getZ(), result);
-            entityToSpawn.setPickUpDelay(10);
-            serverLevel.addFreshEntity(entityToSpawn);
-        }
+            // Спавн предметов с правильным смещением и движением
+            for (ItemStack result : results) {
+                double x = pos.getX() + 0.5 + (world.random.nextDouble() - 0.5) * 0.5;
+                double y = pos.getY() + 0.25 + world.random.nextDouble() * 0.5;
+                double z = pos.getZ() + 0.5 + (world.random.nextDouble() - 0.5) * 0.5;
 
-        // Удаляем блок, так как дроп уже обработан
-        world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                ItemEntity entityToSpawn = new ItemEntity(serverLevel, x, y, z, result);
+                entityToSpawn.setPickUpDelay(10);
 
-        // Получаем уровень зачарования Удача
-        int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, itemstack);
-        int silkTouchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemstack);
+                // Добавляем естественное движение как при обычном дропе
+                entityToSpawn.setDeltaMovement(
+                        world.random.nextGaussian() * 0.05,
+                        world.random.nextGaussian() * 0.05 + 0.2,
+                        world.random.nextGaussian() * 0.05
+                );
 
-        // Получаем количество опыта, которое должен был бы выпустить блок
-        int exp = blockstate.getBlock().getExpDrop(blockstate, serverLevel, serverLevel.getRandom(), pos, fortuneLevel, silkTouchLevel);
+                serverLevel.addFreshEntity(entityToSpawn);
+            }
 
-        // Спавним опыт в мире
-        if (exp > 0) {
-            blockstate.getBlock().popExperience(serverLevel, pos, exp);
-        }
+            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 
-        // Спавним опыт за переплавку
-        if (totalExp > 0) {
-            while (totalExp > 0) {
-                int expToDrop = ExperienceOrb.getExperienceValue(totalExp);
-                totalExp -= expToDrop;
-                serverLevel.addFreshEntity(new ExperienceOrb(serverLevel, pos.getX(), pos.getY(), pos.getZ(), expToDrop));
+            // Опыт от блока
+            int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, itemstack);
+            int silkTouchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemstack);
+            int exp = blockstate.getBlock().getExpDrop(blockstate, serverLevel, serverLevel.getRandom(), pos, fortuneLevel, silkTouchLevel);
+
+            if (exp > 0) {
+                blockstate.getBlock().popExperience(serverLevel, pos, exp);
+            }
+
+            // Опыт за переплавку
+            if (totalExp > 0) {
+                while (totalExp > 0) {
+                    int expToDrop = ExperienceOrb.getExperienceValue(totalExp);
+                    totalExp -= expToDrop;
+                    serverLevel.addFreshEntity(new ExperienceOrb(serverLevel,
+                            pos.getX() + 0.5,
+                            pos.getY() + 0.5,
+                            pos.getZ() + 0.5,
+                            expToDrop));
+                }
             }
         }
 

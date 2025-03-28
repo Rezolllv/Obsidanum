@@ -44,6 +44,13 @@ public class MutatedGartRangedAttackGoal extends Goal {
 
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
 
+        // Добавляем движение к цели
+        if (mob.distanceToSqr(target) > attackRadiusSq * 0.5) { // Если цель слишком далеко, подходим ближе
+            mob.getNavigation().moveTo(target, 1.0); // 1.0 - скорость движения
+        } else {
+            mob.getNavigation().stop(); // Останавливаемся, если уже достаточно близко
+        }
+
         // Если кулдаун активен, уменьшаем его
         if (attackCooldown > 0) {
             attackCooldown--;
