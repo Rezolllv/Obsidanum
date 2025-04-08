@@ -68,11 +68,16 @@ public class MutatedGart extends Monster implements RangedAttackMob {
     public boolean isMoving() {
         return this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6;
     }
+    public final AnimationState appearanceAnimationState = new AnimationState();
 
     // Обновление состояния моба
     @Override
     public void tick() {
         super.tick();
+        if (this.level().isClientSide && this.tickCount == 1) {
+            // Запуск анимации при первом тике на клиенте
+            this.appearanceAnimationState.start(this.tickCount);
+        }
         if (this.level().isClientSide()) {
             setupAnimationStates(); // Настройка состояний анимации
         }

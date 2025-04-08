@@ -2,68 +2,50 @@ package net.rezolv.obsidanum.effect.effects.effect_overlay;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.rezolv.obsidanum.effect.EffectsObs;
 
 public class ConfusionOverlay {
 
     private static final ResourceLocation[] OVERLAY_TEXTURES = {
-            new ResourceLocation("obsidanum", "textures/overlay/flash1.png"),
-            new ResourceLocation("obsidanum", "textures/overlay/flash2.png"),
-            new ResourceLocation("obsidanum", "textures/overlay/flash3.png"),
-            new ResourceLocation("obsidanum", "textures/overlay/flash4.png"),
-            new ResourceLocation("obsidanum", "textures/overlay/flash5.png")
+            new ResourceLocation("obsidanum", "textures/overlay/morok_stage_1.png"),
     };
 
-    private static final int TICK_INTERVAL = 2; // Смена картинки каждые 5 тиков
-    private int currentIndex = 0; // Текущая текстура
-    private int tickCounter = 0; // Счетчик тиков
-
-    public ConfusionOverlay() {
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void onRenderGuiOverlay(RenderGuiOverlayEvent.Post event) {
+    public static final IGuiOverlay CONFUSION_OVERLAY = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || !minecraft.player.hasEffect(EffectsObs.FLASH.get())) {
             return;
         }
 
-        GuiGraphics guiGraphics = event.getGuiGraphics();
-        int screenWidth = minecraft.getWindow().getGuiScaledWidth();
-        int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+        drawOverlay(guiGraphics, OVERLAY_TEXTURES[0], 1, screenWidth, screenHeight);
+    };
 
+    private static void drawOverlay(GuiGraphics guiGraphics, ResourceLocation texture, float alpha, int width, int height) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, texture);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
-        // Установите альфа-канал и нарисуйте текстуру
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 0.7f); // Альфа = 0.7
-        guiGraphics.blit(
-                OVERLAY_TEXTURES[currentIndex],
-                0, 0,
-                0, 0,
-                screenWidth, screenHeight,
-                screenWidth, screenHeight
-        );
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder buffer = tesselator.getBuilder();
 
-        // Сбросьте настройки
+        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.vertex(0,       height, 0).uv(0, 1).endVertex();
+        buffer.vertex(width,   height, 0).uv(1, 1).endVertex();
+        buffer.vertex(width,   0,      0).uv(1, 0).endVertex();
+        buffer.vertex(0,       0,      0).uv(0, 0).endVertex();
+        tesselator.end();
+
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f); // Важно!
-    }
-    @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
-        tickCounter++;
-        if (tickCounter >= TICK_INTERVAL) {
-            tickCounter = 0;
-            currentIndex = (currentIndex + 1) % OVERLAY_TEXTURES.length;
-        }
     }
 }

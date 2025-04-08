@@ -34,7 +34,6 @@ public class ModItemEntities {
             EntityType.Builder.<MagicArrow>of(MagicArrow::new, MobCategory.MISC).setCustomClientFactory(MagicArrow::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(20).setUpdateInterval(1).sized(0.2f, 0.2f));
 
-
     public static final RegistryObject<EntityType<NetherFlameEntityMini>> NETHER_FLAME_ENTITY_MINI = register("projectile_nether_flame_entity_mini",
             EntityType.Builder.<NetherFlameEntityMini>of(NetherFlameEntityMini::new, MobCategory.MISC).setCustomClientFactory(NetherFlameEntityMini::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(20).setUpdateInterval(1).sized(0.2f, 0.2f));

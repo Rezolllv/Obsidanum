@@ -27,6 +27,6 @@ public class ModEntities {
                     .sized(1f, 1.2f).build("gart"));
     public static final RegistryObject<EntityType<MutatedGart>> MUTATED_GART =
             ENTITY_TYPES.register("mutated_gart", () -> EntityType.Builder.of(MutatedGart::new, MobCategory.MONSTER)
-                    .sized(1.5f, 2f).build("mutated_gart"));
+                    .sized(1.2f, 2f).build("mutated_gart"));
 
 }

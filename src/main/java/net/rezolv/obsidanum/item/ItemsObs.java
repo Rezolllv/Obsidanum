@@ -24,6 +24,8 @@ public class ItemsObs {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Obsidanum.MOD_ID);
 
+    public static final RegistryObject<Item> POT_GRENADE = ITEMS.register("pot_grenade",
+            () -> new PotGrenadeItem(new Item.Properties()));
     public static final RegistryObject<Item> VELNARIUM_ORE = ITEMS.register("velnarium_ore",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ORDER_SWORD = ITEMS.register("order_sword",

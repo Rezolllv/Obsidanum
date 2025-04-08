@@ -56,7 +56,7 @@ public class RitualDrum extends Block {
             int currentUses = state.getValue(USES);
 
             if (currentUses < 2) {
-                switch(currentUses) {
+                switch (currentUses) {
                     case 0 -> {
                         playBeeSound(level, pos, SoundEvents.BEE_LOOP);
                         player.sendSystemMessage(Component.translatable("message.obsidanum.drum_first"));
@@ -72,15 +72,35 @@ public class RitualDrum extends Block {
                 playBeeSound(level, pos, SoundEvents.BEE_STING);
                 player.sendSystemMessage(Component.translatable("message.obsidanum.drum_final"));
 
-                BlockPos spawnPos = findValidSpawnPosition(level, pos, 20);
+                BlockPos spawnPos = null;
+                float yRot = player.getYRot();
+
+                // Поиск OBSIDIAN_HOLE_5 в радиусе 20 блоков
+                BlockPos holePos = findNearestObsidianHole(level, pos, 50);
+                if (holePos != null) {
+                    Direction holeFacing = level.getBlockState(holePos).getValue(FACING);
+                    // Ищем позицию с противоположной стороны от отверстия
+                    spawnPos = findSpawnOppositeHole(level, holePos, holeFacing);
+
+                    // Если нашли позицию для спавна, устанавливаем поворот лицом к отверстию
+                    if (spawnPos != null) {
+                        yRot = holeFacing.getOpposite().toYRot();
+                    }
+                }
+
+                // Если не найдено, используем старый алгоритм
+                if (spawnPos == null) {
+                    spawnPos = findValidSpawnPosition(level, pos, 20);
+                }
+
                 if (spawnPos != null) {
                     MutatedGart boss = new MutatedGart(ModEntities.MUTATED_GART.get(), level);
                     boss.moveTo(
                             spawnPos.getX() + 0.5,
                             spawnPos.getY(),
                             spawnPos.getZ() + 0.5,
-                            player.getYRot(),
-                            player.getXRot()
+                            yRot,
+                            0
                     );
                     level.addFreshEntity(boss);
                 }
@@ -88,7 +108,41 @@ public class RitualDrum extends Block {
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }// Поиск позиции для спауна с противоположной стороны от OBSIDIAN_HOLE_5
+    private BlockPos findSpawnOppositeHole(Level level, BlockPos holePos, Direction holeFacing) {
+        // Ищем позицию строго в 1 блоке от отверстия (в противоположном направлении)
+        BlockPos spawnCandidate = holePos.relative(holeFacing.getOpposite(), 3); // Только 1 блок!
+        BlockPos surfacePos = findSurfaceAt(level, spawnCandidate);
+
+        if (surfacePos != null && isValidSpawnArea(level, surfacePos)) {
+            return surfacePos;
+        }
+        return null; // Если не нашлось подходящего места
     }
+
+    // Поиск ближайшего OBSIDIAN_HOLE_5 в радиусе
+    private BlockPos findNearestObsidianHole(Level level, BlockPos center, int radius) {
+        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
+        BlockPos closest = null;
+        double closestDistance = Double.MAX_VALUE;
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    mutablePos.set(center.getX() + x, center.getY() + y, center.getZ() + z);
+                    if (level.getBlockState(mutablePos).getBlock() == BlocksObs.OBSIDIAN_HOLE_5.get()) {
+                        double distance = center.distSqr(mutablePos);
+                        if (distance < closestDistance) {
+                            closest = mutablePos.immutable();
+                            closestDistance = distance;
+                        }
+                    }
+                }
+            }
+        }
+        return closest;
+    }
+
 
     private void playBeeSound(Level level, BlockPos pos, SoundEvent sound) {
         level.playSound(
@@ -103,7 +157,7 @@ public class RitualDrum extends Block {
 
     private BlockPos findValidSpawnPosition(Level level, BlockPos center, int attempts) {
         Random random = new Random();
-        int searchRadius = 5;
+        int searchRadius = 20;
 
         for (int i = 0; i < attempts; i++) {
             // Генерируем случайное смещение

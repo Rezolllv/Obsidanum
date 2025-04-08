@@ -15,10 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -29,6 +26,7 @@ import net.rezolv.obsidanum.block.entity.renderer.ForgeCrucibleEntityRenderer;
 import net.rezolv.obsidanum.block.entity.renderer.HammerForgeRenderer;
 import net.rezolv.obsidanum.block.entity.renderer.PranaCrystallRenderer;
 import net.rezolv.obsidanum.effect.effects.effect_overlay.ConfusionOverlay;
+import net.rezolv.obsidanum.effect.effects.effect_overlay.PreConfusionOverlay;
 import net.rezolv.obsidanum.entity.ModModelLayers;
 import net.rezolv.obsidanum.entity.gart.GartModel;
 import net.rezolv.obsidanum.entity.meat_beetle.MeetBeetleModel;
@@ -65,6 +63,7 @@ public class ModEventBusClientEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        new PreConfusionOverlay();
         new ConfusionOverlay();
 
         ItemProperties.register(ItemsObs.OBSIDAN_SWORD.get(), new ResourceLocation("activated"),
@@ -78,7 +77,11 @@ public class ModEventBusClientEvents {
         ItemProperties.register(ItemsObs.OBSIDAN_PICKAXE.get(), new ResourceLocation("activated"),
                 (stack, world, entity, seed) -> stack.getItem() instanceof ObsidanPickaxe && ((ObsidanPickaxe) stack.getItem()).isActivated(new ItemStack(ItemsObs.OBSIDAN_PICKAXE.get())) ? 1.0F : 0.0F);
     }
-
+    @SubscribeEvent
+    public static void onRegisterOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("pre_confusion_overlay", PreConfusionOverlay.PRE_CONFUSION_OVERLAY);
+        event.registerAboveAll("confusion_overlay", ConfusionOverlay.CONFUSION_OVERLAY);
+    }
 
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {

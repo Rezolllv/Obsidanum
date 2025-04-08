@@ -275,6 +275,7 @@ public class CreativeTabObs extends CreativeModeTab {
                         pOutput.accept(ItemsObs.CRUCIBLE_WITH_NETHER_FLAME.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_KEY.get());
                         pOutput.accept(ItemsObs.VELNARIUM_ORE.get());
+                        pOutput.accept(ItemsObs.POT_GRENADE.get());
                         pOutput.accept(ItemsObs.ORDER_SWORD.get());
                         pOutput.accept(ItemsObs.OBSIDIAN_TOTEM_OF_IMMORTALITY.get());
                         pOutput.accept(ItemsObs.ELEMENTAL_CRUSHER.get());
