@@ -38,5 +38,23 @@ public class ForgeEventBusEvents {
             }
         }
     }
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.hasEffect(EffectsObs.FLASH.get())) {
+            int amplifier = entity.getEffect(EffectsObs.FLASH.get()).getAmplifier();
+
+            float originalDamage = event.getAmount();
+            float multiplier = 1.0f;
+
+            if (amplifier == 0) {
+                multiplier = 1.15f; // +15%
+            } else if (amplifier == 1) {
+                multiplier = 6.40f; // +40%
+            }
+
+            event.setAmount(originalDamage * multiplier);
+        }
+    }
 
 }

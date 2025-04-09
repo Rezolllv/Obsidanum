@@ -35,91 +35,48 @@ public class PreConfusionOverlay {
         UUID playerId = player.getUUID();
         PlayerFogState state = playerStates.computeIfAbsent(playerId, k -> new PlayerFogState());
 
-        // Проверка нахождения игрока в тумане
+        // Обновляем состояние только для визуальных эффектов
         boolean currentlyInFog = isPlayerInFog(player);
         if (currentlyInFog) {
-            if (!state.isInFog) {
-                state.isInFog = true;
-            }
-            // Наращиваем экспозицию до максимума второго уровня
             state.fogExposureTime = Math.min(state.fogExposureTime + 1, PlayerFogState.MAX_EXPOSURE_TIME_LVL2);
         } else {
-            if (state.isInFog) {
-                state.isInFog = false;
-            }
             state.fogExposureTime = Math.max(state.fogExposureTime - 1, 0);
         }
 
-        // Применение эффекта уровня 1 (FLASH I)
-        if (state.fogExposureTime >= PlayerFogState.MAX_EXPOSURE_TIME_LVL1 && state.appliedEffectLevel == 0) {
-            player.addEffect(new MobEffectInstance(EffectsObs.FLASH.get(), PlayerFogState.EFFECT_DURATION, 0));
-            state.appliedEffectLevel = 1;
-            System.out.println("[DEBUG] Применён FLASH I для игрока " + player.getName().getString());
+        MobEffectInstance flashEffect = player.getEffect(EffectsObs.FLASH.get());
+
+        // Если эффект активен - показываем полный оверлей
+        if (flashEffect != null) {
+            int amplifier = flashEffect.getAmplifier();
+            if (amplifier >= 1) {
+                drawFullEffectOverlay(guiGraphics, screenWidth, screenHeight);
+            } else {
+                drawOverlay(guiGraphics, OVERLAY_TEXTURES[0], 1.0f, screenWidth, screenHeight);
+            }
         }
-        // Обновление эффекта до уровня 2 (FLASH II), если ранее был FLASH I
-        if (state.fogExposureTime >= PlayerFogState.MAX_EXPOSURE_TIME_LVL2 && state.appliedEffectLevel == 1) {
-            player.addEffect(new MobEffectInstance(EffectsObs.FLASH.get(), PlayerFogState.EFFECT_DURATION, 1));
-            state.appliedEffectLevel = 2;
-            System.out.println("[DEBUG] Обновлён эффект до FLASH II для игрока " + player.getName().getString());
+        // Иначе показываем прогрессивный оверлей
+        else if (state.fogExposureTime > 0) {
+            // Первый слой появляется сразу с нарастанием прозрачности
+            float stage1Alpha = Math.min(state.fogExposureTime / (float)PlayerFogState.MAX_EXPOSURE_TIME_LVL1, 1.0f);
+            drawOverlay(guiGraphics, OVERLAY_TEXTURES[0], stage1Alpha, screenWidth, screenHeight);
+
+            // Второй слой появляется после достижения первого порога
+            if (state.fogExposureTime > PlayerFogState.MAX_EXPOSURE_TIME_LVL1) {
+                float stage2Progress = (state.fogExposureTime - PlayerFogState.MAX_EXPOSURE_TIME_LVL1) /
+                        (float)(PlayerFogState.MAX_EXPOSURE_TIME_LVL2 - PlayerFogState.MAX_EXPOSURE_TIME_LVL1);
+                float stage2Alpha = Math.min(stage2Progress, 1.0f);
+                drawOverlay(guiGraphics, OVERLAY_TEXTURES[1], stage2Alpha, screenWidth, screenHeight);
+            }
         }
 
-        // Обработка исчезновения эффекта: если время эффекта истекло, сбрасываем состояние
-        MobEffectInstance flashInstance = player.getEffect(EffectsObs.FLASH.get());
-        if (flashInstance != null && flashInstance.getDuration() <= 0) {
-            player.removeEffect(EffectsObs.FLASH.get());
-            flashInstance = null;
-            System.out.println("[DEBUG] Удалён эффект FLASH у игрока " + player.getName().getString());
-        }
-        if (state.appliedEffectLevel > 0 && flashInstance == null) {
-            state.fogExposureTime = 0;
-            state.isInFog = false;
-            state.appliedEffectLevel = 0;
-            System.out.println("[DEBUG] Сброшено состояние эффекта для игрока " + player.getName().getString());
-        }
-
-        // Очистка записей для неактивных игроков
+        // Очистка состояний для неактивных игроков
         playerStates.keySet().removeIf(uuid -> {
             if (minecraft.level == null) return true;
             Player p = minecraft.level.getPlayerByUUID(uuid);
             return p == null || !p.isAlive();
         });
-
-        // Отрисовка оверлея
-        if (flashInstance != null) {
-            int amplifier = flashInstance.getAmplifier();
-            if (amplifier == 0) {
-                // FLASH I: первый слой полностью, второй — постепенно
-                drawOverlay(guiGraphics, OVERLAY_TEXTURES[0], 1.0f, screenWidth, screenHeight);
-
-                float alpha2 = (state.fogExposureTime - PlayerFogState.MAX_EXPOSURE_TIME_LVL1)
-                        / (float)(PlayerFogState.MAX_EXPOSURE_TIME_LVL2 - PlayerFogState.MAX_EXPOSURE_TIME_LVL1);
-                drawOverlay(guiGraphics, OVERLAY_TEXTURES[1], Math.min(alpha2, 1.0f), screenWidth, screenHeight);
-            } else if (amplifier >= 1) {
-                drawFullEffectOverlay(guiGraphics, screenWidth, screenHeight);
-            }
-        } else if (state.fogExposureTime >= 1) {
-            // Фаза накопления экспозиции: оба слоя появляются постепенно перед вторым порогом
-            if (state.fogExposureTime < PlayerFogState.MAX_EXPOSURE_TIME_LVL1) {
-                // Пока до первого порога – только первый слой появляется (но его альфа вычисляется по MAX_EXPOSURE_TIME_LVL2)
-                float alpha1 = state.fogExposureTime / PlayerFogState.MAX_EXPOSURE_TIME_LVL2;
-                drawOverlay(guiGraphics, OVERLAY_TEXTURES[0], Math.min(alpha1, 1.0f), screenWidth, screenHeight);
-            } else {
-                // При значении экспозиции от первого порога и выше – оба слоя появляются постепенно
-                // Первый слой: альфа растёт линейно от (MAX_EXPOSURE_TIME_LVL1/MAX_EXPOSURE_TIME_LVL2) до 1
-                float alpha1 = state.fogExposureTime / PlayerFogState.MAX_EXPOSURE_TIME_LVL2;
-                // Второй слой: начинает с 0 после первого порога и растёт до 1 к моменту достижения второго порога
-                float alpha2 = (state.fogExposureTime - PlayerFogState.MAX_EXPOSURE_TIME_LVL1)
-                        / (PlayerFogState.MAX_EXPOSURE_TIME_LVL2 - PlayerFogState.MAX_EXPOSURE_TIME_LVL1);
-                drawOverlay(guiGraphics, OVERLAY_TEXTURES[0], Math.min(alpha1, 1.0f), screenWidth, screenHeight);
-                drawOverlay(guiGraphics, OVERLAY_TEXTURES[1], Math.min(alpha2, 1.0f), screenWidth, screenHeight);
-            }
-        } else {
-            // Если нечего отображать – сбрасываем состояние
-            state.fogExposureTime = 0;
-            state.isInFog = false;
-            state.appliedEffectLevel = 0;
-        }
     };
+
 
     private static boolean isPlayerInFog(Player player) {
         return player.level().getEntitiesOfClass(PotGrenadeFog.class, player.getBoundingBox())

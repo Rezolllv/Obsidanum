@@ -113,7 +113,6 @@ public class Obsidanum {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         DispenserRegistry.registerBehaviors();
-
     }
 
     // Add the example block item to the building blocks tab

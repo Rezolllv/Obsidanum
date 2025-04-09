@@ -20,6 +20,6 @@ public class EffectsObs {
     public static final RegistryObject<MobEffect> PROTECTION_ARROW = MOB_EFFECTS.register("protection_arrow",
             () -> new ProtectionArrowEffect(MobEffectCategory.HARMFUL, 0xFFD700));
     public static final RegistryObject<MobEffect> FLASH = MOB_EFFECTS.register("flash",
-            () -> new Confusion(MobEffectCategory.HARMFUL, 0xFFFFFF));
+            () -> new Confusion(MobEffectCategory.HARMFUL, 0x444444));
 
 }

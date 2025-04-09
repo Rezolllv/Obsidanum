@@ -95,7 +95,7 @@ public class BlocksObs {
     public static final RegistryObject<Block> THE_GLOOMY_MYCELIUM = BLOCKS.register("the_gloomy_mycelium",
             () -> new MultifaceMushrooms(BlockBehaviour.Properties.copy(Blocks.VINE).noOcclusion()));
     public static final RegistryObject<Block> OBSIDAN_SAPLING = BLOCKS.register("obsidan_sapling",
-            () -> new SaplingBlock(new ObsidanOak(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+            () -> new ObsidianSapling(new ObsidanOak(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> OBSIDAN_WOOD_LOG = registerBlock("obsidan_wood_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(3f)));
     public static final RegistryObject<Block> OBSIDAN_WOOD = registerBlock("obsidan_wood",
